@@ -10,3 +10,5 @@ opencode.json
 codex_key.txt
 *.pem
 *.secret
+__pycache__/
+*.pyc
