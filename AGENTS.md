@@ -96,7 +96,7 @@
 ---
 
 ### 第七条：密钥零泄露与提交前强校验红线
-- **严禁明文落盘**：严禁将任何 API Key（`yls-`）、GitHub Token（`ghp_` / `github_pat_`）、cookie 或隐私凭证写入仓库任何文件、HTML 注释、Commit 信息或对话回复中；所有密钥仅允许从本地忽略文件或 Google Drive `download` 动态读取。
+- **严禁明文入库（公开仓库零泄露）**：Git 仓库为公开状态（not private），严禁将任何 API Key（`yls-`）、GitHub Token（`ghp_` / `github_pat_`）、cookie 或隐私凭证写入仓库任何文件、HTML 注释或 Commit 信息；密钥仅保存在本地忽略文件或 Google Drive `download` 读取（仅限私有对话中按需给用户提供直接可复制命令，绝不入库）。
 - **提交前强制安检**：每次执行 `git commit` 与 `git push` 前，必须先对暂存区执行密钥正则扫描（`git diff --cached | grep -E "yls-[a-zA-Z0-9]{16,}|ghp_[a-zA-Z0-9]{20,}|github_pat_"`）；一旦命中任何敏感串，立即中止提交并清除敏感内容。
 
 ---

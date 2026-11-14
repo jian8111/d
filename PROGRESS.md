@@ -2,17 +2,16 @@
 # PROGRESS.md — 跨号交接进度记录
 
 ## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
-- **更新时间**：2026-11-14 12:06 (PST)
+- **更新时间**：2026-11-14 12:09 (PST)
 - **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 确认为 `PRO1V`，已排除第 6 号纯网盘存储号 `466788455@qq.com`）
 - **已完成内容**：
-  1. **Git Token 安全归档与本机凭据更新**：将用户提供的新 GitHub PAT 仅保存至本机容器隔离文件 `~/.config/gh/pat.env`（权限 `600`，由 `~/.bashrc` 加载，未入库）并同步上传至 Google Drive `download/github_token.txt`（ID: `1hOZQ788YDCIl4X2oAnXY15skAuMGhhtv`），全仓与 Commit 保持零敏感串。
-  2. **创建 2-core GitHub Codespace 实例**：使用具备 `codespace` 作用域的 `GH_TOKEN` 执行 `gh codespace create -R jian8111/d -b main -m basicLinux32gb`，成功创建 `urban-goldfish-vgqwrvgpxjr3xv74`（显示名 `urban goldfish`，规格 `basicLinux32gb` 2-core / 8GB RAM / 32GB 磁盘，状态 `Available`，网页直达地址 `https://urban-goldfish-vgqwrvgpxjr3xv74.github.dev`）。
-  3. **远程 SSH 连通诊断**：执行 `gh codespace ssh -c urban-goldfish-vgqwrvgpxjr3xv74` 时触发沙盒代理对 SSH RPC 隧道拦截（`failed to invoke SSH RPC ... use of closed network connection`），已按安全边界中止绕过并向用户提供直达链接与容器内单行初始化命令。
+  1. **明确第七条公开仓库零泄露边界**：根据用户说明，更新 [`AGENTS.md`](./AGENTS.md) 第七条区分公开 Git 仓库（`not private`，严禁写入任何密钥与 Commit）与私有对话界面（可按需直接提供完整可复制配置命令），同步推送 GitHub `main` 与 Google Drive `download`。
+  2. **Git Token 安全归档与 2-core Codespace 就绪**：`urban-goldfish-vgqwrvgpxjr3xv74`（`basicLinux32gb`，`https://urban-goldfish-vgqwrvgpxjr3xv74.github.dev`）已处于 `Available` 状态；新 Token 仅保存在本机隔离文件 `~/.config/gh/pat.env` 与 Drive `download/github_token.txt`（`1hOZQ788YDCIl4X2oAnXY15skAuMGhhtv`）。
 - **当前状态与下一步待办**：
-  1. Codespace `urban-goldfish-vgqwrvgpxjr3xv74` 已处于 `Available` 就绪状态，可在手机或浏览器直接打开。
-  2. 在 Codespace 网页终端执行单行初始化脚本安装 `@openai/codex` 并写入 `~/.codex/auth.json` 与 `~/.codex/config.toml` 即可直接派活使用。
+  1. 仓库工作树整洁，全仓与历史零密钥泄露；用户在 Codespace 网页终端直接粘贴已填好 `OPENAI_API_KEY` 的一键脚本即可立即启用 Codex。
 
 ## 历史记录
+- **2026-11-14 12:06 (PST)｜`PRO1V(valerie...@gmail.com)`**：将新 GitHub PAT 安全保存至 `~/.config/gh/pat.env` 与 Drive `download/github_token.txt`（`1hOZQ788YDCIl4X2oAnXY15skAuMGhhtv`），创建 2-core GitHub Codespace `urban-goldfish-vgqwrvgpxjr3xv74` 并完成双端归档（`07e5bca`）。
 - **2026-11-14 11:54 (PST)｜`PRO1V(valerie...@gmail.com)`**：执行全仓与 Git 全历史密钥零泄露体检（`0` 泄露），在 [`AGENTS.md`](./AGENTS.md) 末尾追加「第七条：密钥零泄露与提交前强校验红线」并完成双端归档（`0f7a736`）。
 - **2026-11-14 11:29 (PST)｜`PRO1V(valerie...@gmail.com)`**：完成全量一体化配置重建（`.gitignore`、Drive `codex_key.txt`、`AGENTS.md` 五大铁律、双 CLI 与 Python SDK 满血配置与连通验收），严格委派 `codex exec` 生成并通过无头 Chromium 验收单文件 [`pelican_bike.html`](./pelican_bike.html)（`5b5b008`）。
 - **2026-11-14 11:27 (PST)｜`PRO1V(valerie...@gmail.com)`**：新增队友双作多光标演示与原创 7 层光标拼装鹈鹕专页 [`pelican-swarm-demo.html`](./pelican-swarm-demo.html)，并更新 [`index.html`](./index.html)、[`swarm-demo.html`](./swarm-demo.html)、[`.github/workflows/pages.yml`](./.github/workflows/pages.yml) 与 [`README.md`](./README.md) 通过 `verify_repo.py --strict` 与无头 Chromium 校验（`376fd11`）。
