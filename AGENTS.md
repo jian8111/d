@@ -94,4 +94,10 @@
    - `~/.config/opencode/opencode.json`（权限 `600`）：使用 `@ai-sdk/openai` 对接 `baseURL: "https://ylscode.com/codex"`，默认模型 `ylsCode/gpt-6.1-sol`，注册 `gpt-6.1-sol`、`gpt-6.1-terra`、`gpt-6-astra`、`grok-4.7`（`reasoningEffort: "xhigh"`）。
 
 ---
+
+### 第七条：密钥零泄露与提交前强校验红线
+- **严禁明文落盘**：严禁将任何 API Key（`yls-`）、GitHub Token（`ghp_` / `github_pat_`）、cookie 或隐私凭证写入仓库任何文件、HTML 注释、Commit 信息或对话回复中；所有密钥仅允许从本地忽略文件或 Google Drive `download` 动态读取。
+- **提交前强制安检**：每次执行 `git commit` 与 `git push` 前，必须先对暂存区执行密钥正则扫描（`git diff --cached | grep -E "yls-[a-zA-Z0-9]{16,}|ghp_[a-zA-Z0-9]{20,}|github_pat_"`）；一旦命中任何敏感串，立即中止提交并清除敏感内容。
+
+---
 **维护与署名**：`PRO1V(valerie...@gmail.com)`
