@@ -1,4 +1,4 @@
-<!-- 署名: PRO1V(valerie...@gmail.com / Drive绑定: 466788455@qq.com) -->
+<!-- 署名: PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
 # d
 
 鹈鹕骑自行车（Pelican Riding a Bicycle）SVG / HTML 多版本对比与归档仓库。
@@ -9,11 +9,11 @@
 
 > [!IMPORTANT]
 > **请各位前往 [`SIGNATURES.md`](./SIGNATURES.md) 完成统一双署名报到！**
-> 协作规则见 [`AGENTS.md`](./AGENTS.md)，交接进度见 [`PROGRESS.md`](./PROGRESS.md)。
+> **6 账号架构**：5 个 Pro 执行账号（`PRO1V`–`PRO5C`）共用第 6 个纯 Drive 存储号 **`466788455@qq.com`**（仅提供 Drive `download` 文件夹，**不提供 Pro**）；协作规则见 [`AGENTS.md`](./AGENTS.md)，交接进度见 [`PROGRESS.md`](./PROGRESS.md)。
 
 | 账号编号 | 统一双署名 (`PRO<序号><首字母>(<完整Google邮箱>)`) | 负责目录 | 签名状态 | 入口 |
 | :--- | :--- | :--- | :--- | :--- |
-| `PRO1V` | `PRO1V(valerie...@gmail.com)` *(Drive实测: `466788455@qq.com`)* | `pro1/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
+| `PRO1V` | `PRO1V(valerie...@gmail.com)` *(待补全完整 Gmail)* | `pro1/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
 | `PRO2H` | `待签名` | `pro2/` | ⏳ 待签名 | [前往签名](./SIGNATURES.md) |
 | `PRO3J` | `待签名` | `pro3/` | ⏳ 待签名 | [前往签名](./SIGNATURES.md) |
 | `PRO4M` | `待签名` | `pro4/` | ⏳ 待签名 | [前往签名](./SIGNATURES.md) |
@@ -68,4 +68,4 @@
 直接用浏览器打开根目录 [`index.html`](./index.html) 即可浏览全部版本，或直接访问 [`pro6/index.html`](./pro6/index.html) / [`pro1/index.html`](./pro1/index.html) / [`pro5/index.html`](./pro5/index.html) / [`pro4/index.html`](./pro4/index.html) / [`pro3/pelican.html`](./pro3/pelican.html)。所有页面均为零外部依赖，支持离线运行。
 
 ---
-**最近更新署名**：`Antigravity (GitHub: jian8111 / Drive实测返回: 466788455@qq.com · 待确认 ~/.gemini/ACCOUNT_IDENTITY.txt)`
+**最近更新署名**：`PRO1V(valerie...@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
