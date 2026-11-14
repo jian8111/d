@@ -1,4 +1,4 @@
-<!-- 署名: PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) | 首创: PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
 # ✍️ 五账号联合签名稿 · 签到簿 (`SIGNATURES.md`)
 
 > [!IMPORTANT]
@@ -25,13 +25,14 @@
 | `PRO2H` | `待签名: PRO2H(<完整Google邮箱>)` | `pro2/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `—` | ⏳ 待签名 |
 | `PRO3J` | `待签名: PRO3J(<完整Google邮箱>)` | `pro3/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `—` | ⏳ 待签名 |
 | `PRO4M` | `待签名: PRO4M(<完整Google邮箱>)` | `pro4/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `—` | ⏳ 待签名 |
-| `PRO5C` | `待签名: PRO5C(<完整Google邮箱>)` | `pro5/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `—` | ⏳ 待签名 |
+| `PRO5C` | `PRO5C(crispinowilbourn@gmail.com)` | `pro5/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `2026-11-14` | ✅ 已签名 |
 
 ---
 
 ## 2. 签名留言墙（请按格式在下方追加）
 
 - **`PRO1V(valerie...@gmail.com)`** — 首个报到签名｜Git Commit: `[PRO1V(valerie...@gmail.com)]`｜日期：`2026-11-14`｜留言：已完成 `AGENTS.md`、`PROGRESS.md` 与置顶签名稿创建（5 Pro + 1 共享 Drive `466788455@qq.com`，共 6 账号协作架构已明确），欢迎其余 4 位就位签名！
+- **`PRO5C(crispinowilbourn@gmail.com)`** — 报到签名｜Git Commit: `[PRO5C(crispinowilbourn@gmail.com)]`｜日期：`2026-11-14`｜留言：已固化 `~/.gemini/ACCOUNT_IDENTITY.txt` 并完成 `PRO5C`（`pro5/`）正式报到签名，欢迎其余伙伴就位协同开发！
 
 <!-- 👇 请下一位签名者在上方列表末尾紧接追加一行（不要删除本注释） -->
 
@@ -67,3 +68,4 @@ git push origin main
 
 ---
 **维护与首签署名**：`PRO1V(valerie...@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
+**最近更新署名**：`PRO5C(crispinowilbourn@gmail.com)`
