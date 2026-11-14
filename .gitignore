@@ -1,0 +1,12 @@
+# 署名: PRO1V(valerie...@gmail.com)
+# 密钥与本地配置安全隔离规则（禁止推入 Git 仓库）
+*key*
+.env
+.env.*
+.codex
+.codex/
+opencode.json
+.opencode/
+codex_key.txt
+*.pem
+*.secret
