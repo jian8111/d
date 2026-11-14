@@ -1,21 +1,22 @@
-<!-- 署名: PRO5C(crispinowilbourn@gmail.com) | 历史维护: PRO2H(hadcockulloa@gmail.com), PRO1V(valerie...@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
+<!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
-## 最新进度记录 — `PRO5C(crispinowilbourn@gmail.com)`
-- **更新时间**：2026-11-14 10:47 (PST)
-- **执行身份**：`PRO5C(crispinowilbourn@gmail.com)`（对应 `pro5/`，已排除第 6 号纯网盘存储号 `466788455@qq.com`）
+## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
+- **更新时间**：2026-11-14 11:27 (PST)
+- **执行身份**：`PRO1V(valerie...@gmail.com)`（已通过 `~/.gemini/ACCOUNT_IDENTITY.txt` 确认；第 6 号 `466788455@qq.com` 仅作为纯 Drive 存储号）
 - **已完成内容**：
-  1. **本号持久身份固化**：经账号切换界面确认为 Crispino Wilbourn（`crispinowilbourn@gmail.com`），已固化 `PRO5C(crispinowilbourn@gmail.com)` 到 `~/.gemini/ACCOUNT_IDENTITY.txt`，并配置 `git config user.name "PRO5C"` 与 `git config user.email "crispinowilbourn@gmail.com"`。
-  2. **正式完成 `PRO5C` 报到签名**：拉取 `origin/main`（`ca40754`）确认此前 `PRO2H` 已回滚 `b72bc65` 误签并恢复 `PRO5C` 为待签名状态后，在本 `PRO5C` 本号容器中正式完成 [`SIGNATURES.md`](./SIGNATURES.md) 签名总表及留言墙登记，并同步更新 [`README.md`](./README.md) 顶部状态表与本 [`PROGRESS.md`](./PROGRESS.md)。
-  3. **仓库校验与双端归档**：通过 `verify_repo.py --strict` 校验，以 `[PRO5C(crispinowilbourn@gmail.com)]` 开头提交推送至 `jian8111/d` 的 `main` 分支，并调用 `gdrive mutate update` 同步更新云盘 `download` 文件夹中的 `SIGNATURES.md`、`README.md` 与 `PROGRESS.md`。
+  1. **新增队友双作多光标演示 + 原创 7 层光标拼装鹈鹕专页 [`pelican-swarm-demo.html`](./pelican-swarm-demo.html)**：
+     - **队友双作光标演示（`Pro1` & `Pro6`）**：使用本地零依赖 `CursorSwarm`（`PRO1V`–`PRO5C` 五光标）协同框选线框、激光扫描显影，并演示光标从 `pro1` 拖出半透明卡片虚影 `⌘C/⌘V` 克隆生成 `pro6` 及歪斜标签 `move` 自动归位；每张卡片均支持单独重播或进入原版。
+     - **现场原创《Cursor Craft Pelican · 多光标分层拆拼鹈鹕骑行》**：专为展示 `CursorSwarm` 光标交互机制而设计，将画布拆分为 7 个紧致 DOM/SVG 图层 Pod（海岸赛道 → 后轮源件 → 光标现场 `⌘C→拖拽→⌘V` 克隆前轮 → 钢架与 `2-Bone IK` 链条双腿 → 鹈鹕骑手旋转 `move` 精准落座 → 前车篮蓝图鲜鱼 → 飘动 Swarm 指针小旗），内置实时光标编排日志、并发光标数 (`1–8`) / 速率 / 入场起点 / 配色主题控制、`X-Ray` 框选边界透视、分层错开视图、铜车铃 (`B`) / 喉囊弹鱼 (`F`) 交互与 7 层合并 SVG 导出。
+  2. **同步导航与发布配置**：更新 [`index.html`](./index.html)、[`swarm-demo.html`](./swarm-demo.html)、[`.github/workflows/pages.yml`](./.github/workflows/pages.yml) 与 [`README.md`](./README.md) 注册新页面入口，修复 `CursorSwarm` 二次 `refresh()` 穿透 `[data-cs="pop"]` 子节点及隐藏 X-Ray 标牌扫描问题，并通过 `verify_repo.py --strict`（`PASS 0 errors`）及无头 Chromium CDP 多阶段截屏与交互校验。
 - **当前状态与下一步待办**：
-  1. **五账号全员签名集结完成**：`PRO1V`（待补全完整 Gmail）、`PRO2H(hadcockulloa@gmail.com)`、`PRO3J(saveljevsjill148@gmail.com)`、`PRO4M(wilermccomber@gmail.com)` 与 `PRO5C(crispinowilbourn@gmail.com)` 均已完成正式报到签名（`5/5`）；`466788455@qq.com` 仅作为共享 Drive 存储号不参与干活署名。
-  2. 如需启用线上展示，在 GitHub 仓库 `Settings → Pages → Source` 选择 `GitHub Actions`（若仓库为 Private，按需设为 Public 或使用支持私有 Pages 的计划）。
-  3. 如需在 GitHub Issue/PR 评论中使用 `/swarm` 自动生成 PR，为仓库配置 `CURSOR_API_KEY` Secret；任意新容器开工前先读取 [`AGENTS.md`](./AGENTS.md) 与本 `PROGRESS.md`。
+  1. 五账号（`PRO1V`、`PRO2H`、`PRO3J`、`PRO4M`、`PRO5C`）均已完成 [`SIGNATURES.md`](./SIGNATURES.md) 签名集结；本次修改将同步提交至 GitHub `main` 与 Google Drive `download`，并在对话产出独立交互 HTML Artifact。
+  2. 如需开启 GitHub Pages，请在 `Settings → Pages → Source` 选择 `GitHub Actions`；如需触发云端 `/swarm`，配置 `CURSOR_API_KEY` Secret 即可。
 
 ## 历史记录
-- **2026-11-14 10:34 (PST)｜`PRO2H(hadcockulloa@gmail.com)`**：固化 `~/.gemini/ACCOUNT_IDENTITY.txt` 为 `PRO2H(hadcockulloa@gmail.com)`，在 [`SIGNATURES.md`](./SIGNATURES.md) 与 [`README.md`](./README.md) 完成 `PRO2H`（`pro2/`）正式报到签名并回滚此前误签的 `PRO5C`（`b72bc65`），同步双端。
-- **2026-11-14 10:32 (PST)｜`PRO1V(valerie...@gmail.com)`**：配置 Cursor Agent Swarm（`.cursor/rules/`、`skills/`、`agents/`、`mcp.json`、`hooks.json`、`environment.json`）、GitHub Actions（`pages.yml`、`ci-verify.yml`、`cursor-agent-swarm.yml`）及本地托管 `CursorSwarm` 多光标前端引擎与交互实验室（`index.html`、`swarm-demo.html`、`assets/`），并通过 `verify_repo.py --strict` 与无头 Chromium 测试。
+- **2026-11-14 10:47 (PST)｜`PRO5C(crispinowilbourn@gmail.com)`**：确认 `~/.gemini/ACCOUNT_IDENTITY.txt` 并正式完成 [`SIGNATURES.md`](./SIGNATURES.md)、[`README.md`](./README.md) 与 [`PROGRESS.md`](./PROGRESS.md) 报到签名，完成双端归档（`44a8529`）。
+- **2026-11-14 10:34 (PST)｜`PRO2H(hadcockulloa@gmail.com)`**：固化 `~/.gemini/ACCOUNT_IDENTITY.txt` 为 `PRO2H(hadcockulloa@gmail.com)`，在 [`SIGNATURES.md`](./SIGNATURES.md) 与 [`README.md`](./README.md) 完成 `PRO2H`（`pro2/`）正式报到签名并回滚此前误签的 `PRO5C`（`b72bc65`），同步双端（`ca40754`）。
+- **2026-11-14 10:32 (PST)｜`PRO1V(valerie...@gmail.com)`**：配置 Cursor Agent Swarm（`.cursor/rules/`、`skills/`、`agents/`、`mcp.json`、`hooks.json`、`environment.json`）、GitHub Actions（`pages.yml`、`ci-verify.yml`、`cursor-agent-swarm.yml`）及本地托管 `CursorSwarm` 多光标前端引擎与交互实验室（`index.html`、`swarm-demo.html`、`assets/`），并通过 `verify_repo.py --strict` 与无头 Chromium 测试（`d04ad27`）。
 - **2026-11-14 10:29 (PST)｜`PRO4M(wilermccomber@gmail.com)`**：固化 `~/.gemini/ACCOUNT_IDENTITY.txt`，在 [`SIGNATURES.md`](./SIGNATURES.md)、[`README.md`](./README.md) 与 [`PROGRESS.md`](./PROGRESS.md) 完成 `PRO4M`（`pro4/`）正式报到签名，并完成 GitHub `main` 与 Google Drive `download` 双端同步。
 - **2026-11-14 10:28 (PST)｜`PRO3J(saveljevsjill148@gmail.com)`**：固化 `~/.gemini/ACCOUNT_IDENTITY.txt`，在 [`SIGNATURES.md`](./SIGNATURES.md)、[`README.md`](./README.md) 与 [`PROGRESS.md`](./PROGRESS.md) 完成 `PRO3J`（`pro3/`）正式报到签名，并完成 GitHub `main` 与 Google Drive `download` 双端同步。
 - **2026-11-14 10:27 (PST)｜`误签回滚记录（b72bc65）`**：此前由 `PRO2H` 会话误判并提交的 `PRO5C(crispinowilbourn@gmail.com)` 签名已在 `ca40754` 撤回，恢复 `PRO5C` 为待签名状态。
@@ -26,4 +27,4 @@
 - **2026-11-14 09:52 (PST)｜`PRO1V(valerie...@gmail.com)`**：创建 [`AGENTS.md`](./AGENTS.md) 永久规则与 [`PROGRESS.md`](./PROGRESS.md)，汇聚 `pro1`–`pro5` 鹈鹕骑车作品。
 
 ---
-**记录署名**：`PRO5C(crispinowilbourn@gmail.com)`
+**记录署名**：`PRO1V(valerie...@gmail.com)`

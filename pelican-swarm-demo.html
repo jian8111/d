@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pelican Cursor Demo · 多光标协同演示与现场组装鹈鹕</title>
+  <meta name="description" content="CursorSwarm multi-cursor live build demo featuring two selected team Pelicans (Pro1 & Pro6) and an original layer-assembled Cursor Craft Pelican Riding a Bicycle." />
+  <link rel="stylesheet" href="./assets/css/swarm-ui.css" />
+  <style>
+    :root {
+      --bg: #0b151e;
+      --panel: #11202d;
+      --panel-alt: #162a3b;
+      --ink: #eef5f7;
+      --muted: #96b0be;
+      --border: rgba(123, 245, 233, 0.22);
+      --accent: #14b8a6;
+      --accent-bright: #7bf5e9;
+      --coral: #f97316;
+      --amber: #fbbf24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(20, 184, 166, 0.14), transparent 40%),
+        radial-gradient(circle at 88% 14%, rgba(44, 107, 237, 0.14), transparent 38%),
+        var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+      padding: 22px 16px 88px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1140px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .director-bar {
+      position: sticky;
+      top: 10px;
+      z-index: 900;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: rgba(13, 26, 37, 0.94);
+      border: 1px solid rgba(123, 245, 233, 0.28);
+      box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .director-title {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .director-title h1 {
+      margin: 0;
+      font-size: clamp(1.06rem, 2.2vw, 1.36rem);
+      letter-spacing: -0.02em;
+    }
+
+    .director-title span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .director-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .btn-ui,
+    .sel-ui {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 7px 11px;
+      font: inherit;
+      font-size: 0.81rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.16s ease, border-color 0.16s ease, transform 0.12s ease;
+    }
+
+    .btn-ui:hover,
+    .sel-ui:hover {
+      border-color: var(--accent-bright);
+      background: rgba(20, 184, 166, 0.22);
+    }
+
+    .btn-ui:active {
+      transform: translateY(1px);
+    }
+
+    .btn-ui-primary {
+      background: #147d75;
+      border-color: #26c4b6;
+      color: #ffffff;
+    }
+
+    .btn-ui-coral {
+      background: rgba(249, 115, 22, 0.2);
+      border-color: rgba(251, 146, 60, 0.55);
+      color: #fed7aa;
+    }
+
+    .sel-ui option {
+      background: #11202d;
+      color: var(--ink);
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.16rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-head p {
+      margin: 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .pelican-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 18px 42px -22px rgba(0, 0, 0, 0.65);
+    }
+
+    .pelican-media {
+      background: #0c1721;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pelican-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pelican-body {
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(123, 245, 233, 0.14);
+      color: var(--accent-bright);
+      border: 1px solid rgba(123, 245, 233, 0.25);
+    }
+
+    .badge-coral {
+      background: rgba(249, 115, 22, 0.18);
+      color: #fed7aa;
+      border-color: rgba(251, 146, 60, 0.4);
+    }
+
+    .pelican-body h3 {
+      margin: 0;
+      font-size: 1.08rem;
+    }
+
+    .pelican-body p {
+      margin: 0;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .card-footer {
+      margin-top: auto;
+      padding-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-footer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .craft-stage-card {
+      background: linear-gradient(180deg, #10202d 0%, #0b1620 100%);
+      border: 1px solid rgba(123, 245, 233, 0.34);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 24px 56px -22px rgba(0, 0, 0, 0.75);
+    }
+
+    .craft-layout {
+      display: grid;
+      grid-template-columns: 1.56fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .craft-left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .craft-canvas {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 960 / 520;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(123, 245, 233, 0.28);
+      background: #0d1b26;
+      user-select: none;
+    }
+
+    .craft-pod,
+    .wheel-pod {
+      position: absolute;
+      pointer-events: none;
+      transition: transform 0.35s ease, outline-color 0.25s ease;
+    }
+
+    .craft-pod-interactive {
+      pointer-events: auto;
+    }
+
+    .craft-pod svg,
+    .wheel-pod svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    .pod-outline-tag {
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(11, 22, 32, 0.88);
+      border: 1px solid #7bf5e9;
+      color: #7bf5e9;
+      font: 700 10px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 4;
+      white-space: nowrap;
+    }
+
+    section[id],
+    article[id] {
+      scroll-margin-top: 108px;
+    }
+
+    .craft-pod.tag-bottom .pod-outline-tag,
+    .wheel-pod.tag-bottom .pod-outline-tag {
+      top: auto;
+      bottom: 4px;
+    }
+
+    .craft-pod.tag-center-bottom .pod-outline-tag {
+      top: auto;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .craft-canvas.is-xray .craft-pod,
+    .craft-canvas.is-xray .wheel-pod {
+      outline: 1.5px dashed rgba(123, 245, 233, 0.78);
+      outline-offset: -1px;
+      background: rgba(20, 184, 166, 0.06);
+    }
+
+    .craft-canvas.is-xray .pod-outline-tag {
+      opacity: 1;
+    }
+
+    .craft-pod.is-highlighted,
+    .wheel-pod.is-highlighted {
+      outline: 2px solid #fbbf24 !important;
+      background: rgba(251, 191, 36, 0.1) !important;
+      z-index: 8;
+    }
+
+    .craft-pod.is-highlighted .pod-outline-tag,
+    .wheel-pod.is-highlighted .pod-outline-tag {
+      opacity: 1;
+      border-color: #fbbf24;
+      color: #fde68a;
+    }
+
+    .craft-canvas.is-exploded .craft-pod,
+    .craft-canvas.is-exploded .wheel-pod {
+      outline: 1.5px dashed rgba(251, 146, 60, 0.75);
+      background: rgba(249, 115, 22, 0.06);
+    }
+
+    .craft-canvas.is-exploded #pod-sky { transform: translate(-10px, 6px) scale(0.95); }
+    .craft-canvas.is-exploded #pod-wheel-rear { transform: translate(-18px, 14px); }
+    .craft-canvas.is-exploded #pod-wheel-front { transform: translate(18px, 14px); }
+    .craft-canvas.is-exploded #pod-frame { transform: translate(0px, -4px); }
+    .craft-canvas.is-exploded #pod-rider { transform: translate(-6px, -16px); }
+    .craft-canvas.is-exploded #pod-basket { transform: translate(16px, -14px); }
+    .craft-canvas.is-exploded #pod-flag { transform: translate(-20px, -16px); }
+
+    .layer-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .layer-card {
+      background: rgba(16, 33, 47, 0.9);
+      border: 1px solid rgba(123, 245, 233, 0.2);
+      border-radius: 12px;
+      padding: 9px 11px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: border-color 0.16s ease, background-color 0.16s ease;
+    }
+
+    .layer-card:hover,
+    .layer-card.is-active {
+      border-color: var(--amber);
+      background: rgba(251, 191, 36, 0.1);
+    }
+
+    .layer-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent-bright);
+    }
+
+    .layer-card-op {
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: rgba(249, 115, 22, 0.2);
+      color: #fed7aa;
+      border: 1px solid rgba(251, 146, 60, 0.35);
+    }
+
+    .layer-card strong {
+      font-size: 0.82rem;
+      color: var(--ink);
+    }
+
+    .layer-card span.layer-sub {
+      font-size: 0.74rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .craft-sidebar {
+      background: rgba(16, 32, 45, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .craft-sidebar h3 {
+      margin: 0;
+      font-size: 1.03rem;
+    }
+
+    .craft-sidebar p {
+      margin: 0;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .agent-roster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .agent-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.71rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--ink);
+      transition: transform 0.14s ease, border-color 0.14s ease, background-color 0.14s ease;
+    }
+
+    .agent-pill i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .agent-pill.is-working {
+      border-color: var(--accent-bright);
+      background: rgba(123, 245, 233, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .cursor-feed {
+      background: #08121a;
+      border: 1px solid rgba(123, 245, 233, 0.2);
+      border-radius: 12px;
+      padding: 9px 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.73rem;
+      line-height: 1.48;
+      color: #c5e8e4;
+      height: 124px;
+      overflow-y: auto;
+      display: block;
+    }
+
+    .feed-line {
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 3px;
+    }
+
+    .feed-agent {
+      font-weight: 700;
+      color: var(--accent-bright);
+      flex: none;
+    }
+
+    .feed-op {
+      color: #fed7aa;
+      flex: none;
+    }
+
+    .sliders-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(8, 17, 25, 0.68);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 0.77rem;
+      color: var(--muted);
+    }
+
+    .slider-row-head {
+      display: flex;
+      justify-content: space-between;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .slider-row input[type="range"] {
+      width: 100%;
+      accent-color: #2dd4bf;
+    }
+
+    .ctrl-grid-mini {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .ctrl-select-mini {
+      width: 100%;
+      background: #0d1d2a;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 8px;
+      font: inherit;
+      font-size: 0.76rem;
+    }
+
+    .toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .tele-item {
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(123, 245, 233, 0.16);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .tele-item small {
+      display: block;
+      font-size: 0.67rem;
+      color: var(--muted);
+    }
+
+    .tele-item strong {
+      font-size: 0.85rem;
+      color: var(--accent-bright);
+    }
+
+    @media (max-width: 920px) {
+      .team-grid,
+      .craft-layout {
+        grid-template-columns: 1fr;
+      }
+      .layer-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .director-bar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .layer-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="director-bar" data-cs-ignore>
+      <div class="director-title">
+        <h1>Pelican Cursor Demo · 多光标协同演示与现场组装鹈鹕</h1>
+        <span id="swarm-live-note">五账号光标（PRO1V–PRO5C）正在协同框选、复制粘贴（⌘C/⌘V）并拼装队友双作与原创多层鹈鹕</span>
+      </div>
+      <div class="director-actions">
+        <button type="button" class="btn-ui btn-ui-primary" id="btn-swarm-all">🚀 全场五光标协同</button>
+        <button type="button" class="btn-ui" id="btn-swarm-team">🚲 演示 Pro1×Pro6</button>
+        <button type="button" class="btn-ui btn-ui-coral" id="btn-swarm-craft">🛠️ 演示光标拆拼鹈鹕</button>
+        <button type="button" class="btn-ui" id="btn-swarm-reveal">⚡ 立即全显</button>
+        <select class="sel-ui" id="sel-swarm-palette" aria-label="光标配色主题">
+          <option value="team">Team 五色</option>
+          <option value="neon">Neon 霓虹</option>
+          <option value="ocean">Ocean 海洋</option>
+          <option value="sunset">Sunset 落日</option>
+          <option value="candy">Candy 糖果</option>
+          <option value="ink">Ink 墨色</option>
+        </select>
+        <button type="button" class="btn-ui" id="btn-swarm-sound">🔇 音效</button>
+        <a class="btn-ui" href="./index.html">← 作品集</a>
+        <a class="btn-ui" href="./swarm-demo.html">Swarm 实验室</a>
+      </div>
+    </header>
+
+    <div id="swarm-pelican-stage">
+      <!-- 1. Two Selected Team Pelicans Showcased via CursorSwarm -->
+      <section id="team-pelicans-zone" aria-label="队友精选双作 CursorSwarm 多光标演示">
+        <div class="section-head">
+          <h2>🚲 队友精选双作 · 光标协同搭建演示（任选 <code>Pro1</code> &amp; <code>Pro6</code>）</h2>
+          <p><code>PRO1V</code>–<code>PRO5C</code> 光标现场框选线框、激光扫描显影、从 <code>Pro1</code> 拖影 <code>⌘C/⌘V</code> 克隆卡片到 <code>Pro6</code>，并将歪斜标签 <code>move</code> 归位</p>
+        </div>
+
+        <div class="team-grid">
+          <article class="pelican-card" id="card-pro1" data-cs-copy="false">
+            <div class="pelican-media" data-cs-dir="l">
+              <img src="./pro1/pelican-bicycle.svg" alt="Pro1 海岸鹈鹕骑车纯矢量插画" />
+            </div>
+            <div class="pelican-body">
+              <div class="tag-row">
+                <span class="badge" data-cs="pop">PRO1 · 源卡片模板</span>
+                <span class="badge" data-cs="pop" data-cs-relocate="true">760×320 SVG</span>
+                <span class="badge" data-cs="pop">绿松石钢架</span>
+                <span class="badge" data-cs="pop">2-Bone IK</span>
+              </div>
+              <h3>海岸鹈鹕骑车（Pro1）</h3>
+              <p data-cs="words">零依赖内联矢量，绿松石复古公路架配双连杆逆向运动学（IK）踩踏、海湾丘陵视差层与喉囊弹鱼彩蛋；右侧 Pro6 卡片将由光标直接从此卡 ⌘C/⌘V 克隆搭建。</p>
+              <div class="card-footer">
+                <span class="badge">pro1/pelican-bicycle.svg</span>
+                <div class="card-footer-actions" data-cs-ignore>
+                  <button type="button" class="btn-ui" id="btn-solo-pro1">▶ 光标重搭 Pro1</button>
+                  <a class="btn-ui" href="./pro1/index.html">打开原版 →</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="pelican-card" id="card-pro6" data-cs-copy="true">
+            <div class="pelican-media" data-cs-dir="r">
+              <img src="./pro6/pelican-bicycle.svg" alt="Pro6 暮海港湾巡游鹈鹕矢量插画" />
+            </div>
+            <div class="pelican-body">
+              <div class="tag-row">
+                <span class="badge badge-coral" data-cs="pop">PRO6 · ⌘C/⌘V 克隆生成</span>
+                <span class="badge" data-cs="pop" data-cs-relocate="true">960×560 SVG</span>
+                <span class="badge" data-cs="pop">18 交叉辐条</span>
+                <span class="badge" data-cs="pop">73° 车架</span>
+              </div>
+              <h3>暮海港湾巡游鹈鹕（Pro6）</h3>
+              <p data-cs="words">朱红复古钢架与水手条纹围巾鹈鹕，支持 18 根交叉编织辐条、28:16 链条耦合、海港巡游多场景与铜铃 Web Audio 音效；可观察光标搬运虚影粘贴与逐词打字效果。</p>
+              <div class="card-footer">
+                <span class="badge">pro6/pelican-bicycle.svg</span>
+                <div class="card-footer-actions" data-cs-ignore>
+                  <button type="button" class="btn-ui" id="btn-solo-pro6">▶ 光标重搭 Pro6</button>
+                  <a class="btn-ui" href="./pro6/index.html">打开原版 →</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 2. Original Field-Built Cursor-Crafted Pelican Riding a Bicycle -->
+      <section id="cursor-pelican-zone" class="craft-stage-card" aria-label="现场原创 CursorSwarm 分层拼装鹈鹕骑行">
+        <div class="section-head">
+          <h2>🛠️ 现场原创：《Cursor Craft Pelican · 多光标分层拆拼鹈鹕骑行》</h2>
+          <p>专为展示 <code>CursorSwarm</code> 光标而生：画布拆成 7 个独立矢量图层 Pod——看光标如何先扫出 <code>后轮</code>、现场 <code>⌘C→拖拽→⌘V</code> 复制出 <code>前轮</code>，再把 <code>鹈鹕骑手</code> 与 <code>前车篮</code> 精准 <code>move</code> 落座！</p>
+        </div>
+
+        <div class="craft-layout">
+          <div class="craft-left-col">
+            <div class="craft-canvas" id="craft-canvas" role="img" aria-label="多光标实时分层拼装鹈鹕骑车画布">
+              <!-- POD 1: Sky & Drafting Coastal Track -->
+              <div id="pod-sky" class="craft-pod" data-cs="media" data-cs-dir="l" data-cs-label="01-coast-track"
+                   style="left:0%; top:0%; width:100%; height:100%;">
+                <span class="pod-outline-tag" data-cs="skip">01 BACKDROP · SWEEP</span>
+                <svg id="svg-pod-sky" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" data-cs="skip">
+                  <defs>
+                    <linearGradient id="cf-sky-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop id="cf-sky-0" offset="0%" stop-color="#0f2940" />
+                      <stop id="cf-sky-1" offset="56%" stop-color="#194566" />
+                      <stop id="cf-sky-2" offset="100%" stop-color="#387796" />
+                    </linearGradient>
+                    <linearGradient id="cf-sea-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop id="cf-sea-0" offset="0%" stop-color="#0c4a6e" />
+                      <stop id="cf-sea-1" offset="100%" stop-color="#0e7490" />
+                    </linearGradient>
+                    <linearGradient id="cf-road-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop id="cf-road-0" offset="0%" stop-color="#334155" />
+                      <stop id="cf-road-1" offset="100%" stop-color="#0f172a" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="960" height="332" fill="url(#cf-sky-grad)" />
+                  <!-- Studio drafting ruler & alignment guides -->
+                  <g id="cf-draft-grid" stroke="#7bf5e9" stroke-width="0.8" opacity="0.18">
+                    <path d="M0 80 H960 M0 160 H960 M0 240 H960 M0 320 H960" stroke-dasharray="6 6" />
+                    <path d="M120 0 V520 M240 0 V520 M360 0 V520 M480 0 V520 M600 0 V520 M720 0 V520 M840 0 V520" stroke-dasharray="6 6" />
+                  </g>
+                  <g id="cf-ruler-ticks" fill="#7bf5e9" font-family="monospace" font-size="10" opacity="0.55">
+                    <text x="16" y="20">CANVAS 960×520 · MULTI-LAYER CURSOR ASSEMBLY</text>
+                    <text x="818" y="20">2-BONE IK + ⌘C/⌘V</text>
+                  </g>
+                  <!-- Stylized Paper Clouds -->
+                  <g fill="#e0f2fe" opacity="0.82">
+                    <path d="M98 92 H214 C224 92 232 84 232 74 C232 64 222 57 211 59 C205 42 188 33 171 38 C158 25 135 28 126 45 C112 43 99 54 99 68 C89 72 90 92 98 92 Z" />
+                    <path d="M715 74 H828 C836 74 843 68 843 60 C843 52 835 46 826 47 C821 34 806 27 791 31 C780 20 761 23 754 37 C741 35 730 45 730 56 C722 59 722 74 715 74 Z" opacity="0.7" />
+                  </g>
+                  <!-- Far Coastal Hills -->
+                  <path d="M0 268 Q155 212 330 256 T670 242 T960 264 L960 286 L0 286 Z" fill="#1b4d63" opacity="0.75" />
+                  <path d="M0 278 Q210 236 445 268 T880 258 L960 270 L960 292 L0 292 Z" fill="#15606e" opacity="0.9" />
+                  <!-- Sea strip & Sailboats -->
+                  <rect x="0" y="280" width="960" height="58" fill="url(#cf-sea-grad)" />
+                  <g transform="translate(765 256)" opacity="0.88">
+                    <polygon points="0,24 17,2 19,24" fill="#f8fafc" />
+                    <polygon points="21,24 21,7 34,24" fill="#fed7aa" />
+                    <path d="M-3 25 H38 L32 30 H3 Z" fill="#0f172a" />
+                  </g>
+                  <g transform="translate(135 266) scale(0.75)" opacity="0.75">
+                    <polygon points="0,24 17,2 19,24" fill="#e0f2fe" />
+                    <polygon points="21,24 21,8 33,24" fill="#7bf5e9" />
+                    <path d="M-3 25 H36 L30 29 H3 Z" fill="#0f172a" />
+                  </g>
+                  <!-- Harbor Boardwalk & Road Surface (ground y = 410) -->
+                  <rect x="0" y="338" width="960" height="182" fill="url(#cf-road-grad)" />
+                  <rect x="0" y="338" width="960" height="6" fill="#14b8a6" opacity="0.65" />
+                  <g id="cf-railing-group"></g>
+                  <g id="cf-road-dashes"></g>
+                  <!-- Contact Shadows directly beneath wheels at y = 411 -->
+                  <ellipse cx="456" cy="414" rx="220" ry="12" fill="#020617" opacity="0.58" />
+                  <ellipse cx="300" cy="412" rx="64" ry="8" fill="#020617" opacity="0.72" />
+                  <ellipse cx="612" cy="412" rx="64" ry="8" fill="#020617" opacity="0.72" />
+                </svg>
+              </div>
+
+              <!-- POD 2: Rear Wheel (Original Source for Copy-Paste) -->
+              <div id="pod-wheel-rear" class="wheel-pod tag-bottom" data-cs="media" data-cs-dir="t" data-cs-copy="false" data-cs-label="02-wheel-rear-src"
+                   style="left:22.5%; top:50%; width:17.5%; height:32.3077%;">
+                <span class="pod-outline-tag" data-cs="skip">02 REAR WHEEL · SOURCE</span>
+                <svg id="svg-pod-wheel-rear" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 168" data-cs="skip">
+                  <g transform="translate(84 84)">
+                    <circle r="66" fill="none" stroke="#111827" stroke-width="12" />
+                    <circle r="66" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="10 8" />
+                    <circle r="58.5" fill="none" stroke="#e2e8f0" stroke-width="3.2" />
+                    <circle r="55" fill="none" stroke="#2dd4bf" stroke-width="1.8" />
+                    <g id="cf-spokes-rear"></g>
+                    <circle r="11" fill="#1e293b" stroke="#7bf5e9" stroke-width="2.2" />
+                    <circle r="4.5" fill="#f97316" />
+                  </g>
+                </svg>
+              </div>
+
+              <!-- POD 3: Front Wheel (Identical class .wheel-pod -> Live ⌘C/⌘V Cloned by Cursor!) -->
+              <div id="pod-wheel-front" class="wheel-pod tag-bottom" data-cs="media" data-cs-dir="l" data-cs-copy="true" data-cs-label="03-wheel-front-clone"
+                   style="left:55%; top:50%; width:17.5%; height:32.3077%;">
+                <span class="pod-outline-tag" data-cs="skip">03 FRONT WHEEL · ⌘C/⌘V CLONE</span>
+                <svg id="svg-pod-wheel-front" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 168" data-cs="skip">
+                  <g transform="translate(84 84)">
+                    <circle r="66" fill="none" stroke="#111827" stroke-width="12" />
+                    <circle r="66" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="10 8" />
+                    <circle r="58.5" fill="none" stroke="#e2e8f0" stroke-width="3.2" />
+                    <circle r="55" fill="none" stroke="#2dd4bf" stroke-width="1.8" />
+                    <g id="cf-spokes-front"></g>
+                    <circle r="11" fill="#1e293b" stroke="#7bf5e9" stroke-width="2.2" />
+                    <circle r="4.5" fill="#f97316" />
+                  </g>
+                </svg>
+              </div>
+
+              <!-- POD 4: Diamond Frame, Drivetrain, Far IK Leg & Brass Bell -->
+              <div id="pod-frame" class="craft-pod craft-pod-interactive tag-center-bottom" data-cs="media" data-cs-dir="l" data-cs-label="04-frame-ik-drivetrain"
+                   style="left:22.9167%; top:32.3077%; width:49.1667%; height:46.5385%;">
+                <span class="pod-outline-tag" data-cs="skip">04 STEEL FRAME + 2-BONE IK</span>
+                <svg id="svg-pod-frame" xmlns="http://www.w3.org/2000/svg" viewBox="220 168 472 242" data-cs="skip">
+                  <defs>
+                    <linearGradient id="cf-frame-grad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#2dd4bf" />
+                      <stop offset="55%" stop-color="#0d9488" />
+                      <stop offset="100%" stop-color="#0f766e" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Wheel Fenders -->
+                  <path d="M232 332 A72 72 0 0 1 366 320" fill="none" stroke="#0f766e" stroke-width="6.5" stroke-linecap="round" />
+                  <path d="M544 320 A72 72 0 0 1 678 332" fill="none" stroke="#0f766e" stroke-width="6.5" stroke-linecap="round" />
+
+                  <!-- Far Pelican Leg (Behind Frame/Crank, 2-Bone IK) -->
+                  <g id="cf-leg-far" stroke-linecap="round" stroke-linejoin="round">
+                    <line id="cf-f-thigh" x1="382" y1="216" x2="416" y2="288" stroke="#c2410c" stroke-width="12.5" />
+                    <line id="cf-f-shin" x1="416" y1="288" x2="426" y2="376" stroke="#ea580c" stroke-width="10.5" />
+                    <ellipse id="cf-f-foot" cx="430" cy="376" rx="14" ry="5.5" fill="#9a3412" />
+                  </g>
+
+                  <!-- Chain & Rear Cog -->
+                  <line x1="300" y1="333" x2="426" y2="328" stroke="#94a3b8" stroke-width="3" stroke-dasharray="5 3" />
+                  <line x1="300" y1="355" x2="426" y2="372" stroke="#64748b" stroke-width="3" stroke-dasharray="5 3" />
+                  <circle cx="300" cy="344" r="12" fill="#0f172a" stroke="#94a3b8" stroke-width="2.6" />
+
+                  <!-- Teal Vintage Cruiser Frame -->
+                  <g stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="300" y1="344" x2="384" y2="240" stroke="url(#cf-frame-grad)" stroke-width="6.5" />
+                    <line x1="300" y1="344" x2="426" y2="350" stroke="url(#cf-frame-grad)" stroke-width="6.5" />
+                    <line x1="384" y1="240" x2="426" y2="350" stroke="url(#cf-frame-grad)" stroke-width="8" />
+                    <line x1="384" y1="240" x2="538" y2="212" stroke="url(#cf-frame-grad)" stroke-width="8" />
+                    <line x1="426" y1="350" x2="546" y2="232" stroke="url(#cf-frame-grad)" stroke-width="8.5" />
+                    <line x1="536" y1="205" x2="554" y2="254" stroke="#5eead4" stroke-width="9" />
+                    <line x1="554" y1="254" x2="612" y2="344" stroke="url(#cf-frame-grad)" stroke-width="7" />
+                    <line x1="386" y1="238" x2="536" y2="210" stroke="#ccfbf1" stroke-width="1.6" opacity="0.7" />
+                  </g>
+
+                  <!-- Axle Nuts -->
+                  <circle cx="300" cy="344" r="5" fill="#e2e8f0" />
+                  <circle cx="612" cy="344" r="5" fill="#e2e8f0" />
+
+                  <!-- Saddle & Handlebar Stem -->
+                  <line x1="384" y1="240" x2="380" y2="222" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round" />
+                  <path d="M356 222 Q380 214 405 222 Q394 230 364 228 Z" fill="#92400e" stroke="#fbbf24" stroke-width="1.1" />
+                  <path d="M538 206 L530 186 Q526 180 510 188" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round" />
+                  <rect x="498" y="185" width="16" height="8" rx="4" fill="#f97316" />
+
+                  <!-- Clickable Brass Bell -->
+                  <g id="cf-bell" transform="translate(524 181)" style="cursor:pointer;">
+                    <title>点击敲响铜铃 (B)</title>
+                    <circle cx="0" cy="0" r="13" fill="#fbbf24" opacity="0.16" />
+                    <path d="M-7 2 A7 7 0 0 1 7 2 Z" fill="#fbbf24" stroke="#fffbeb" stroke-width="1.2" />
+                    <rect x="-8" y="2" width="16" height="3" rx="1.5" fill="#92400e" />
+                  </g>
+
+                  <!-- Crankset & Arms -->
+                  <circle cx="426" cy="350" r="22" fill="#0f172a" stroke="#5eead4" stroke-width="2.6" />
+                  <circle cx="426" cy="350" r="12" fill="none" stroke="#94a3b8" stroke-width="1.8" />
+                  <line id="cf-crank-far" x1="426" y1="350" x2="426" y2="376" stroke="#94a3b8" stroke-width="4.5" stroke-linecap="round" />
+                  <line id="cf-crank-near" x1="426" y1="350" x2="426" y2="324" stroke="#e2e8f0" stroke-width="5.2" stroke-linecap="round" />
+                </svg>
+              </div>
+
+              <!-- POD 5: Pelican Rider + Near IK Leg + Cap + Goggles (Auto Relocated onto Saddle!) -->
+              <div id="pod-rider" class="craft-pod craft-pod-interactive" data-cs="media" data-cs-dir="t" data-cs-relocate="true" data-cs-label="05-pelican-rider-move"
+                   style="left:25.5208%; top:8.0769%; width:42.1875%; height:67.3077%;">
+                <span class="pod-outline-tag" data-cs="skip">05 PELICAN RIDER · MOVE TO SADDLE</span>
+                <svg id="svg-pod-rider" xmlns="http://www.w3.org/2000/svg" viewBox="245 42 405 350" data-cs="skip">
+                  <defs>
+                    <linearGradient id="cf-pelican-body" x1="0.15" y1="0" x2="0.85" y2="1">
+                      <stop offset="0%" stop-color="#ffffff" />
+                      <stop offset="70%" stop-color="#f1f5f9" />
+                      <stop offset="100%" stop-color="#cbd5e1" />
+                    </linearGradient>
+                    <linearGradient id="cf-pouch-grad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#fbbf24" />
+                      <stop offset="55%" stop-color="#f97316" />
+                      <stop offset="100%" stop-color="#ea580c" />
+                    </linearGradient>
+                  </defs>
+                  <g id="cf-pelican-rig">
+                    <!-- Striped Sailor Scarf -->
+                    <g id="cf-scarf">
+                      <path id="cf-scarf-1" d="M428 134 Q380 140 330 128 T260 138 L264 152 Q330 142 384 154 L430 144 Z" fill="#14b8a6" />
+                      <path id="cf-scarf-2" d="M426 141 Q386 158 346 154 T290 170 L296 180 Q348 164 392 166 L430 149 Z" fill="#f97316" opacity="0.9" />
+                    </g>
+
+                    <!-- Tail & Torso -->
+                    <path d="M336 188 L302 176 L318 192 L298 200 L328 206 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" />
+                    <ellipse cx="390" cy="186" rx="52" ry="33" fill="url(#cf-pelican-body)" stroke="#cbd5e1" stroke-width="1.2" />
+
+                    <!-- Wing gripping Handlebar -->
+                    <path d="M388 174 Q432 168 474 179 L510 183 Q516 188 506 194 L456 200 Q406 208 368 194 Z" fill="#ffffff" stroke="#94a3b8" stroke-width="1.4" />
+
+                    <!-- Near Leg (2-Bone IK) -->
+                    <g id="cf-leg-near" stroke-linecap="round" stroke-linejoin="round">
+                      <line id="cf-n-thigh" x1="382" y1="216" x2="416" y2="274" stroke="#f97316" stroke-width="13.5" />
+                      <line id="cf-n-shin" x1="416" y1="274" x2="426" y2="324" stroke="#fb923c" stroke-width="11" />
+                      <ellipse id="cf-n-foot" cx="430" cy="324" rx="14.5" ry="6" fill="#ea580c" stroke="#fed7aa" stroke-width="1" />
+                    </g>
+
+                    <!-- Neck & Head -->
+                    <path d="M416 168 Q434 140 434 112 Q434 86 454 83 Q476 83 479 103 Q469 126 458 154 Q448 175 430 180 Z" fill="url(#cf-pelican-body)" stroke="#cbd5e1" stroke-width="1.1" />
+
+                    <!-- Backwards Cursor-Studio Cap -->
+                    <path d="M432 95 C430 74, 468 72, 474 90 Z" fill="#147d75" stroke="#7bf5e9" stroke-width="1.2" />
+                    <path d="M432 94 Q412 96 408 102 Q422 103 438 98 Z" fill="#0f766e" />
+                    <circle cx="453" cy="79" r="3" fill="#fbbf24" />
+
+                    <!-- Cyclist Goggles & Eye -->
+                    <g transform="translate(461 100)">
+                      <rect x="-10" y="-7" width="19" height="12" rx="6" fill="#0f172a" stroke="#7bf5e9" stroke-width="1.8" />
+                      <ellipse cx="0" cy="-1" rx="6.5" ry="3.8" fill="#38bdf8" />
+                      <circle cx="2" cy="-1" r="2.2" fill="#0f172a" />
+                      <circle cx="3" cy="-2" r="0.9" fill="#ffffff" />
+                    </g>
+
+                    <!-- Expressive Beak & Interactive Fish Pouch -->
+                    <g id="cf-beak-group" style="cursor:pointer;">
+                      <title>点击大喉囊弹出鲜鱼 (F)</title>
+                      <path id="cf-pouch" d="M474 107 Q522 150 578 117 L580 107 Z" fill="url(#cf-pouch-grad)" />
+                      <path d="M474 98 L582 107 Q590 109 585 115 L576 111 L474 107 Z" fill="#fb923c" stroke="#fed7aa" stroke-width="1.1" />
+                      <path d="M582 107 Q590 108 586 117" fill="none" stroke="#ef4444" stroke-width="2.4" stroke-linecap="round" />
+                    </g>
+                  </g>
+                  <!-- FX particles inside rider SVG coordinate frame -->
+                  <g id="cf-fx-layer"></g>
+                </svg>
+              </div>
+
+              <!-- POD 6: Handlebar Basket + Rolled Blueprint & Fish (Auto Relocated onto Stem!) -->
+              <div id="pod-basket" class="craft-pod" data-cs="media" data-cs-dir="r" data-cs-relocate="true" data-cs-label="06-basket-move"
+                   style="left:56.0417%; top:29.2308%; width:9.5833%; height:18.4615%;">
+                <span class="pod-outline-tag" data-cs="skip">06 BASKET · MOVE</span>
+                <svg id="svg-pod-basket" xmlns="http://www.w3.org/2000/svg" viewBox="538 152 92 96" data-cs="skip">
+                  <!-- Rolled blueprint & fish peeking out -->
+                  <g transform="translate(566 174) rotate(-18)">
+                    <rect x="-7" y="-14" width="14" height="32" rx="3" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.2" />
+                    <line x1="-3" y1="-10" x2="-3" y2="12" stroke="#0f172a" stroke-width="1.2" stroke-dasharray="3 2" />
+                  </g>
+                  <g transform="translate(595 178) rotate(14)">
+                    <path d="M-9 0 Q0 -8 10 0 Q0 8 -9 0 M9 0 L15 -5 L15 5 Z" fill="#e2e8f0" stroke="#64748b" stroke-width="1.1" />
+                    <circle cx="-4" cy="-1" r="1.2" fill="#0f172a" />
+                  </g>
+                  <!-- Basket -->
+                  <path d="M552 184 L610 184 L602 232 L560 232 Z" fill="#d99b52" stroke="#925b21" stroke-width="2.2" stroke-linejoin="round" />
+                  <path d="M565 184 L569 232 M581 184 L581 232 M597 184 L593 232 M554 200 L608 200 M557 216 L605 216" stroke="#9a6427" stroke-width="1.4" opacity="0.72" />
+                </svg>
+              </div>
+
+              <!-- POD 7: Rear Cursor-Arrow Pennant Flag (Pop + Relocate!) -->
+              <div id="pod-flag" class="craft-pod" data-cs="pop" data-cs-relocate="true" data-cs-label="07-cursor-flag"
+                   style="left:15.8333%; top:30.7692%; width:16.25%; height:36.5385%;">
+                <span class="pod-outline-tag" data-cs="skip">07 SWARM FLAG · POP</span>
+                <svg id="svg-pod-flag" xmlns="http://www.w3.org/2000/svg" viewBox="152 160 156 190" data-cs="skip">
+                  <path d="M300 344 Q266 260 238 178" fill="none" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round" />
+                  <g id="cf-flag-cloth">
+                    <path d="M238 178 L166 190 L182 206 L168 220 L242 206 Z" fill="#e05a47" stroke="#fed7aa" stroke-width="1.2" />
+                    <polygon points="198,187 206,204 209,197 216,194" fill="#ffffff" />
+                  </g>
+                  <circle cx="238" cy="176" r="4" fill="#7bf5e9" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Interactive 6-Layer Strip showing exactly how CursorSwarm assembles each layer -->
+            <div class="layer-strip" id="layer-strip">
+              <div class="layer-card" data-pod="#pod-sky" data-cs="pop" data-cs-copy="false" data-cs-label="layer-01-backdrop">
+                <div class="layer-card-top"><span>LAYER 01</span><span class="layer-card-op">media · sweep</span></div>
+                <strong>海岸赛道背景板</strong>
+                <span class="layer-sub">激光扫线从左向右展开天空、帆船、辅助线与滚动栈道。</span>
+              </div>
+              <div class="layer-card" data-pod="#pod-wheel-rear" data-cs="pop" data-cs-copy="false" data-cs-label="layer-02-rear-wheel">
+                <div class="layer-card-top"><span>LAYER 02</span><span class="layer-card-op">media · source</span></div>
+                <strong>后轮 16 辐条源件</strong>
+                <span class="layer-sub">先由光标从上到下生成，随后作为前轮的 ⌘C 复制模板。</span>
+              </div>
+              <div class="layer-card" data-pod="#pod-wheel-front" data-cs="pop" data-cs-copy="true" data-cs-label="layer-03-front-clone">
+                <div class="layer-card-top"><span>LAYER 03</span><span class="layer-card-op">⌘C → ⌘V 克隆</span></div>
+                <strong>前轮实况克隆粘贴</strong>
+                <span class="layer-sub">光标选中后轮触发 ⌘C，拖拽半透明轮影跨画布粘贴至前叉。</span>
+              </div>
+              <div class="layer-card" data-pod="#pod-frame" data-cs="pop" data-cs-copy="false" data-cs-label="layer-04-steel-frame">
+                <div class="layer-card-top"><span>LAYER 04</span><span class="layer-card-op">frame + 2-Bone IK</span></div>
+                <strong>钢架 · 链条与铜铃</strong>
+                <span class="layer-sub">绿松石车架、双曲柄链条与可点击发声铜车铃（B 键）。</span>
+              </div>
+              <div class="layer-card" data-pod="#pod-rider" data-cs="pop" data-cs-relocate="true" data-cs-label="layer-05-pelican-move">
+                <div class="layer-card-top"><span>LAYER 05</span><span class="layer-card-op">move · 错位落座</span></div>
+                <strong>鹈鹕骑手旋转归位</strong>
+                <span class="layer-sub">骑手以随机倾角先出现在半空，再由光标拖拽旋转贴合车座。</span>
+              </div>
+              <div class="layer-card" data-pod="#pod-basket,#pod-flag" data-cs="pop" data-cs-relocate="true" data-cs-label="layer-06-basket-flag">
+                <div class="layer-card-top"><span>LAYER 06</span><span class="layer-card-op">move + pop 彩蛋</span></div>
+                <strong>前篮蓝图 &amp; 指针小旗</strong>
+                <span class="layer-sub">自动卡入车把与后轴天线，点击大喉囊或按 F 弹出小鱼。</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar: Cursor Swarm Live Choreography Controls & Agent Feed -->
+          <aside class="craft-sidebar">
+            <span class="badge badge-coral" data-cs="pop">CURSOR SWARM CHOREOGRAPHY</span>
+            <h3>五光标协作编排与骑行控制台</h3>
+            <p data-cs="words">左侧作品由 7 个独立 DOM Pod 叠加而成：支持实时调整并发光标数、速度、配色与 <code>⌘C/⌘V</code> / <code>move</code> / X-Ray 透视边界。</p>
+
+            <div class="agent-roster" data-cs-ignore>
+              <span class="agent-pill" data-agent="PRO1V"><i style="background:#147d75"></i>PRO1V</span>
+              <span class="agent-pill" data-agent="PRO2H"><i style="background:#e05a47"></i>PRO2H</span>
+              <span class="agent-pill" data-agent="PRO3J"><i style="background:#e69d24"></i>PRO3J</span>
+              <span class="agent-pill" data-agent="PRO4M"><i style="background:#2c6bed"></i>PRO4M</span>
+              <span class="agent-pill" data-agent="PRO5C"><i style="background:#8e44ad"></i>PRO5C</span>
+            </div>
+
+            <div class="cursor-feed" id="cursor-feed" data-cs-ignore aria-live="polite">
+              <div class="feed-line"><span class="feed-agent">SYSTEM</span><span class="feed-op">READY</span><span>等待光标调度…</span></div>
+            </div>
+
+            <div class="sliders-box" data-cs-ignore>
+              <div class="ctrl-grid-mini">
+                <label class="slider-row">
+                  <span class="slider-row-head"><span>光标数</span><span id="val-cursors">5</span></span>
+                  <input id="rng-cursors" type="range" min="1" max="8" step="1" value="5" />
+                </label>
+                <label class="slider-row">
+                  <span class="slider-row-head"><span>搭建速度</span><span id="val-speed">1.5×</span></span>
+                  <input id="rng-speed" type="range" min="0.6" max="3.4" step="0.2" value="1.5" />
+                </label>
+              </div>
+              <div class="ctrl-grid-mini">
+                <select id="sel-start" class="ctrl-select-mini" aria-label="光标入场方式">
+                  <option value="corners">四角飞入 (corners)</option>
+                  <option value="center">中心散开 (center)</option>
+                  <option value="outside">屏外切入 (outside)</option>
+                  <option value="top">顶部降落 (top)</option>
+                  <option value="random">随机坐标 (random)</option>
+                </select>
+                <select id="sel-scene" class="ctrl-select-mini" aria-label="画布风格">
+                  <option value="coastal">海湾海岸 (Coastal)</option>
+                  <option value="sunset">日落海港 (Sunset)</option>
+                  <option value="blueprint">工程蓝图 (Blueprint)</option>
+                  <option value="studio">极客暗稿 (Studio)</option>
+                </select>
+              </div>
+              <label class="slider-row">
+                <span class="slider-row-head"><span>踩踏速率</span><span id="val-cadence">1.15×</span></span>
+                <input id="rng-cadence" type="range" min="0" max="2.4" step="0.05" value="1.15" />
+              </label>
+            </div>
+
+            <div class="toggle-row" data-cs-ignore>
+              <label class="chip-toggle"><input id="chk-copy" type="checkbox" checked /> ⌘C/⌘V 轮组克隆</label>
+              <label class="chip-toggle"><input id="chk-relocate" type="checkbox" checked /> 错位移动归位</label>
+              <label class="chip-toggle"><input id="chk-xray" type="checkbox" /> 📐 框选线框</label>
+              <label class="chip-toggle"><input id="chk-explode" type="checkbox" /> 📑 分层错开</label>
+            </div>
+
+            <div class="toggle-row" data-cs-ignore>
+              <button type="button" class="btn-ui btn-ui-coral" id="btn-replay-craft">↻ 重播 7 层拼装</button>
+              <button type="button" class="btn-ui" id="btn-cf-bell">🔔 铜铃 (B)</button>
+              <button type="button" class="btn-ui" id="btn-cf-fish">🐟 弹鱼 (F)</button>
+              <button type="button" class="btn-ui btn-ui-primary" id="btn-cf-export">📥 导出整合 SVG</button>
+            </div>
+
+            <div class="telemetry-grid">
+              <div class="tele-item" data-cs="pop" data-cs-copy="false" data-cs-label="telemetry-crank">
+                <small>CRANK θ / IK</small>
+                <strong id="tele-crank">0° · OK</strong>
+              </div>
+              <div class="tele-item" data-cs="pop" data-cs-copy="false" data-cs-label="telemetry-swarm">
+                <small>SWARM STATUS</small>
+                <strong id="tele-swarm">BUILDING</strong>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="./assets/vendor/cursor-swarm/cursor-swarm.min.js"></script>
+  <script src="./assets/js/swarm-ui.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      /* ===========================================================
+       * 1. CursorSwarm Multi-Cursor Live Choreography Director
+       * =========================================================== */
+      var sound = window.SwarmGalleryUI.createSoundEngine();
+      var swarmInstance = null;
+      var currentPalette = "team";
+      var noteEl = document.getElementById("swarm-live-note");
+      var feedEl = document.getElementById("cursor-feed");
+      var teleSwarm = document.getElementById("tele-swarm");
+      var craftCanvas = document.getElementById("craft-canvas");
+
+      var chkCopy = document.getElementById("chk-copy");
+      var chkRelocate = document.getElementById("chk-relocate");
+      var chkXray = document.getElementById("chk-xray");
+      var chkExplode = document.getElementById("chk-explode");
+      var rngCursors = document.getElementById("rng-cursors");
+      var valCursors = document.getElementById("val-cursors");
+      var rngSpeed = document.getElementById("rng-speed");
+      var valSpeed = document.getElementById("val-speed");
+      var selStart = document.getElementById("sel-start");
+      var selPalette = document.getElementById("sel-swarm-palette");
+
+      if (window.CursorSwarm && !window.CursorSwarm.palettes.team) {
+        window.CursorSwarm.palettes.team = window.SwarmGalleryUI.PALETTE_PRESETS.team;
+      }
+
+      var copyTargets = ["#card-pro6", "#pod-wheel-front", ".layer-card[data-pod='#pod-wheel-front']"];
+      var relocateTargets = [
+        "#card-pro1 [data-cs-relocate]",
+        "#card-pro6 [data-cs-relocate]",
+        "#pod-rider",
+        "#pod-basket",
+        "#pod-flag",
+        ".layer-card[data-pod='#pod-rider']",
+        ".layer-card[data-pod='#pod-basket,#pod-flag']"
+      ];
+
+      function syncDatasetFlags() {
+        var cVal = chkCopy.checked ? "true" : "false";
+        var rVal = chkRelocate.checked ? "true" : "false";
+        copyTargets.forEach(function (sel) {
+          document.querySelectorAll(sel).forEach(function (el) { el.dataset.csCopy = cVal; });
+        });
+        relocateTargets.forEach(function (sel) {
+          document.querySelectorAll(sel).forEach(function (el) { el.dataset.csRelocate = rVal; });
+        });
+      }
+
+      function appendFeed(agent, op, detail) {
+        if (!feedEl) return;
+        var row = document.createElement("div");
+        row.className = "feed-line";
+        row.innerHTML =
+          '<span class="feed-agent">' + escapeHtml(agent || "SWARM") + "</span>" +
+          '<span class="feed-op">' + escapeHtml(op) + "</span>" +
+          "<span>" + escapeHtml(detail) + "</span>";
+        feedEl.appendChild(row);
+        while (feedEl.children.length > 26) {
+          feedEl.removeChild(feedEl.firstChild);
+        }
+        feedEl.scrollTop = feedEl.scrollHeight;
+
+        if (agent) {
+          document.querySelectorAll(".agent-pill").forEach(function (pill) {
+            pill.classList.toggle("is-working", pill.getAttribute("data-agent") === agent);
+          });
+        }
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function runSwarmDemo(targetSelector, label) {
+        if (swarmInstance) {
+          try { swarmInstance.destroy(); } catch (_) {}
+        }
+        syncDatasetFlags();
+
+        var targetEl = document.querySelector(targetSelector);
+        if (targetEl && targetSelector !== "#swarm-pelican-stage") {
+          targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        var count = parseInt(rngCursors.value, 10) || 5;
+        var speed = parseFloat(rngSpeed.value) || 1.5;
+        var pal = window.SwarmGalleryUI.PALETTE_PRESETS[currentPalette] || currentPalette;
+        var team = window.SwarmGalleryUI.TEAM_AGENTS;
+        var roles = ["layout", "type", "media"];
+        var agents = [];
+        for (var i = 0; i < count; i++) {
+          agents.push(
+            team[i]
+              ? { name: team[i].name, role: team[i].role }
+              : { name: "CURSOR·0" + (i + 1), role: roles[i % roles.length] }
+          );
+        }
+
+        if (feedEl) feedEl.innerHTML = "";
+        appendFeed("DIRECTOR", "START", label + " (" + count + " cursors @ " + speed + "×)");
+        if (teleSwarm) teleSwarm.textContent = "ACTIVE · 0%";
+
+        swarmInstance = new window.CursorSwarm({
+          root: targetSelector,
+          cursors: count,
+          agents: agents,
+          names: agents.map(function (a) { return a.name; }),
+          palette: pal,
+          startPosition: selStart.value,
+          deconstruct: false,
+          exitAfterBuild: "edge",
+          idle: "dim",
+          speed: speed,
+          trigger: 0.99,
+          copyPaste: chkCopy.checked ? 0.85 : false,
+          relocation: chkRelocate.checked ? 0.55 : false,
+          hud: true,
+          hudPosition: "bottom-left",
+          respectReducedMotion: true,
+          onBuild: function (el, type, agentName) {
+            sound.tick(type);
+            var tag = el.dataset.csLabel || (el.id ? "#" + el.id : el.tagName.toLowerCase());
+            var opLabel = el.dataset.csCopy === "true" && (type === "frame" || type === "media" || type === "pop")
+              ? "⌘C/⌘V"
+              : (el.dataset.csRelocate === "true" ? "move/" + type : type);
+            appendFeed(agentName || "AGENT", opLabel, tag);
+            var pct = swarmInstance ? Math.round(swarmInstance.progress * 100) : 0;
+            if (noteEl) {
+              noteEl.textContent = label + " · 多光标组装进度 " + pct + "%（" + (agentName || "AGENT") + " → " + tag + "）";
+            }
+            if (teleSwarm) teleSwarm.textContent = "BUILD " + pct + "%";
+          },
+          onDone: function () {
+            document.querySelectorAll(".agent-pill").forEach(function (pill) {
+              pill.classList.remove("is-working");
+            });
+            appendFeed("SWARM", "DONE ✓", "所有组件完成搭建");
+            if (teleSwarm) teleSwarm.textContent = "DONE · 100%";
+            if (noteEl) {
+              noteEl.textContent = label + " · 全部光标协同搭建完成 ✓（可点击单卡、7 层拆拼重播或切换 X-Ray 线框）";
+            }
+          }
+        }).init();
+
+        setTimeout(function () {
+          if (swarmInstance && swarmInstance.state === "running") {
+            if (typeof swarmInstance._sweep === "function") swarmInstance._sweep();
+            else window.dispatchEvent(new Event("scroll"));
+          }
+        }, 420);
+      }
+
+      document.getElementById("btn-swarm-all").addEventListener("click", function () {
+        runSwarmDemo("#swarm-pelican-stage", "全场 Pro1 × Pro6 × 7 层光标拼装鹈鹕");
+      });
+      document.getElementById("btn-swarm-team").addEventListener("click", function () {
+        runSwarmDemo("#team-pelicans-zone", "队友双作 Pro1 × Pro6 光标演示");
+      });
+      document.getElementById("btn-swarm-craft").addEventListener("click", function () {
+        runSwarmDemo("#cursor-pelican-zone", "现场原创 7 层光标拆拼鹈鹕");
+      });
+      document.getElementById("btn-replay-craft").addEventListener("click", function () {
+        runSwarmDemo("#cursor-pelican-zone", "7 层光标拆拼重播");
+      });
+      document.getElementById("btn-solo-pro1").addEventListener("click", function () {
+        runSwarmDemo("#card-pro1", "Pro1 海岸鹈鹕单卡重构");
+      });
+      document.getElementById("btn-solo-pro6").addEventListener("click", function () {
+        runSwarmDemo("#card-pro6", "Pro6 暮海港湾单卡重构");
+      });
+
+      document.getElementById("btn-swarm-reveal").addEventListener("click", function () {
+        if (swarmInstance) {
+          swarmInstance.stop({ reveal: true });
+          document.querySelectorAll(".agent-pill").forEach(function (p) { p.classList.remove("is-working"); });
+          appendFeed("DIRECTOR", "REVEAL", "已立即全显所有元素");
+          if (teleSwarm) teleSwarm.textContent = "REVEALED ✓";
+          if (noteEl) noteEl.textContent = "已立即显示全部作品（点击任意模式即可重播光标效果）";
+        }
+      });
+
+      selPalette.addEventListener("change", function () {
+        currentPalette = selPalette.value;
+        var preset = window.SwarmGalleryUI.PALETTE_PRESETS[currentPalette] || currentPalette;
+        if (swarmInstance && swarmInstance.state !== "destroyed") {
+          swarmInstance.setPalette(preset);
+        }
+      });
+
+      rngCursors.addEventListener("input", function () {
+        valCursors.textContent = rngCursors.value;
+      });
+      rngCursors.addEventListener("change", function () {
+        runSwarmDemo("#cursor-pelican-zone", rngCursors.value + " 光标拆拼演示");
+      });
+
+      rngSpeed.addEventListener("input", function () {
+        valSpeed.textContent = parseFloat(rngSpeed.value).toFixed(1) + "×";
+        if (swarmInstance && swarmInstance.state === "running") {
+          swarmInstance.setSpeed(parseFloat(rngSpeed.value));
+        }
+      });
+
+      selStart.addEventListener("change", function () {
+        runSwarmDemo("#cursor-pelican-zone", "起点 " + selStart.value + " 重播");
+      });
+
+      chkCopy.addEventListener("change", function () {
+        runSwarmDemo("#swarm-pelican-stage", "刷新 ⌘C/⌘V 开关配置");
+      });
+      chkRelocate.addEventListener("change", function () {
+        runSwarmDemo("#cursor-pelican-zone", "刷新 Move 归位开关配置");
+      });
+
+      chkXray.addEventListener("change", function () {
+        craftCanvas.classList.toggle("is-xray", chkXray.checked);
+      });
+      chkExplode.addEventListener("change", function () {
+        craftCanvas.classList.toggle("is-exploded", chkExplode.checked);
+      });
+
+      var soundBtn = document.getElementById("btn-swarm-sound");
+      soundBtn.addEventListener("click", function () {
+        var on = sound.toggle();
+        soundBtn.textContent = on ? "🔊 音效" : "🔇 音效";
+      });
+
+      // Layer Strip Interactive Hover & Click Highlight
+      document.querySelectorAll(".layer-card").forEach(function (card) {
+        var podSelectors = (card.getAttribute("data-pod") || "").split(",");
+        function setHighlight(active) {
+          card.classList.toggle("is-active", active);
+          podSelectors.forEach(function (sel) {
+            var el = document.querySelector(sel.trim());
+            if (el) el.classList.toggle("is-highlighted", active);
+          });
+        }
+        card.addEventListener("mouseenter", function () { setHighlight(true); });
+        card.addEventListener("mouseleave", function () { setHighlight(false); });
+        card.addEventListener("click", function () {
+          chkXray.checked = true;
+          craftCanvas.classList.add("is-xray");
+          document.querySelectorAll(".craft-pod, .wheel-pod").forEach(function (p) {
+            p.classList.remove("is-highlighted");
+          });
+          document.querySelectorAll(".layer-card").forEach(function (c) {
+            c.classList.remove("is-active");
+          });
+          setHighlight(true);
+          appendFeed("INSPECT", "HIGHLIGHT", card.querySelector("strong").textContent);
+        });
+      });
+
+      /* ===========================================================
+       * 2. Original Layered Pelican Bicycle Motion + 2-Bone IK + FX
+       * =========================================================== */
+      var NS = "http://www.w3.org/2000/svg";
+
+      function buildWheelSpokes(groupId, count) {
+        var g = document.getElementById(groupId);
+        if (!g) return;
+        for (var i = 0; i < count; i++) {
+          var a1 = (i / count) * Math.PI * 2;
+          var a2 = a1 + (i % 2 === 0 ? 0.36 : -0.36);
+          var line = document.createElementNS(NS, "line");
+          line.setAttribute("x1", (Math.cos(a1) * 11).toFixed(1));
+          line.setAttribute("y1", (Math.sin(a1) * 11).toFixed(1));
+          line.setAttribute("x2", (Math.cos(a2) * 56.5).toFixed(1));
+          line.setAttribute("y2", (Math.sin(a2) * 56.5).toFixed(1));
+          line.setAttribute("stroke", i % 4 === 0 ? "#7bf5e9" : "#cbd5e1");
+          line.setAttribute("stroke-width", i % 4 === 0 ? "1.35" : "0.95");
+          line.setAttribute("opacity", "0.85");
+          g.appendChild(line);
+        }
+      }
+      buildWheelSpokes("cf-spokes-rear", 16);
+      buildWheelSpokes("cf-spokes-front", 16);
+
+      // Railing posts & scrolling boardwalk dashes
+      var railingGroup = document.getElementById("cf-railing-group");
+      var railTop = document.createElementNS(NS, "rect");
+      railTop.setAttribute("x", "0");
+      railTop.setAttribute("y", "316");
+      railTop.setAttribute("width", "960");
+      railTop.setAttribute("height", "5");
+      railTop.setAttribute("fill", "#1e3a4c");
+      railingGroup.appendChild(railTop);
+
+      var railPosts = [];
+      for (var ri = 0; ri < 9; ri++) {
+        var post = document.createElementNS(NS, "rect");
+        post.setAttribute("x", "-3");
+        post.setAttribute("y", "316");
+        post.setAttribute("width", "6");
+        post.setAttribute("height", "24");
+        post.setAttribute("fill", "#2a4f66");
+        railingGroup.appendChild(post);
+        railPosts.push(post);
+      }
+
+      var roadDashesGroup = document.getElementById("cf-road-dashes");
+      var roadDashes = [];
+      for (var di = 0; di < 10; di++) {
+        var dash = document.createElementNS(NS, "rect");
+        dash.setAttribute("y", "448");
+        dash.setAttribute("width", "54");
+        dash.setAttribute("height", "4");
+        dash.setAttribute("rx", "2");
+        dash.setAttribute("fill", "#7bf5e9");
+        dash.setAttribute("opacity", "0.35");
+        roadDashesGroup.appendChild(dash);
+        roadDashes.push(dash);
+      }
+
+      // Scene Palettes (Coastal, Sunset, Blueprint, Studio)
+      var SCENES = {
+        coastal: {
+          sky: ["#0f2940", "#194566", "#387796"],
+          sea: ["#0c4a6e", "#0e7490"],
+          road: ["#334155", "#0f172a"],
+          gridOp: 0.18
+        },
+        sunset: {
+          sky: ["#2c1654", "#9a3412", "#f59e0b"],
+          sea: ["#1e3a5f", "#b45309"],
+          road: ["#3b2f2f", "#1c1917"],
+          gridOp: 0.12
+        },
+        blueprint: {
+          sky: ["#051b33", "#093259", "#0c4a7a"],
+          sea: ["#062442", "#093c66"],
+          road: ["#051e38", "#031224"],
+          gridOp: 0.45
+        },
+        studio: {
+          sky: ["#0b131b", "#13202e", "#1d3144"],
+          sea: ["#0e1f2d", "#163042"],
+          road: ["#1e293b", "#090f17"],
+          gridOp: 0.28
+        }
+      };
+
+      document.getElementById("sel-scene").addEventListener("change", function (e) {
+        var s = SCENES[e.target.value] || SCENES.coastal;
+        document.getElementById("cf-sky-0").setAttribute("stop-color", s.sky[0]);
+        document.getElementById("cf-sky-1").setAttribute("stop-color", s.sky[1]);
+        document.getElementById("cf-sky-2").setAttribute("stop-color", s.sky[2]);
+        document.getElementById("cf-sea-0").setAttribute("stop-color", s.sea[0]);
+        document.getElementById("cf-sea-1").setAttribute("stop-color", s.sea[1]);
+        document.getElementById("cf-road-0").setAttribute("stop-color", s.road[0]);
+        document.getElementById("cf-road-1").setAttribute("stop-color", s.road[1]);
+        document.getElementById("cf-draft-grid").setAttribute("opacity", s.gridOp);
+      });
+
+      // 2-Bone Inverse Kinematics Solver
+      function solveIK(hx, hy, px, py, L1, L2) {
+        var dx = px - hx;
+        var dy = py - hy;
+        var dist = Math.hypot(dx, dy);
+        var maxR = L1 + L2 - 1;
+        if (dist > maxR) dist = maxR;
+        if (dist < Math.abs(L1 - L2) + 1) dist = Math.abs(L1 - L2) + 1;
+        var a = (L1 * L1 - L2 * L2 + dist * dist) / (2 * dist);
+        var h = Math.sqrt(Math.max(0, L1 * L1 - a * a));
+        var ux = dx / dist;
+        var uy = dy / dist;
+        return {
+          x: hx + a * ux + h * uy,
+          y: hy + a * uy - h * ux
+        };
+      }
+
+      // Bell Chime & Fish Pop Interactive Easter Eggs
+      var fxLayer = document.getElementById("cf-fx-layer");
+      var frameSvg = document.getElementById("svg-pod-frame");
+
+      function ringBell() {
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          try {
+            var ac = new AudioCtx();
+            [1174.66, 1760].forEach(function (freq, idx) {
+              var o = ac.createOscillator();
+              var g = ac.createGain();
+              o.type = "sine";
+              o.frequency.setValueAtTime(freq, ac.currentTime + idx * 0.045);
+              g.gain.setValueAtTime(0.08, ac.currentTime + idx * 0.045);
+              g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.5);
+              o.connect(g);
+              g.connect(ac.destination);
+              o.start(ac.currentTime + idx * 0.045);
+              o.stop(ac.currentTime + 0.52);
+            });
+          } catch (_) {}
+        }
+        for (var i = 0; i < 2; i++) {
+          var ring = document.createElementNS(NS, "circle");
+          ring.setAttribute("cx", "524");
+          ring.setAttribute("cy", "181");
+          ring.setAttribute("r", 8 + i * 7);
+          ring.setAttribute("fill", "none");
+          ring.setAttribute("stroke", "#fbbf24");
+          ring.setAttribute("stroke-width", "2.2");
+          frameSvg.appendChild(ring);
+          (function (el, sr) {
+            var t0 = performance.now();
+            function anim(now) {
+              var p = (now - t0) / 520;
+              if (p >= 1) { el.remove(); return; }
+              el.setAttribute("r", (sr + p * 32).toFixed(1));
+              el.setAttribute("opacity", (1 - p).toFixed(2));
+              requestAnimationFrame(anim);
+            }
+            requestAnimationFrame(anim);
+          })(ring, 8 + i * 7);
+        }
+        appendFeed("BELL (B)", "CHIME", "叮！清脆铜铃声");
+      }
+
+      function popFish() {
+        var fish = document.createElementNS(NS, "g");
+        var body = document.createElementNS(NS, "path");
+        body.setAttribute("d", "M-12 0 Q0 -9 12 0 Q0 9 -12 0 M-12 0 L-20 -6 L-20 6 Z");
+        body.setAttribute("fill", "#fbbf24");
+        body.setAttribute("stroke", "#ffffff");
+        body.setAttribute("stroke-width", "1.2");
+        fish.appendChild(body);
+        fxLayer.appendChild(fish);
+
+        var t0 = performance.now();
+        function anim(now) {
+          var p = (now - t0) / 820;
+          if (p >= 1) { fish.remove(); return; }
+          var fx = 564 + p * 42;
+          var fy = 108 - Math.sin(p * Math.PI) * 56;
+          var rot = -35 + p * 85;
+          fish.setAttribute("transform", "translate(" + fx.toFixed(1) + " " + fy.toFixed(1) + ") rotate(" + rot.toFixed(1) + ")");
+          fish.setAttribute("opacity", p > 0.7 ? ((1 - p) / 0.3).toFixed(2) : "1");
+          requestAnimationFrame(anim);
+        }
+        requestAnimationFrame(anim);
+        appendFeed("POUCH (F)", "FISH POP", "喉囊弹出一条海湾鲜鱼！");
+      }
+
+      document.getElementById("cf-bell").addEventListener("click", ringBell);
+      document.getElementById("btn-cf-bell").addEventListener("click", ringBell);
+      document.getElementById("cf-beak-group").addEventListener("click", popFish);
+      document.getElementById("btn-cf-fish").addEventListener("click", popFish);
+
+      document.addEventListener("keydown", function (e) {
+        if (e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+        if (e.key === "b" || e.key === "B") ringBell();
+        if (e.key === "f" || e.key === "F") popFish();
+      });
+
+      // Cadence & Merged Multi-Layer SVG Exporter
+      var cadence = 1.15;
+      var rngCadence = document.getElementById("rng-cadence");
+      var valCadence = document.getElementById("val-cadence");
+      rngCadence.addEventListener("input", function () {
+        cadence = parseFloat(rngCadence.value);
+        valCadence.textContent = cadence.toFixed(2) + "×";
+      });
+
+      document.getElementById("btn-cf-export").addEventListener("click", function () {
+        var merged = document.createElementNS(NS, "svg");
+        merged.setAttribute("xmlns", NS);
+        merged.setAttribute("viewBox", "0 0 960 520");
+        merged.setAttribute("width", "960");
+        merged.setAttribute("height", "520");
+
+        function appendSvgLayer(id, tx, ty) {
+          var src = document.getElementById(id);
+          if (!src) return;
+          var g = document.createElementNS(NS, "g");
+          if (tx || ty) g.setAttribute("transform", "translate(" + tx + " " + ty + ")");
+          for (var i = 0; i < src.children.length; i++) {
+            g.appendChild(src.children[i].cloneNode(true));
+          }
+          merged.appendChild(g);
+        }
+
+        appendSvgLayer("svg-pod-sky", 0, 0);
+        appendSvgLayer("svg-pod-wheel-rear", 216, 260);
+        appendSvgLayer("svg-pod-wheel-front", 528, 260);
+        appendSvgLayer("svg-pod-frame", 0, 0);
+        appendSvgLayer("svg-pod-rider", 0, 0);
+        appendSvgLayer("svg-pod-basket", 0, 0);
+        appendSvgLayer("svg-pod-flag", 0, 0);
+
+        var ser = new XMLSerializer().serializeToString(merged);
+        var blob = new Blob([ser], { type: "image/svg+xml;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "cursor-crafted-pelican.svg";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        appendFeed("EXPORT", "SVG", "已合并 7 个图层为单文件 cursor-crafted-pelican.svg");
+      });
+
+      // 60FPS Pedaling & Zero-Slip Rolling Animation
+      var hipX = 382, hipY = 216, bbX = 426, bbY = 350, crankR = 26, L1 = 92, L2 = 88, wheelR = 66;
+      var crankRad = 0;
+      var scrollX = 0;
+      var lastTime = performance.now();
+
+      var spokesRear = document.getElementById("cf-spokes-rear");
+      var spokesFront = document.getElementById("cf-spokes-front");
+      var crankNear = document.getElementById("cf-crank-near");
+      var crankFar = document.getElementById("cf-crank-far");
+      var nThigh = document.getElementById("cf-n-thigh");
+      var nShin = document.getElementById("cf-n-shin");
+      var nFoot = document.getElementById("cf-n-foot");
+      var fThigh = document.getElementById("cf-f-thigh");
+      var fShin = document.getElementById("cf-f-shin");
+      var fFoot = document.getElementById("cf-f-foot");
+      var scarf1 = document.getElementById("cf-scarf-1");
+      var scarf2 = document.getElementById("cf-scarf-2");
+      var flagCloth = document.getElementById("cf-flag-cloth");
+      var pelicanRig = document.getElementById("cf-pelican-rig");
+      var teleCrank = document.getElementById("tele-crank");
+
+      function tick(now) {
+        var dt = Math.min(0.05, (now - lastTime) / 1000);
+        lastTime = now;
+        var t = now / 1000;
+
+        var omega = cadence * 3.1;
+        crankRad = (crankRad + omega * dt) % (Math.PI * 2);
+        scrollX = (scrollX + omega * 1.45 * wheelR * dt) % 120;
+
+        var wheelDeg = (crankRad * 1.45 * 180) / Math.PI;
+        spokesRear.setAttribute("transform", "rotate(" + wheelDeg.toFixed(1) + ")");
+        spokesFront.setAttribute("transform", "rotate(" + wheelDeg.toFixed(1) + ")");
+
+        // Zero-slip synchronized track & railing
+        for (var i = 0; i < railPosts.length; i++) {
+          var rx = ((i * 120 - scrollX + 1080) % 1080) - 60;
+          railPosts[i].setAttribute("transform", "translate(" + rx.toFixed(1) + " 0)");
+        }
+        for (var j = 0; j < roadDashes.length; j++) {
+          var dx = ((j * 120 - scrollX + 1200) % 1200) - 80;
+          roadDashes[j].setAttribute("x", dx.toFixed(1));
+        }
+
+        // Pedal coordinates & 2-Bone IK
+        var nx = bbX + Math.cos(crankRad) * crankR;
+        var ny = bbY + Math.sin(crankRad) * crankR;
+        var fx = bbX + Math.cos(crankRad + Math.PI) * crankR;
+        var fy = bbY + Math.sin(crankRad + Math.PI) * crankR;
+
+        crankNear.setAttribute("x2", nx.toFixed(1));
+        crankNear.setAttribute("y2", ny.toFixed(1));
+        crankFar.setAttribute("x2", fx.toFixed(1));
+        crankFar.setAttribute("y2", fy.toFixed(1));
+
+        var nKnee = solveIK(hipX, hipY, nx, ny, L1, L2);
+        var fKnee = solveIK(hipX, hipY, fx, fy, L1, L2);
+
+        nThigh.setAttribute("x2", nKnee.x.toFixed(1));
+        nThigh.setAttribute("y2", nKnee.y.toFixed(1));
+        nShin.setAttribute("x1", nKnee.x.toFixed(1));
+        nShin.setAttribute("y1", nKnee.y.toFixed(1));
+        nShin.setAttribute("x2", nx.toFixed(1));
+        nShin.setAttribute("y2", ny.toFixed(1));
+        nFoot.setAttribute("cx", (nx + 4).toFixed(1));
+        nFoot.setAttribute("cy", ny.toFixed(1));
+
+        fThigh.setAttribute("x2", fKnee.x.toFixed(1));
+        fThigh.setAttribute("y2", fKnee.y.toFixed(1));
+        fShin.setAttribute("x1", fKnee.x.toFixed(1));
+        fShin.setAttribute("y1", fKnee.y.toFixed(1));
+        fShin.setAttribute("x2", fx.toFixed(1));
+        fShin.setAttribute("y2", fy.toFixed(1));
+        fFoot.setAttribute("cx", (fx + 4).toFixed(1));
+        fFoot.setAttribute("cy", fy.toFixed(1));
+
+        // Scarf, Cursor Pennant Flag flutter & body micro-bob
+        var bob = Math.sin(crankRad * 2) * 1.4;
+        var wave1 = 128 + Math.sin(t * 6.4) * 7;
+        var wave2 = 154 + Math.cos(t * 5.8) * 6;
+        scarf1.setAttribute("d", "M428 134 Q380 140 330 " + wave1.toFixed(1) + " T260 " + (wave1 + 9).toFixed(1) + " L264 " + (wave1 + 23).toFixed(1) + " Q330 142 384 154 L430 144 Z");
+        scarf2.setAttribute("d", "M426 141 Q386 158 346 " + wave2.toFixed(1) + " T290 " + (wave2 + 14).toFixed(1) + " L296 " + (wave2 + 24).toFixed(1) + " Q348 164 392 166 L430 149 Z");
+        pelicanRig.setAttribute("transform", "translate(0 " + bob.toFixed(2) + ")");
+
+        var flagSkew = Math.sin(t * 7.2) * 3.5;
+        flagCloth.setAttribute("transform", "rotate(" + flagSkew.toFixed(1) + " 238 178)");
+
+        teleCrank.textContent = Math.round((crankRad * 180) / Math.PI) + "° · OK";
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+      runSwarmDemo("#swarm-pelican-stage", "全场 Pro1 × Pro6 × 7 层光标拼装鹈鹕");
+    })();
+  </script>
+</body>
+</html>
