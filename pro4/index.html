@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鹈鹕骑行记 · Pelican Riding a Bicycle SVG</title>
+  <meta name="description" content="手工矢量绘制的海岸鹈鹕骑车互动展示：包含真实双连杆逆运动学踏频同步、齿轮链条传动、昼夜海岸光影切换与独立 SVG 下载。" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-theme="morning">
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="title-block">
+        <h1>鹈鹕骑行记 · Coastal Pelican Cyclist</h1>
+        <p class="title-sub">纯矢量 SVG 分层绘制 · 双连杆逆运动学踏频同步 · 海岸晨昏昼夜光影切换</p>
+      </div>
+      <div class="header-actions">
+        <a id="link-raw-svg" class="btn" href="./pelican-bicycle.svg" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+          查看独立 SVG
+        </a>
+        <button id="btn-download-svg" class="btn btn-primary" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          导出当前帧 SVG
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="stage-frame" aria-label="鹈鹕骑车交互画布">
+        <div class="canvas-wrap">
+          <svg id="pelican-scene" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="svg-title svg-desc">
+            <title id="svg-title">Interactive Pelican Riding a Bicycle</title>
+            <desc id="svg-desc">Animated SVG scene of a coastal pelican pedaling a vintage seafoam bicycle with real-time crank, chain, wheel, and leg inverse kinematics.</desc>
+
+            <defs>
+              <!-- Morning Sky -->
+              <linearGradient id="skyMorning" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#87c3dc" />
+                <stop offset="48%" stop-color="#c9e6ee" />
+                <stop offset="82%" stop-color="#f7ebd2" />
+                <stop offset="100%" stop-color="#fce0b8" />
+              </linearGradient>
+              <!-- Sunset Sky -->
+              <linearGradient id="skySunset" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4e6f8c" />
+                <stop offset="42%" stop-color="#a86d6d" />
+                <stop offset="76%" stop-color="#e39264" />
+                <stop offset="100%" stop-color="#ffd08a" />
+              </linearGradient>
+              <!-- Night Sky -->
+              <linearGradient id="skyNight" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0b1a26" />
+                <stop offset="55%" stop-color="#143040" />
+                <stop offset="100%" stop-color="#224c5c" />
+              </linearGradient>
+
+              <radialGradient id="sunGlowMorning" cx="79%" cy="27%" r="36%">
+                <stop offset="0%" stop-color="#fff9db" stop-opacity="0.95" />
+                <stop offset="22%" stop-color="#ffe5a3" stop-opacity="0.55" />
+                <stop offset="60%" stop-color="#ffd59e" stop-opacity="0.16" />
+                <stop offset="100%" stop-color="#ffd59e" stop-opacity="0" />
+              </radialGradient>
+
+              <radialGradient id="sunGlowSunset" cx="79%" cy="68%" r="44%">
+                <stop offset="0%" stop-color="#fff0c2" stop-opacity="0.95" />
+                <stop offset="26%" stop-color="#ff9955" stop-opacity="0.65" />
+                <stop offset="66%" stop-color="#e85f3f" stop-opacity="0.22" />
+                <stop offset="100%" stop-color="#e85f3f" stop-opacity="0" />
+              </radialGradient>
+
+              <linearGradient id="oceanMorning" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3c91a8" />
+                <stop offset="45%" stop-color="#2b758d" />
+                <stop offset="100%" stop-color="#1e576d" />
+              </linearGradient>
+
+              <linearGradient id="oceanSunset" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#537282" />
+                <stop offset="45%" stop-color="#355568" />
+                <stop offset="100%" stop-color="#213a4a" />
+              </linearGradient>
+
+              <linearGradient id="oceanNight" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#163a49" />
+                <stop offset="50%" stop-color="#0f2b38" />
+                <stop offset="100%" stop-color="#091d28" />
+              </linearGradient>
+
+              <linearGradient id="headlandGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#6d999e" />
+                <stop offset="100%" stop-color="#4e7982" />
+              </linearGradient>
+
+              <linearGradient id="lighthouseBeamGrad" x1="0" y1="0.5" x2="1" y2="0.5">
+                <stop offset="0%" stop-color="#fff4b8" stop-opacity="0.55" />
+                <stop offset="100%" stop-color="#fff4b8" stop-opacity="0" />
+              </linearGradient>
+
+              <linearGradient id="headlampBeamGrad" x1="0" y1="0.5" x2="1" y2="0.5">
+                <stop offset="0%" stop-color="#fff6bd" stop-opacity="0.62" />
+                <stop offset="55%" stop-color="#ffea94" stop-opacity="0.22" />
+                <stop offset="100%" stop-color="#ffea94" stop-opacity="0" />
+              </linearGradient>
+
+              <linearGradient id="seawallGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#dfd3be" />
+                <stop offset="100%" stop-color="#bfb097" />
+              </linearGradient>
+
+              <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ebe1cf" />
+                <stop offset="30%" stop-color="#dfd3be" />
+                <stop offset="100%" stop-color="#c8b9a0" />
+              </linearGradient>
+
+              <!-- Bicycle Materials -->
+              <linearGradient id="frameMainGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#48a8b0" />
+                <stop offset="45%" stop-color="#247982" />
+                <stop offset="100%" stop-color="#165058" />
+              </linearGradient>
+
+              <linearGradient id="chromeGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="35%" stop-color="#d2dce0" />
+                <stop offset="70%" stop-color="#8b9aa1" />
+                <stop offset="100%" stop-color="#e9eff2" />
+              </linearGradient>
+
+              <linearGradient id="leatherGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c97942" />
+                <stop offset="55%" stop-color="#9e5324" />
+                <stop offset="100%" stop-color="#6e3514" />
+              </linearGradient>
+
+              <linearGradient id="wickerGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#dfb173" />
+                <stop offset="55%" stop-color="#c58f4d" />
+                <stop offset="100%" stop-color="#9e6c32" />
+              </linearGradient>
+
+              <linearGradient id="tireGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#364045" />
+                <stop offset="100%" stop-color="#1e2529" />
+              </linearGradient>
+
+              <!-- Pelican Materials -->
+              <linearGradient id="plumageGrad" x1="0.2" y1="0" x2="0.8" y2="1">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="52%" stop-color="#f6efe2" />
+                <stop offset="85%" stop-color="#e2dbce" />
+                <stop offset="100%" stop-color="#ccc9c0" />
+              </linearGradient>
+
+              <linearGradient id="wingNearGrad" x1="0" y1="0" x2="0.8" y2="1">
+                <stop offset="0%" stop-color="#fdfaf3" />
+                <stop offset="55%" stop-color="#ebe6dc" />
+                <stop offset="100%" stop-color="#c2c7ca" />
+              </linearGradient>
+
+              <linearGradient id="wingFarGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#dad7ce" />
+                <stop offset="100%" stop-color="#9da8ae" />
+              </linearGradient>
+
+              <linearGradient id="beakUpperGrad" x1="0" y1="0" x2="1" y2="0.3">
+                <stop offset="0%" stop-color="#f4c786" />
+                <stop offset="55%" stop-color="#eca65c" />
+                <stop offset="88%" stop-color="#df7744" />
+                <stop offset="100%" stop-color="#c95232" />
+              </linearGradient>
+
+              <linearGradient id="pouchGrad" x1="0.2" y1="0" x2="0.6" y2="1">
+                <stop offset="0%" stop-color="#ffd06e" />
+                <stop offset="55%" stop-color="#f39c38" />
+                <stop offset="100%" stop-color="#d46b27" />
+              </linearGradient>
+
+              <linearGradient id="footNearGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f59842" />
+                <stop offset="100%" stop-color="#d96726" />
+              </linearGradient>
+
+              <linearGradient id="footFarGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cb7531" />
+                <stop offset="100%" stop-color="#a24c1d" />
+              </linearGradient>
+
+              <linearGradient id="fishGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f2f9fc" />
+                <stop offset="48%" stop-color="#9cc0d0" />
+                <stop offset="100%" stop-color="#537c92" />
+              </linearGradient>
+
+              <linearGradient id="goggleLensGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#b5e7f2" stop-opacity="0.82" />
+                <stop offset="50%" stop-color="#69b7ca" stop-opacity="0.58" />
+                <stop offset="100%" stop-color="#2c6f82" stop-opacity="0.72" />
+              </linearGradient>
+
+              <filter id="softShadow" x="-15%" y="-15%" width="130%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+                <feOffset dx="0" dy="4" result="offsetblur" />
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.18" />
+                </feComponentTransfer>
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <clipPath id="basketClip">
+                <path d="M 716,282 L 796,282 L 784,358 C 783,364 778,368 772,368 L 728,368 C 722,368 718,364 717,358 Z" />
+              </clipPath>
+            </defs>
+
+            <!-- ==================== 1. SKY & ATMOSPHERES ==================== -->
+            <g id="layer-sky">
+              <rect id="sky-bg-morning" width="1200" height="500" fill="url(#skyMorning)" />
+              <rect id="sky-bg-sunset" width="1200" height="500" fill="url(#skySunset)" opacity="0" />
+              <rect id="sky-bg-night" width="1200" height="500" fill="url(#skyNight)" opacity="0" />
+
+              <rect id="glow-morning" width="1200" height="500" fill="url(#sunGlowMorning)" />
+              <rect id="glow-sunset" width="1200" height="500" fill="url(#sunGlowSunset)" opacity="0" />
+
+              <!-- Twinkling Night Stars -->
+              <g id="sky-stars" fill="#fff7d6" opacity="0">
+                <circle cx="95" cy="72" r="1.7" />
+                <circle cx="176" cy="118" r="1.3" />
+                <circle cx="242" cy="54" r="2.1" />
+                <circle cx="318" cy="148" r="1.4" />
+                <circle cx="430" cy="64" r="1.8" />
+                <circle cx="515" cy="96" r="1.2" />
+                <circle cx="612" cy="48" r="2.0" />
+                <circle cx="695" cy="122" r="1.5" />
+                <circle cx="788" cy="76" r="1.8" />
+                <circle cx="870" cy="44" r="1.4" />
+                <circle cx="1018" cy="88" r="2.0" />
+                <circle cx="1115" cy="60" r="1.5" />
+                <circle cx="1142" cy="144" r="1.3" />
+              </g>
+
+              <!-- Sun & Moon -->
+              <g id="celestial-sun">
+                <circle id="sun-halo" cx="948" cy="195" r="64" fill="#ffe5a3" opacity="0.28" />
+                <circle id="sun-disc" cx="948" cy="195" r="46" fill="#fff6cf" opacity="0.95" />
+              </g>
+              <g id="celestial-moon" opacity="0">
+                <circle cx="948" cy="128" r="48" fill="#d9eef5" opacity="0.14" />
+                <path d="M 962,96 A 32,32 0 1 0 980,152 A 25,25 0 1 1 962,96 Z" fill="#f7f2dc" />
+              </g>
+
+              <!-- Drifting Clouds -->
+              <g id="clouds-layer" fill="#ffffff" opacity="0.72">
+                <path d="M 110,164 C 110,148 126,136 144,138 C 154,116 184,110 204,126 C 222,118 244,128 248,146 C 266,148 276,162 272,174 L 114,174 C 110,174 110,168 110,164 Z" />
+                <path d="M 380,108 C 380,96 392,88 406,90 C 414,74 438,70 454,82 C 468,76 486,84 488,98 C 500,100 506,110 502,118 L 382,118 Z" opacity="0.78" />
+                <path d="M 700,126 C 700,115 712,107 726,109 C 736,92 762,88 778,101 C 792,94 810,102 814,116 C 826,118 834,128 830,136 L 702,136 Z" opacity="0.65" />
+                <path d="M 1030,148 C 1030,138 1040,131 1052,133 C 1060,119 1082,116 1096,127 C 1108,121 1124,128 1127,140 C 1138,142 1144,150 1140,157 L 1032,157 Z" opacity="0.58" />
+              </g>
+
+              <!-- Distant Headland & Lighthouse -->
+              <path d="M 0,408 L 85,372 C 138,350 205,364 252,388 C 292,408 345,412 396,422 L 0,422 Z" fill="url(#headlandGrad)" opacity="0.78" />
+              <g id="lighthouse" transform="translate(154, 304)">
+                <!-- Rotating Lighthouse Beam (visible in night/sunset) -->
+                <g id="lighthouse-beam" opacity="0" transform="translate(22, 10)">
+                  <polygon points="0,0 440,-42 440,56" fill="url(#lighthouseBeamGrad)" />
+                </g>
+                <path d="M 10,68 L 16,14 L 28,14 L 34,68 Z" fill="#f7f4ec" />
+                <path d="M 13,44 L 31,44 L 32.5,56 L 11.5,56 Z" fill="#d95c3c" />
+                <path d="M 15,24 L 29,24 L 30,34 L 14,34 Z" fill="#d95c3c" />
+                <rect x="15" y="7" width="14" height="7" rx="1.5" fill="#fff4be" />
+                <path d="M 13,7 L 22,0 L 31,7 Z" fill="#234852" />
+              </g>
+
+              <!-- Distant Seabirds -->
+              <g id="gulls-group" fill="none" stroke="#426773" stroke-width="2.2" stroke-linecap="round" opacity="0.68">
+                <path d="M 284,218 Q 293,208 302,217 Q 311,208 320,218" />
+                <path d="M 334,242 Q 341,234 348,241 Q 355,234 362,242" />
+                <path d="M 852,162 Q 860,153 868,161 Q 876,153 884,162" />
+              </g>
+            </g>
+
+            <!-- ==================== 2. OCEAN & SAILBOATS ==================== -->
+            <g id="layer-ocean">
+              <rect id="ocean-bg-morning" x="0" y="418" width="1200" height="148" fill="url(#oceanMorning)" />
+              <rect id="ocean-bg-sunset" x="0" y="418" width="1200" height="148" fill="url(#oceanSunset)" opacity="0" />
+              <rect id="ocean-bg-night" x="0" y="418" width="1200" height="148" fill="url(#oceanNight)" opacity="0" />
+
+              <!-- Sun / Moon Shimmer Sparkles -->
+              <g id="ocean-shimmer" fill="none" stroke="#ffeab5" stroke-linecap="round" opacity="0.54">
+                <path d="M 920,425 Q 948,423 976,425" stroke-width="2.6" />
+                <path d="M 902,435 Q 934,433 962,435 M 972,435 Q 988,434 998,435" stroke-width="2.4" />
+                <path d="M 914,447 Q 950,445 984,447" stroke-width="2.2" />
+                <path d="M 894,460 Q 926,458 954,460 M 968,460 Q 992,459 1004,460" stroke-width="2.2" />
+                <path d="M 924,475 Q 950,473 974,475" stroke-width="2" />
+              </g>
+
+              <!-- Gentle Ocean Waves -->
+              <g id="ocean-waves" stroke="#bce4ec" stroke-width="2" stroke-linecap="round" opacity="0.45">
+                <path d="M 90,455 Q 125,449 160,455" fill="none" />
+                <path d="M 270,482 Q 310,476 350,482" fill="none" />
+                <path d="M 620,446 Q 665,440 710,446" fill="none" />
+                <path d="M 1030,492 Q 1075,486 1120,492" fill="none" />
+              </g>
+
+              <!-- Distant Sailboats -->
+              <g id="sailboats-layer">
+                <g transform="translate(815, 386)" opacity="0.88">
+                  <path d="M 2,34 L 34,34 L 29,40 L 7,40 Z" fill="#b44f38" />
+                  <path d="M 17,4 L 17,32 L 32,32 Z" fill="#fffaf0" />
+                  <path d="M 15,9 L 15,32 L 5,32 Z" fill="#e9e2d2" />
+                </g>
+                <g transform="translate(1062, 396) scale(0.78)" opacity="0.78">
+                  <path d="M 2,34 L 34,34 L 29,40 L 7,40 Z" fill="#2e4e58" />
+                  <path d="M 17,5 L 17,32 L 31,32 Z" fill="#fffaf0" />
+                </g>
+              </g>
+
+              <!-- Surf Foam along Seawall -->
+              <path d="M 0,536 Q 80,530 160,536 T 320,536 T 480,536 T 640,536 T 800,536 T 960,536 T 1120,536 L 1200,536 L 1200,548 L 0,548 Z" fill="#eef9fb" opacity="0.72" />
+            </g>
+
+            <!-- ==================== 3. COASTAL BOARDWALK & PARALLAX ==================== -->
+            <g id="layer-promenade">
+              <rect x="0" y="542" width="1200" height="24" fill="url(#seawallGrad)" />
+              <line x1="0" y1="542" x2="1200" y2="542" stroke="#f6f0e3" stroke-width="2" />
+              <line x1="0" y1="566" x2="1200" y2="566" stroke="#a69880" stroke-width="2" />
+
+              <!-- Guardrail Top Rail + Scrolling Posts -->
+              <rect x="0" y="514" width="1200" height="6" fill="#cfc2ab" stroke="#998a71" stroke-width="1.5" />
+              <g id="parallax-posts" fill="#cfc2ab" stroke="#998a71" stroke-width="1.5"></g>
+
+              <!-- Bike Promenade Surface -->
+              <rect x="0" y="566" width="1200" height="194" fill="url(#roadGrad)" />
+              <rect id="road-night-tint" x="0" y="542" width="1200" height="218" fill="#0d1d26" opacity="0" />
+
+              <!-- Scrolling Stone Paver Joints & Bike Lane Dashes & Dune Grass -->
+              <g id="parallax-pavers" stroke="#b7a78e" stroke-width="1.4" opacity="0.48"></g>
+              <g id="parallax-lane-dashes" fill="#f8f5ec" opacity="0.82"></g>
+              <g id="parallax-grass" fill="none" stroke="#628e64" stroke-width="2.6" stroke-linecap="round"></g>
+
+              <!-- Night Headlamp Light Cone (illuminating boardwalk ahead) -->
+              <polygon id="headlamp-beam" points="760,398 1195,436 1195,690 760,404" fill="url(#headlampBeamGrad)" opacity="0" />
+
+              <!-- Ground Cast Shadow Under Bicycle -->
+              <ellipse id="ground-shadow-main" cx="572" cy="632" rx="268" ry="16" fill="#7c6d56" opacity="0.34" />
+              <ellipse cx="390" cy="631" rx="74" ry="8" fill="#5e503d" opacity="0.32" />
+              <ellipse cx="755" cy="631" rx="74" ry="8" fill="#5e503d" opacity="0.32" />
+            </g>
+
+            <!-- ==================== 4. FAR-SIDE PELICAN LIMBS & FAR CRANK ==================== -->
+            <g id="layer-far-side">
+              <g id="pelican-far-wing">
+                <path d="M 532,276 C 566,280 604,288 634,285 C 654,282 670,273 682,272 C 690,271 693,279 685,284 C 668,294 644,302 616,304 C 586,306 556,298 526,292 Z" fill="url(#wingFarGrad)" stroke="#707d85" stroke-width="1.6" stroke-linejoin="round" />
+                <path d="M 664,275 C 674,269 686,270 689,277 C 690,283 682,287 670,286" fill="#465661" stroke="#313d45" stroke-width="1.5" />
+              </g>
+
+              <!-- Far Crank Arm & Pedal (dynamically updated by JS) -->
+              <g id="crank-far">
+                <line id="crank-far-arm" x1="535" y1="538" x2="511.7" y2="500.7" stroke="#6c7b82" stroke-width="8" stroke-linecap="round" />
+                <rect id="pedal-far" x="497.7" y="496.7" width="28" height="8" rx="3" fill="#3a4347" stroke="#1e2427" stroke-width="1.4" />
+              </g>
+
+              <!-- Far Leg & Webbed Foot (dynamically updated by 2-link IK) -->
+              <g id="pelican-far-leg">
+                <path id="pelican-far-thigh" d="M 492,320 C 534,332 574,352 602,370 C 609,375 606,386 595,387 C 566,382 528,364 490,344 Z" fill="#d3cfc4" stroke="#9aa0a3" stroke-width="1.6" stroke-linejoin="round" />
+                <path id="pelican-far-shank" d="M 600,375 L 514,497" stroke="#b96426" stroke-width="10" stroke-linecap="round" />
+                <path id="pelican-far-shank-hi" d="M 600,375 L 514,497" stroke="#d47d38" stroke-width="5" stroke-linecap="round" />
+                <path id="pelican-far-foot" d="M 505,495 C 515,491 529,494 536,501 C 529,504 515,505 501,503 C 498,500 500,496 505,495 Z" fill="url(#footFarGrad)" stroke="#7c3612" stroke-width="1.5" stroke-linejoin="round" />
+              </g>
+            </g>
+
+            <!-- ==================== 5. BICYCLE WHEELS & DRIVETRAIN ==================== -->
+            <g id="layer-wheels">
+              <!-- Rear Wheel (390, 526) -->
+              <g id="wheel-rear">
+                <circle cx="390" cy="526" r="97" fill="none" stroke="url(#tireGrad)" stroke-width="14" />
+                <circle cx="390" cy="526" r="102" fill="none" stroke="#535f66" stroke-width="1.2" opacity="0.55" />
+                <circle cx="390" cy="526" r="89" fill="none" stroke="url(#chromeGrad)" stroke-width="5" />
+                <circle cx="390" cy="526" r="86.5" fill="none" stroke="#7d8c93" stroke-width="1.2" />
+                <g stroke="#d5dfe3" stroke-width="1.6" stroke-linecap="round" opacity="0.92">
+                  <line x1="400.6" y1="531.5" x2="479.0" y2="526.0" />
+                  <line x1="401.9" y1="524.4" x2="473.6" y2="556.4" />
+                  <line x1="394.6" y1="537.1" x2="458.2" y2="583.2" />
+                  <line x1="400.1" y1="532.4" x2="434.5" y2="603.1" />
+                  <line x1="386.4" y1="537.4" x2="405.5" y2="613.6" />
+                  <line x1="393.6" y1="537.4" x2="374.5" y2="613.6" />
+                  <line x1="379.9" y1="532.4" x2="345.5" y2="603.1" />
+                  <line x1="385.4" y1="537.1" x2="321.8" y2="583.2" />
+                  <line x1="378.1" y1="524.4" x2="306.4" y2="556.4" />
+                  <line x1="379.4" y1="531.5" x2="301.0" y2="526.0" />
+                  <line x1="381.9" y1="517.2" x2="306.4" y2="495.6" />
+                  <line x1="378.3" y1="523.4" x2="321.8" y2="468.8" />
+                  <line x1="389.5" y1="514.0" x2="345.5" y2="448.9" />
+                  <line x1="382.7" y1="516.5" x2="374.5" y2="438.4" />
+                  <line x1="397.3" y1="516.5" x2="405.5" y2="438.4" />
+                  <line x1="390.5" y1="514.0" x2="434.5" y2="448.9" />
+                  <line x1="401.7" y1="523.4" x2="458.2" y2="468.8" />
+                  <line x1="398.1" y1="517.2" x2="473.6" y2="495.6" />
+                </g>
+                <line x1="390" y1="439" x2="390" y2="449" stroke="#c89a40" stroke-width="3" stroke-linecap="round" />
+                <path d="M 406.0,526.0 L 401.7,528.9 L 404.2,533.4 L 399.0,534.0 L 399.1,539.2 L 394.3,537.2 L 391.9,541.9 L 388.6,537.9 L 384.3,541.0 L 383.2,535.9 L 378.0,536.6 L 379.4,531.6 L 374.5,529.8 L 378.0,526.0 L 374.5,522.2 L 379.4,520.4 L 378.0,515.4 L 383.2,516.1 L 384.3,511.0 L 388.6,514.1 L 391.9,510.1 L 394.3,514.8 L 399.1,512.8 L 399.0,518.0 L 404.2,518.6 L 401.7,523.1 Z" fill="#6f7c82" stroke="#424d52" stroke-width="1.2" />
+                <circle cx="390" cy="526" r="10.5" fill="url(#chromeGrad)" stroke="#5b6970" stroke-width="1.5" />
+              </g>
+
+              <!-- Front Wheel (755, 526) -->
+              <g id="wheel-front">
+                <circle cx="755" cy="526" r="97" fill="none" stroke="url(#tireGrad)" stroke-width="14" />
+                <circle cx="755" cy="526" r="102" fill="none" stroke="#535f66" stroke-width="1.2" opacity="0.55" />
+                <circle cx="755" cy="526" r="89" fill="none" stroke="url(#chromeGrad)" stroke-width="5" />
+                <circle cx="755" cy="526" r="86.5" fill="none" stroke="#7d8c93" stroke-width="1.2" />
+                <g stroke="#d5dfe3" stroke-width="1.6" stroke-linecap="round" opacity="0.92">
+                  <line x1="765.6" y1="531.5" x2="844.0" y2="526.0" />
+                  <line x1="766.9" y1="524.4" x2="838.6" y2="556.4" />
+                  <line x1="759.6" y1="537.1" x2="823.2" y2="583.2" />
+                  <line x1="765.1" y1="532.4" x2="799.5" y2="603.1" />
+                  <line x1="751.4" y1="537.4" x2="770.5" y2="613.6" />
+                  <line x1="758.6" y1="537.4" x2="739.5" y2="613.6" />
+                  <line x1="744.9" y1="532.4" x2="710.5" y2="603.1" />
+                  <line x1="750.4" y1="537.1" x2="686.8" y2="583.2" />
+                  <line x1="743.1" y1="524.4" x2="671.4" y2="556.4" />
+                  <line x1="744.4" y1="531.5" x2="666.0" y2="526.0" />
+                  <line x1="746.9" y1="517.2" x2="671.4" y2="495.6" />
+                  <line x1="743.3" y1="523.4" x2="686.8" y2="468.8" />
+                  <line x1="754.5" y1="514.0" x2="710.5" y2="448.9" />
+                  <line x1="747.7" y1="516.5" x2="739.5" y2="438.4" />
+                  <line x1="762.3" y1="516.5" x2="770.5" y2="438.4" />
+                  <line x1="755.5" y1="514.0" x2="799.5" y2="448.9" />
+                  <line x1="766.7" y1="523.4" x2="823.2" y2="468.8" />
+                  <line x1="763.1" y1="517.2" x2="838.6" y2="495.6" />
+                </g>
+                <line x1="755" y1="439" x2="755" y2="449" stroke="#c89a40" stroke-width="3" stroke-linecap="round" />
+                <circle cx="755" cy="526" r="10.5" fill="url(#chromeGrad)" stroke="#5b6970" stroke-width="1.5" />
+              </g>
+
+              <!-- Bicycle Chain -->
+              <g id="bike-chain">
+                <path d="M 390,511 L 535,507 A 31,31 0 0 1 535,569 L 390,541 A 15,15 0 0 1 390,511 Z" fill="none" stroke="#3b464b" stroke-width="4.5" stroke-linejoin="round" />
+                <path id="bike-chain-links" d="M 390,511 L 535,507 A 31,31 0 0 1 535,569 L 390,541 A 15,15 0 0 1 390,511 Z" fill="none" stroke="#adb9bf" stroke-width="2" stroke-dasharray="5 5" stroke-linejoin="round" />
+              </g>
+            </g>
+
+            <!-- ==================== 6. BICYCLE FRAME, FENDERS & BASKET ==================== -->
+            <g id="layer-bike-frame">
+              <g id="bike-fenders">
+                <line x1="390" y1="526" x2="294" y2="466" stroke="#b6c2c7" stroke-width="2.4" stroke-linecap="round" />
+                <line x1="390" y1="526" x2="281" y2="546" stroke="#b6c2c7" stroke-width="2.4" stroke-linecap="round" />
+                <line x1="755" y1="526" x2="854" y2="472" stroke="#b6c2c7" stroke-width="2.4" stroke-linecap="round" />
+                <line x1="755" y1="526" x2="862" y2="554" stroke="#b6c2c7" stroke-width="2.4" stroke-linecap="round" />
+
+                <path d="M 278,548 A 113,113 0 0 1 464,439" fill="none" stroke="#1e6870" stroke-width="11" stroke-linecap="round" />
+                <path d="M 278,548 A 113,113 0 0 1 464,439" fill="none" stroke="#68c1c9" stroke-width="3" stroke-linecap="round" opacity="0.65" />
+                <rect x="278" y="514" width="9" height="16" rx="3" transform="rotate(-18 282 522)" fill="#e24234" stroke="#7c1d15" stroke-width="1.4" />
+
+                <path d="M 692,431 A 113,113 0 0 1 864,556" fill="none" stroke="#1e6870" stroke-width="11" stroke-linecap="round" />
+                <path d="M 692,431 A 113,113 0 0 1 864,556" fill="none" stroke="#68c1c9" stroke-width="3" stroke-linecap="round" opacity="0.65" />
+              </g>
+
+              <g id="bike-tubes" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="390" y1="526" x2="535" y2="538" stroke="#1b5d64" stroke-width="9" />
+                <line x1="390" y1="526" x2="480" y2="372" stroke="#247982" stroke-width="8.5" />
+                <line x1="535" y1="538" x2="479" y2="367" stroke="url(#frameMainGrad)" stroke-width="12" />
+                <line x1="535" y1="538" x2="721" y2="378" stroke="url(#frameMainGrad)" stroke-width="13" />
+                <path d="M 480,368 Q 594,352 706,344" fill="none" stroke="url(#frameMainGrad)" stroke-width="11.5" />
+                <line x1="504" y1="443" x2="495" y2="416" stroke="#f7eed9" stroke-width="12.5" stroke-linecap="butt" />
+                <line x1="498" y1="445" x2="510" y2="441" stroke="#e2b453" stroke-width="2" />
+                <line x1="489" y1="418" x2="501" y2="414" stroke="#e2b453" stroke-width="2" />
+
+                <line x1="479" y1="367" x2="471" y2="342" stroke="url(#chromeGrad)" stroke-width="7.5" />
+                <path d="M 455,347 C 455,342 461,342 461,347 M 441,347 C 441,342 447,342 447,347" fill="none" stroke="#7d8c93" stroke-width="2.6" />
+                <path d="M 426,336 C 424,330 434,327 450,331 C 468,334 494,330 503,335 C 508,338 504,344 492,344 C 474,344 452,346 436,345 C 428,344 426,340 426,336 Z" fill="url(#leatherGrad)" stroke="#4f240b" stroke-width="1.6" />
+                <circle cx="436" cy="336" r="1.8" fill="#ebd088" />
+                <circle cx="443" cy="338" r="1.8" fill="#ebd088" />
+
+                <path d="M 723,388 C 729,426 739,472 755,526" fill="none" stroke="#247982" stroke-width="10.5" />
+                <line x1="704" y1="332" x2="725" y2="392" stroke="#1e6b73" stroke-width="15" />
+                <ellipse cx="715" cy="362" rx="4" ry="7" transform="rotate(-19 715 362)" fill="#e8ba58" stroke="#855814" stroke-width="1.2" />
+
+                <circle cx="535" cy="538" r="10.5" fill="#18535a" stroke="#103d42" stroke-width="2" />
+                <circle cx="390" cy="526" r="6" fill="#d9e2e6" stroke="#424f54" stroke-width="1.5" />
+                <circle cx="755" cy="526" r="6" fill="#d9e2e6" stroke="#424f54" stroke-width="1.5" />
+              </g>
+
+              <g id="bike-headlamp" transform="translate(733, 396)">
+                <path d="M -10,-6 L -4,10 L 5,8" fill="none" stroke="#8f9ca1" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M 2,0 L 24,-4 C 30,-4 32,10 24,12 L 2,8 C -3,7 -3,1 2,0 Z" fill="url(#chromeGrad)" stroke="#556369" stroke-width="1.5" />
+                <ellipse id="headlamp-lens" cx="26" cy="4" rx="3.5" ry="7.5" fill="#fff8d4" stroke="#8f9ca1" stroke-width="1.2" />
+              </g>
+
+              <g id="bike-handlebars">
+                <path d="M 704,332 L 690,287 Q 688,280 698,279 L 711,279" fill="none" stroke="url(#chromeGrad)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M 709,279 C 698,272 688,270 676,274" fill="none" stroke="#9eaab0" stroke-width="6" stroke-linecap="round" />
+                <path d="M 685,271 L 672,276" fill="none" stroke="#7d411c" stroke-width="10" stroke-linecap="round" />
+                <path d="M 709,280 C 692,280 668,288 646,296" fill="none" stroke="url(#chromeGrad)" stroke-width="6.5" stroke-linecap="round" />
+                <path d="M 664,290 L 642,298" fill="none" stroke="url(#leatherGrad)" stroke-width="11" stroke-linecap="round" />
+                <g id="bike-bell-hit" transform="translate(674, 283)">
+                  <rect x="-3" y="2" width="6" height="5" fill="#6b777d" />
+                  <path d="M -8,3 C -8,-7 8,-7 8,3 Z" fill="#f3c55b" stroke="#8d5e14" stroke-width="1.4" />
+                  <circle cx="0" cy="-5" r="2" fill="#ffe89c" />
+                  <g id="bell-waves" fill="none" stroke="#f7b93e" stroke-width="2.2" stroke-linecap="round" opacity="0">
+                    <path d="M -14,-6 A 14,14 0 0 1 14,-6" />
+                    <path d="M -20,-10 A 20,20 0 0 1 20,-10" />
+                  </g>
+                </g>
+              </g>
+
+              <g id="bike-basket" filter="url(#softShadow)">
+                <path d="M 710,283 L 722,294 M 716,326 L 726,332" stroke="#7d411c" stroke-width="4" stroke-linecap="round" />
+                <path d="M 722,282 C 722,262 745,260 750,282 Z" fill="#f7f1e1" stroke="#b8a890" stroke-width="1.2" />
+                <path d="M 727,270 L 744,272" stroke="#d95f3c" stroke-width="3.2" stroke-linecap="round" />
+                <g transform="translate(758, 268) rotate(-54)">
+                  <path d="M -32,0 C -14,-14 14,-12 34,0 C 14,12 -14,14 -32,0 Z" fill="url(#fishGrad)" stroke="#3e5f70" stroke-width="1.5" />
+                  <path d="M 30,0 L 45,-11 L 40,0 L 45,11 Z" fill="#7aa1b5" stroke="#3e5f70" stroke-width="1.4" stroke-linejoin="round" />
+                  <circle cx="-18" cy="-2" r="2.4" fill="#182a34" />
+                  <circle cx="-17.5" cy="-2.6" r="0.8" fill="#ffffff" />
+                  <path d="M -10,-8 Q -4,0 -10,8" fill="none" stroke="#456b7d" stroke-width="1.5" />
+                  <path d="M 3,-6 Q 7,0 3,6 M 11,-5 Q 15,0 11,5" fill="none" stroke="#ffffff" stroke-width="1.4" opacity="0.7" />
+                </g>
+                <g transform="translate(778, 272) rotate(-78)">
+                  <path d="M -24,0 C -10,-11 10,-9 26,0 C 10,9 -10,11 -24,0 Z" fill="url(#fishGrad)" stroke="#3e5f70" stroke-width="1.4" />
+                  <path d="M 22,0 L 35,-8 L 31,0 L 35,8 Z" fill="#7aa1b5" stroke="#3e5f70" stroke-width="1.3" stroke-linejoin="round" />
+                  <circle cx="-13" cy="-2" r="2" fill="#182a34" />
+                  <path d="M -7,-6 Q -3,0 -7,6" fill="none" stroke="#456b7d" stroke-width="1.3" />
+                </g>
+                <path d="M 716,282 L 796,282 L 784,358 C 783,364 778,368 772,368 L 728,368 C 722,368 718,364 717,358 Z" fill="url(#wickerGrad)" stroke="#7c5221" stroke-width="2" />
+                <g clip-path="url(#basketClip)" stroke="#8c5e28" stroke-width="1.5" opacity="0.52">
+                  <line x1="712" y1="298" x2="800" y2="298" />
+                  <line x1="712" y1="312" x2="800" y2="312" />
+                  <line x1="712" y1="326" x2="800" y2="326" />
+                  <line x1="712" y1="340" x2="800" y2="340" />
+                  <line x1="712" y1="354" x2="800" y2="354" />
+                  <line x1="732" y1="280" x2="736" y2="370" />
+                  <line x1="748" y1="280" x2="750" y2="370" />
+                  <line x1="764" y1="280" x2="763" y2="370" />
+                  <line x1="780" y1="280" x2="776" y2="370" />
+                </g>
+                <rect x="713" y="278" width="86" height="9" rx="4.5" fill="#e5b97d" stroke="#7c5221" stroke-width="1.8" />
+              </g>
+
+              <g id="crankset">
+                <path d="M 568.0,538.0 L 562.8,541.1 L 567.2,545.3 L 561.4,547.2 L 564.7,552.3 L 558.7,552.9 L 560.8,558.6 L 554.8,557.8 L 555.6,563.8 L 549.9,561.7 L 549.3,567.7 L 544.2,564.4 L 542.3,570.2 L 538.1,565.8 L 535.0,571.0 L 531.9,565.8 L 527.7,570.2 L 525.8,564.4 L 520.7,567.7 L 520.1,561.7 L 514.4,563.8 L 515.2,557.8 L 509.2,558.6 L 511.3,552.9 L 505.3,552.3 L 508.6,547.2 L 502.8,545.3 L 507.2,541.1 L 502.0,538.0 L 507.2,534.9 L 502.8,530.7 L 508.6,528.8 L 505.3,523.7 L 511.3,523.1 L 509.2,517.4 L 515.2,518.2 L 514.4,512.2 L 520.1,514.3 L 520.7,508.3 L 525.8,511.6 L 527.7,505.8 L 531.9,510.2 L 535.0,505.0 L 538.1,510.2 L 542.3,505.8 L 544.2,511.6 L 549.3,508.3 L 549.9,514.3 L 555.6,512.2 L 554.8,518.2 L 560.8,517.4 L 558.7,523.1 L 564.7,523.7 L 561.4,528.8 L 567.2,530.7 L 562.8,534.9 Z" fill="#cad4d9" stroke="#536168" stroke-width="1.5" />
+                <circle cx="535" cy="538" r="22" fill="none" stroke="#627178" stroke-width="2" />
+                <circle cx="535" cy="522" r="5" fill="#ebdcb9" />
+                <circle cx="550" cy="538" r="5" fill="#ebdcb9" />
+                <circle cx="535" cy="554" r="5" fill="#ebdcb9" />
+                <circle cx="520" cy="538" r="5" fill="#ebdcb9" />
+              </g>
+            </g>
+
+            <!-- ==================== 7. PELICAN RIDER ==================== -->
+            <g id="layer-pelican">
+              <g id="pelican-upper-group">
+                <g id="pelican-tail">
+                  <path d="M 426,310 L 368,292 C 362,294 364,303 376,308 L 418,324 Z" fill="#42525c" stroke="#2c373e" stroke-width="1.5" />
+                  <path d="M 430,318 L 372,315 C 367,319 371,327 384,328 L 428,331 Z" fill="#e5dfd1" stroke="#9aa0a3" stroke-width="1.5" />
+                </g>
+
+                <g id="pelican-torso">
+                  <path d="M 418,308 C 414,274 446,248 486,250 C 520,252 544,278 548,308 C 552,336 530,356 490,354 C 452,352 421,334 418,308 Z" fill="url(#plumageGrad)" stroke="#9ea4a7" stroke-width="1.8" />
+                  <path d="M 442,336 C 464,347 506,348 532,334" fill="none" stroke="#c8c2b4" stroke-width="2" stroke-linecap="round" />
+                  <path d="M 520,282 C 534,294 538,314 531,329" fill="none" stroke="#e4ddd0" stroke-width="2.2" stroke-linecap="round" />
+                </g>
+
+                <!-- Toggleable Striped Scarf -->
+                <g id="pelican-scarf">
+                  <g id="pelican-scarf-tails">
+                    <path id="scarf-tail-1" d="M 485,254 C 450,248 416,258 386,246 C 378,243 374,252 384,258 C 412,272 448,266 486,266 Z" fill="#d95f3c" stroke="#8f361d" stroke-width="1.5" stroke-linejoin="round" />
+                    <path id="scarf-tail-2" d="M 476,262 C 446,268 416,280 392,274 C 386,272 384,280 393,284 C 418,292 454,280 486,271 Z" fill="#e6734e" stroke="#8f361d" stroke-width="1.5" stroke-linejoin="round" />
+                    <path id="scarf-stripes" d="M 432,254 L 426,265 M 408,252 L 403,263 M 438,270 L 434,283 M 414,275 L 410,286" stroke="#fbf5e6" stroke-width="4" stroke-linecap="round" />
+                  </g>
+                  <path d="M 488,245 C 504,242 528,248 542,258 C 546,264 538,274 526,272 C 508,268 490,264 482,256 C 480,250 482,246 488,245 Z" fill="#e06743" stroke="#8f361d" stroke-width="1.6" />
+                  <path d="M 505,246 L 501,264 M 524,251 L 519,269" stroke="#fbf5e6" stroke-width="4" stroke-linecap="round" />
+                </g>
+
+                <!-- Head & Beak -->
+                <g id="pelican-head-group">
+                  <path d="M 494,252 C 492,226 502,202 512,184 C 520,168 538,154 558,158 C 578,162 586,184 576,204 C 566,222 544,234 538,254 C 524,258 506,258 494,252 Z" fill="url(#plumageGrad)" stroke="#9ea4a7" stroke-width="1.8" stroke-linejoin="round" />
+                  <path d="M 508,242 C 508,218 518,194 532,175" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+                  <path d="M 526,164 C 516,154 504,152 496,156 C 504,160 512,164 518,170 C 508,166 498,166 492,171 C 502,174 512,175 520,178" fill="#fbf7ee" stroke="#9ea4a7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+
+                  <!-- Signature Gular Pouch -->
+                  <g id="pelican-pouch">
+                    <path d="M 562,199 C 584,239 624,250 666,236 C 692,227 710,213 722,205 L 569,192 Z" fill="url(#pouchGrad)" stroke="#b35a1d" stroke-width="1.8" stroke-linejoin="round" />
+                    <path d="M 588,208 C 608,230 638,235 674,224" fill="none" stroke="#ffd98a" stroke-width="2.4" stroke-linecap="round" opacity="0.7" />
+                    <path d="M 596,216 C 618,234 646,236 672,228" fill="none" stroke="#c86522" stroke-width="1.4" stroke-linecap="round" opacity="0.5" />
+                  </g>
+
+                  <!-- Upper Mandible -->
+                  <path d="M 567,181 L 716,197 C 726,198 730,204 725,214 C 722,218 717,214 717,208 C 716,204 710,203 696,202 L 566,196 Z" fill="url(#beakUpperGrad)" stroke="#a34b28" stroke-width="1.7" stroke-linejoin="round" />
+                  <path d="M 576,184 L 712,198" stroke="#ffe5b8" stroke-width="2.2" stroke-linecap="round" opacity="0.72" />
+                  <ellipse cx="584" cy="187" rx="4.5" ry="1.6" transform="rotate(6 584 187)" fill="#8c4221" opacity="0.7" />
+
+                  <!-- Eye -->
+                  <circle cx="556" cy="182" r="9.5" fill="#f7d678" stroke="#c79e3b" stroke-width="1.2" />
+                  <circle cx="557" cy="182" r="6" fill="#ffffff" />
+                  <circle cx="558.5" cy="181.5" r="3.8" fill="#1b262c" />
+                  <circle cx="559.8" cy="180" r="1.4" fill="#ffffff" />
+                  <ellipse cx="546" cy="193" rx="6" ry="3.2" fill="#f29b82" opacity="0.35" />
+
+                  <!-- Optional Retro Aviator Goggles -->
+                  <g id="pelican-goggles" opacity="0">
+                    <path d="M 512,184 L 543,182" stroke="#7d411c" stroke-width="5.5" stroke-linecap="round" />
+                    <ellipse cx="556" cy="182" rx="14" ry="12" fill="url(#goggleLensGrad)" stroke="#c79034" stroke-width="3.2" />
+                    <path d="M 548,176 L 555,175" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+                  </g>
+                </g>
+              </g>
+
+              <!-- Near Crank Arm & Pedal (dynamically updated by JS) -->
+              <g id="crank-near">
+                <line id="crank-near-arm" x1="535" y1="538" x2="558.3" y2="575.3" stroke="url(#chromeGrad)" stroke-width="9" stroke-linecap="round" />
+                <circle cx="535" cy="538" r="7" fill="#9da9af" stroke="#424e54" stroke-width="1.5" />
+                <g id="pedal-near">
+                  <rect x="543.3" y="571.3" width="30" height="8.5" rx="3.2" fill="#2c3539" stroke="#151a1c" stroke-width="1.5" />
+                  <rect x="549.3" y="574.1" width="18" height="2.5" rx="1" fill="#f2a23a" />
+                </g>
+              </g>
+
+              <!-- Near Leg & Webbed Foot (dynamically updated by 2-link IK) -->
+              <g id="pelican-near-leg">
+                <path id="pelican-near-thigh" d="M 484,322 C 518,334 550,368 566,408 C 571,420 562,430 550,428 C 542,424 536,427 528,421 C 504,404 476,374 464,344 C 460,331 470,318 484,322 Z" fill="url(#plumageGrad)" />
+                <path id="pelican-near-thigh-stroke" d="M 488,324 C 520,338 550,370 566,408 C 571,420 562,430 550,428 C 542,424 536,427 528,421 C 504,404 476,374 464,344" fill="none" stroke="#9ea4a7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                <path id="pelican-near-shank" d="M 557.5,422 L 558.3,570" stroke="#d46324" stroke-width="11" stroke-linecap="round" />
+                <path id="pelican-near-shank-hi" d="M 557.5,422 L 558.3,570" stroke="#f7a048" stroke-width="5.5" stroke-linecap="round" />
+                <path id="pelican-near-foot" d="M 547,566 C 558,561 573,565 582,573 C 574,576 561,577 546,576 C 542,574 542,568 547,566 Z" fill="url(#footNearGrad)" stroke="#9e4314" stroke-width="1.6" stroke-linejoin="round" />
+              </g>
+
+              <!-- Near Wing Gripping Near Handlebar -->
+              <g id="pelican-near-wing">
+                <path d="M 464,274 C 484,260 518,266 544,284 C 566,298 594,304 622,298 C 636,295 648,292 652,298 C 655,304 646,312 630,317 C 594,328 544,332 496,324 C 464,318 448,296 464,274 Z" fill="url(#wingNearGrad)" stroke="#8e979c" stroke-width="1.8" stroke-linejoin="round" />
+                <path d="M 480,295 C 498,303 522,306 544,302 M 498,311 C 520,318 548,318 574,312" fill="none" stroke="#b6b9b4" stroke-width="1.8" stroke-linecap="round" />
+                <path d="M 596,304 C 618,299 638,292 650,294 C 658,295 659,304 649,309 C 634,317 610,322 586,321 C 594,315 596,308 596,304 Z" fill="#3a4a54" stroke="#242f36" stroke-width="1.6" stroke-linejoin="round" />
+                <path d="M 612,307 L 645,301 M 604,314 L 638,308" stroke="#617582" stroke-width="1.3" stroke-linecap="round" />
+              </g>
+            </g>
+
+            <!-- ==================== 8. BREEZE & COASTAL MOTION ==================== -->
+            <g id="layer-breeze" fill="none" stroke="#ffffff" stroke-linecap="round" opacity="0.72">
+              <path id="breeze-1" d="M 225,292 C 260,292 296,292 332,292" stroke-width="2.4" />
+              <path id="breeze-2" d="M 248,306 C 276,306 302,306 320,306" stroke-width="1.8" />
+              <path id="breeze-3" d="M 192,438 C 224,438 250,438 272,438" stroke-width="2" />
+              <path id="breeze-4" d="M 164,598 C 204,598 244,598 274,598" stroke-width="2.4" stroke="#f7f1e1" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- Primary Controls -->
+        <div class="control-deck">
+          <div class="control-group">
+            <button id="btn-toggle-play" class="btn btn-primary" type="button" aria-pressed="true">
+              <span id="play-icon" aria-hidden="true">❚❚</span>
+              <span id="play-label">暂停骑行</span>
+            </button>
+            <button id="btn-bell" class="btn btn-bell" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              叮铃鸣笛
+            </button>
+            <label class="speed-control" for="slider-speed">
+              <span class="control-label">踏频倍率</span>
+              <input id="slider-speed" class="speed-slider" type="range" min="0" max="2.8" step="0.1" value="1.0" />
+              <span id="speed-value" class="mono-val">1.0×</span>
+            </label>
+          </div>
+
+          <div class="segmented" role="group" aria-label="海岸光影氛围">
+            <button id="mode-morning" class="seg-btn is-active" type="button" data-mode="morning">晨光海岸</button>
+            <button id="mode-sunset" class="seg-btn" type="button" data-mode="sunset">落日橘海</button>
+            <button id="mode-night" class="seg-btn" type="button" data-mode="night">星夜灯塔</button>
+          </div>
+        </div>
+
+        <!-- Props Toggles & Live Mechanical Telemetry -->
+        <div class="sub-deck">
+          <div class="prop-toggles">
+            <label class="toggle-chip" for="toggle-scarf">
+              <input id="toggle-scarf" type="checkbox" checked />
+              <span>条纹围巾</span>
+            </label>
+            <label class="toggle-chip" for="toggle-goggles">
+              <input id="toggle-goggles" type="checkbox" />
+              <span>复古护目镜</span>
+            </label>
+            <label class="toggle-chip" for="toggle-breeze">
+              <input id="toggle-breeze" type="checkbox" checked />
+              <span>海风气流线</span>
+            </label>
+          </div>
+
+          <div class="telemetry-strip" aria-label="实时骑行机械参数">
+            <div class="metric-item">
+              <span class="metric-key">车速</span>
+              <span id="metric-speed" class="metric-num">18.4 km/h</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">踏频</span>
+              <span id="metric-cadence" class="metric-num">54 RPM</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">传动比</span>
+              <span class="metric-num">28:13</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-key">里程</span>
+              <span id="metric-distance" class="metric-num">0 m</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="craft-notes" aria-label="矢量设计与机械原理说明">
+        <article class="note-card">
+          <h2>双连杆逆运动学踏频</h2>
+          <p>JavaScript 每帧解算髋关节至左右踏板的精确几何距离，驱动羽毛大腿与橙色跗跖随曲柄平滑屈伸，脚蹼全程紧贴踏板不漂移。</p>
+        </article>
+        <article class="note-card">
+          <h2>真实齿轮传动与地面防滑</h2>
+          <p>大盘 28 齿与后飞轮 13 齿严格按 2.15× 传动比驱动 18 辐条车轮，并与海岸木栈道护栏和虚线视差位移严格同步。</p>
+        </article>
+        <article class="note-card">
+          <h2>可导出纯正矢量图层</h2>
+          <p>点击页面右上角「查看独立 SVG」或「导出当前帧 SVG」，即可直接保存不含脚本依赖的完整矢量插画。</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>pro4 · Pelican Riding a Bicycle SVG &amp; Interactive HTML</span>
+      <span>提示：按空格键暂停/继续，直接点击车铃或鹈鹕头部也可触发鸣铃交互</span>
+    </footer>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
