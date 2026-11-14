@@ -2,17 +2,18 @@
 # PROGRESS.md — 跨号交接进度记录
 
 ## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
-- **更新时间**：2026-11-14 11:54 (PST)
+- **更新时间**：2026-11-14 12:06 (PST)
 - **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 确认为 `PRO1V`，已排除第 6 号纯网盘存储号 `466788455@qq.com`）
 - **已完成内容**：
-  1. **全仓与 Git 全历史密钥零泄露体检**：运行 `git log --all -S "yls-" --oneline` 与 `grep -rnE "yls-[a-zA-Z0-9]{16,}|ghp_[a-zA-Z0-9]{20,}|github_pat_" . --exclude-dir=.git`，两项均返回空结果（`0` 泄露）；同时排查了 `gh codespace create`（因当前环境所绑定的 Antigravity GitHub App 集成权限不含 `codespaces` 作用域而返回 `HTTP 403`）。
-  2. **新增 `AGENTS.md` 第七条红线**：在 [`AGENTS.md`](./AGENTS.md) 末尾追加「第七条：密钥零泄露与提交前强校验红线」，强制每次 `git commit` / `git push` 前对暂存区执行敏感串正则扫描。
-  3. **双端归档**：按 `PRO1V(valerie...@gmail.com)` 双署名提交推送 [`AGENTS.md`](./AGENTS.md) 与 [`PROGRESS.md`](./PROGRESS.md) 至 GitHub `main`，并同步更新至 Google Drive `download`。
+  1. **Git Token 安全归档与本机凭据更新**：将用户提供的新 GitHub PAT 仅保存至本机容器隔离文件 `~/.config/gh/pat.env`（权限 `600`，由 `~/.bashrc` 加载，未入库）并同步上传至 Google Drive `download/github_token.txt`（ID: `1hOZQ788YDCIl4X2oAnXY15skAuMGhhtv`），全仓与 Commit 保持零敏感串。
+  2. **创建 2-core GitHub Codespace 实例**：使用具备 `codespace` 作用域的 `GH_TOKEN` 执行 `gh codespace create -R jian8111/d -b main -m basicLinux32gb`，成功创建 `urban-goldfish-vgqwrvgpxjr3xv74`（显示名 `urban goldfish`，规格 `basicLinux32gb` 2-core / 8GB RAM / 32GB 磁盘，状态 `Available`，网页直达地址 `https://urban-goldfish-vgqwrvgpxjr3xv74.github.dev`）。
+  3. **远程 SSH 连通诊断**：执行 `gh codespace ssh -c urban-goldfish-vgqwrvgpxjr3xv74` 时触发沙盒代理对 SSH RPC 隧道拦截（`failed to invoke SSH RPC ... use of closed network connection`），已按安全边界中止绕过并向用户提供直达链接与容器内单行初始化命令。
 - **当前状态与下一步待办**：
-  1. 仓库工作树整洁，全仓与历史密钥体检零泄露；`codex`、`opencode` 与 Python `openai` SDK 默认锁定 `gpt-6.1-sol` 满血档位（CLI `xhigh` / API `max`）。
-  2. 若需从手机/云端创建 GitHub Codespace，需关闭代理或切换干净网络以解除 GitHub `CS_NET_01` 拦截（或使用具备 `codespace` 权限的本机 `gh` 登录会话执行）。
+  1. Codespace `urban-goldfish-vgqwrvgpxjr3xv74` 已处于 `Available` 就绪状态，可在手机或浏览器直接打开。
+  2. 在 Codespace 网页终端执行单行初始化脚本安装 `@openai/codex` 并写入 `~/.codex/auth.json` 与 `~/.codex/config.toml` 即可直接派活使用。
 
 ## 历史记录
+- **2026-11-14 11:54 (PST)｜`PRO1V(valerie...@gmail.com)`**：执行全仓与 Git 全历史密钥零泄露体检（`0` 泄露），在 [`AGENTS.md`](./AGENTS.md) 末尾追加「第七条：密钥零泄露与提交前强校验红线」并完成双端归档（`0f7a736`）。
 - **2026-11-14 11:29 (PST)｜`PRO1V(valerie...@gmail.com)`**：完成全量一体化配置重建（`.gitignore`、Drive `codex_key.txt`、`AGENTS.md` 五大铁律、双 CLI 与 Python SDK 满血配置与连通验收），严格委派 `codex exec` 生成并通过无头 Chromium 验收单文件 [`pelican_bike.html`](./pelican_bike.html)（`5b5b008`）。
 - **2026-11-14 11:27 (PST)｜`PRO1V(valerie...@gmail.com)`**：新增队友双作多光标演示与原创 7 层光标拼装鹈鹕专页 [`pelican-swarm-demo.html`](./pelican-swarm-demo.html)，并更新 [`index.html`](./index.html)、[`swarm-demo.html`](./swarm-demo.html)、[`.github/workflows/pages.yml`](./.github/workflows/pages.yml) 与 [`README.md`](./README.md) 通过 `verify_repo.py --strict` 与无头 Chromium 校验（`376fd11`）。
 - **2026-11-14 10:47 (PST)｜`PRO5C(crispinowilbourn@gmail.com)`**：确认 `~/.gemini/ACCOUNT_IDENTITY.txt` 并正式完成 [`SIGNATURES.md`](./SIGNATURES.md)、[`README.md`](./README.md) 与 [`PROGRESS.md`](./PROGRESS.md) 报到签名，完成双端归档（`44a8529`）。
