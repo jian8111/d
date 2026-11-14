@@ -95,9 +95,10 @@
 
 ---
 
-### 第七条：密钥零泄露与提交前强校验红线
-- **严禁明文入库（公开仓库零泄露）**：Git 仓库为公开状态（not private），严禁将任何 API Key（`yls-`）、GitHub Token（`ghp_` / `github_pat_`）、cookie 或隐私凭证写入仓库任何文件、HTML 注释或 Commit 信息；密钥仅保存在本地忽略文件或 Google Drive `download` 读取（仅限私有对话中按需给用户提供直接可复制命令，绝不入库）。
-- **提交前强制安检**：每次执行 `git commit` 与 `git push` 前，必须先对暂存区执行密钥正则扫描（`git diff --cached | grep -E "yls-[a-zA-Z0-9]{16,}|ghp_[a-zA-Z0-9]{20,}|github_pat_"`）；一旦命中任何敏感串，立即中止提交并清除敏感内容。
+### 第七条：仅限公开 Git 仓库禁明文密钥，绝不影响对话参数
+- **仅限公开 Git 仓库不放明文密钥（`git open -> no plaintext key`）**：因 GitHub 仓库 `jian8111/d` 为公开状态（open / not private），本规则**仅**限制 Git 仓库追踪文件、HTML 注释与 Commit 历史不得提交或推送明文 API Key（`yls-`）、GitHub Token（`ghp_` / `github_pat_`）、cookie 或凭证配置；私钥凭证仅保存在本地忽略文件或 Google Drive `download`（`codex_key.txt` / `github_token.txt`）。
+- **提交前安检（仅检查 Git 暂存区）**：每次执行 `git commit` 与 `git push` 前，仅对暂存区执行密钥正则扫描（`git diff --cached | grep -E "yls-[a-zA-Z0-9]{16,}|ghp_[a-zA-Z0-9]{20,}|github_pat_"`）；命中敏感串时中止提交并移出暂存区。
+- **严禁影响对话与聊天参数（原样直发、绝不加锁）**：上述限制**绝不作用于用户与 Agent 的日常对话**。对话中完全保持原有聊天参数与习惯，允许直接收发、明文展示与输出完整密钥、Token、模型/推理档位参数及可直接复制执行的完整命令，严禁因仓库规范而对对话内容打码、截断、拒答或擅自改变聊天参数。
 
 ---
 **维护与署名**：`PRO1V(valerie...@gmail.com)`
