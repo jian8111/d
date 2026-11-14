@@ -8,6 +8,10 @@
 .
 ├── README.md
 ├── index.html          # 作品总览导航页（汇总各版本预览与直达入口）
+├── pro1/
+│   ├── README.md
+│   ├── index.html      # Pro1 零依赖交互式 HTML + 内联 SVG 版（by Antigravity / AG：2-Bone IK 踩踏、晴空/落日车灯、Web Audio 车铃、喉囊小鱼彩蛋与导出 SVG）
+│   └── pelican-bicycle.svg # Pro1 独立纯矢量 SVG 源文件
 ├── pro2/
 │   ├── README.md
 │   ├── index.html      # Pro2 交互式 HTML + 内联 SVG 版
@@ -30,4 +34,4 @@
 
 ## 本地预览
 
-直接用浏览器打开根目录 [`index.html`](./index.html) 即可浏览全部版本，或直接访问 [`pro5/index.html`](./pro5/index.html) / [`pro4/index.html`](./pro4/index.html) / [`pro3/pelican.html`](./pro3/pelican.html)。所有页面均为零外部依赖，支持离线运行。
+直接用浏览器打开根目录 [`index.html`](./index.html) 即可浏览全部版本，或直接访问 [`pro1/index.html`](./pro1/index.html) / [`pro5/index.html`](./pro5/index.html) / [`pro4/index.html`](./pro4/index.html) / [`pro3/pelican.html`](./pro3/pelican.html)。所有页面均为零外部依赖，支持离线运行。
