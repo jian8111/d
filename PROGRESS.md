@@ -1,7 +1,22 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
+- **更新时间**：2026-11-14 14:15 PST / 22:15 UTC
+- **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 并完成核验，已排除纯存储号 `466788455@qq.com`；当前容器 `gdrive` 已实测连通可用）。
+- **已完成事项**：
+  1. 完成 Codespace `pelican-ride` 提取与双署名收编，登记 `pelican-ride.html`、`pelican-ride.svg` 与 `pelican_bike.html`。
+  2. 构建 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 与 [`scripts/README.md`](./scripts/README.md) 双端发布渠道，统一 GitHub `main` 与 Google Drive `download` 的 50 MiB 分流、身份校验和暂存区密钥扫描。
+  3. 创建并实测修复 3 部离线 CursorSwarm 作品：[`cursor-swarm-city.html`](./cursor-swarm-city.html)、[`cursor-swarm-foundry.html`](./cursor-swarm-foundry.html)、[`pelican-swarm-coaster.html`](./pelican-swarm-coaster.html)。
+  4. 修复 `index.html` 移动端 390px 横向溢出，并更新目录、README 与 GitHub Pages 发布清单。
+- **当前状态与下一步待办**：
+  1. 由 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 执行 GitHub `main` + Google Drive `download` 双端同步。
+  2. 删除临时导出分支 `codespace-friendly-goggles-qvx4rrv696grc96vq`。
+  3. 确认 Codespace `friendly-goggles-qvx4rrv696grc96vq` 处于 `Shutdown` 省额状态。
+- **记录署名**：`PRO1V(valerie...@gmail.com)`
+
+## 上次已归档进度 — `PRO1V(valerie...@gmail.com)`
 - **更新时间**：2026-11-14 13:07 (PST)
 - **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 确认为 `PRO1V`，已排除第 6 号纯网盘存储号 `466788455@qq.com`）
 - **已完成内容**：

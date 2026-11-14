@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+<html lang="zh-CN" data-theme="cyber">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="description" content="NEON HARBOR · 五个光标，一座生长中的赛博港湾。离线实时造城实验。" />
+  <title>NEON HARBOR · 多光标赛博港湾实时造城</title>
+  <link rel="icon" href="data:," />
+  <style>
+    :root {
+      --bg:#08131e; --panel:#0e1c29; --panel-2:#122333; --ink:#e7f0f2; --muted:#8babbc;
+      --line:#263c4c; --accent:#c5f477; --cyan:#72dbe7; --orange:#ffaa7b; --purple:#bcabff;
+      --sky-top:#0a1b30; --sky-bottom:#254557; --water:#0b2737; --mountain:#193648;
+      --building:#153849; --glass:#276075; --edge:#68bfd0; --sun:#8bb9b3; --shore:#122d3c;
+      --grid:rgba(114,219,231,.06); --glow:rgba(114,219,231,.12); --header:rgba(8,19,30,.96);
+      font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; color-scheme:dark;
+    }
+    :root[data-theme="daylight"] {
+      --bg:#e8efed; --panel:#f6f9f5; --panel-2:#dee9e6; --ink:#183a44; --muted:#50747d;
+      --line:#b6cdca; --accent:#356f3f; --cyan:#147f8d; --orange:#aa4c28; --purple:#6e58a4;
+      --sky-top:#a9d4dc; --sky-bottom:#f8e3b2; --water:#83b8bd; --mountain:#80a9af;
+      --building:#b7d2d2; --glass:#73abb8; --edge:#286d81; --sun:#fff2c7; --shore:#54818d;
+      --grid:rgba(24,70,80,.06); --glow:rgba(27,103,112,.08); --header:rgba(232,239,237,.97);
+      color-scheme:light;
+    }
+    :root[data-theme="blueprint"] {
+      --bg:#071f4c; --panel:#0b2a5d; --panel-2:#10366e; --ink:#edf6ff; --muted:#a1c0e3;
+      --line:#31558a; --accent:#f6edb6; --cyan:#b2dcff; --orange:#f8cda5; --purple:#e0d0ff;
+      --sky-top:#0a2857; --sky-bottom:#133e70; --water:#092957; --mountain:#204674;
+      --building:#103b73; --glass:#23538b; --edge:#b0d6ff; --sun:#b8d7ef; --shore:#163b6c;
+      --grid:rgba(190,220,255,.12); --glow:rgba(180,219,255,.09); --header:rgba(7,31,76,.97);
+    }
+    *,*::before,*::after { box-sizing:border-box; min-width:0; }
+    html { scroll-padding-top:104px; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-size:14px; line-height:1.6; }
+    button,input,select { font:inherit; }
+    button,select,a { -webkit-tap-highlight-color:transparent; }
+    button,select { color:var(--ink); border:1px solid var(--line); background:var(--panel-2); border-radius:5px; }
+    button { cursor:pointer; }
+    button:hover,select:hover { border-color:var(--cyan); }
+    button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    button:disabled { opacity:.5; cursor:default; }
+    a { color:inherit; }
+    svg { display:block; max-width:100%; }
+    h1,h2,h3,p,figure { margin:0; }
+    .mono { font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; }
+    .eyebrow { font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+    .dot { display:inline-block; width:6px; height:6px; background:var(--accent); border-radius:50%; box-shadow:0 0 10px var(--accent); flex-shrink:0; }
+    .topbar { position:sticky; top:0; z-index:100; background:var(--header); border-bottom:1px solid var(--line); backdrop-filter:blur(16px); }
+    .topbar-inner { max-width:1392px; margin:auto; min-height:68px; padding:12px 30px; display:flex; align-items:center; flex-wrap:wrap; gap:12px 22px; }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; margin-right:auto; }
+    .brand-mark { width:30px; height:30px; color:var(--accent); }
+    .brand strong { display:block; font-size:12px; line-height:1.3; letter-spacing:.12em; }
+    .brand small { display:block; color:var(--muted); font-size:9px; letter-spacing:.12em; }
+    .controls { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+    .controls button,.controls select { height:33px; padding:0 10px; font-size:11px; }
+    .controls .primary { color:var(--bg); background:var(--accent); border-color:var(--accent); font-weight:700; }
+    .controls .icon-button { color:var(--muted); background:transparent; }
+    .control-label { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--muted); }
+    #speed { width:63px; accent-color:var(--accent); cursor:pointer; }
+    #speed-value { width:29px; color:var(--ink); }
+    #sound[aria-pressed="true"] { color:var(--accent); border-color:var(--accent); }
+    .gallery-link { text-decoration:none; font-size:11px; color:var(--muted); white-space:nowrap; }
+    .gallery-link:hover { color:var(--accent); }
+    .wrap { width:100%; max-width:1392px; margin:auto; padding:0 30px; }
+    /* Temporary rotation and copy drags stay inside the stage, including on narrow screens. */
+    #city-stage { overflow-x:clip; }
+    .hero { display:grid; grid-template-columns:1.5fr 1fr; align-items:end; gap:24px; padding:40px 0 28px; }
+    .hero-kicker { display:flex; align-items:center; gap:9px; margin-bottom:12px; }
+    .hero-kicker span:last-child { color:var(--accent); }
+    h1 { font-size:clamp(44px,6.1vw,84px); line-height:.98; font-weight:850; letter-spacing:-.065em; }
+    h1 .outline { color:var(--accent); }
+    .hero-subtitle { margin-top:14px; color:var(--muted); font-size:13px; letter-spacing:.04em; }
+    .hero-note { padding-bottom:2px; max-width:370px; justify-self:end; }
+    .hero-note p { font-size:13px; color:var(--muted); line-height:1.9; }
+    .hero-note p strong { color:var(--ink); font-weight:500; }
+    .session { display:flex; align-items:center; gap:8px; margin-top:14px; font-size:10px; color:var(--cyan); }
+    .metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:18px; }
+    .metric { border:1px solid var(--line); background:var(--panel); padding:14px 18px 12px; position:relative; overflow:hidden; border-radius:6px; }
+    .metric-top { display:flex; align-items:center; justify-content:space-between; gap:8px; color:var(--muted); font-size:10px; }
+    .metric-icon { color:var(--cyan); font-size:15px; line-height:1; }
+    .metric-value { font-size:28px; letter-spacing:-.05em; font-weight:600; line-height:1.5; }
+    .metric-value small { font-size:12px; letter-spacing:0; color:var(--muted); margin-left:6px; font-weight:400; }
+    .metric-bottom { font-size:9px; color:var(--muted); display:flex; gap:8px; align-items:center; }
+    .metric-bottom span:first-child { color:var(--accent); }
+    .meter { height:2px; background:var(--line); margin-top:10px; }
+    #progress-bar { width:0; height:100%; background:var(--accent); transition:width .3s; }
+    .sparkline { position:absolute; right:12px; bottom:12px; width:68px; height:21px; color:var(--cyan); opacity:.7; }
+    .viewport { border:1px solid var(--line); border-radius:7px; overflow:hidden; background:var(--panel); }
+    .panel-heading { min-height:42px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; padding:10px 16px; border-bottom:1px solid var(--line); }
+    .panel-title { display:flex; gap:9px; align-items:center; font-size:10px; letter-spacing:.05em; }
+    .panel-title span { color:var(--muted); }
+    .live-tag { color:var(--accent); display:flex; align-items:center; gap:6px; font-size:9px; letter-spacing:.1em; }
+    .scene-wrap { position:relative; background:var(--sky-top); overflow:hidden; }
+    #harbor-svg { width:100%; height:auto; overflow:hidden; }
+    .scene-coordinates { position:absolute; left:18px; top:13px; font-size:8px; letter-spacing:.08em; color:var(--edge); pointer-events:none; }
+    .scene-coordinates b { font-weight:400; opacity:.6; }
+    .scene-mode { position:absolute; right:18px; top:13px; color:var(--edge); font-size:8px; letter-spacing:.08em; }
+    .view-caption { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:7px; padding:10px 16px; font-size:10px; color:var(--muted); border-top:1px solid var(--line); }
+    .scene-legend { display:flex; flex-wrap:wrap; gap:16px; }
+    .scene-legend span { display:flex; gap:5px; align-items:center; }
+    .scene-legend i { width:5px; height:5px; border-radius:1px; background:var(--cyan); }
+    .scene-legend span:nth-child(2) i { background:var(--accent); }
+    .scene-legend span:nth-child(3) i { background:var(--orange); }
+    .section-heading { margin:25px 0 12px; display:flex; align-items:center; flex-wrap:wrap; justify-content:space-between; gap:6px 14px; }
+    .section-heading h2 { font-size:13px; font-weight:500; letter-spacing:.05em; }
+    .section-heading h2 span { color:var(--muted); font-size:10px; margin-left:8px; }
+    .section-heading p { color:var(--muted); font-size:10px; }
+    .districts { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .district { background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:16px; overflow:hidden; }
+    .district-head { display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:9px; color:var(--muted); }
+    .district-head b { color:var(--district-color); font-weight:400; letter-spacing:.1em; }
+    .district-visual { width:100%; height:76px; margin:6px 0 10px; color:var(--district-color); background:linear-gradient(0deg,var(--glow),transparent); }
+    .district h3 { font-size:14px; font-weight:500; }
+    .district p { color:var(--muted); font-size:10px; margin:4px 0 13px; min-height:32px; }
+    .build-button { display:flex; justify-content:space-between; align-items:center; gap:6px; width:100%; padding:8px 10px; font-size:11px; border-color:var(--line); background:transparent; }
+    .build-button:hover { background:var(--glow); border-color:var(--district-color); }
+    .build-button span:last-child { color:var(--district-color); font-size:16px; line-height:1; }
+    .landmarks { display:grid; gap:6px; }
+    .landmarks:not(:empty) { margin-top:10px; }
+    .landmark { display:flex; align-items:center; gap:9px; padding:7px; border:1px solid var(--line); border-radius:4px; background:var(--panel-2); }
+    .landmark svg { width:42px; height:34px; flex-shrink:0; color:var(--district-color); }
+    .landmark strong { display:block; font-size:10px; font-weight:500; }
+    .landmark small { display:block; font-size:8px; color:var(--muted); }
+    .landmark-state { margin-left:auto; color:var(--accent); font-size:9px; }
+    .operations { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:12px; margin-top:18px; }
+    .operation-panel { border:1px solid var(--line); background:var(--panel); border-radius:6px; overflow:hidden; }
+    .crew { display:flex; flex-wrap:wrap; gap:7px 15px; padding:12px 16px; border-bottom:1px solid var(--line); }
+    .crew-member { display:flex; align-items:center; gap:6px; font-size:9px; color:var(--muted); }
+    .crew-member i { width:6px; height:6px; background:var(--agent-color); border-radius:50%; }
+    .crew-member b { font-weight:400; color:var(--ink); }
+    .crew-member output { color:var(--agent-color); }
+    .logs { height:154px; overflow-y:auto; padding:8px 16px; scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
+    .log { display:grid; grid-template-columns:53px 49px minmax(0,1fr); gap:9px; padding:4px 0; font-size:9px; line-height:1.5; }
+    .log time { color:var(--muted); opacity:.8; }
+    .log .log-agent { color:var(--cyan); }
+    .log .log-message { color:var(--muted); overflow-wrap:anywhere; }
+    .terminal-body { padding:15px 18px; background:linear-gradient(120deg,var(--glow),transparent 50%); }
+    .terminal-file { font-size:9px; color:var(--muted); margin-bottom:10px; }
+    .terminal-file span { color:var(--accent); margin-right:7px; }
+    pre { overflow-x:auto; max-width:100%; margin:0; font-size:11px; line-height:1.9; scrollbar-width:thin; }
+    pre code { font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; }
+    .code-muted { color:var(--muted); } .code-cyan { color:var(--cyan); } .code-accent { color:var(--accent); } .code-orange { color:var(--orange); }
+    .terminal-status { display:flex; gap:7px; align-items:center; color:var(--muted); font-size:9px; padding-top:12px; }
+    .terminal-status .dot { width:4px; height:4px; }
+    .bottom-line { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 20px; padding:22px 0 64px; font-size:9px; color:var(--muted); letter-spacing:.04em; }
+    #notice { position:fixed; z-index:110; bottom:58px; left:50%; transform:translateX(-50%); max-width:calc(100% - 28px); width:max-content; border:1px solid var(--cyan); border-radius:5px; padding:10px 16px; background:var(--panel); color:var(--ink); font-size:12px; box-shadow:0 6px 30px #0004; opacity:0; visibility:hidden; transition:opacity .2s; pointer-events:none; }
+    #notice.visible { opacity:1; visibility:visible; }
+    /* Keep viewport-wide engine guides and moving copy ghosts inside their visual surfaces. */
+    .cs-layer { clip-path:inset(0); contain:strict; }
+    .cs-hud { max-width:calc(100vw - 24px); font-size:9px !important; }
+    #harbor-svg .breathe { animation:beacon 3.5s ease-in-out infinite; }
+    #harbor-svg .scanner { transform-origin:974px 211px; animation:scan 12s ease-in-out infinite alternate; }
+    #harbor-svg .train { animation:maglev 16s linear infinite; }
+    #harbor-svg .reflection { animation:water-shift 6s ease-in-out infinite alternate; transform-origin:center; }
+    #harbor-svg .turbine-rotor { transform-box:fill-box; transform-origin:center; animation:spin 9s linear infinite; }
+    @keyframes beacon { 0%,100% { opacity:.4; } 50% { opacity:1; } }
+    @keyframes scan { from { transform:rotate(-9deg); opacity:.15; } to { transform:rotate(11deg); opacity:.6; } }
+    @keyframes maglev { from { transform:translateX(-260px); } to { transform:translateX(1100px); } }
+    @keyframes water-shift { from { transform:translateX(-4px) scaleX(.98); opacity:.35; } to { transform:translateX(4px) scaleX(1.02); opacity:.65; } }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @media (min-width:1600px) { .hero { padding-top:48px; } }
+    @media (max-width:1120px) {
+      .topbar-inner { gap:10px; padding:10px 22px; } .controls { flex:1 1 100%; }
+      .brand { margin-right:auto; } .gallery-link { margin-left:auto; } .wrap { padding:0 22px; }
+      .hero { padding-top:30px; } .district { padding:12px; } .metric { padding:12px; }
+    }
+    @media (max-width:700px) {
+      html { scroll-padding-top:188px; } .topbar-inner { padding:10px 15px; gap:10px; }
+      .brand strong { font-size:11px; } .brand-mark { width:26px; height:26px; }
+      .controls { gap:6px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .controls button,.controls select { padding:0 6px; width:100%; font-size:10px; }
+      .control-label { justify-content:center; gap:4px; } #speed { width:50px; } #speed-value { width:25px; }
+      .control-label.entry,.control-label.theme { display:block; } .controls .export-button { grid-column:2 / 4; }
+      .gallery-link { font-size:10px; } .wrap { padding:0 16px; }
+      .hero { grid-template-columns:1fr; gap:18px; padding:28px 0 23px; }
+      h1 { font-size:clamp(42px,12vw,72px); } .hero-subtitle { font-size:11px; margin-top:11px; }
+      .hero-note { justify-self:start; max-width:none; } .hero-note p { font-size:11px; } .session { margin-top:9px; font-size:9px; }
+      .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-bottom:12px; }
+      .metric { padding:11px 12px; } .metric-value { font-size:25px; } .metric-top { font-size:9px; }
+      .metric-bottom { font-size:8px; } .sparkline { width:43px; right:9px; }
+      .panel-heading { padding:9px 12px; } .panel-title { font-size:9px; gap:6px; }
+      .scene-wrap { min-height:230px; } #harbor-svg { width:100%; height:230px; object-fit:cover; }
+      .scene-coordinates { font-size:6px; left:10px; top:10px; } .scene-mode { font-size:6px; right:10px; top:10px; }
+      .view-caption { padding:8px 12px; font-size:8px; } .scene-legend { gap:10px; }
+      .districts { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+      .section-heading { margin-top:22px; } .section-heading h2 { font-size:12px; } .section-heading h2 span { font-size:8px; }
+      .section-heading p { font-size:9px; } .district h3 { font-size:12px; } .district p { font-size:9px; min-height:30px; }
+      .district-head { font-size:8px; } .build-button { font-size:10px; padding:7px 8px; }
+      .operations { grid-template-columns:1fr; gap:12px; } .logs { height:156px; }
+      .bottom-line { font-size:8px; padding-bottom:70px; } .landmark { flex-wrap:wrap; gap:5px; }
+      .landmark svg { width:30px; height:26px; } .landmark strong { font-size:9px; } .landmark small { font-size:7px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *,*::before,*::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" data-cs-ignore>
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html" aria-label="返回作品集首页">
+        <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 26h26M6 23V13l6-4v14M16 23V4l6 4v15M26 23V15M3 29h26" stroke="currentColor" stroke-width="1.7"/><path d="M9 15v3m10-9v3m0 3v3" stroke="currentColor" stroke-width="1.5"/></svg>
+        <span><strong>NEON HARBOR</strong><small>COLLECTIVE CITY LAB / 001</small></span>
+      </a>
+      <a class="gallery-link" href="./index.html">← 返回作品集首页</a>
+      <div class="controls" aria-label="港湾建造控制台">
+        <button id="replay" class="primary" type="button">↻ 重新造城</button>
+        <button id="finish" type="button">⚡ 一键竣工</button>
+        <label class="control-label" for="speed"><span>速度</span><input id="speed" type="range" min="0.5" max="4" step="0.5" value="1.5" /><output id="speed-value" class="mono" for="speed">1.5×</output></label>
+        <label class="control-label entry"><select id="entry" aria-label="光标入场方式"><option value="corners">入场 · 四角集结</option><option value="top">入场 · 天际降临</option><option value="outside">入场 · 城外驰入</option><option value="random">入场 · 随机坐标</option></select></label>
+        <label class="control-label theme"><select id="theme" aria-label="港湾配色主题"><option value="cyber">Cyber · 赛博港湾</option><option value="daylight">Daylight · 晨曦海岸</option><option value="blueprint">Blueprint · 工程蓝图</option></select></label>
+        <button id="sound" class="icon-button" type="button" aria-pressed="false">🔊 音效：关</button>
+        <button id="export" class="export-button" type="button">↓ 导出港湾 SVG 蓝图</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="city-stage" class="wrap" aria-label="多光标赛博港湾实时造城舞台">
+    <section class="hero">
+      <div>
+        <div class="hero-kicker eyebrow mono" data-cs="pop" data-cs-label="港湾会话标识"><i class="dot"></i><span>EXPERIMENT 001</span><span>LIVE CITY GENERATION</span></div>
+        <h1 data-cs="type" data-cs-label="港湾城市标题">NEON <span class="outline">HARBOR</span><span style="color:var(--cyan)">.</span></h1>
+        <p class="hero-subtitle" data-cs="words" data-cs-label="建造宣言">多光标赛博港湾实时造城 / 五个光标，一座共同生长的城市。</p>
+      </div>
+      <div class="hero-note" data-cs="words" data-cs-label="城市实验简介">
+        <p><strong>从第一束光，到下一片天际线。</strong><br />看五位建造者协同点亮港湾，再亲手添加一个地标。<br />这座城市的下一笔，由你决定。</p>
+        <div class="session mono" data-cs-ignore><i class="dot"></i><span id="session-status">五位建造者已就位 · 正在连接港湾</span></div>
+      </div>
+    </section>
+
+    <section class="metrics" aria-label="建造遥测">
+      <article class="metric" data-cs="frame" data-cs-label="建造进度遥测" data-cs-relocate="false">
+        <div class="metric-top"><span>建造进度 / BUILD</span><span class="metric-icon">◷</span></div>
+        <div class="metric-value mono" data-cs-ignore><output id="progress">0</output><small>%</small></div>
+        <div class="metric-bottom"><span>● LIVE</span><span id="build-detail" data-cs-ignore>等待第一块城市模块</span></div>
+        <div class="meter"><div id="progress-bar" data-cs-ignore></div></div>
+      </article>
+      <article class="metric" data-cs="pop" data-cs-label="五光标协作遥测">
+        <div class="metric-top"><span>协作光标 / AGENTS</span><span class="metric-icon">↗</span></div>
+        <div class="metric-value mono">05<small>ONLINE</small></div>
+        <div class="metric-bottom"><span>100%</span><span>五位 Pro 同频协作</span></div>
+        <svg class="sparkline" viewBox="0 0 70 22" fill="none" aria-hidden="true"><path d="M0 18h7l5-8 7 5 7-12 8 11 8-5 7 3 8-10h13" stroke="currentColor" stroke-width="1.3"/></svg>
+      </article>
+      <article class="metric" data-cs="frame" data-cs-label="城市扩建遥测" data-cs-relocate="false">
+        <div class="metric-top"><span>新增地标 / LANDMARKS</span><span class="metric-icon">⊞</span></div>
+        <div class="metric-value mono" data-cs-ignore><output id="landmark-total">00</output><small>UNITS</small></div>
+        <div class="metric-bottom"><span>＋ 扩建就绪</span><span>四个城区，自由生长</span></div>
+      </article>
+      <article class="metric" data-cs="pop" data-cs-label="清洁能源遥测">
+        <div class="metric-top"><span>清洁能源 / POWER</span><span class="metric-icon">ϟ</span></div>
+        <div class="metric-value mono" data-cs-ignore><output id="power">128.4</output><small>MW</small></div>
+        <div class="metric-bottom"><span>↗ 潮汐 + 太阳能</span><span>离网运行</span></div>
+        <svg class="sparkline" viewBox="0 0 70 22" fill="none" aria-hidden="true"><path d="M0 19l10-2 8 2 9-9 8 3 9-8 9 2L70 1" stroke="currentColor" stroke-width="1.3"/></svg>
+      </article>
+    </section>
+
+    <figure class="viewport" data-cs="frame" data-cs-label="港湾全景视窗" data-cs-relocate="false">
+      <div class="panel-heading" data-cs-ignore>
+        <div class="panel-title mono"><span>01 /</span> HARBOR OBSERVATORY <span>· 港湾观测站</span></div>
+        <div class="live-tag mono"><i class="dot"></i> REALTIME</div>
+      </div>
+      <div class="scene-wrap">
+        <div class="scene-coordinates mono" data-cs-ignore>SECTOR 07 · 22°18′N / 114°10′E<br /><b>VIRTUAL COORDINATES · ELEVATION +024M</b></div>
+        <span class="scene-mode mono" id="scene-mode" data-cs-ignore>CYBER / NIGHT CYCLE</span>
+        <svg id="harbor-svg" viewBox="0 0 1100 420" role="img" aria-labelledby="harbor-title harbor-desc" data-cs="media" data-cs-label="赛博港湾全景扫描" data-cs-relocate="false">
+          <title id="harbor-title">NEON HARBOR · 赛博港湾全景</title>
+          <desc id="harbor-desc">远山电网、斜拉桥与磁浮列车、玻璃太阳塔楼、灯塔、潮汐风车和波动的海面倒影；扩建后地标同步出现在城市中。</desc>
+          <defs>
+            <linearGradient id="sky" x2="0" y2="1"><stop stop-color="var(--sky-top)"/><stop offset="1" stop-color="var(--sky-bottom)"/></linearGradient>
+            <linearGradient id="sea" x2="0" y2="1"><stop stop-color="var(--water)"/><stop offset="1" stop-color="var(--bg)"/></linearGradient>
+            <linearGradient id="glass" x2="1" y2=".3"><stop stop-color="var(--building)"/><stop offset=".5" stop-color="var(--glass)"/><stop offset="1" stop-color="var(--building)"/></linearGradient>
+            <linearGradient id="beam"><stop stop-color="var(--cyan)" stop-opacity="0"/><stop offset="1" stop-color="var(--cyan)" stop-opacity=".5"/></linearGradient>
+            <linearGradient id="moon-glow" x2="0" y2="1"><stop stop-color="var(--sun)" stop-opacity=".18"/><stop offset="1" stop-color="var(--sun)" stop-opacity="0"/></linearGradient>
+            <pattern id="city-grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M28 0H0V28" fill="none" stroke="var(--edge)" stroke-opacity=".08" stroke-width=".5"/></pattern>
+            <pattern id="windows" width="10" height="13" patternUnits="userSpaceOnUse"><path d="M3 4h3M3 7h3" stroke="var(--cyan)" stroke-width="1" opacity=".5"/></pattern>
+            <pattern id="solar" width="12" height="9" patternUnits="userSpaceOnUse"><rect width="11" height="8" fill="var(--building)" stroke="var(--edge)" stroke-opacity=".45" stroke-width=".5"/></pattern>
+            <clipPath id="bridge-clip"><rect x="0" y="226" width="1100" height="25"/></clipPath>
+            <g id="little-tower"><path d="M0 0v-38h20v38" fill="var(--building)" stroke="var(--edge)" stroke-opacity=".35"/><path d="M3-34h14v31H3z" fill="url(#windows)"/><path d="M5-39v-5h10v5" fill="var(--building)" stroke="var(--edge)" stroke-opacity=".4"/></g>
+            <g id="turbine"><path d="M0 0v-42" stroke="var(--edge)" stroke-width="2"/><g class="turbine-rotor"><path d="M0-42l-3-23 5 2-2 21 21 8-4 3-17-11-17 16-1-5 18-11" fill="var(--edge)" fill-opacity=".7"/><circle cy="-42" r="3" fill="var(--accent)"/></g></g>
+          </defs>
+          <rect width="1100" height="420" fill="url(#sky)"/>
+          <rect width="1100" height="420" fill="url(#city-grid)"/>
+          <circle cx="795" cy="78" r="38" fill="var(--sun)" opacity=".12"/>
+          <circle cx="795" cy="78" r="30" fill="var(--sun)" opacity=".45"/>
+          <path d="M765 78h60M795 48v60" stroke="var(--edge)" stroke-width=".6" opacity=".4"/>
+          <circle cx="795" cy="78" r="48" fill="none" stroke="var(--edge)" stroke-width=".5" stroke-dasharray="2 6" opacity=".4"/>
+          <g fill="var(--edge)" opacity=".6"><circle cx="100" cy="65" r="1"/><circle cx="223" cy="41" r="1.3"/><circle cx="380" cy="75" r=".8"/><circle cx="563" cy="32" r="1"/><circle cx="660" cy="58" r=".8"/><circle cx="915" cy="35" r="1"/><circle cx="1014" cy="87" r="1.2"/></g>
+          <path d="M0 189L76 122l41 35 71-73 87 96 58-59 83 66 83-54 74 58 88-73 93 71 68-48 85 53 72-75 121 72v62H0Z" fill="var(--mountain)" opacity=".5"/>
+          <path d="M0 212l93-53 74 40 71-52 103 67 97-42 72 33 90-39 71 56 70-52 84 45 82-48 70 52 123-63v111H0Z" fill="var(--mountain)"/>
+          <g fill="none" stroke="var(--edge)" stroke-width=".65" opacity=".28">
+            <path d="M0 189l76-67 41 35 71-73 87 96 58-59 83 66 83-54 74 58 88-73 93 71 68-48 85 53 72-75 121 72"/>
+            <path d="M30 186l46-64 9 67 32-32 39 39 32-112 30 115 57-19 58-59-16 89 99-23 25 27 58-81 28 83 46-25 18 36 70-109 35 103 58-32 68-48-25 82 110-29 12 36 60-111 19 97"/>
+            <path d="M5 206h1090M74 186h144M288 193h140M474 198h152M729 198h128M916 202h127"/>
+          </g>
+          <g stroke="var(--edge)" fill="none" opacity=".5" stroke-width=".7">
+            <path d="M114 186l12-60 12 60m-21-15h18m-21-19h24m-26-10h28M343 191l9-43 10 43m-16-19h13m-15-11h16M851 195l10-51 11 51m-18-18h15m-17-15h18"/>
+            <path d="M126 140Q240 184 352 159M352 159Q610 220 861 157"/>
+          </g>
+          <g fill="var(--building)" stroke="var(--edge)" stroke-width=".6" stroke-opacity=".35">
+            <path d="M40 263v-58h25v58m12 0v-80h34v80m7 0v-48h29v48m13 0v-65h27v65m14 0v-96h29v96m13 0v-51h33v51m426 0v-64h35v64m13 0v-91h27v91m12 0v-72h39v72m15 0v-42h29v42m7 0v-87h25v87m11 0v-60h32v60m12 0v-38h31v38m111 0v-59h27v59m15 0v-77h26v77"/>
+            <path d="M80 186h28v77H80m126-93h20v93h-20m549-88h21v88h-21m54-17v-51h32v51m13-67h18v84h-18m184-56h20v56h-20" fill="url(#windows)" stroke="none"/>
+          </g>
+          <!-- Three glass solar towers, with structural ribs and breathing navigation lights. -->
+          <g id="solar-towers">
+            <path d="M431 278V124l33-19 31 19v154Z" fill="url(#glass)" stroke="var(--edge)" stroke-width="1.1"/>
+            <path d="M464 105v173m-33-154 33 21 31-21m-64 46 33 18 31-18m-64 45 33 18 31-18m-64 45 33 18 31-18" fill="none" stroke="var(--edge)" stroke-opacity=".65" stroke-width=".7"/>
+            <path d="M437 136v130h21V149Zm33 13v117h19V136Z" fill="url(#windows)" opacity=".75"/>
+            <path d="M499 280V66l40-18 41 18v214Z" fill="url(#glass)" stroke="var(--edge)" stroke-width="1.2"/>
+            <path d="M539 48v232m-40-214 40 17 41-17m-81 41 40 17 41-17m-81 41 40 17 41-17m-81 41 40 17 41-17m-81 41 40 17 41-17" fill="none" stroke="var(--edge)" stroke-opacity=".7" stroke-width=".8"/>
+            <path d="M506 82v184h26V93Zm40 11v173h27V82Z" fill="url(#windows)"/>
+            <path d="M539 48V29m-9 10h18" stroke="var(--edge)" stroke-width="1"/>
+            <circle cx="539" cy="29" r="2" fill="var(--orange)" class="breathe"/>
+            <path d="M588 280V146l31-17 32 17v134Z" fill="url(#glass)" stroke="var(--edge)"/>
+            <path d="M619 129v151m-31-134 31 17 32-17m-63 47 31 16 32-16m-63 46 31 17 32-17" stroke="var(--edge)" stroke-opacity=".6" stroke-width=".7" fill="none"/>
+            <path d="M594 157v110h19V168Zm31 11v99h20V157Z" fill="url(#windows)"/>
+            <path d="M423 281h238l21 9H410Z" fill="var(--shore)" stroke="var(--edge)" stroke-opacity=".6"/>
+            <g class="breathe" fill="var(--accent)"><rect x="448" y="137" width="3" height="26"/><rect x="550" y="106" width="3" height="39"/><rect x="631" y="186" width="3" height="20"/></g>
+            <g fill="var(--accent)" opacity=".8" font-size="6" font-family="monospace"><text x="508" y="254">S O L A R / 0 1</text><text x="437" y="257">N E O N</text></g>
+          </g>
+          <!-- Cable-stayed cross-sea bridge and moving maglev. -->
+          <g id="bridge" fill="none">
+            <path d="M0 247H1100" stroke="var(--building)" stroke-width="12"/>
+            <path d="M0 242H1100M0 251H1100" stroke="var(--edge)" stroke-width="1"/>
+            <path d="M271 289V147h9v142m505 0V137h9v152" stroke="var(--edge)" stroke-width="2"/>
+            <path d="M272 150L75 241m197-91-156 91m156-91-116 91m116-91-77 91m77-91-37 91m45-91 36 91m-36-91 76 91m-76-91 116 91m-116-91 156 91m-156-91 196 91M787 140L590 241m197-101-157 101m157-101-117 101m117-101-77 101m77-101-37 101m45-101 37 101m-37-101 77 101m-77-101 117 101m-117-101 157 101m-157-101 197 101" stroke="var(--edge)" stroke-width=".65" opacity=".65"/>
+            <path d="M40 254v35m95-35v35m225-35v35m95-35v35m95-35v35m95-35v35m225-35v35m95-35v35" stroke="var(--building)" stroke-width="3"/>
+            <path d="M0 238H1100" stroke="var(--accent)" stroke-width="1.2" opacity=".65"/>
+          </g>
+          <g clip-path="url(#bridge-clip)"><g class="train"><path d="M16 229h156l17 9H0l9-7Z" fill="var(--ink)"/><path d="M24 231h136l9 4H17Z" fill="var(--glass)"/><path d="M48 230v6m30-6v6m30-6v6m30-6v6" stroke="var(--ink)" stroke-width="2"/><path d="M1 238h187" stroke="var(--cyan)" stroke-width="2"/><path d="M-55 240h45m-80-4h59" stroke="var(--cyan)" stroke-opacity=".5"/></g></g>
+          <!-- Foreground harbor, piers, container cranes, and lighthouse. -->
+          <path d="M0 275h222l29 13h171l25 13h232l38-20h132l27-13h224v152H0Z" fill="url(#sea)"/>
+          <path d="M0 274h216l31 12h170l29 13h232l39-20h136l26-13h221" fill="none" stroke="var(--edge)" stroke-width="1.2" opacity=".7"/>
+          <path d="M0 275h217l31 13H0Zm719 5h137l25-13h219v16H719Z" fill="var(--shore)"/>
+          <path d="M65 287v29h168v-7H80v-22m721-5v27h158v-7H816v-20" fill="var(--shore)" stroke="var(--edge)" stroke-opacity=".5" stroke-width=".7"/>
+          <g fill="url(#solar)" stroke="var(--edge)" stroke-opacity=".5" stroke-width=".7"><path d="M18 267l10-19h48l-10 19Z"/><path d="M81 267l10-19h49l-10 19Z"/><path d="M144 267l10-19h49l-10 19Z"/></g>
+          <g stroke="var(--edge)" stroke-width="1.1" fill="none"><path d="M76 274v-70h70v6H83m26-6 37 38m-70-38 37 38m32-34v40m-69-40 69 40m-45 27v-29h27v29M24 274v-45h40v5H30m34-5v32"/><path d="M140 247v11h12" stroke="var(--orange)"/></g>
+          <g fill="var(--building)" stroke="var(--edge)" stroke-width=".6" opacity=".8"><rect x="95" y="266" width="29" height="10"/><rect x="128" y="263" width="27" height="13"/><rect x="159" y="268" width="37" height="8"/><path d="M99 268v6m5-6v6m6-6v6m23-8v8m6-8v8m6-8v8"/></g>
+          <g id="tidal-farm"><use href="#turbine" x="716" y="277"/><use href="#turbine" x="748" y="280" transform="translate(187 70) scale(.75)"/><use href="#turbine" x="825" y="275" transform="translate(412 137) scale(.5)"/></g>
+          <g id="lighthouse">
+            <path class="scanner" d="M974 211L720 155v82Z" fill="url(#beam)"/>
+            <path d="M960 269l7-53h14l7 53Z" fill="var(--building)" stroke="var(--edge)" stroke-width=".9"/>
+            <path d="M965 232h19m-21 17h23" stroke="var(--edge)" stroke-width="2"/>
+            <path d="M964 216v-12h20v12Zm-4-13 14-10 14 10Z" fill="var(--building)" stroke="var(--edge)" stroke-width=".9"/>
+            <rect x="968" y="207" width="12" height="6" fill="var(--accent)" class="breathe"/><path d="M974 193v-8" stroke="var(--edge)"/>
+            <path d="M946 271h55l-7 6h-55Z" fill="var(--shore)" stroke="var(--edge)" stroke-width=".6"/>
+          </g>
+          <g id="city-additions" aria-label="新增城市地标"></g>
+          <g class="reflection" fill="none" stroke-linecap="round">
+            <path d="M500 309h75m-65 6h60m-74 8h88m-62 7h42m-66 9h70m-53 9h31m-47 8h66m-46 8h28m-33 11h40m-27 12h15" stroke="var(--cyan)" stroke-width="1.5" opacity=".6"/>
+            <path d="M441 308h34m-39 8h45m-29 10h27m-38 9h28m-17 12h19M601 307h35m-28 9h38m-28 10h19m-35 10h39M958 291h31m-25 6h34m-34 8h22m-30 9h33m-23 10h12" stroke="var(--accent)" stroke-width="1" opacity=".65"/>
+            <path d="M47 322h59m61 9h72m69-16h41m381 16h45m151 9h67m91-22h43M14 357h63m53 20h47m71-32h57m51 37h84m231-31h54m89 29h86m88-21h86M30 402h145m118-7h93m309 7h74m136-5h113" stroke="var(--edge)" stroke-width=".7" opacity=".45"/>
+          </g>
+          <g fill="var(--shore)" stroke="var(--edge)" stroke-width=".6"><path d="M303 335h43l-7 7h-28Z"/><path d="M324 335v-12h8v12m-4-12v-8" fill="none"/><path d="M829 354h35l-5 5h-26Z"/><path d="M843 354v-9h8v9"/></g>
+          <g fill="none" stroke="var(--edge)" stroke-width=".6" opacity=".65"><path d="M22 385v14h14m1028 0h14v-14M22 39V25h14m1028 0h14v14"/><path d="M525 401h50m-25-4v8"/></g>
+          <g font-size="6.5" font-family="monospace" fill="var(--edge)" opacity=".75"><text x="29" y="389">NEON HARBOR / DIGITAL TWIN</text><text x="951" y="389">SCALE 1:2400</text><text x="505" y="20">N H · 0 0 1</text></g>
+        </svg>
+      </div>
+      <figcaption class="view-caption" data-cs-ignore><div class="scene-legend mono"><span><i></i>城市结构</span><span><i></i>清洁能源</span><span><i></i>交通信标</span></div><span>1100 × 420 · 全景矢量视图 / LIVE SVG</span></figcaption>
+    </figure>
+
+    <div class="section-heading" data-cs-ignore><h2>选择一片城区，开始扩建 <span class="mono">EXPAND THE HORIZON</span></h2><p>点击 ＋ · 让建造者把你的想法落地</p></div>
+    <section class="districts" aria-label="四区扩建工作台">
+      <article class="district" id="district-signal" style="--district-color:var(--cyan)" data-cs="pop" data-cs-copy="true" data-cs-label="A01 信号高地区块">
+        <div class="district-head mono"><b>A01 / UPLINK</b><span>信号高地</span></div>
+        <svg class="district-visual" viewBox="0 0 230 76" fill="none" aria-hidden="true"><path d="M12 66h206M78 64l19-47 20 47m-30-22h21M97 17V4m-4 4h8M116 65V38h38v27m-34-21h30M153 65V51h21v14" stroke="currentColor" stroke-width="1"/><path d="M102 19q25 0 25-25M104 26q32 0 32-32M107 33q40 0 40-39" stroke="currentColor" opacity=".5"/><path d="M70 69h118" stroke="currentColor" opacity=".4"/><circle cx="97" cy="17" r="3" fill="currentColor"/></svg>
+        <h3>让信号，抵达更远</h3><p>加建卫星天线，接入下一条星际链路。</p>
+        <button class="build-button" data-cs-ignore data-expand="signal" type="button"><span>加建卫星天线</span><span aria-hidden="true">＋</span></button>
+        <div class="landmarks" id="landmarks-signal" aria-label="已添加的卫星天线"></div>
+      </article>
+      <article class="district" id="district-transit" style="--district-color:var(--orange)" data-cs="pop" data-cs-copy="true" data-cs-label="B02 磁浮交通区块">
+        <div class="district-head mono"><b>B02 / TRANSIT</b><span>磁浮环线</span></div>
+        <svg class="district-visual" viewBox="0 0 230 76" fill="none" aria-hidden="true"><path d="M12 56h206M12 62h206M50 62v9m49-9v9m49-9v9m49-9v9M51 31h111l22 20H35l9-16Z" stroke="currentColor"/><path d="M55 36h101l10 9H45Z" fill="currentColor" opacity=".2"/><path d="M78 35v12m28-12v12m28-12v12M12 44h14m-5-7h13m156 19h28" stroke="currentColor" opacity=".6"/></svg>
+        <h3>把远方，变成下一站</h3><p>增开磁浮班次，让港湾的流动永不停歇。</p>
+        <button class="build-button" data-cs-ignore data-expand="transit" type="button"><span>增开磁浮班次</span><span aria-hidden="true">＋</span></button>
+        <div class="landmarks" id="landmarks-transit" aria-label="已添加的磁浮班次"></div>
+      </article>
+      <article class="district" id="district-energy" style="--district-color:var(--accent)" data-cs="pop" data-cs-copy="true" data-cs-label="C03 潮汐能源区块">
+        <div class="district-head mono"><b>C03 / ENERGY</b><span>潮汐能源</span></div>
+        <svg class="district-visual" viewBox="0 0 230 76" fill="none" aria-hidden="true"><path d="M91 60V24m49 39V38M91 24l-3-21 6 3-3 18 19 9-5 3-14-12-15 16-2-5 17-11M140 38l-2-15 4 2-2 13 14 7-4 2-10-9-11 11-1-4 12-7" stroke="currentColor"/><circle cx="91" cy="24" r="2" fill="currentColor"/><circle cx="140" cy="38" r="2" fill="currentColor"/><path d="M20 63q17-7 34 0t34 0 34 0 34 0 34 0m-160 8q17-7 34 0t34 0 34 0 34 0 34 0" stroke="currentColor" opacity=".5"/></svg>
+        <h3>借一阵风，点亮一座城</h3><p>部署潮汐风车，为城市注入 12.8 MW。</p>
+        <button class="build-button" data-cs-ignore data-expand="energy" type="button"><span>部署潮汐风车</span><span aria-hidden="true">＋</span></button>
+        <div class="landmarks" id="landmarks-energy" aria-label="已添加的潮汐风车"></div>
+      </article>
+      <article class="district" id="district-holo" style="--district-color:var(--purple)" data-cs="pop" data-cs-copy="true" data-cs-label="D04 全息街区模块">
+        <div class="district-head mono"><b>D04 / CULTURE</b><span>全息街区</span></div>
+        <svg class="district-visual" viewBox="0 0 230 76" fill="none" aria-hidden="true"><path d="M57 65h119M81 64V20h67v44M76 15h77v39H76Z" stroke="currentColor"/><path d="M82 21h65v27H82Z" fill="currentColor" opacity=".12"/><path d="M91 42V28l11 14V28m9 0v14m0-7h12m0-7v14M65 55l-7 10m103-10 7 10" stroke="currentColor"/><path d="M80 10h68M85 6h58M86 70h56" stroke="currentColor" stroke-dasharray="2 5" opacity=".4"/></svg>
+        <h3>给夜色，多一点想象</h3><p>点亮全息灯牌，留下属于港湾的暗号。</p>
+        <button class="build-button" data-cs-ignore data-expand="holo" type="button"><span>点亮全息灯牌</span><span aria-hidden="true">＋</span></button>
+        <div class="landmarks" id="landmarks-holo" aria-label="已添加的全息灯牌"></div>
+      </article>
+    </section>
+
+    <section class="operations" aria-label="建造操作记录与城市终端">
+      <div class="operation-panel" data-cs="frame" data-cs-label="实时建造日志面板" data-cs-relocate="false">
+        <div class="panel-heading" data-cs-ignore><div class="panel-title mono"><span>02 /</span> BUILD FEED <span>· 实时建造日志</span></div><span id="operation-count" class="eyebrow mono">000 OPS</span></div>
+        <div class="crew mono" data-cs-ignore>
+          <span class="crew-member" style="--agent-color:#72dbe7"><i></i><b>PRO1V</b>构架 <output id="ops-PRO1V">0</output></span>
+          <span class="crew-member" style="--agent-color:#c5f477"><i></i><b>PRO2H</b>文字 <output id="ops-PRO2H">0</output></span>
+          <span class="crew-member" style="--agent-color:#bcabff"><i></i><b>PRO3J</b>视觉 <output id="ops-PRO3J">0</output></span>
+          <span class="crew-member" style="--agent-color:#ffaa7b"><i></i><b>PRO4M</b>城区 <output id="ops-PRO4M">0</output></span>
+          <span class="crew-member" style="--agent-color:#fa8eae"><i></i><b>PRO5C</b>系统 <output id="ops-PRO5C">0</output></span>
+        </div>
+        <div class="logs mono" id="build-log" role="log" aria-label="实时建造日志" aria-live="polite" aria-relevant="additions" data-cs-ignore></div>
+      </div>
+      <div class="operation-panel" data-cs="frame" data-cs-label="城市终端框架" data-cs-relocate="false">
+        <div class="panel-heading" data-cs-ignore><div class="panel-title mono"><span>03 /</span> CITY KERNEL <span>· 城市终端</span></div><span class="eyebrow mono">v1.0.0</span></div>
+        <div class="terminal-body">
+          <div class="terminal-file mono" data-cs-ignore><span>●</span>harbor.config · local session</div>
+          <pre><code data-cs="words" data-cs-label="城市终端代码"><span class="code-muted">// 一座城市，从协作开始。</span>
+<span class="code-cyan">const</span> harbor = {
+  name: <span class="code-accent">'NEON HARBOR'</span>,
+  builders: <span class="code-orange">5</span>, energy: <span class="code-accent">'renewable'</span>,
+  horizon: <span class="code-accent">'always expanding'</span>
+};
+<span class="code-cyan">await</span> city.build(harbor); <span class="code-muted">// ready for you_</span></code></pre>
+          <div class="terminal-status mono" data-cs-ignore><i class="dot"></i><span id="kernel-status">LOCAL ENGINE · 等待城市结构编译</span></div>
+        </div>
+      </div>
+    </section>
+    <footer class="bottom-line mono" data-cs-ignore><span>BUILT TOGETHER. GROWING FOREVER. / 一起造城，持续生长。</span><span>PRO1V(valerie...@gmail.com) · CURSORSWARM 1.0.0 · OFFLINE READY</span></footer>
+  </main>
+  <div id="notice" role="status" aria-live="polite" data-cs-ignore></div>
+  <script src="./assets/vendor/cursor-swarm/cursor-swarm.min.js"></script>
+  <script>
+    // 署名: PRO1V(valerie...@gmail.com)
+    (() => {
+      'use strict';
+      const $ = id => document.getElementById(id);
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      const agents = [
+        { name:'PRO1V', color:'#72dbe7', role:['layout'] },
+        { name:'PRO2H', color:'#c5f477', role:['type'] },
+        { name:'PRO3J', color:'#bcabff', role:['media'] },
+        { name:'PRO4M', color:'#ffaa7b', role:['layout','media'] },
+        { name:'PRO5C', color:'#fa8eae', role:['type','layout'] }
+      ];
+      const counts = {signal:0,transit:0,energy:0,holo:0};
+      const agentOps = Object.fromEntries(agents.map(agent => [agent.name,0]));
+      const districts = {
+        signal:{ name:'卫星天线', code:'UP', color:'var(--cyan)', symbol:'M8 32h34M16 30l9-23 10 23M21 21h9M25 7V2M29 8q10 0 10-10M30 13q15 0 15-15', location:[323,275] },
+        transit:{ name:'磁浮班次', code:'MG', color:'var(--orange)', symbol:'M2 29h46M9 12h25l10 12H3Z M12 16h20l4 5H8M19 15v7M28 15v7', location:[100,236] },
+        energy:{ name:'潮汐风车', code:'TW', color:'var(--accent)', symbol:'M25 34V13M25 13L22 1l5 2-2 10 13 5-3 3-10-8-11 11-2-4 13-7M5 34q5-3 10 0t10 0 10 0 10 0', location:[682,282] },
+        holo:{ name:'全息灯牌', code:'HL', color:'var(--purple)', symbol:'M6 5h38v22H6ZM12 27v7m26-7v7M12 21V11l8 10V11m7 0v10m0-5h9m0-5v10M4 35h42', location:[866,262] }
+      };
+      let swarm = null;
+      let operationCount = 0;
+      let audioContext = null;
+      let soundEnabled = false;
+      let lastSound = 0;
+      let noticeTimer;
+      let generation = 0;
+
+      function notice(message) {
+        $('notice').textContent = message;
+        $('notice').classList.add('visible');
+        clearTimeout(noticeTimer);
+        noticeTimer = setTimeout(() => $('notice').classList.remove('visible'),4200);
+      }
+
+      function log(agent,message,color) {
+        const row = document.createElement('div');
+        row.className = 'log';
+        const time = document.createElement('time');
+        const now = new Date();
+        time.dateTime = now.toISOString();
+        time.textContent = now.toLocaleTimeString('en-GB',{hour12:false});
+        const who = document.createElement('span');
+        who.className = 'log-agent';
+        who.textContent = agent || 'SYSTEM';
+        if (color) who.style.color = color;
+        const text = document.createElement('span');
+        text.className = 'log-message';
+        text.textContent = message;
+        row.append(time,who,text);
+        const list = $('build-log');
+        const follow = list.scrollHeight - list.scrollTop - list.clientHeight < 30;
+        list.append(row);
+        while (list.children.length > 80) list.firstElementChild.remove();
+        if (follow) list.scrollTop = list.scrollHeight;
+      }
+
+      function tone(kind) {
+        if (!soundEnabled || !audioContext || audioContext.state !== 'running') return;
+        const now = audioContext.currentTime;
+        if (now - lastSound < .065) return;
+        lastSound = now;
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        oscillator.type = kind === 'done' ? 'sine' : 'triangle';
+        const frequency = {frame:240,pop:590,media:380,words:820,type:720,done:980}[kind] || 440;
+        oscillator.frequency.setValueAtTime(frequency,now);
+        oscillator.frequency.exponentialRampToValueAtTime(kind === 'done' ? 1440 : frequency*.45,now+.075);
+        gain.gain.setValueAtTime(0,now);
+        gain.gain.linearRampToValueAtTime(.025,now+.006);
+        gain.gain.exponentialRampToValueAtTime(.0001,now+.11);
+        oscillator.connect(gain); gain.connect(audioContext.destination);
+        oscillator.start(now); oscillator.stop(now+.12);
+        oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+      }
+
+      function updateTelemetry() {
+        const progress = swarm ? Math.round(swarm.progress*100) : 100;
+        $('progress').textContent = progress;
+        $('progress-bar').style.width = progress+'%';
+        const records = swarm ? swarm.records : [];
+        const built = records.filter(record => record.state === 'built').length;
+        $('build-detail').textContent = records.length ? built+' / '+records.length+' 模块就绪' : '静态港湾已就绪';
+        $('landmark-total').textContent = String(Object.values(counts).reduce((a,b)=>a+b,0)).padStart(2,'0');
+        $('power').textContent = (128.4+counts.energy*12.8).toFixed(1);
+      }
+
+      function finishLandmark(el) {
+        if (!el.classList.contains('landmark')) return;
+        el.querySelector('.landmark-state').textContent = '✓';
+        el.querySelector('small').textContent = el.dataset.unit+' · 已接入港湾';
+        const marker = $(el.dataset.marker);
+        if (marker) marker.style.opacity = '1';
+      }
+
+      function buildCity() {
+        const currentGeneration = ++generation;
+        if (swarm) swarm.destroy();
+        swarm = null;
+        Object.keys(agentOps).forEach(name => { agentOps[name]=0; $('ops-'+name).textContent='0'; });
+        operationCount = 0;
+        $('operation-count').textContent = '000 OPS';
+        $('build-log').replaceChildren();
+        $('session-status').textContent = '五位建造者在线 · 城市正在生长';
+        $('kernel-status').textContent = 'LOCAL ENGINE · 正在编译城市结构';
+        document.querySelectorAll('.landmark').forEach(el => {
+          el.querySelector('.landmark-state').textContent = '…';
+          el.querySelector('small').textContent = el.dataset.unit+' · 等待建造';
+          const marker = $(el.dataset.marker);
+          if (marker) marker.style.opacity='0';
+        });
+        if (typeof CursorSwarm !== 'function') {
+          document.querySelectorAll('.landmark').forEach(finishLandmark);
+          $('session-status').textContent = '静态港湾 · 建造引擎尚未加载';
+          $('kernel-status').textContent = '请保留页面旁的 assets/vendor/cursor-swarm 文件夹';
+          log('SYSTEM','本地引擎缺失，已展示城市；扩建仍然可用。');
+          updateTelemetry();
+          return;
+        }
+        swarm = new CursorSwarm({
+          root:'#city-stage', targets:'[data-cs]:not([data-cs="none"])',
+          agents, cursors:5, respectReducedMotion:true,
+          startPosition:$('entry').value, exitAfterBuild:'home',
+          copyPaste:0.45, relocation:0.3, hud:true, hudPosition:'bottom-left',
+          deconstruct:false, speed:Number($('speed').value), adaptiveSpeed:false,
+          typeDuration:1.8, trigger:1,
+          onBuild(el,type,agentName) {
+            if (generation !== currentGeneration) return;
+            operationCount++;
+            const agent = agents.find(item => item.name === agentName);
+            if (agent) { agentOps[agentName]++; $('ops-'+agentName).textContent=agentOps[agentName]; }
+            const verbs = {frame:'框选组装',pop:'拼装部署',media:'扫描成像',words:'输入代码 / 文字',type:'逐字写入'};
+            log(agentName || 'SYSTEM',(verbs[type] || '建造')+' · '+(el.dataset.csLabel || '港湾模块'),agent && agent.color);
+            $('operation-count').textContent = String(operationCount).padStart(3,'0')+' OPS';
+            finishLandmark(el);
+            tone(type);
+            updateTelemetry();
+          },
+          onDone() {
+            if (generation !== currentGeneration) return;
+            log('SYSTEM','所有模块已接入港湾 · 光标归位，等待下一次扩建。','var(--accent)');
+            $('session-status').textContent = '港湾建造完成 · 等待你的下一笔';
+            $('kernel-status').textContent = 'BUILD SUCCESS · 城市已上线，扩建通道开放';
+            tone('done');
+            updateTelemetry();
+          }
+        }).init();
+        // Expose the live engine for the local control console and offline inspection.
+        window.swarm = swarm;
+        log('SYSTEM','港湾会话启动 · 5 AGENTS / '+$('entry').selectedOptions[0].textContent);
+        if (swarm.state === 'stopped') {
+          document.querySelectorAll('.landmark').forEach(finishLandmark);
+          $('session-status').textContent = '减少动态效果已启用 · 港湾静态就绪';
+          $('kernel-status').textContent = 'STATIC MODE · 尊重系统减少动态效果偏好';
+          log('SYSTEM','减少动态效果模式：城市直接呈现，扩建照常可用。');
+        }
+        updateTelemetry();
+      }
+
+      function addCityMarker(kind,number,id) {
+        const config = districts[kind];
+        const ns = $('harbor-svg').namespaceURI;
+        const group = document.createElementNS(ns,'g');
+        group.id = id;
+        const column = (number-1)%6;
+        const level = Math.floor((number-1)/6);
+        const x = config.location[0] + column*(kind === 'transit' ? 116 : 29);
+        const y = config.location[1] - level*(kind === 'transit' ? 10 : 32);
+        group.setAttribute('transform','translate('+x+' '+y+') scale(.6)');
+        group.setAttribute('color',config.color);
+        const title = document.createElementNS(ns,'title');
+        title.textContent = config.name+' '+number;
+        const path = document.createElementNS(ns,'path');
+        path.setAttribute('d',config.symbol);
+        path.setAttribute('transform','translate(0 -35)');
+        path.setAttribute('stroke','currentColor');
+        path.setAttribute('stroke-width','1.5');
+        path.setAttribute('fill','var(--building)');
+        group.append(title,path);
+        group.style.opacity='0';
+        $('city-additions').append(group);
+      }
+
+      function expand(kind,button) {
+        if (!districts[kind] || counts[kind]>=12) return;
+        const number = ++counts[kind];
+        const config = districts[kind];
+        const unit = config.code+'-'+String(number).padStart(2,'0');
+        const markerId = 'marker-'+unit;
+        const newEl = document.createElement('article');
+        newEl.className = 'landmark';
+        newEl.dataset.cs='pop';
+        newEl.dataset.csCopy='false';
+        newEl.dataset.csRelocate='false';
+        newEl.dataset.csLabel=config.name+' '+unit;
+        newEl.dataset.unit=unit;
+        newEl.dataset.marker=markerId;
+        // Symbols and labels are fixed local definitions, with no remote assets or user HTML.
+        newEl.innerHTML='<svg viewBox="0 0 50 38" fill="none" aria-hidden="true"><path d="'+config.symbol+'" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>'+config.name+' '+String(number).padStart(2,'0')+'</strong><small>'+unit+' · 等待建造</small></div><span class="landmark-state" aria-label="建造状态">…</span>';
+        $('landmarks-'+kind).prepend(newEl);
+        addCityMarker(kind,number,markerId);
+        log('USER','扩建请求 · '+config.name+' '+unit,'var(--orange)');
+        if (swarm && swarm.state === 'running') {
+          swarm.add(newEl,'pop');
+          $('session-status').textContent = '收到扩建请求 · 建造者正在前往 '+unit;
+          $('kernel-status').textContent = 'EXPANSION QUEUED · '+unit;
+          notice(config.name+'已派单，光标将前往建造');
+        } else {
+          finishLandmark(newEl);
+          notice(reducedMotion.matches ? '新地标已展示 · 减少动态效果模式' : '新地标已展示 · 点击「重新造城」观看光标建造');
+          log('SYSTEM',unit+' 已直接展示；重新造城可重播扩建过程。');
+        }
+        if (number>=12) { button.disabled=true; button.querySelector('span').textContent='本区 12 个地标已满'; }
+        updateTelemetry();
+      }
+
+      $('replay').addEventListener('click',() => { buildCity(); notice('新一轮建造已开始 · 已扩建地标将保留'); });
+      $('finish').addEventListener('click',() => {
+        if (swarm && swarm.state === 'running') swarm.stop({reveal:true});
+        document.querySelectorAll('.landmark').forEach(finishLandmark);
+        $('session-status').textContent = reducedMotion.matches ? '减少动态效果已启用 · 港湾静态就绪' : '全城已竣工 · 点击重新造城可召回光标';
+        $('kernel-status').textContent = 'BUILD SUCCESS · 所有城市模块已呈现';
+        log('SYSTEM','一键竣工 · 所有地标已接入港湾。','var(--accent)');
+        updateTelemetry();
+        tone('done');
+        notice('全城已竣工 · 仍可继续添加新地标');
+      });
+      $('speed').addEventListener('input',event => {
+        const value = Number(event.target.value);
+        $('speed-value').textContent=value+'×';
+        if (swarm) swarm.setSpeed(value);
+      });
+      $('entry').addEventListener('change',() => { buildCity(); notice('已切换光标入场方式，开始重新造城'); });
+      $('theme').addEventListener('change',event => {
+        const theme = event.target.value;
+        document.documentElement.dataset.theme=theme;
+        $('scene-mode').textContent={cyber:'CYBER / NIGHT CYCLE',daylight:'DAYLIGHT / DAWN CYCLE',blueprint:'BLUEPRINT / ENGINEERING VIEW'}[theme];
+        log('SYSTEM','港湾光照切换 · '+event.target.selectedOptions[0].textContent);
+      });
+      $('sound').addEventListener('click',async () => {
+        if (soundEnabled) {
+          soundEnabled=false;
+          $('sound').setAttribute('aria-pressed','false');
+          $('sound').textContent='🔊 音效：关';
+          return;
+        }
+        const Audio = window.AudioContext || window.webkitAudioContext;
+        if (!Audio) { notice('当前浏览器未提供合成音频，视觉建造照常运行'); return; }
+        try {
+          if (!audioContext) audioContext=new Audio();
+          await audioContext.resume();
+          soundEnabled=audioContext.state==='running';
+          $('sound').setAttribute('aria-pressed',String(soundEnabled));
+          $('sound').textContent=soundEnabled ? '🔊 音效：开' : '🔊 音效：关';
+          if (soundEnabled) { lastSound=-1; tone('pop'); }
+        } catch (_) { notice('音频暂不可用，请再次点击音效开关'); }
+      });
+      document.querySelectorAll('[data-expand]').forEach(button => button.addEventListener('click',() => expand(button.dataset.expand,button)));
+
+      $('export').addEventListener('click',() => {
+        const source=$('harbor-svg');
+        const clone=source.cloneNode(true);
+        // Bake computed colors and the current animation frame into the standalone SVG.
+        const originals=[source,...source.querySelectorAll('*')];
+        const copies=[clone,...clone.querySelectorAll('*')];
+        const properties=['fill','stroke','color','stop-color','stop-opacity','opacity','stroke-width','stroke-opacity','fill-opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','font-family','font-size','font-weight','transform','transform-origin','transform-box'];
+        originals.forEach((el,index) => {
+          const style=getComputedStyle(el);
+          const target=copies[index];
+          target.removeAttribute('data-cs'); target.removeAttribute('data-cs-label');
+          target.removeAttribute('data-cs-relocate');
+          target.removeAttribute('class'); target.removeAttribute('style');
+          properties.forEach(property => {
+            let value=style.getPropertyValue(property);
+            // Chromium resolves url(#id) against file:// or the HTTP page URL.
+            value=value.replace(/url\(["']?[^)]*#([^"')]+)["']?\)/g,'url(#$1)');
+            target.removeAttribute(property);
+            if (value && !(property==='transform' && value==='none')) target.style.setProperty(property,value);
+          });
+          if (el.parentElement && el.parentElement.id==='city-additions') target.style.opacity='1';
+        });
+        clone.style.removeProperty('transform');
+        clone.setAttribute('width','1100'); clone.setAttribute('height','420');
+        clone.removeAttribute('data-cs');
+        clone.removeAttribute('aria-labelledby');
+        const signature=document.createComment(' 署名: PRO1V(valerie...@gmail.com) · NEON HARBOR · '+$('theme').value+' · current frame ');
+        clone.insertBefore(signature,clone.firstChild);
+        const data='<?xml version="1.0" encoding="UTF-8"?>\n'+new XMLSerializer().serializeToString(clone);
+        const url=URL.createObjectURL(new Blob([data],{type:'image/svg+xml;charset=utf-8'}));
+        const anchor=document.createElement('a');
+        anchor.href=url; anchor.download='neon-harbor-'+$('theme').value+'.svg';
+        document.body.append(anchor); anchor.click(); anchor.remove();
+        setTimeout(() => URL.revokeObjectURL(url),2000);
+        log('SYSTEM','港湾 SVG 蓝图已导出 · 含全部新增地标与当前主题。');
+        notice('港湾 SVG 蓝图已导出 · 可离线独立打开');
+      });
+      reducedMotion.addEventListener('change',() => { buildCity(); });
+      buildCity();
+    })();
+  </script>
+</body>
+</html>

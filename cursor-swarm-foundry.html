@@ -1,0 +1,372 @@
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="obsidian">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#191b1a" />
+  <meta name="description" content="AETHER FOUNDRY · 多光标星港精密蓝图工坊。六位工程光标，协同装配一座星港。离线 CAD 透视、分解装配与可派发检验工单。" />
+  <title>AETHER FOUNDRY · 多光标星港精密蓝图工坊</title>
+  <link rel="icon" href="data:," />
+  <style>
+    :root{color-scheme:dark;--bg:#191b1a;--surface:#202321;--paper:#1c201e;--raised:#282c28;--ink:#ede9dc;--muted:#9b9f92;--line:#3e443b;--faint:#2a302a;--accent:#d6af70;--accent-soft:#373328;--blue:#7dabb5;--green:#a4b594;--svg-ink:#b8c5ac;--svg-solid:#30392f;--grid:#313a30;--shadow:0 18px 50px #00000015;--mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;--sans:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+    [data-theme="ivory"]{color-scheme:light;--bg:#eae7dd;--surface:#f6f3e9;--paper:#f3f0e5;--raised:#e6e3d8;--ink:#30382f;--muted:#6b7465;--line:#c0c5b5;--faint:#dddfd1;--accent:#8a602e;--accent-soft:#e9dfca;--blue:#3d7f91;--green:#5b7754;--svg-ink:#52654c;--svg-solid:#d4dcc9;--grid:#d7ddcd;--shadow:0 18px 50px #51493508}
+    [data-theme="amber"]{color-scheme:dark;--bg:#231f19;--surface:#2a261e;--paper:#25221b;--raised:#353025;--ink:#f2e5c9;--muted:#b2a58b;--line:#554a36;--faint:#3b3325;--accent:#edb851;--accent-soft:#44371e;--blue:#9daea5;--green:#c0ba83;--svg-ink:#d4b978;--svg-solid:#483d27;--grid:#423a27;--shadow:0 18px 50px #00000015}
+    *{box-sizing:border-box;min-width:0}html{scroll-behavior:smooth;scroll-padding-top:150px}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);transition:background .3s,color .3s}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button,a,select{touch-action:manipulation}button{color:inherit;cursor:pointer}button:disabled{cursor:wait;opacity:.6}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:4px}button:hover{border-color:var(--accent)}a{color:inherit;text-decoration:none}svg{display:block;max-width:100%}code,pre{font-family:var(--mono);overflow-x:auto;max-width:100%}h1,h2,h3,p{margin:0}::selection{background:var(--accent);color:var(--bg)}.shell{width:min(1392px,calc(100% - 64px));margin-inline:auto}.mono{font-family:var(--mono)}.micro{font:10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase}.muted{color:var(--muted)}
+    .masthead{height:65px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:20px}.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:32px;height:35px;color:var(--accent)}.brand-name{font:700 14px/1.2 var(--mono);letter-spacing:.13em}.brand-sub{font:9px/1.5 var(--mono);letter-spacing:.16em;color:var(--muted);margin-top:5px}.header-meta{display:flex;gap:25px;align-items:center}.online{display:flex;align-items:center;gap:8px;font:10px var(--mono);letter-spacing:.05em}.dot{width:5px;height:5px;display:inline-block;flex:none;background:var(--green);border-radius:50%}.plate{border:1px solid var(--line);padding:5px 9px;font:10px var(--mono);color:var(--muted)}
+    .toolbar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 8px 20px #00000008}.tool-inner{display:flex;align-items:center;gap:7px;padding-block:12px;flex-wrap:wrap}.tool{height:32px;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:transparent;padding:0 11px;white-space:nowrap;font-size:11px;transition:background .2s,border-color .2s}.tool.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:700}.tool[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}.tool .symbol{font-size:16px;line-height:1}.speed-control{height:32px;display:flex;align-items:center;gap:8px;padding:0 10px;border:1px solid var(--line);font:10px var(--mono)}.speed-control input{width:72px;height:14px;accent-color:var(--accent);cursor:pointer}.speed-control output{width:30px}.theme-control{display:flex;align-items:center;gap:6px;padding-inline:8px;border:1px solid var(--line);height:32px}.theme-control .theme-dot{width:9px;height:9px;background:var(--accent);border-radius:50%}.theme-control select{border:0;color:var(--ink);background:var(--bg);font:11px var(--mono);padding:0;max-width:86px;height:26px;cursor:pointer}.tool-spacer{flex:1}.back{color:var(--muted);border-color:transparent;padding-right:0}.download{color:var(--accent)}
+    .intro{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 0 22px}.eyebrow{font:10px var(--mono);letter-spacing:.15em;color:var(--accent);display:flex;gap:10px;align-items:center;margin-bottom:8px}.eyebrow:before{content:"";width:20px;height:1px;background:var(--accent)}h1{font-size:clamp(26px,3vw,43px);font-weight:400;line-height:1.1;letter-spacing:-.045em}h1 em{font-family:Georgia,"Times New Roman",serif;font-weight:400;color:var(--accent);letter-spacing:-.035em}.intro-copy{color:var(--muted);font-size:11px;letter-spacing:.05em;margin-top:10px}.intro-right{text-align:right}.intro-coordinate{font:11px var(--mono);color:var(--muted);line-height:1.9}.serial{color:var(--ink);font-size:19px;letter-spacing:-.03em}.project-meta{display:flex;gap:12px;margin-top:6px;justify-content:flex-end}.project-meta span{font:9px var(--mono);padding-left:9px;border-left:1px solid var(--line)}
+    .assembly-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:17px;align-items:stretch}.panel{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}.panel-head{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line)}.panel-heading{font:11px var(--mono);letter-spacing:.065em;display:flex;align-items:center;gap:10px}.panel-heading .index{color:var(--accent);font-size:10px}.panel-heading small{font-size:9px;color:var(--muted);font-weight:400;letter-spacing:0}.panel-badge{font:9px var(--mono);color:var(--accent);border:1px solid var(--line);padding:3px 7px;white-space:nowrap}.draft-area{background:var(--paper);position:relative;overflow:hidden;isolation:isolate}.draft-meta{position:absolute;top:14px;left:18px;z-index:2;pointer-events:none}.draft-meta p{font:8px var(--mono);letter-spacing:.08em;color:var(--muted)}.draft-meta strong{font:9px var(--mono);color:var(--ink);display:block;margin-bottom:4px}.view-label{position:absolute;top:13px;right:16px;font:8px var(--mono);color:var(--muted);display:flex;align-items:center;gap:7px}.view-label:before{content:"";height:5px;width:5px;border:1px solid var(--accent);transform:rotate(45deg)}#starport-blueprint{width:100%;height:auto;aspect-ratio:1120/440;min-height:230px;color:var(--svg-ink);overflow:hidden}.drawing-footer{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;min-height:57px;padding:10px 18px;border-top:1px solid var(--line)}.legend{display:flex;gap:16px;flex-wrap:wrap}.legend span{display:flex;align-items:center;gap:6px;font:8px var(--mono);color:var(--muted)}.legend i{width:16px;border-top:1px solid var(--svg-ink)}.legend .dashed{border-top:1px dashed var(--accent)}.drawing-scale{font:8px var(--mono);color:var(--muted);text-align:right}.drawing-scale b{display:block;color:var(--ink);font-weight:400;font-size:10px;margin-top:3px}.status-strip{padding:10px 18px;display:flex;gap:12px;align-items:center;border-top:1px solid var(--line);font:9px var(--mono);color:var(--muted)}.status-strip .status-text{flex:1;color:var(--green)}.progress-track{height:3px;width:82px;background:var(--faint)}.progress-track i{display:block;height:100%;width:0;background:var(--accent);transition:width .35s}.status-percent{color:var(--ink);width:28px;text-align:right}
+    .subsystem-panel{display:flex;flex-direction:column}.subsystem-panel .panel-head{padding-inline:15px}.subsystem-intro{font-size:10px;color:var(--muted);padding:11px 15px 3px}.subsystems{display:grid;gap:6px;padding:8px 10px 10px;flex:1}.subsystem{display:grid;grid-template-columns:31px 1fr 17px;align-items:center;gap:10px;position:relative;background:transparent;text-align:left;border:1px solid var(--line);padding:10px 11px;width:100%;transition:background .2s,border-color .2s}.subsystem:hover,.subsystem.is-selected{background:var(--accent-soft);border-color:var(--accent)}.subsystem svg{width:27px;height:27px;color:var(--muted)}.subsystem.is-selected svg{color:var(--accent)}.subsystem-name{display:block;font-size:11px;font-weight:500}.subsystem-name em{font:9px var(--mono);font-style:normal;margin-left:4px;color:var(--muted)}.subsystem-detail{display:block;font:8px var(--mono);color:var(--muted);margin-top:4px;letter-spacing:.025em}.subsystem-plus{color:var(--accent);font:17px var(--mono)}.subsystem-bottom{padding:8px 15px 11px;font:8px var(--mono);color:var(--muted);display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line)}
+    .crew-strip{display:flex;align-items:center;gap:20px;padding:16px 0}.crew-title{flex:none;font:9px var(--mono);color:var(--muted);letter-spacing:.1em}.crew-list{display:flex;align-items:center;justify-content:space-between;gap:8px;flex:1}.crew-member{display:flex;gap:7px;align-items:center;font:8px var(--mono);color:var(--muted)}.crew-member i{width:6px;height:6px;flex:none;background:var(--crew-color);transform:rotate(45deg)}.crew-member b{font-weight:400;color:var(--ink);font-size:9px}.crew-member.is-working{color:var(--accent)}.crew-member.is-working i{box-shadow:0 0 0 3px var(--accent-soft)}
+    .operations-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:17px}.operations-grid .panel-head{min-height:43px;padding:10px 16px}.work-orders{max-height:247px;overflow-y:auto;overscroll-behavior:contain;scroll-padding:10px;padding:12px;display:grid;gap:8px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}.empty-order{display:flex;align-items:center;gap:15px;padding:15px 8px;color:var(--muted)}.empty-order .crosshair-icon{font-size:30px;color:var(--accent);font-weight:200;line-height:1}.empty-order p{font-size:11px}.empty-order small{display:block;font:8px var(--mono);margin-top:6px}.ticket{padding:11px 12px;border:1px solid var(--line);border-left:2px solid var(--accent);background:var(--paper);scroll-margin-block:12px}.ticket-top{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:5px}.ticket-id{font:9px var(--mono);color:var(--accent)}.ticket-status{font:8px var(--mono);color:var(--muted)}.ticket h3{font-size:11px;font-weight:500}.ticket p{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.6}.ticket-check{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font:9px var(--mono);display:flex;gap:10px;justify-content:space-between;color:var(--green)}.event-log{height:126px;overflow-y:auto;padding:10px 16px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;font:9px/1.9 var(--mono)}.event-row{display:grid;grid-template-columns:48px 69px 1fr;gap:8px}.event-time{color:var(--muted)}.event-type{color:var(--accent)}.event-message{color:var(--muted);overflow-wrap:anywhere}.log-footer{padding:8px 16px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font:8px var(--mono);color:var(--muted)}.log-footer .live{display:flex;align-items:center;gap:5px;color:var(--green)}footer{display:flex;justify-content:space-between;gap:15px;padding:22px 0 54px;font:8px var(--mono);color:var(--muted);letter-spacing:.05em}.footer-note{display:flex;gap:14px}.footer-note span:before{content:"+";color:var(--accent);margin-right:6px}.toast{position:fixed;bottom:52px;left:50%;transform:translate(-50%,10px);z-index:110;opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:11px 17px;max-width:calc(100% - 32px);width:max-content;font-size:11px;box-shadow:0 6px 30px #0002;transition:opacity .25s,transform .25s}.toast.visible{opacity:1;transform:translate(-50%,0)}
+    .blueprint .fine{fill:none;stroke:currentColor;stroke-width:1}.blueprint .hair{fill:none;stroke:currentColor;stroke-width:.6}.blueprint .heavy{fill:var(--svg-solid);stroke:currentColor;stroke-width:1.5}.blueprint .accent-stroke{stroke:var(--accent)}.blueprint .accent-fill{fill:var(--accent)}.blueprint .dim{opacity:.43}.blueprint .solid{fill:var(--paper);stroke:currentColor;stroke-width:1}.blueprint text{font-family:var(--mono);fill:currentColor;letter-spacing:.06em}.blueprint .microtext{font-size:7px}.blueprint .annotation{font-size:8px;fill:var(--muted)}.blueprint .measure{fill:none;stroke:var(--accent);stroke-width:.7}.blueprint .layer{transform-box:view-box;transform-origin:560px 220px;transition:transform 1s cubic-bezier(.22,.68,.18,1),filter .3s}.blueprint .layer.selected{filter:drop-shadow(0 0 3px var(--accent))}.blueprint .selection-halo{opacity:0;stroke:var(--accent);stroke-width:1.5;fill:var(--accent);fill-opacity:.035;stroke-dasharray:5 4;transition:opacity .3s}.blueprint .selected .selection-halo{opacity:1}.cad-overlay{opacity:0;pointer-events:none;transition:opacity .4s}.cad-overlay .cad-box{fill:var(--blue);fill-opacity:.025;stroke:var(--blue);stroke-width:1;stroke-dasharray:5 4}.cad-overlay .cad-cross{stroke:var(--accent);fill:none;stroke-width:.8}.cad-overlay text{fill:var(--blue);font-size:7px}.xray .cad-overlay{opacity:1}.xray .skin{fill-opacity:.12;stroke-dasharray:3 2}.xray .internal{opacity:1}.internal{opacity:.4;transition:opacity .4s}.exploded #module-spine{transform:translate(-25px,28px)}.exploded #module-cryo{transform:translate(0,-53px)}.exploded #module-docks{transform:translate(9px,58px)}.exploded #module-thruster{transform:translate(81px,9px)}.exploded #module-wings{transform:translate(-28px,-25px)}.exploded #module-telemetry{transform:translate(54px,-52px)}.exploded .explosion-guides{opacity:.6}.explosion-guides{opacity:0;stroke:var(--accent);stroke-width:.7;stroke-dasharray:3 5;fill:none;transition:opacity .4s}.cryo-rotor{transform-origin:560px 218px;animation:rotor-cycle 60s linear infinite}.ion-plume{animation:ion-cycle 3s ease-in-out infinite}.blueprint.paused .cryo-rotor,.blueprint.paused .ion-plume{animation-play-state:paused}@keyframes rotor-cycle{to{transform:rotate(360deg)}}@keyframes ion-cycle{50%{opacity:.45}}
+    @media(min-width:1550px){.intro{padding-block:31px}.assembly-grid{grid-template-columns:minmax(0,1fr) 310px}}
+    @media(max-width:1100px){.shell{width:calc(100% - 40px)}.tool-inner{gap:6px}.tool{padding-inline:8px;font-size:10px}.tool-spacer{display:none}.assembly-grid{grid-template-columns:minmax(0,1fr) 260px}.crew-member .crew-role{display:none}.header-meta{gap:12px}.header-meta .plate{display:none}h1{font-size:36px}.intro-coordinate{font-size:10px}.panel-heading small{display:none}.subsystem{padding:9px 8px;gap:7px}.legend{gap:10px}}
+    @media(max-width:760px){.shell{width:calc(100% - 28px)}.masthead{height:59px}.brand-mark{width:27px;height:30px}.brand-name{font-size:11px}.brand-sub{font-size:7px;letter-spacing:.1em}.header-meta .header-coordinate{display:none}.online{font-size:8px;gap:5px}.tool-inner{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding-block:8px}.tool{height:30px;padding:0 5px;font-size:10px;gap:4px}.tool .symbol{font-size:13px}.tool.primary{grid-column:span 1}.speed-control{grid-column:span 2;height:30px;padding-inline:8px;justify-content:space-between}.speed-control input{width:75px;flex:1;max-width:100px}.theme-control{height:30px;padding-inline:5px;gap:4px;justify-content:center}.theme-control select{font-size:9px;max-width:68px}.back{padding:0;font-size:9px}.download{grid-column:span 2}.back{grid-column:span 2}.intro{padding:20px 0 17px;gap:10px;align-items:flex-end}.eyebrow{font-size:8px;letter-spacing:.08em;margin-bottom:7px;gap:6px}.eyebrow:before{width:12px}h1{font-size:clamp(26px,6.7vw,40px);letter-spacing:-.055em}.intro-copy{font-size:9px;margin-top:8px;letter-spacing:0}.intro-right{display:none}.assembly-grid{grid-template-columns:1fr;gap:12px}.panel-head{min-height:44px;padding:10px 12px}.panel-heading{font-size:10px;gap:8px}.panel-badge{font-size:8px;padding:2px 5px}.draft-meta{top:9px;left:10px}.draft-meta p{font-size:6px}.draft-meta strong{font-size:7px;margin-bottom:3px}.view-label{font-size:6px;right:10px;top:10px}#starport-blueprint{min-height:185px;aspect-ratio:1120/540}.drawing-footer{padding:9px 11px;gap:6px;min-height:43px}.legend{gap:9px}.legend span{font-size:6px;gap:4px}.legend i{width:10px}.drawing-scale{font-size:6px}.drawing-scale b{font-size:8px}.status-strip{font-size:8px;gap:7px;padding:8px 11px}.progress-track{width:47px}.status-percent{font-size:8px}.subsystem-intro{padding-top:9px;font-size:9px}.subsystems{grid-template-columns:1fr 1fr;gap:7px;padding:9px}.subsystem{grid-template-columns:23px 1fr 9px;padding:10px 8px;gap:6px;min-height:63px}.subsystem svg{width:22px;height:22px}.subsystem-name{font-size:10px}.subsystem-name em{display:block;font-size:8px;margin:2px 0 0}.subsystem-detail{font-size:7px;line-height:1.6}.subsystem-plus{font-size:13px}.subsystem:last-child{grid-column:span 2;grid-template-columns:23px 1fr 9px}.subsystem:last-child .subsystem-name em{display:inline;margin-left:5px}.subsystem-bottom{font-size:7px}.crew-strip{gap:9px;align-items:flex-start;padding:15px 0}.crew-title{font-size:7px;padding-top:3px;width:47px;line-height:1.6}.crew-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 7px}.crew-member{gap:5px}.crew-member b{font-size:7px}.crew-member i{width:4px;height:4px}.operations-grid{grid-template-columns:1fr;gap:12px}.event-log{height:133px}.ticket h3{font-size:11px}.ticket p{font-size:10px}.ticket-check{font-size:8px;gap:5px}.event-row{grid-template-columns:42px 61px 1fr;gap:5px;font-size:8px}footer{font-size:7px;line-height:1.8;padding-top:17px;flex-wrap:wrap;gap:7px}.footer-note{gap:9px}.toast{bottom:59px}.cs-hud{font-size:8px!important;padding:8px 10px!important}.cs-hud .cs-st{max-width:32ch!important}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="masthead shell" data-cs-ignore>
+    <div class="brand"><svg class="brand-mark" viewBox="0 0 36 40" aria-hidden="true"><path d="M18 2 34 11v18L18 38 2 29V11Z M18 2v36M2 11l32 18M34 11 2 29" fill="none" stroke="currentColor" stroke-width="1"/><path d="m10 25 8-15 8 15M13 21h10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><div><div class="brand-name">AETHER / FOUNDRY</div><div class="brand-sub">ORBITAL ENGINEERING BUREAU · 轨道工程局</div></div></div>
+    <div class="header-meta"><span class="micro muted header-coordinate">LAGRANGE POINT 04 / SECTOR 07</span><span class="online"><i class="dot"></i> LOCAL SYSTEM ONLINE</span><span class="plate">WORK No. 002</span></div>
+  </header>
+  <nav class="toolbar" data-cs-ignore aria-label="蓝图工坊控制栏">
+    <div class="tool-inner shell">
+      <button class="tool primary" id="replay" type="button"><span class="symbol">↻</span>重新制图</button>
+      <button class="tool" id="instant" type="button"><span class="symbol">ϟ</span>一键成图</button>
+      <label class="speed-control" for="speed"><span>速度</span><input type="range" id="speed" min="0.5" max="3.5" step="0.1" value="1.4" aria-label="建造速度，0.5 到 3.5 倍"/><output id="speed-value" for="speed">1.4×</output></label>
+      <button class="tool" id="xray-toggle" type="button" aria-pressed="false"><span class="symbol">⊞</span>CAD 透视</button>
+      <button class="tool" id="explode-toggle" type="button" aria-pressed="false"><span class="symbol">⇕</span>分解视图</button>
+      <label class="theme-control"><span class="theme-dot" aria-hidden="true"></span><select id="theme" aria-label="图纸配色"><option value="obsidian">Obsidian</option><option value="ivory">Ivory</option><option value="amber">Amber</option></select></label>
+      <button class="tool" id="sound-toggle" type="button" aria-pressed="false" aria-label="开启精密机械音效"><span class="symbol" id="sound-icon">♬</span><span id="sound-label">音效关</span></button>
+      <span class="tool-spacer"></span>
+      <button class="tool download" id="download" type="button"><span class="symbol">↓</span>下载 SVG 蓝图</button>
+      <a class="tool back" href="./index.html">← 返回作品集</a>
+    </div>
+  </nav>
+  <main id="foundry-stage" class="shell">
+    <section class="intro" aria-labelledby="page-title">
+      <div><p class="eyebrow">PRECISION ASSEMBLY / 多光标星港精密蓝图工坊</p><h1 id="page-title">AETHER <em>FOUNDRY.</em></h1><p class="intro-copy">六个光标，一座星港。让每一个微米，严丝合缝。</p></div>
+      <div class="intro-right"><p class="intro-coordinate">PROJECT <span class="serial">AF—087</span><br/>深空补给站 · 第七代模块化轨道平台</p><div class="project-meta"><span>REV. 04—B</span><span>CLASS: ORBITAL</span><span>ISO 2768—f</span></div></div>
+    </section>
+    <div class="assembly-grid">
+      <section class="panel blueprint-panel" aria-labelledby="blueprint-title">
+        <div class="panel-head"><h2 class="panel-heading" id="blueprint-title"><span class="index">01 /</span> 星港总装蓝图 <small>GENERAL ARRANGEMENT</small></h2><span class="panel-badge" id="view-badge">ORTHOGRAPHIC · 01</span></div>
+        <div class="draft-area">
+          <div class="draft-meta"><strong>AF—087 / AETHER STATION</strong><p>ASSEMBLY DRAWING · DO NOT SCALE</p></div><div class="view-label" id="view-label">ISOMETRIC / ASSEMBLY</div>
+          <svg id="starport-blueprint" class="blueprint" viewBox="0 0 1120 440" role="img" aria-labelledby="svg-title svg-desc">
+            <title id="svg-title">AETHER AF—087 星港总装精密蓝图</title><desc id="svg-desc">主桁架连接旋转低温环、折叠光翼、对接泊位和推进舱。选取子系统可高亮对应舱段并派发检验工单；可切换 CAD 线框和分解装配视图。</desc>
+            <defs>
+              <pattern id="minor-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="var(--grid)" stroke-width=".45"/></pattern>
+              <pattern id="major-grid" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="url(#minor-grid)"/><path d="M100 0H0V100" fill="none" stroke="var(--grid)" stroke-width=".9"/></pattern>
+              <pattern id="solar-cells" width="16" height="13" patternUnits="userSpaceOnUse" patternTransform="skewY(-7)"><rect width="16" height="13" fill="var(--svg-solid)"/><path d="M0 0H16V13H0ZM8 0V13" stroke="currentColor" stroke-width=".45" fill="none"/></pattern>
+              <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V6" stroke="currentColor" stroke-width=".6"/></pattern>
+              <linearGradient id="ion-tail"><stop stop-color="var(--accent)" stop-opacity=".5"/><stop offset=".55" stop-color="var(--blue)" stop-opacity=".15"/><stop offset="1" stop-color="var(--blue)" stop-opacity="0"/></linearGradient>
+              <marker id="dimension-arrow" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M8 1 0 4 8 7" fill="none" stroke="var(--accent)" stroke-width="1"/></marker>
+            </defs>
+            <rect width="1120" height="440" fill="var(--paper)"/><rect x="30" y="44" width="1060" height="357" fill="url(#major-grid)"/>
+            <g class="hair dim"><path d="M30 44H1090V401H30ZM30 220H1090M560 44V401"/><path d="M30 34v10m100-5v5m100-5v5m100-5v5m100-5v5m100-10v10m100-5v5m100-5v5m100-5v5m100-5v5m100-10v10M20 44h10m-5 50h5m-10 50h10m-5 50h5m-10 50h10m-5 50h5m-10 50h10m-5 50h5"/></g>
+            <g class="microtext dim"><text x="26" y="29">0</text><text x="122" y="29">100</text><text x="222" y="29">200</text><text x="322" y="29">300</text><text x="422" y="29">400</text><text x="522" y="29">500</text><text x="622" y="29">600</text><text x="722" y="29">700</text><text x="822" y="29">800</text><text x="922" y="29">900</text><text x="1017" y="29">1000</text><text x="8" y="99" transform="rotate(-90 8 99)">050</text><text x="8" y="199" transform="rotate(-90 8 199)">150</text><text x="8" y="299" transform="rotate(-90 8 299)">250</text><text x="8" y="399" transform="rotate(-90 8 399)">350</text></g>
+            <g class="explosion-guides"><path d="M560 218V105M560 218l-28 70M725 212l79-45M390 196l-40-45M835 221h125M383 235l-10 78"/><circle cx="560" cy="218" r="4"/></g>
+            <g id="module-spine" class="layer" data-build data-cs="pop" data-cs-label="FRAME-01 / titanium spine" data-cs-relocate="false">
+              <rect class="selection-halo" x="330" y="177" width="526" height="82" rx="3"/>
+              <path class="heavy skin" d="m331 207 74-19 383 9 66 23-63 25-383-9-77-18Z"/>
+              <g class="fine"><path d="m333 207 456 10 62 3m-443-32v48m381-39v48M408 197l381 10m-381 20 381 10"/><path d="m414 199 31 29 31-27 31 28 31-27 31 28 31-26 31 27 31-26 31 27 31-26 31 27 31-26m-372-5 31 29m-31 1 31-27 31 28 31-26 31 27 31-26 31 27 31-26 31 27 31-26 31 27 31-26"/><path d="M424 194v40m62-39v40m62-38v39m62-37v39m62-37v39m62-37v39" class="dim"/></g>
+              <path class="solid skin" d="m333 204 37-10 38 1v44l-37-1-38-16Z"/><ellipse class="heavy" cx="333" cy="213" rx="9" ry="14"/><ellipse class="fine" cx="333" cy="213" rx="4" ry="9"/>
+              <g class="internal fine"><path d="m410 211 376 10m-376-5 376 10" stroke-dasharray="4 3"/><rect x="459" y="204" width="29" height="19"/><rect x="682" y="210" width="29" height="19"/></g>
+              <g class="cad-overlay"><rect class="cad-box" x="322" y="178" width="534" height="77"/><path class="cad-cross" d="M580 215h20m-10-10v20"/><path class="measure" d="M333 261v19m521-32v32M333 274H854" marker-start="url(#dimension-arrow)" marker-end="url(#dimension-arrow)"/><text x="563" y="270">84.00 ±0.02 m</text></g>
+            </g>
+            <g id="module-wings" class="layer" data-build data-cs="pop" data-cs-label="VECTOR-02 / folding solar wings" data-cs-relocate="false">
+              <rect class="selection-halo" x="236" y="77" width="214" height="263" rx="3"/>
+              <g class="fine"><path d="m365 216-49-75m59 70-24-89m14 111-58 64m65-58-23 79"/><path d="m310 144 47-27m-49 181 47 20" class="dim"/></g>
+              <g fill="url(#solar-cells)" stroke="currentColor" stroke-width="1"><path d="m258 87 63-8 23 77-62 10Z"/><path d="m326 78 64-8 21 78-62 9Z"/><path d="m284 173 63-10 21 77-61 11Z"/><path d="m352 162 62-10 22 78-62 10Z"/><path d="m274 278 62 12-22 63-62-14Z"/><path d="m341 291 62 13-20 63-63-13Z"/></g>
+              <g class="fine"><path d="m321 79 25 81m1 3 25 80m-35 48-22 64"/><circle class="solid" cx="368" cy="217" r="10"/><circle cx="368" cy="217" r="4"/></g>
+              <g class="cad-overlay"><rect class="cad-box" x="246" y="66" width="194" height="307"/><path class="cad-cross" d="M333 210h20m-10-10v20"/><text x="248" y="62">PV-WING / 21.4 × 34.6 m</text></g>
+            </g>
+            <g id="module-cryo" class="layer" data-build data-cs="pop" data-cs-label="ORBIT-03 / cryogenic ring" data-cs-relocate="false">
+              <rect class="selection-halo" x="475" y="85" width="173" height="271" rx="3"/>
+              <ellipse class="heavy skin" cx="560" cy="218" rx="72" ry="122"/>
+              <ellipse class="solid" cx="560" cy="218" rx="53" ry="101"/><ellipse class="fine" cx="560" cy="218" rx="63" ry="112"/>
+              <g class="fine"><path d="M560 96v21m0 202v21m-71-122h19m104 0h20m-122-81 14 15m72 132 15 17m-101 0 14-17m72-132 15-15"/><ellipse cx="560" cy="218" rx="58" ry="106" stroke-dasharray="2 7"/><path d="m510 132 6 12m-19 27 10 7m-19 65 19-3m4 48 12-11m38-177v16m45 20-11 13m26 28-14 4m25 59-20-3m-4 48-13-11m-31 48v-15"/></g>
+              <path class="heavy" d="m546 202 28 1 10 15-10 16-28-1-9-15Z"/><circle class="solid" cx="560" cy="218" r="10"/>
+              <g class="cryo-rotor fine"><path d="M560 117v89m0 24v89m-53-101h40m26 0h40m-90-71 30 62m14 18 30 62m-74 0 30-62m14-18 30-62"/><circle class="accent-stroke" cx="560" cy="112" r="3"/><circle cx="560" cy="324" r="3"/><circle cx="502" cy="218" r="3"/><circle cx="618" cy="218" r="3"/></g>
+              <g class="cad-overlay"><rect class="cad-box" x="480" y="89" width="161" height="259"/><path class="cad-cross" d="M546 218h28m-14-14v28"/><path class="measure" d="M647 98h19m-19 241h19m-6-241v241" marker-start="url(#dimension-arrow)" marker-end="url(#dimension-arrow)"/><text x="669" y="236" transform="rotate(-90 669 236)">Ø 42.00 ±0.05 m</text></g>
+            </g>
+            <g id="module-thruster" class="layer" data-build data-cs="pop" data-cs-label="THERM-04 / plasma propulsion" data-cs-relocate="false">
+              <rect class="selection-halo" x="790" y="172" width="196" height="104" rx="3"/>
+              <path class="heavy skin" d="m793 197 49-4 34 14v31l-34 14-49-8Z"/><path class="solid skin" d="m841 193 9 4v51l-9 4Z"/>
+              <path class="heavy" d="m875 207 18-8 7 5v40l-7 4-18-10Z"/><ellipse class="solid" cx="899" cy="224" rx="6" ry="20"/><ellipse class="fine accent-stroke" cx="901" cy="224" rx="3" ry="14"/>
+              <path class="ion-plume" d="M903 211Q966 212 1048 224Q966 237 903 237Z" fill="url(#ion-tail)"/>
+              <g class="fine"><path d="m799 204 35-3v43l-35-7Zm8 0v35m8-36v38m8-39v41m11-37 40 12m-40 19 40-10"/><path class="accent-stroke ion-plume" d="m910 219 65 5-65 5m4-5h97" stroke-width=".6"/><path d="m815 193 10-11 20 1 5 13m-35 53 10 11 20-1 5-11"/></g>
+              <g class="internal fine"><path d="M841 214h51m-51 6h51m-51 6h51m-51 6h51" stroke-dasharray="3 3"/></g>
+              <g class="cad-overlay"><rect class="cad-box" x="789" y="177" width="126" height="90"/><path class="cad-cross" d="M842 224h20m-10-10v20"/><text x="790" y="173">PLASMA / 340 kN · 8.2 MW</text></g>
+            </g>
+            <g id="module-telemetry" class="layer" data-build data-cs="pop" data-cs-label="TELE-05 / telemetry array" data-cs-relocate="false">
+              <rect class="selection-halo" x="686" y="93" width="114" height="111" rx="3"/>
+              <path class="fine" d="m713 199 12-49m-6 50 13-48m-9 24 31-26"/><path class="heavy skin" d="M704 133q28 34 58 10l-27-27Z"/><path class="fine" d="m704 133 58 10m-27-27-3 29 24-4m-24 4 5-33m-13 14 8 19"/><path class="accent-stroke fine" d="m737 114 2-15m5 6q10 7 12 18m-9-24q17 8 19 27"/><circle class="solid" cx="728" cy="149" r="5"/>
+              <g class="cad-overlay"><rect class="cad-box" x="695" y="97" width="79" height="103"/><path class="cad-cross" d="M724 145h20m-10-10v20"/><text x="699" y="89">KA-BAND / 32 GHz</text></g>
+            </g>
+            <g id="module-docks" class="layer" data-build data-cs="pop" data-cs-label="QA-SHIP / docking ports and shuttle" data-cs-relocate="false">
+              <rect class="selection-halo" x="630" y="238" width="174" height="117" rx="3"/>
+              <path class="heavy skin" d="m661 236 30 1v24l-8 10-22-2-9-10Z"/><path class="fine" d="m661 244 30 1m-31 7 30 1m-31 7 29 1"/>
+              <path class="heavy skin" d="m724 239 28 1v24l-7 8-20-1-8-9Z"/><path class="fine" d="m723 247 29 1m-30 7 29 1"/>
+              <g transform="translate(677 294) rotate(-8)"><path class="solid skin" d="m-4-23 12-3 27 28 18 11-1 5-27-5-9 14-18 6-5-5 13-22-13-21Z"/><path class="heavy" d="m0-22 10-2 13 18-9 1Z"/><path class="fine" d="m14-4 8 17m-21-6 12 5m13 2 9 4m-38 6 8-3"/><path class="accent-stroke fine" d="m-11 30-7 13m7-8-4 12"/><text class="microtext" x="29" y="4">07</text></g>
+              <g class="fine dim"><ellipse cx="676" cy="285" rx="29" ry="11" stroke-dasharray="4 4"/><path d="M676 273v20" stroke-dasharray="2 3"/></g>
+              <g class="cad-overlay"><rect class="cad-box" x="638" y="232" width="142" height="119"/><path class="cad-cross" d="M665 286h20m-10-10v20"/><text x="640" y="362">DOCK / ALIGN ±0.08°</text></g>
+            </g>
+            <g class="annotation"><g class="hair"><path d="m410 210-57-38h-132"/><path d="m500 135-47-61h-63"/><path d="m673 311 53 46h100"/><path d="m852 245 58 59h100"/><path d="m752 133 51-40h156"/><path d="m306 310-59 48h-92"/></g><g class="accent-fill"><circle cx="410" cy="210" r="2"/><circle cx="500" cy="135" r="2"/><circle cx="673" cy="311" r="2"/><circle cx="852" cy="245" r="2"/><circle cx="752" cy="133" r="2"/><circle cx="306" cy="310" r="2"/></g><text x="222" y="166">01 / TITANIUM SPINE</text><text x="222" y="183" class="microtext dim">LOAD PATH · 84.00 m</text><text x="390" y="67">02 / CRYO-RING</text><text x="728" y="370">03 / DOCK PODS</text><text x="914" y="297">04 / ION DRIVE</text><text x="805" y="86">05 / TELEMETRY</text><text x="156" y="371">06 / SOLAR ARRAY</text></g>
+            <g class="measure"><path d="M332 381v13m568-102v102M334 388H898" marker-start="url(#dimension-arrow)" marker-end="url(#dimension-arrow)"/><path d="M74 345v38h38m-38 0 16-16"/></g><g class="microtext"><text x="558" y="384" class="accent-fill">104.80 m / OVERALL</text><text x="69" y="340">Y</text><text x="117" y="386">X</text><text x="93" y="365">Z</text><text x="34" y="422" class="dim">DATUM: AF-0 / UNIT: METRE / TOLERANCE: ISO 2768-f</text><text x="916" y="422" class="dim">AF—087 · SHEET 01/01</text></g>
+          </svg>
+        </div>
+        <div class="drawing-footer"><div class="legend"><span><i></i> 装配结构</span><span><i class="dashed"></i> 尺寸 / 公差</span><span><i style="border-color:var(--blue)"></i> 透视边界</span></div><div class="drawing-scale">PROJECTION / UNITS<b>ISO · 1:250 / m</b></div></div>
+        <div class="status-strip" data-cs-ignore><i class="dot"></i><span class="status-text" id="build-status">六位工程师就位 · 正在建立装配基准</span><div class="progress-track" aria-hidden="true"><i id="build-progress"></i></div><span class="status-percent" id="build-percent">0%</span></div>
+      </section>
+      <aside class="panel subsystem-panel" aria-labelledby="subsystem-title"><div class="panel-head"><h2 class="panel-heading" id="subsystem-title"><span class="index">02 /</span> 核心子系统</h2><span class="micro muted">5 UNITS</span></div><p class="subsystem-intro">选择舱段，派发一张现场检验工单。</p>
+        <div class="subsystems">
+          <button class="subsystem" data-system="spine" data-build data-cs="pop" data-cs-label="主桁架 / subsystem" aria-pressed="false" type="button"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M3 9h24v12H3Zm0 0 8 12 8-12 8 12M3 15h24" fill="none" stroke="currentColor"/></svg><span><span class="subsystem-name">主桁架 <em>Spine</em></span><span class="subsystem-detail">Ti-6Al-4V / 84.00 m</span></span><span class="subsystem-plus">+</span></button>
+          <button class="subsystem" data-system="cryo" data-build data-cs="pop" data-cs-label="低温环 / subsystem" aria-pressed="false" type="button"><svg viewBox="0 0 30 30" aria-hidden="true"><ellipse cx="15" cy="15" rx="9" ry="12" fill="none" stroke="currentColor"/><ellipse cx="15" cy="15" rx="6" ry="9" fill="none" stroke="currentColor"/><path d="M15 3v24M6 15h18" stroke="currentColor" stroke-width=".7"/></svg><span><span class="subsystem-name">低温环 <em>Cryo-Ring</em></span><span class="subsystem-detail">20 K / Ø 42.00 m</span></span><span class="subsystem-plus">+</span></button>
+          <button class="subsystem" data-system="docks" data-build data-cs="pop" data-cs-label="对接泊位 / subsystem" aria-pressed="false" type="button"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M5 4h20v6H5Zm4 6v8m12-8v8M5 18h8v8H5Zm12 0h8v8h-8Z" fill="none" stroke="currentColor"/></svg><span><span class="subsystem-name">对接泊位 <em>Dock Pods</em></span><span class="subsystem-detail">IDSS / 2 ACTIVE PORTS</span></span><span class="subsystem-plus">+</span></button>
+          <button class="subsystem" data-system="thruster" data-build data-cs="pop" data-cs-label="推进器 / subsystem" aria-pressed="false" type="button"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="m5 8 13 3v8L5 22Zm13 3 4-4v16l-4-4m7-8 3 4-3 4M1 11h4m-4 8h4" fill="none" stroke="currentColor"/></svg><span><span class="subsystem-name">等离子推进 <em>Thruster</em></span><span class="subsystem-detail">340 kN / 8.2 MW</span></span><span class="subsystem-plus">+</span></button>
+          <button class="subsystem" data-system="telemetry" data-build data-cs="pop" data-cs-label="遥测阵列 / subsystem" aria-pressed="false" type="button"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M6 10q6 16 18 7L14 6ZM16 16l-4 10m-4 0h13M17 7V2m4 3q5 2 6 8" fill="none" stroke="currentColor"/></svg><span><span class="subsystem-name">遥测阵列 <em>Telemetry</em></span><span class="subsystem-detail">KA-BAND / 32 GHz / LOCKED</span></span><span class="subsystem-plus">+</span></button>
+        </div><div class="subsystem-bottom"><span>CLICK TO DISPATCH ↗</span><span id="selected-code">NO MODULE SELECTED</span></div>
+      </aside>
+    </div>
+    <section class="crew-strip" data-cs-ignore aria-label="六位专业工程光标"><span class="crew-title">ASSEMBLY<br/>CREW / 06</span><div class="crew-list"><div class="crew-member" data-agent="FRAME-01" style="--crew-color:#c7b58f"><i></i><span><b>FRAME-01</b> <span class="crew-role">结构</span></span></div><div class="crew-member" data-agent="VECTOR-02" style="--crew-color:#b3bd9c"><i></i><span><b>VECTOR-02</b> <span class="crew-role">光翼</span></span></div><div class="crew-member" data-agent="ORBIT-03" style="--crew-color:#83a5a1"><i></i><span><b>ORBIT-03</b> <span class="crew-role">轨道</span></span></div><div class="crew-member" data-agent="THERM-04" style="--crew-color:#ce9b71"><i></i><span><b>THERM-04</b> <span class="crew-role">热控</span></span></div><div class="crew-member" data-agent="TELE-05" style="--crew-color:#9ca9b7"><i></i><span><b>TELE-05</b> <span class="crew-role">遥测</span></span></div><div class="crew-member" data-agent="QA-SHIP" style="--crew-color:#c6b6a6"><i></i><span><b>QA-SHIP</b> <span class="crew-role">质检</span></span></div></div></section>
+    <div class="operations-grid">
+      <section class="panel" id="orders-panel" aria-labelledby="orders-title"><div class="panel-head"><h2 class="panel-heading" id="orders-title"><span class="index">03 /</span> 现场工单 <small>WORK ORDERS</small></h2><span class="panel-badge"><span id="ticket-count">00</span> ISSUED</span></div><div class="work-orders" id="work-orders"><div class="empty-order" id="empty-order"><span class="crosshair-icon">⌖</span><div><p>下一次精密装配，由你发起。</p><small>SELECT A SUBSYSTEM → INSPECT → VERIFY</small></div></div></div></section>
+      <section class="panel" data-cs-ignore aria-labelledby="log-title"><div class="panel-head"><h2 class="panel-heading" id="log-title"><span class="index">04 /</span> 建造记录 <small>EVENT STREAM</small></h2><span class="micro muted" id="event-count">000 EVENTS</span></div><div class="event-log" id="event-log" role="log" aria-label="光标建造和检验日志" aria-live="off"></div><div class="log-footer"><span class="live"><i class="dot"></i> LOCAL TELEMETRY</span><span>CURSOR SWARM / v1.0.0</span></div></section>
+    </div>
+    <footer data-cs-ignore><span>AETHER FOUNDRY © 2087 · 轨道工程局 / 精密装配部</span><div class="footer-note"><span>零外部依赖</span><span>离线可用</span><span>PRO1V / WORK 002</span></div></footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./assets/vendor/cursor-swarm/cursor-swarm.min.js"></script>
+  <script>
+    /* 署名: PRO1V(valerie...@gmail.com) */
+    (() => {
+      'use strict';
+      const $ = id => document.getElementById(id);
+      const stage = $('foundry-stage');
+      const blueprint = $('starport-blueprint');
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      const agents = [
+        {name:'FRAME-01',role:'layout'}, {name:'VECTOR-02',role:'layout'},
+        {name:'ORBIT-03',role:'layout'}, {name:'THERM-04',role:'layout'},
+        {name:'TELE-05',role:'layout'}, {name:'QA-SHIP',role:['layout','type']}
+      ];
+      const palettes = {
+        obsidian:['#c7b58f','#b3bd9c','#83a5a1','#ce9b71','#9ca9b7','#c6b6a6'],
+        ivory:['#83693f','#607a50','#477f7b','#a36538','#536d8a','#82705d'],
+        amber:['#e1ba75','#b5bd8b','#a6b8ad','#dfa06e','#aeb3b3','#d5c49c']
+      };
+      const systems = {
+        spine:{name:'主桁架 Spine',code:'STR-01',agent:'FRAME-01',title:'复核主承力桁架节点预紧与对中',task:'复核 Ti-6Al-4V 连接节点 A12—A18；修订热收缩补偿垫片，按轴线基准重新定位。',limit:'偏差 ≤ 0.02 m',reading:'0.012 m',rev:'M6 节点 / 预紧 42 N·m'},
+        cryo:{name:'低温环 Cryo-Ring',code:'CRY-02',agent:'ORBIT-03',title:'检验低温环密封与同轴公差',task:'检查 20 K 冷媒回路及旋转接头；修订径向补偿间隙，确认环体 360° 无干涉。',limit:'径向偏差 ≤ 0.05 m',reading:'0.031 m',rev:'冷媒回路 / 压降 0.08 bar'},
+        docks:{name:'对接泊位 Dock Pods',code:'DCK-03',agent:'QA-SHIP',title:'校准 IDSS 对接环与穿梭机姿态',task:'复测 D-01 / D-02 激光对接基准；修订引导标靶偏置，执行锁环行程和密封检验。',limit:'角偏差 ≤ 0.08°',reading:'0.046°',rev:'捕获环 / 行程 120 mm'},
+        thruster:{name:'等离子推进 Thruster',code:'THR-04',agent:'THERM-04',title:'修订推进舱隔热层并检验推力轴线',task:'检查等离子约束器与喷口热屏蔽；增加隔热垫片，复核推进轴线与桁架质心基准。',limit:'轴线偏差 ≤ 0.03°',reading:'0.018°',rev:'隔热层 / 增补 0.4 mm'},
+        telemetry:{name:'遥测阵列 Telemetry',code:'TEL-05',agent:'TELE-05',title:'复核 Ka 波段天线指向与链路预算',task:'标定 32 GHz 天线相位中心；修订星敏感器安装偏置，验证深空链路指向和锁定余量。',limit:'指向误差 ≤ 0.01°',reading:'0.006°',rev:'相位中心 / 补偿 +0.2 mm'}
+      };
+      let swarm = null, generation = 0, ticketSerial = 0, eventSerial = 0, toastTimer;
+      let audioContext = null, soundEnabled = false, lastSound = 0;
+      function notify(message) {
+        $('toast').textContent = message;
+        $('toast').classList.add('visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => $('toast').classList.remove('visible'), 3200);
+      }
+      function log(type, message) {
+        const row = document.createElement('div'); row.className = 'event-row';
+        const time = document.createElement('span'); time.className = 'event-time';
+        time.textContent = new Date().toLocaleTimeString('en-GB',{hour12:false}).slice(3);
+        const label = document.createElement('span'); label.className = 'event-type'; label.textContent = type;
+        const text = document.createElement('span'); text.className = 'event-message'; text.textContent = message;
+        row.append(time,label,text); $('event-log').append(row);
+        while ($('event-log').childElementCount > 80) $('event-log').firstElementChild.remove();
+        $('event-log').scrollTop = $('event-log').scrollHeight;
+        $('event-count').textContent = String(++eventSerial).padStart(3,'0') + ' EVENTS';
+      }
+      function tick(done = false) {
+        if (!soundEnabled || !audioContext || audioContext.state !== 'running') return;
+        const now = audioContext.currentTime;
+        if (now-lastSound < 0.06 && !done) return;
+        lastSound = now;
+        const oscillator = audioContext.createOscillator(), gain = audioContext.createGain();
+        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(done ? 1220 : 780, now);
+        oscillator.frequency.exponentialRampToValueAtTime(done ? 1820 : 190, now + 0.055);
+        gain.gain.setValueAtTime(0.0001,now); gain.gain.exponentialRampToValueAtTime(0.035,now + .004);
+        gain.gain.exponentialRampToValueAtTime(0.0001,now + (done ? .16 : .075));
+        oscillator.connect(gain); gain.connect(audioContext.destination);
+        oscillator.start(now); oscillator.stop(now + .18); oscillator.onended = () => {oscillator.disconnect();gain.disconnect();};
+      }
+      function updateProgress() {
+        const percent = swarm ? Math.round(swarm.progress * 100) : 100;
+        $('build-progress').style.width = percent + '%'; $('build-percent').textContent = percent + '%';
+      }
+      function completeTicket(ticket, animated) {
+        if (ticket.dataset.complete === 'true') return;
+        ticket.dataset.complete = 'true';
+        const system = systems[ticket.dataset.system];
+        ticket.querySelector('.ticket-status').textContent = animated ? 'VERIFIED ✓' : 'READY / 待重播';
+        const result = ticket.querySelector('.ticket-result');
+        result.textContent = animated ? '实测 ' + system.reading + ' · PASS' : '检验卡已展示 · 重播后执行';
+        if(animated) $('build-status').textContent=ticket.dataset.number+' 检验通过 · '+system.name;
+        log(animated ? 'QA / PASS' : 'QA / READY',ticket.dataset.number + ' · ' + system.name + (animated ? ' · ' + system.reading : ' · 重播可现场检验'));
+      }
+      function makeSwarm() {
+        generation++; const run = generation;
+        if (swarm) swarm.destroy();
+        $('build-status').textContent = '六位工程师就位 · 正在建立装配基准';
+        document.querySelectorAll('.crew-member').forEach(el => el.classList.remove('is-working'));
+        stage.querySelectorAll('.ticket').forEach(el => {
+          el.dataset.complete = 'false';el.querySelector('.ticket-status').textContent = 'QUEUED / 排队';
+          el.querySelector('.ticket-result').textContent = '待光标现场检验';
+        });
+        if (!window.CursorSwarm) {
+          $('build-status').textContent = '静态蓝图可用 · 本地建造引擎未载入';
+          log('OFFLINE','本地 CursorSwarm 引擎不可用');updateProgress();return;
+        }
+        swarm = new CursorSwarm({
+          root: '#foundry-stage', targets: '[data-build], .ticket', cursors: 6,
+          agents, names: agents.map(agent => agent.name), palette: palettes[$('theme').value],
+          respectReducedMotion: true, startPosition: 'outside', exitAfterBuild: 'home',
+          copyPaste: 0.5, relocation: 0.35, hud: true, hudPosition: 'bottom-left',
+          speed: Number($('speed').value), trigger: 0.99, deconstruct: false,
+          onBuild(el,type,agent) {
+            if (run !== generation) return;
+            log('BUILD / '+ type.toUpperCase(),(agent || 'FOUNDRY') + ' → ' + (el.dataset.csLabel || '装配单元'));
+            if (el.classList.contains('ticket')) completeTicket(el,true);
+            document.querySelectorAll('.crew-member').forEach(member => member.classList.toggle('is-working',member.dataset.agent===agent));
+            tick();updateProgress();
+          },
+          onDone() {
+            if (run !== generation) return;
+            $('build-status').textContent = '总装完成 · 所有尺寸已归位 / READY';
+            document.querySelectorAll('.crew-member').forEach(el => el.classList.remove('is-working'));
+            log('DONE ✓','所有可检验装配单元完成 · 光标归航');tick(true);updateProgress();
+          }
+        });
+        window.foundrySwarm = swarm;
+        swarm.init();
+        log('INIT', '6 ENGINEERS · AF—087 · REV.04—B');
+        if (swarm.state === 'stopped') {
+          blueprint.classList.add('paused');
+          $('build-status').textContent = '减少动态效果已启用 · 静态总装就绪';
+          stage.querySelectorAll('.ticket').forEach(el=>completeTicket(el,false));
+          log('DONE ✓','遵循减少动态效果偏好 · 直接显示完整图纸');
+        }
+        updateProgress();
+      }
+      function dispatch(systemKey) {
+        const system = systems[systemKey];
+        stage.querySelectorAll('.layer').forEach(el=>el.classList.toggle('selected',el.id==='module-'+systemKey));
+        stage.querySelectorAll('[data-system].subsystem').forEach(el=>{
+          const selected=el.dataset.system===systemKey;el.classList.toggle('is-selected',selected);el.setAttribute('aria-pressed',String(selected));
+        });
+        $('selected-code').textContent = system.code + ' SELECTED';
+        if ($('empty-order')) $('empty-order').remove();
+        const number = 'WO—' + String(++ticketSerial).padStart(3,'0');
+        const ticketEl = document.createElement('article');
+        ticketEl.className='ticket'; ticketEl.dataset.system=systemKey;ticketEl.dataset.number=number;
+        ticketEl.dataset.csLabel=number+' / '+system.code;ticketEl.dataset.csRelocate='false';ticketEl.dataset.csCopy='false';
+        ticketEl.setAttribute('aria-label',number+' '+system.title);
+        const top=document.createElement('div');top.className='ticket-top';
+        const id=document.createElement('span');id.className='ticket-id';id.textContent=number+' / '+system.code+' · '+system.agent;
+        const status=document.createElement('span');status.className='ticket-status';status.textContent='QUEUED / 排队';top.append(id,status);
+        const title=document.createElement('h3');title.textContent=system.title;
+        const task=document.createElement('p');task.textContent=system.task;
+        const revision=document.createElement('p');revision.className='mono';revision.textContent='REV.'+String(ticketSerial).padStart(2,'0')+' / '+system.rev;
+        const check=document.createElement('div');check.className='ticket-check';
+        const tolerance=document.createElement('span');tolerance.textContent=system.limit;
+        const result=document.createElement('span');result.className='ticket-result';result.textContent='待光标现场检验';check.append(tolerance,result);
+        ticketEl.append(top,title,task,revision,check);$('work-orders').prepend(ticketEl);
+        $('work-orders').scrollTop=0;$('ticket-count').textContent=String(ticketSerial).padStart(2,'0');
+        log('DISPATCH',number+' → '+system.name);
+        if (swarm && swarm.state === 'running') {
+          $('build-status').textContent=number+' 已派工 · 等待现场检验';
+          swarm.add(ticketEl, 'pop');
+          notify(system.name+' 已选中 · '+number+' 正在派工');
+          // Dispatch after the nested work-order viewport enters the screen.
+          requestAnimationFrame(()=>{
+            const rect=ticketEl.getBoundingClientRect();
+            if (rect.top>innerHeight-60) $('orders-panel').scrollIntoView({behavior:reducedMotion.matches?'instant':'smooth',block:'center'});
+            else window.dispatchEvent(new Event('scroll'));
+          });
+        } else {
+          completeTicket(ticketEl,false);
+          notify('工单已展示；点击「重新制图」重播，派发光标现场检验。');
+        }
+      }
+      $('replay').addEventListener('click',()=>{makeSwarm();notify(reducedMotion.matches?'已刷新图纸 · 遵循减少动态效果偏好':'新一轮制图已启动 · 六位光标工程师就位');});
+      $('instant').addEventListener('click',()=>{
+        if (swarm && swarm.state!=='stopped' && swarm.state!=='destroyed') swarm.stop({reveal:true});
+        blueprint.classList.add('paused');updateProgress();
+        $('build-status').textContent='总装完成 · 一键成图 / STOPPED';log('INSTANT','全部装配单元已直接呈现 · 点击重新制图可重播');
+        notify('完整蓝图已呈现 · 重新制图可重播');
+      });
+      $('speed').addEventListener('input',()=>{
+        $('speed-value').textContent=Number($('speed').value).toFixed(1)+'×';
+        if(swarm) swarm.setSpeed(Number($('speed').value));
+      });
+      function toggleView(button, className, onText, offText) {
+        const enabled=blueprint.classList.toggle(className);button.setAttribute('aria-pressed',String(enabled));
+        log('CAD',enabled?onText:offText);
+        $('view-badge').textContent=blueprint.classList.contains('xray')?'X-RAY CAD · ±0.02':blueprint.classList.contains('exploded')?'EXPLODED · 06 LAYERS':'ORTHOGRAPHIC · 01';
+        $('view-label').textContent=[blueprint.classList.contains('xray')?'X-RAY':'ISOMETRIC',blueprint.classList.contains('exploded')?'EXPLODED':'ASSEMBLY'].join(' / ');
+        tick();
+      }
+      $('xray-toggle').addEventListener('click',()=>toggleView($('xray-toggle'),'xray','透视开启 · 模块边界 / 定位十字 / 公差尺寸','透视关闭 · 返回实体装配'));
+      $('explode-toggle').addEventListener('click',()=>toggleView($('explode-toggle'),'exploded','分解装配 · 六个独立图层已分离','分解归位 · 总装轴线已恢复'));
+      $('theme').addEventListener('change',()=>{
+        const theme=$('theme').value;document.documentElement.dataset.theme=theme;
+        if(swarm) swarm.setPalette(palettes[theme]);
+        document.querySelectorAll('.crew-member').forEach((el,i)=>el.style.setProperty('--crew-color',palettes[theme][i]));
+        document.querySelector('meta[name="theme-color"]').content=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+        log('PALETTE',theme.toUpperCase()+' / 图纸配色已切换');
+      });
+      $('sound-toggle').addEventListener('click',async()=>{
+        if(soundEnabled){soundEnabled=false;}
+        else {
+          const AudioEngine=window.AudioContext||window.webkitAudioContext;
+          if(!AudioEngine){notify('当前浏览器不支持机械音效');return;}
+          try {if(!audioContext) audioContext=new AudioEngine();await audioContext.resume();soundEnabled=true;}
+          catch(_error){notify('音频设备暂不可用');return;}
+        }
+        $('sound-toggle').setAttribute('aria-pressed',String(soundEnabled));
+        $('sound-toggle').setAttribute('aria-label',soundEnabled?'关闭精密机械音效':'开启精密机械音效');
+        $('sound-label').textContent=soundEnabled?'音效开':'音效关';$('sound-icon').textContent=soundEnabled?'♪':'♬';
+        log('AUDIO',soundEnabled?'机械提示音已启用':'机械提示音已关闭');tick(true);
+      });
+      $('download').addEventListener('click',()=>{
+        const clone=blueprint.cloneNode(true);
+        // Inline computed presentation makes the export independent of the page theme.
+        const sourceNodes=[blueprint,...blueprint.querySelectorAll('*')];
+        const cloneNodes=[clone,...clone.querySelectorAll('*')];
+        const properties=['fill','fill-opacity','stroke','stroke-width','stroke-dasharray','stroke-opacity','opacity','font-family','font-size','font-weight','letter-spacing','color','filter'];
+        sourceNodes.forEach((node,index)=>{
+          const style=getComputedStyle(node),copy=cloneNodes[index];
+          properties.forEach(property=>copy.style.setProperty(property,style.getPropertyValue(property)));
+          copy.style.animation='none';copy.style.transition='none';
+          if(node.classList.contains('layer')||node.classList.contains('cryo-rotor')) copy.style.transform=style.transform;
+          copy.style.removeProperty('clip-path');
+        });
+        clone.removeAttribute('data-build');
+        clone.querySelectorAll('[data-build]').forEach(el=>el.removeAttribute('data-build'));
+        // The SVG namespace is assembled without an external network address in the HTML source.
+        clone.setAttribute('xmlns',blueprint.namespaceURI);
+        const text='<?xml version="1.0" encoding="UTF-8"?>\n<!-- 署名: PRO1V(valerie...@gmail.com) -->\n'+new XMLSerializer().serializeToString(clone);
+        const blobUrl=URL.createObjectURL(new Blob([text],{type:'image/svg+xml;charset=utf-8'}));
+        const el=document.createElement('a');el.href = blobUrl;el.download='AETHER-AF087-'+$('theme').value+'.svg';
+        document.body.append(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(blobUrl),2000);
+        log('EXPORT','AF—087 / 当前配色与 CAD 视图已导出为独立 SVG');notify('SVG 蓝图已导出 · 保留当前配色与装配视图');
+      });
+      stage.querySelectorAll('.subsystem').forEach(el=>el.addEventListener('click',()=>dispatch(el.dataset.system)));
+      reducedMotion.addEventListener('change',()=>{
+        if(reducedMotion.matches){if(swarm)swarm.stop({reveal:true});blueprint.classList.add('paused');updateProgress();$('build-status').textContent='减少动态效果已启用 · 静态总装就绪';log('MOTION','切换为静态图纸');}
+      });
+      $('replay').addEventListener('click',()=>{if(!reducedMotion.matches)blueprint.classList.remove('paused');});
+      makeSwarm();
+    })();
+  </script>
+</body>
+</html>

@@ -31,6 +31,12 @@
       box-sizing: border-box;
     }
 
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: clip;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -43,8 +49,10 @@
     }
 
     .container {
-      width: 100%;
-      max-width: 960px;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      width: min(100%, 960px);
       display: flex;
       flex-direction: column;
       gap: 24px;
@@ -80,6 +88,15 @@
       grid-template-columns: 1.3fr 1fr;
     }
 
+    .entry-card > *,
+    .info-pane > *,
+    .file-list,
+    code {
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
     .preview-pane {
       background: #cbeaf6;
       border-right: 1px solid var(--border);
@@ -92,6 +109,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
+    }
+
+    .preview-pane svg {
+      width: 100%;
+      height: 100%;
+      min-height: 220px;
       display: block;
     }
 
@@ -176,11 +200,17 @@
 
     @media (max-width: 760px) {
       .entry-card {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
       .preview-pane {
         border-right: none;
         border-bottom: 1px solid var(--border);
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 14px 88px;
       }
     }
   </style>
@@ -220,6 +250,137 @@
     </section>
 
     <section class="entries" aria-label="作品目录">
+      <!-- 署名: PRO1V(valerie...@gmail.com) | 创作: Codespaces Codex (gpt-6.1-sol/xhigh) 提取核验双发布 -->
+      <article class="entry-card">
+        <div class="preview-pane" style="background:#08131e">
+          <svg viewBox="0 0 640 420" role="img" aria-labelledby="city-preview-title city-preview-desc">
+            <title id="city-preview-title">NEON HARBOR 赛博港湾天际线与天桥</title>
+            <desc id="city-preview-desc">霓虹港湾的赛博城市、跨海天桥与五个协作光标。</desc>
+            <defs>
+              <linearGradient id="city-sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#091a31"/><stop offset=".62" stop-color="#153b52"/><stop offset="1" stop-color="#087d82"/></linearGradient>
+              <linearGradient id="city-water" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#071c32"/><stop offset=".5" stop-color="#0a5264"/><stop offset="1" stop-color="#071c32"/></linearGradient>
+              <linearGradient id="city-neon" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#c5f477"/><stop offset=".52" stop-color="#72dbe7"/><stop offset="1" stop-color="#bcabff"/></linearGradient>
+              <filter id="city-glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect width="640" height="420" fill="url(#city-sky)"/>
+            <circle cx="516" cy="80" r="38" fill="#c5f477" opacity=".82"/>
+            <circle cx="516" cy="80" r="55" fill="none" stroke="#72dbe7" stroke-opacity=".25" stroke-width="2"/>
+            <path d="M0 218 58 184l45 28 49-74 44 45 55-91 54 74 42-39 63 76 47-42 58 45 58-66 67 48v96H0Z" fill="#102b40"/>
+            <g fill="#183d50" stroke="#39758a" stroke-width="2">
+              <path d="M30 190h60v130H30z"/><path d="M104 155h58v165h-58z"/><path d="M176 205h50v115h-50z"/><path d="M238 130h66v190h-66z"/><path d="M316 176h55v144h-55z"/><path d="M384 116h72v204h-72z"/><path d="M470 164h53v156h-53z"/><path d="M537 133h70v187h-70z"/>
+            </g>
+            <g fill="#c5f477" opacity=".9">
+              <path d="M43 211h9v13h-9zM65 211h9v13h-9zM116 178h9v13h-9zM138 178h9v13h-9zM252 151h10v14h-10zM278 151h10v14h-10zM399 140h10v14h-10zM426 140h10v14h-10zM550 157h10v14h-10zM578 157h10v14h-10z"/>
+            </g>
+            <g fill="#72dbe7" opacity=".85"><path d="M43 245h9v13h-9zM116 211h9v13h-9zM252 186h10v14h-10zM399 174h10v14h-10zM550 193h10v14h-10z"/></g>
+            <path d="M0 321c112-25 194-31 301-3 103 27 190 22 339-20v122H0Z" fill="url(#city-water)"/>
+            <path d="M0 336c105-31 202-24 301 2 99 26 200 18 339-25" fill="none" stroke="#72dbe7" stroke-opacity=".55" stroke-width="3"/>
+            <path d="M0 318C108 260 196 266 303 310c108 44 208 42 337-9" fill="none" stroke="url(#city-neon)" stroke-width="7" filter="url(#city-glow)"/>
+            <path d="M34 331 94 286h444l68 43" fill="none" stroke="#c5f477" stroke-width="3"/>
+            <path d="M94 286v46M161 276v55M231 278v56M307 290v48M382 298v39M460 298v41M538 290v40" stroke="#72dbe7" stroke-opacity=".65" stroke-width="2"/>
+            <path d="M75 286c73-53 142-74 220-65 87 10 153 44 239 65" fill="none" stroke="#bcabff" stroke-width="3" stroke-dasharray="8 8"/>
+            <g stroke="#c5f477" stroke-width="2" fill="#08131e"><path d="m104 119 12 19-13-4-9 12z"/><path d="m271 91 12 19-13-4-9 12z"/><path d="m438 109 12 19-13-4-9 12z"/><path d="m557 237 12 19-13-4-9 12z"/><path d="m348 246 12 19-13-4-9 12z"/></g>
+            <g fill="#e7f0f2" font-family="ui-monospace,monospace"><text x="28" y="38" font-size="12" letter-spacing="3">NEON HARBOR / CITY BUILD 05</text><text x="28" y="58" font-size="9" fill="#72dbe7" letter-spacing="2">CURSORSWARM · HARBOR DISTRICT ONLINE</text></g>
+          </svg>
+        </div>
+        <div class="info-pane">
+          <div>
+            <span class="edition-label">CURSORSWARM / NEON HARBOR</span>
+            <h2>NEON HARBOR · 赛博港湾造城</h2>
+            <p>五个光标并行铺设港区、天际线与跨海天桥，霓虹灯带会随城市阶段逐步点亮。支持主题切换、建造速度、分区聚焦、音效与实时 Swarm 轨迹。</p>
+            <div class="file-list">cursor-swarm-city.html<br />离线单文件 · 内联 SVG 场景</div>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="./cursor-swarm-city.html">进入赛博港湾</a>
+            <a class="btn" href="./cursor-swarm-city.html#city-stage">查看造城舞台</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry-card">
+        <div class="preview-pane" style="background:#071f4c">
+          <svg viewBox="0 0 640 420" role="img" aria-labelledby="foundry-preview-title foundry-preview-desc">
+            <title id="foundry-preview-title">AETHER FOUNDRY 星港总装蓝图与低温环</title>
+            <desc id="foundry-preview-desc">深蓝工程图纸中的轨道星港、低温环与精密尺寸标记。</desc>
+            <defs>
+              <pattern id="foundry-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#b2dcff" stroke-opacity=".14"/></pattern>
+              <linearGradient id="foundry-paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#092957"/><stop offset="1" stop-color="#123e73"/></linearGradient>
+              <filter id="foundry-glow"><feGaussianBlur stdDeviation="5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect width="640" height="420" fill="url(#foundry-paper)"/><rect x="24" y="54" width="592" height="326" fill="url(#foundry-grid)" stroke="#b0d6ff" stroke-opacity=".55"/>
+            <g fill="none" stroke="#b2dcff" stroke-width="2" opacity=".8"><path d="M70 217h500M320 83v270"/><circle cx="320" cy="217" r="116" stroke-dasharray="5 7"/><ellipse cx="320" cy="217" rx="178" ry="70" stroke="#f6edb6" stroke-width="3"/><ellipse cx="320" cy="217" rx="150" ry="49" stroke="#7dabb5" stroke-width="5"/></g>
+            <g fill="#f6edb6" stroke="#b0d6ff" stroke-width="2"><path d="m176 191 144-26 144 26-144 26z"/><path d="m178 216 142 26 142-26-2 33-140 28-140-28z"/><path d="m320 165 22 51-22 52-22-52z"/><rect x="293" y="116" width="54" height="36" rx="4"/><rect x="293" y="282" width="54" height="36" rx="4"/></g>
+            <g fill="#7dabb5" stroke="#b2dcff" stroke-width="2"><path d="M124 150h80l-20 45h-80z"/><path d="M436 150h80l20 45h-80z"/><path d="M124 285h80l-20-45h-80z"/><path d="M436 285h80l20-45h-80z"/></g>
+            <g stroke="#d6af70" stroke-width="2" fill="none"><path d="M116 106h408M116 100v12M524 100v12"/><path d="M92 128v178M86 128h12M86 306h12"/><path d="M120 364h400"/></g>
+            <g fill="#d6af70" font-family="ui-monospace,monospace"><text x="32" y="34" font-size="12" letter-spacing="3">AETHER FOUNDRY / AF—087</text><text x="120" y="96" font-size="10">184.00 m ±0.02</text><text x="98" y="222" font-size="9" transform="rotate(-90 98 222)">LOW-TEMP RING / Ø 64.00 m</text><text x="454" y="397" font-size="9">REV. 04—B · ORBITAL ASSEMBLY</text></g>
+            <g stroke="#f6edb6" stroke-width="2" filter="url(#foundry-glow)"><path d="M140 337h50M450 337h50M170 350h300"/></g>
+            <g fill="#edf6ff" font-family="ui-monospace,monospace"><text x="42" y="398" font-size="9" letter-spacing="2">SIX CURSORS · PRECISION ASSEMBLY · LOCAL CAD</text></g>
+          </svg>
+        </div>
+        <div class="info-pane">
+          <div>
+            <span class="edition-label">CURSORSWARM / AETHER FOUNDRY</span>
+            <h2>AETHER FOUNDRY · 星港精密蓝图</h2>
+            <p>六位工程光标协同装配深空补给站：主桁架、折叠光翼、对接泊位与低温环逐层归位。可切换 CAD 透视、分解视图、图纸主题、精密音效并下载蓝图 SVG。</p>
+            <div class="file-list">cursor-swarm-foundry.html<br />离线 CAD 蓝图 · 低温环装配视图</div>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="./cursor-swarm-foundry.html">打开星港蓝图</a>
+            <a class="btn" href="./cursor-swarm-foundry.html#starport-blueprint">查看总装图</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry-card">
+        <div class="preview-pane" style="background:#d8eef1">
+          <svg viewBox="0 0 640 420" role="img" aria-labelledby="coaster-preview-title coaster-preview-desc">
+            <title id="coaster-preview-title">SKYRAIL COASTER 海湾玻璃天轨与白鹈鹕骑单车</title>
+            <desc id="coaster-preview-desc">蓝绿色海湾上方的玻璃天轨，白鹈鹕骑着单车穿过庆典。</desc>
+            <defs>
+              <linearGradient id="coaster-sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a8d5ec"/><stop offset=".7" stop-color="#e6f5f2"/><stop offset="1" stop-color="#78c9c2"/></linearGradient>
+              <linearGradient id="coaster-sea" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#236f7a"/><stop offset=".52" stop-color="#78c9c2"/><stop offset="1" stop-color="#2c8f98"/></linearGradient>
+              <filter id="coaster-shadow"><feGaussianBlur stdDeviation="7"/></filter>
+            </defs>
+            <rect width="640" height="420" fill="url(#coaster-sky)"/><circle cx="513" cy="72" r="34" fill="#ffba66" opacity=".9"/><path d="M0 232c86-29 156-24 240 5s162 28 236 1 104-25 164-13v195H0Z" fill="url(#coaster-sea)"/><path d="M0 281c100-30 185-14 270 11s166 21 244-3 87-25 126-20" fill="none" stroke="#d7fff7" stroke-opacity=".65" stroke-width="3"/>
+            <path d="M32 239C151 112 254 110 356 195s171 97 252-5" fill="none" stroke="#ffffff" stroke-opacity=".45" stroke-width="18" filter="url(#coaster-shadow)"/><path d="M32 239C151 112 254 110 356 195s171 97 252-5" fill="none" stroke="#236f7a" stroke-width="11"/><path d="M32 239C151 112 254 110 356 195s171 97 252-5" fill="none" stroke="#b7fff3" stroke-width="4"/>
+            <g fill="#edf9f7" stroke="#236f7a" stroke-width="3"><path d="M97 203v134M178 158v175M265 148v168M355 195v132M449 230v99M547 198v120"/><path d="M82 337h30M163 333h30M250 320h30M340 331h30M434 333h30M532 324h30"/></g>
+            <g transform="translate(274 122)" stroke="#203446" stroke-width="4" fill="none"><circle cx="-16" cy="100" r="24"/><circle cx="73" cy="100" r="24"/><path d="M-16 100 8 64l25 36m-25-36 40 0 25 36m-40-36 13-21m-1 0h18"/><path d="M5 44c-4-30 14-48 39-48 22 0 35 15 32 34-3 20-23 28-42 17l-7 23" fill="#fff"/><path d="m73 31 34 9-30 10" fill="#ffba66"/><path d="M31 17c-7-18 1-29 13-35 14-6 30 4 27 18-3 14-17 20-29 14" fill="#fff"/><path d="M38 29 25 58m35-26 10 31"/><path d="M8 64 33 53"/><circle cx="8" cy="64" r="5" fill="#ed7569"/></g>
+            <g fill="#203446" font-family="ui-monospace,monospace"><text x="28" y="37" font-size="12" letter-spacing="3">SKYRAIL COASTER / CELEBRATION RUN</text><text x="28" y="57" font-size="9" fill="#236f7a" letter-spacing="2">CURSOR BRIDGE × PELICAN CYCLING FESTIVAL</text></g>
+            <g fill="#ed7569"><circle cx="124" cy="117" r="5"/><circle cx="212" cy="92" r="5"/><circle cx="409" cy="153" r="5"/><circle cx="495" cy="186" r="5"/></g>
+          </svg>
+        </div>
+        <div class="info-pane">
+          <div>
+            <span class="edition-label">CURSORSWARM / SKYRAIL COASTER</span>
+            <h2>SKYRAIL COASTER · 光标造桥 × 鹈鹕骑行庆典</h2>
+            <p>光标沿海湾铺出一条玻璃天轨，白鹈鹕骑着单车穿过云端庆典。支持昼夜主题、轨道速度、庆典粒子、音效、场景聚焦与离线互动。</p>
+            <div class="file-list">pelican-swarm-coaster.html<br />离线天轨场景 · 白鹈鹕骑行庆典</div>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="./pelican-swarm-coaster.html">登上玻璃天轨</a>
+            <a class="btn" href="./pelican-swarm-coaster.html#coaster-stage">查看庆典舞台</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="entry-card">
+        <div class="preview-pane" style="background:#f6f3e9">
+          <img src="./pelican-ride.svg" alt="顺风出逃：系着橘红围巾的白鹈鹕骑红色单车沿海岸兜风" />
+        </div>
+        <div class="info-pane">
+          <div>
+            <span class="edition-label">THE PELICAN CYCLING CLUB</span>
+            <h2>顺风出逃 · 骑到海边去</h2>
+            <p>奶油色海岸、橘红围巾与复古单车。单文件离线运行，支持同步踩踏、三档骑行速度、昼夜切换、车铃与当前画面 SVG 下载，适配手机与桌面。</p>
+            <div class="file-list">pelican-ride.html<br />pelican-ride.svg</div>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="./pelican-ride.html">出发，去兜风</a>
+            <a class="btn" href="./pelican-ride.svg" target="_blank" rel="noopener">查看 SVG 插画</a>
+          </div>
+        </div>
+      </article>
+
       <article class="entry-card">
         <div class="preview-pane">
           <img src="./pro6/pelican-bicycle.svg" alt="Pro6 暮海港湾巡游鹈鹕矢量插画预览" />
