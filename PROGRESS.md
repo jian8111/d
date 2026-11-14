@@ -2,15 +2,17 @@
 # PROGRESS.md — 跨号交接进度记录
 
 ## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
-- **更新时间**：2026-11-14 12:09 (PST)
+- **更新时间**：2026-11-14 12:18 (PST)
 - **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 确认为 `PRO1V`，已排除第 6 号纯网盘存储号 `466788455@qq.com`）
 - **已完成内容**：
-  1. **明确第七条公开仓库零泄露边界**：根据用户说明，更新 [`AGENTS.md`](./AGENTS.md) 第七条区分公开 Git 仓库（`not private`，严禁写入任何密钥与 Commit）与私有对话界面（可按需直接提供完整可复制配置命令），同步推送 GitHub `main` 与 Google Drive `download`。
-  2. **Git Token 安全归档与 2-core Codespace 就绪**：`urban-goldfish-vgqwrvgpxjr3xv74`（`basicLinux32gb`，`https://urban-goldfish-vgqwrvgpxjr3xv74.github.dev`）已处于 `Available` 状态；新 Token 仅保存在本机隔离文件 `~/.config/gh/pat.env` 与 Drive `download/github_token.txt`（`1hOZQ788YDCIl4X2oAnXY15skAuMGhhtv`）。
+  1. **加密写入 Codespaces User Secret**：从本地 `~/.codex/auth.json` 读取密钥并通过 `gh secret set YLS_API_KEY --user -a codespaces --repos jian8111/d` 加密写入 GitHub Codespaces User Secret（仓库零明文落盘）。
+  2. **新增 [`.devcontainer/devcontainer.json`](./.devcontainer/devcontainer.json) 与 [`.devcontainer/setup-codex.sh`](./.devcontainer/setup-codex.sh)**：配置 `postStartCommand` 自动检测并安装 `@openai/codex`，读取容器环境变量 `$YLS_API_KEY` 生成 `~/.codex/auth.json`（`600`）与 `~/.codex/config.toml`（默认 `gpt-6.1-sol` + `xhigh` + `https://ylscode.com/codex` + `wire_api = "responses"` + `supports_websockets = false`）。
+  3. **校验、提交与云端重建**：通过零密钥泄露扫描与 `verify_repo.py --strict` 校验，推送至 `main` 并同步 Drive `download`，触发 `gh codespace rebuild -c urban-goldfish-vgqwrvgpxjr3xv74 --full`。
 - **当前状态与下一步待办**：
-  1. 仓库工作树整洁，全仓与历史零密钥泄露；用户在 Codespace 网页终端直接粘贴已填好 `OPENAI_API_KEY` 的一键脚本即可立即启用 Codex。
+  1. Codespace `urban-goldfish-vgqwrvgpxjr3xv74`（`https://urban-goldfish-vgqwrvgpxjr3xv74.github.dev`）已触发云端完整重建（若旧实例工作区尚未拉取 `.devcontainer/`，重建后若需应用新配置可直接 `git pull` 后再 Rebuild 或新开实例）。
 
 ## 历史记录
+- **2026-11-14 12:09 (PST)｜`PRO1V(valerie...@gmail.com)`**：明确 [`AGENTS.md`](./AGENTS.md) 第七条公开仓库零泄露边界并完成双端归档（`e140515`）。
 - **2026-11-14 12:06 (PST)｜`PRO1V(valerie...@gmail.com)`**：将新 GitHub PAT 安全保存至 `~/.config/gh/pat.env` 与 Drive `download/github_token.txt`（`1hOZQ788YDCIl4X2oAnXY15skAuMGhhtv`），创建 2-core GitHub Codespace `urban-goldfish-vgqwrvgpxjr3xv74` 并完成双端归档（`07e5bca`）。
 - **2026-11-14 11:54 (PST)｜`PRO1V(valerie...@gmail.com)`**：执行全仓与 Git 全历史密钥零泄露体检（`0` 泄露），在 [`AGENTS.md`](./AGENTS.md) 末尾追加「第七条：密钥零泄露与提交前强校验红线」并完成双端归档（`0f7a736`）。
 - **2026-11-14 11:29 (PST)｜`PRO1V(valerie...@gmail.com)`**：完成全量一体化配置重建（`.gitignore`、Drive `codex_key.txt`、`AGENTS.md` 五大铁律、双 CLI 与 Python SDK 满血配置与连通验收），严格委派 `codex exec` 生成并通过无头 Chromium 验收单文件 [`pelican_bike.html`](./pelican_bike.html)（`5b5b008`）。
