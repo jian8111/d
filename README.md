@@ -1,4 +1,4 @@
-<!-- 署名: PRO5C(crispinowilbourn@gmail.com) | 首创: PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
+<!-- 署名: PRO3J(saveljevsjill148@gmail.com) | 历史署名: PRO5C(crispinowilbourn@gmail.com), PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
 # d
 
 鹈鹕骑自行车（Pelican Riding a Bicycle）SVG / HTML 多版本对比与归档仓库。
@@ -15,7 +15,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | `PRO1V` | `PRO1V(valerie...@gmail.com)` *(待补全完整 Gmail)* | `pro1/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
 | `PRO2H` | `待签名` | `pro2/` | ⏳ 待签名 | [前往签名](./SIGNATURES.md) |
-| `PRO3J` | `待签名` | `pro3/` | ⏳ 待签名 | [前往签名](./SIGNATURES.md) |
+| `PRO3J` | `PRO3J(saveljevsjill148@gmail.com)` | `pro3/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
 | `PRO4M` | `待签名` | `pro4/` | ⏳ 待签名 | [前往签名](./SIGNATURES.md) |
 | `PRO5C` | `PRO5C(crispinowilbourn@gmail.com)` | `pro5/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
 
@@ -68,4 +68,4 @@
 直接用浏览器打开根目录 [`index.html`](./index.html) 即可浏览全部版本，或直接访问 [`pro6/index.html`](./pro6/index.html) / [`pro1/index.html`](./pro1/index.html) / [`pro5/index.html`](./pro5/index.html) / [`pro4/index.html`](./pro4/index.html) / [`pro3/pelican.html`](./pro3/pelican.html)。所有页面均为零外部依赖，支持离线运行。
 
 ---
-**最近更新署名**：`PRO5C(crispinowilbourn@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
+**最近更新署名**：`PRO3J(saveljevsjill148@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
