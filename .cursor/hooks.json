@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "python3 .cursor/hooks/swarm-guard.py",
+        "matcher": "git",
+        "timeout": 10
+      }
+    ],
+    "subagentStart": [
+      {
+        "command": "python3 .cursor/hooks/swarm-guard.py",
+        "timeout": 10
+      }
+    ]
+  }
+}

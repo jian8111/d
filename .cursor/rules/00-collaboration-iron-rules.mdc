@@ -1,0 +1,16 @@
+---
+description: Permanent 5-Pro+1-Drive collaboration, <50MB archive gate, secret isolation, Drive sync, and PRO1V-PRO5C signature rules from AGENTS.md.
+alwaysApply: true
+---
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+
+# Collaboration, Secret Isolation & Archive Iron Rules
+
+Follow `AGENTS.md` on every task without exception:
+
+1. **5 Pro + 1 Drive-Only Identity Rule**: Read `~/.gemini/ACCOUNT_IDENTITY.txt` to identify the active Pro worker (`PRO1V`–`PRO5C`). `466788455@qq.com` is the **Drive-only storage account** (`download` folder ID: `1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`); NEVER use `466788455@qq.com` as a Pro worker signature or Git author email.
+2. **Archive & Size Gate**: Push code, config, docs, and files `< 50 MB` directly to GitHub `jian8111/d` (`main`) and sync to Google Drive `download` (`1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`). Never push files `>= 50 MB` to Git; store them in `download` only. Never prompt with a modal asking how to submit.
+3. **Secret Isolation**: Never commit `*key*`, `.env`, `.env.*`, `.codex/`, `opencode.json`, `codex_key.txt`, `*.pem`, or `*.secret` to Git (enforced by `.gitignore` and `.cursor/hooks/swarm-guard.py`).
+4. **Cross-Account Handoff**: Read `AGENTS.md` and `PROGRESS.md` first when resuming (`继续`). Update `PROGRESS.md` in both repo root and Drive `download` after finishing changes.
+5. **Cloud Environment (`no sudo`)**: Use `pip install --user --break-system-packages` for Python packages and user-prefix npm (`~/.npm-global`) for Node tools.
+6. **Dual Signature (`PRO1V`–`PRO5C`)**: Configure `git config user.name "PRO<N><L>"` and `git config user.email "<ProEmail>"`, prefix commit messages with `[PRO<N><L>(<ProEmail>)]`, and sign code headers, artifacts, and `PROGRESS.md`.

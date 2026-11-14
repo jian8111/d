@@ -1,0 +1,16 @@
+---
+description: Frontend rules for HTML showcase pages, SVG editions, and CursorSwarm multi-cursor animations.
+globs:
+  - "*.html"
+  - "assets/**/*"
+  - "pro*/**/*"
+alwaysApply: false
+---
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+
+# Frontend & CursorSwarm Animation Standards
+
+- **Zero External Dependencies**: Keep all pages (`index.html`, `swarm-demo.html`, `pro1/`–`pro6/`) offline-capable without remote CDN scripts, fonts, or stylesheets. Load vendored `./assets/vendor/cursor-swarm/cursor-swarm.min.js`.
+- **Non-Blocking Controls**: Mark floating UI toolbars and debug panels with `data-cs-ignore` so visitors can click "Reveal All", toggle sound, or change speed/palettes at any time.
+- **Accessibility**: Keep `respectReducedMotion: true` enabled by default so users with `prefers-reduced-motion: reduce` receive the static page immediately.
+- **Browser Proof**: Verify layout, console errors, and `CursorSwarm` lifecycle (`init`, `setSpeed`, `setPalette`, `stop({ reveal: true })`) in headless Chromium after edits.

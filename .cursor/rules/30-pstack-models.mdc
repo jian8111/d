@@ -1,0 +1,16 @@
+---
+description: Role-to-model routing table for /swarm and multi-agent workflows (pstack compatible).
+alwaysApply: true
+---
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+
+# Swarm Role Model Routing (pstack-compatible)
+# Use `inherit-parent` or `auto` by default so every Cursor plan works out-of-the-box.
+# Override any role with a specific model slug entitled on your Cursor account (e.g., claude-opus-5[effort=high], grok-4.7-xhigh-fast, composer-2.5).
+# budget: balanced (inherit-parent)
+swarm planner: inherit-parent
+swarm workers: inherit-parent
+swarm verifier: inherit-parent
+github sync reviewer: inherit-parent
+architect runners: inherit-parent, inherit-parent
+interrogate reviewers: inherit-parent

@@ -1,10 +1,21 @@
 <!DOCTYPE html>
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>d · 鹈鹕骑车 SVG / HTML 作品集</title>
-  <meta name="description" content="Pelican riding a bicycle SVG & interactive HTML showcase repository, organized by model edition." />
+  <title>d · 鹈鹕骑车 SVG / HTML 作品集 &amp; Cursor Swarm</title>
+  <meta name="description" content="Pelican riding a bicycle SVG & interactive HTML showcase repository, powered by Cursor Agent Swarm and CursorSwarm multi-cursor live rebuild." />
+  <link rel="stylesheet" href="./assets/css/swarm-ui.css" />
+  <script src="./assets/vendor/cursor-swarm/cursor-swarm.min.js"></script>
+  <script>
+    if (window.CursorSwarm && !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+      window.CursorSwarm.cloak();
+      setTimeout(function () {
+        document.documentElement.classList.remove("cs-cloak");
+      }, 2500);
+    }
+  </script>
   <style>
     :root {
       --bg: #f6f1e7;
@@ -26,7 +37,7 @@
       background: var(--bg);
       color: var(--ink);
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
-      padding: 36px 20px 48px;
+      padding: 36px 20px 92px;
       display: flex;
       justify-content: center;
     }
@@ -178,8 +189,34 @@
   <main class="container">
     <header>
       <h1>鹈鹕骑车 · Pelican Riding a Bicycle</h1>
-      <p>SVG 与交互式 HTML 作品归档目录，按版本分文件夹存放，方便直接预览与横向对比。</p>
+      <p>SVG 与交互式 HTML 作品归档目录，按版本分文件夹存放，方便直接预览与横向对比；已集成 5 账号多光标协同搭建动画与 Cursor Agent Swarm 配置。</p>
     </header>
+
+    <section class="swarm-banner" aria-label="Cursor Agent Swarm 与多光标协同配置">
+      <div>
+        <span class="swarm-banner-eyebrow">CURSOR AGENT SWARM · GITHUB WORKFLOWS</span>
+        <h2>五账号 Swarm 多智能体协同 &amp; 多光标搭建特效</h2>
+        <p>已配置 <code>.cursor/rules/</code>、<code>.cursor/skills/swarm/</code>、<code>.cursor/agents/</code>、<code>.cursor/mcp.json</code>、<code>.cursor/hooks.json</code> 与 GitHub Actions（自动部署 Pages、CI 校验与 Cursor CLI Swarm PR）。右下角控制台可随时跳过动画或切换配色与音效。</p>
+        <div class="swarm-agent-chips">
+          <span class="swarm-chip" data-cs="pop"><i style="background:#147d75"></i>PRO1V</span>
+          <span class="swarm-chip" data-cs="pop"><i style="background:#e05a47"></i>PRO2H</span>
+          <span class="swarm-chip" data-cs="pop"><i style="background:#e69d24"></i>PRO3J</span>
+          <span class="swarm-chip" data-cs="pop"><i style="background:#2c6bed"></i>PRO4M</span>
+          <span class="swarm-chip" data-cs="pop"><i style="background:#8e44ad"></i>PRO5C</span>
+        </div>
+      </div>
+      <div class="swarm-banner-actions">
+        <div class="swarm-banner-paths">
+          .cursor/skills/swarm/SKILL.md<br />
+          .cursor/agents/{planner,worker,verifier}.md<br />
+          .github/workflows/{pages,ci-verify,cursor-agent-swarm}.yml
+        </div>
+        <div class="swarm-banner-btns">
+          <a class="swarm-banner-btn swarm-banner-btn-primary" href="./swarm-demo.html">打开 Swarm 交互实验室</a>
+          <a class="swarm-banner-btn" href="./assets/vendor/cursor-swarm/ATTRIBUTION.md" target="_blank" rel="noopener">MIT 引擎说明</a>
+        </div>
+      </div>
+    </section>
 
     <section class="entries" aria-label="作品目录">
       <article class="entry-card">
@@ -316,5 +353,11 @@
       </article>
     </section>
   </main>
+  <script src="./assets/js/swarm-ui.js"></script>
+  <script>
+    if (window.SwarmGalleryUI) {
+      window.swarmGallery = window.SwarmGalleryUI.mountGallerySwarm({ demoLink: true });
+    }
+  </script>
 </body>
 </html>

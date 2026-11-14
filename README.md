@@ -1,4 +1,4 @@
-<!-- 署名: PRO4M(wilermccomber@gmail.com) | 历史署名: PRO3J(saveljevsjill148@gmail.com), PRO5C(crispinowilbourn@gmail.com), PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
+<!-- 署名: PRO1V(valerie...@gmail.com) | 历史: PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com), PRO5C(crispinowilbourn@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
 # d
 
 鹈鹕骑自行车（Pelican Riding a Bicycle）SVG / HTML 多版本对比与归档仓库。
@@ -30,42 +30,46 @@
 
 ```text
 .
-├── AGENTS.md           # 仓库与跨账号协作永久规则（四条铁律）
-├── PROGRESS.md         # 跨号交接进度记录
-├── SIGNATURES.md       # ✍️ 五账号联合签名稿 / 签到簿（置顶报到）
+├── AGENTS.md                   # 仓库与跨账号协作永久规则（5 Pro + 1 Drive 架构与四大铁律）
+├── PROGRESS.md                 # 跨号交接进度记录
+├── SIGNATURES.md               # ✍️ 五账号联合签名稿 / 签到簿（置顶报到）
 ├── README.md
-├── index.html          # 作品总览导航页（汇总各版本预览与直达入口）
-├── pro1/
-│   ├── README.md
-│   ├── index.html      # Pro1 零依赖交互式 HTML + 内联 SVG 版（by Antigravity / AG：2-Bone IK 踩踏、晴空/落日车灯、Web Audio 车铃、喉囊小鱼彩蛋与导出 SVG）
-│   └── pelican-bicycle.svg # Pro1 独立纯矢量 SVG 源文件
-├── pro2/
-│   ├── README.md
-│   ├── index.html      # Pro2 交互式 HTML + 内联 SVG 版
-│   └── pelican.svg     # Pro2 独立 SVG 文件
-├── pro3/
-│   ├── README.md
-│   ├── pelican.html    # Pro3 交互式 HTML + 内联 SVG 版（含双连杆 IK 实时踩踏、调速、晨光/落日切换、Web Audio 车铃与导出 SVG）
-│   └── pelican.svg     # Pro3 独立纯矢量 SVG 源文件
-├── pro4/
-│   ├── README.md
-│   ├── index.html      # Pro4 交互式 HTML + 内联 SVG 版（含双连杆 IK、昼夜三光影切换、防滑视差、Web Audio 车铃与导出当前帧 SVG）
-│   ├── styles.css      # 海岸纸张质感原生样式表
-│   ├── app.js          # 双连杆 IK、齿轮同步与交互逻辑
-│   └── pelican-bicycle.svg # Pro4 独立纯矢量 SVG 源文件
-├── pro5/
-│   ├── README.md
-│   ├── index.html      # Pro5 零依赖单文件交互式 HTML + 内联 SVG 版（5 场景预设、2-Bone IK、CAD 蓝图遥测、Web Audio 车铃与导出/复制 SVG）
-│   └── pelican-bicycle.svg # Pro5 独立纯矢量 SVG 源文件
-└── pro6/
-    ├── README.md
-    ├── index.html      # Pro6 朱红复古钢架海港巡游版（4 套光影/工程蓝图、2-Bone IK 实时踩踏、Web Audio 车铃、喉囊弹鱼彩蛋与导出/复制 SVG）
-    └── pelican-bicycle.svg # Pro6 独立纯矢量 SVG 源文件（960×560）
+├── index.html                  # 作品总览导航页（集成 5 账号 CursorSwarm 多光标搭建动画与控制台）
+├── swarm-demo.html             # Cursor Swarm 多光标实验室与配置架构总览
+├── .cursor/
+│   ├── rules/                  # .mdc 协作规则、Swarm 编排规范、前端规则与 pstack 模型路由
+│   ├── skills/                 # /swarm、/swarm-verify（含 verify_repo.py）与 /cursor-swarm-ui
+│   ├── agents/                 # swarm-planner、swarm-worker、swarm-verifier、github-sync-reviewer
+│   ├── hooks/                  # swarm-guard.py（防强推 main、50MB 防超限与密钥隔离守卫）
+│   ├── hooks.json              # Cursor 生命周期 Hook 配置
+│   ├── mcp.json                # GitHub / Playwright / Context7 MCP 服务配置
+│   └── environment.json        # Cursor Cloud Agents 云端环境初始化配置
+├── .github/workflows/
+│   ├── pages.yml               # GitHub Pages 自动构建与发布工作流
+│   ├── ci-verify.yml           # PR / Push 自动运行 verify_repo.py --strict
+│   └── cursor-agent-swarm.yml  # Cursor CLI Agent Swarm CI 工作流（workflow_dispatch & /swarm）
+├── assets/
+│   ├── css/swarm-ui.css        # Swarm 控制台与横幅样式
+│   ├── js/swarm-ui.js          # 5 账号多光标控制器与可选 Web Audio 音效
+│   └── vendor/cursor-swarm/    # 本地托管 MIT 协议 cursor-swarm.min.js（零外部 CDN 依赖）
+├── pro1/ ... pro6/             # 六个版本的「鹈鹕骑自行车」纯矢量 SVG & 交互 HTML 作品
 ```
 
-## 本地预览
+## Cursor Swarm × GitHub 配置说明
 
-直接用浏览器打开根目录 [`index.html`](./index.html) 即可浏览全部版本，或直接访问 [`pro6/index.html`](./pro6/index.html) / [`pro1/index.html`](./pro1/index.html) / [`pro5/index.html`](./pro5/index.html) / [`pro4/index.html`](./pro4/index.html) / [`pro3/pelican.html`](./pro3/pelican.html)。所有页面均为零外部依赖，支持离线运行。
+1. **Cursor IDE / CLI 本地多智能体蜂群**：
+   - 使用 Cursor 打开本仓库即自动加载 [`.cursor/rules/`](./.cursor/rules) 与 [`.cursor/agents/`](./.cursor/agents)。
+   - 在 Agent 对话中输入 `/swarm <目标>`，主控代理会按互不冲突的目录切片派发 `swarm-worker` 并行开发，并调用 `swarm-verifier` 与 [`verify_repo.py`](./.cursor/skills/swarm-verify/scripts/verify_repo.py) 完成全量校验。
+   - 如需在 MCP 中启用 GitHub Server，在本地导出 `GITHUB_PERSONAL_ACCESS_TOKEN` 环境变量即可（[`.cursor/mcp.json`](./.cursor/mcp.json) 使用 `${env:...}` 占位，不存放明文密钥）。
+2. **GitHub Actions 与 GitHub Pages**：
+   - **GitHub Pages**（[`.github/workflows/pages.yml`](./.github/workflows/pages.yml)）：在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，推送 `main` 后即自动发布 `index.html`、`swarm-demo.html` 与 `pro1/`–`pro6/`。
+   - **Cursor Agent Swarm CI**（[`.github/workflows/cursor-agent-swarm.yml`](./.github/workflows/cursor-agent-swarm.yml)）：配置仓库 Secret 后可通过 `Actions → Cursor Agent Swarm CI` 手动触发，或在 Issue/PR 评论中输入 `/swarm <任务>` 自动开分支并发起 PR：
+     ```bash
+     gh secret set CURSOR_API_KEY --repo jian8111/d --body "$CURSOR_API_KEY"
+     ```
+3. **本地校验与预览**：
+   - 运行校验：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict`
+   - 本地预览：直接打开 [`index.html`](./index.html) 或 [`swarm-demo.html`](./swarm-demo.html)，或启动静态服务器 `python3 -m http.server 8787`。所有页面均为零外部依赖，支持离线运行。
 
 ---
-**最近更新署名**：`PRO4M(wilermccomber@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
+**最近更新署名**：`PRO1V(valerie...@gmail.com)｜历史署名: PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com), PRO5C(crispinowilbourn@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`

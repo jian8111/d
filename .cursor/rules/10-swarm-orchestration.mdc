@@ -1,0 +1,15 @@
+---
+description: Multi-agent Swarm orchestration protocol for decomposing tasks into disjoint parallel workers, verifying outputs, and avoiding file conflicts.
+alwaysApply: false
+---
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+
+# Cursor Swarm Orchestration Rule
+
+When a task spans multiple editions (`pro1/`–`pro6/`), workflows, or independent verification checks, run a structured Swarm:
+
+1. **Frame First**: Define the done predicate, choose the topology (`partition`, `race`, or `mixed`), and write a short checklist before spawning subagents.
+2. **Disjoint Ownership**: Assign each `swarm-worker` a non-overlapping file slice (e.g., Worker A owns `pro6/`, Worker B owns `assets/`, Worker C owns `.github/workflows/`). Never let two parallel workers edit `index.html`, `README.md`, or `PROGRESS.md` simultaneously.
+3. **Isolated Execution**: Request isolated worktrees or cloud subagents when multiple workers edit code concurrently; keep integration & `PROGRESS.md` updates in the parent orchestrator.
+4. **Independent Verification**: Always run `swarm-verifier` (and `python3 .cursor/skills/swarm-verify/scripts/verify_repo.py`) before committing or pushing.
+5. **No Raw Dumps**: Aggregate worker outputs into a concise `PASS` / `ISSUES` / `BLOCKED` summary table with verified file paths and command results.

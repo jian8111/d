@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursor Swarm Lab · 多光标搭建 &amp; GitHub Swarm 配置实验室</title>
+  <meta name="description" content="Interactive CursorSwarm playground and Cursor Agent Swarm + GitHub Pages architecture explorer for jian8111/d." />
+  <link rel="stylesheet" href="./assets/css/swarm-ui.css" />
+  <style>
+    :root {
+      --bg: #0f1c24;
+      --surface: #152631;
+      --surface-alt: #1b313f;
+      --ink: #eef4f6;
+      --muted: #9eb7c2;
+      --border: rgba(123, 245, 233, 0.18);
+      --accent: #19a397;
+      --accent-bright: #7bf5e9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(25, 163, 151, 0.16), transparent 40%),
+        radial-gradient(circle at 88% 18%, rgba(44, 107, 237, 0.15), transparent 42%),
+        var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+      padding: 28px 20px 110px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .lab-wrap {
+      width: 100%;
+      max-width: 1040px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .lab-topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: rgba(21, 38, 49, 0.9);
+      border: 1px solid var(--border);
+    }
+
+    .lab-topbar h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      letter-spacing: -0.02em;
+    }
+
+    .lab-topbar p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .lab-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(16, 30, 39, 0.95);
+      border: 1px solid rgba(123, 245, 233, 0.25);
+      box-shadow: 0 16px 36px -18px rgba(0, 0, 0, 0.55);
+    }
+
+    .ctrl-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .ctrl-field select,
+    .ctrl-field input[type="range"] {
+      width: 100%;
+      background: var(--surface-alt);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 8px;
+      font: inherit;
+    }
+
+    .ctrl-toggles {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ctrl-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 5px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .ctrl-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .btn-lab {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 7px 13px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-lab:hover {
+      border-color: var(--accent-bright);
+      background: rgba(25, 163, 151, 0.25);
+    }
+
+    .btn-lab-primary {
+      background: var(--accent);
+      border-color: #27c2b4;
+      color: #ffffff;
+    }
+
+    .stage {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero-panel {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 20px;
+      padding: 24px;
+      border-radius: 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .hero-panel h2 {
+      margin: 0 0 10px;
+      font-size: 1.45rem;
+    }
+
+    .hero-panel p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.93rem;
+    }
+
+    .svg-frame {
+      background: #0d171f;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .svg-frame svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .slice-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .slice-tag {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #0b1920;
+      background: var(--accent-bright);
+    }
+
+    .slice-card h3 {
+      margin: 2px 0 0;
+      font-size: 1.02rem;
+    }
+
+    .slice-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.55;
+    }
+
+    .code-box {
+      margin: 0;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #0b141b;
+      border: 1px solid rgba(123, 245, 233, 0.2);
+      color: #bfece7;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      line-height: 1.55;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 780px) {
+      .hero-panel {
+        grid-template-columns: 1fr;
+      }
+      .ctrl-actions {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="lab-wrap">
+    <header class="lab-topbar" data-cs-ignore>
+      <div>
+        <h1>Cursor Swarm Lab · 多光标协同与 GitHub 蜂群配置</h1>
+        <p>实时调参体验多光标并行构建 DOM（<code>CursorSwarm</code>），同时查看仓库 <code>.cursor/</code> 与 <code>.github/workflows/</code> 配置拓扑。</p>
+      </div>
+      <a class="btn-lab" href="./index.html">← 返回作品集首页</a>
+    </header>
+
+    <section class="lab-controls" data-cs-ignore aria-label="CursorSwarm 参数控制器">
+      <label class="ctrl-field">
+        <span>并发光标数量 (<strong id="val-cursors">5</strong>)</span>
+        <input id="opt-cursors" type="range" min="1" max="8" step="1" value="5" />
+      </label>
+
+      <label class="ctrl-field">
+        <span>动画速度 (<strong id="val-speed">1.6×</strong>)</span>
+        <input id="opt-speed" type="range" min="0.6" max="3.6" step="0.2" value="1.6" />
+      </label>
+
+      <label class="ctrl-field">
+        <span>入场起点</span>
+        <select id="opt-start">
+          <option value="corners">四角飞入 (corners)</option>
+          <option value="center">中心散开 (center)</option>
+          <option value="outside">屏幕外飞入 (outside)</option>
+          <option value="top">顶部降落 (top)</option>
+          <option value="random">随机坐标 (random)</option>
+        </select>
+      </label>
+
+      <label class="ctrl-field">
+        <span>光标配色主题</span>
+        <select id="opt-palette">
+          <option value="team">Team 五账号主题</option>
+          <option value="neon">Neon 霓虹</option>
+          <option value="ocean">Ocean 海洋</option>
+          <option value="sunset">Sunset 落日</option>
+          <option value="forest">Forest 森林</option>
+          <option value="ink">Ink 暗墨</option>
+        </select>
+      </label>
+
+      <div class="ctrl-toggles">
+        <label class="ctrl-check"><input id="opt-copy" type="checkbox" checked /> 卡片复制粘贴 (copyPaste)</label>
+        <label class="ctrl-check"><input id="opt-relocate" type="checkbox" checked /> 错位拖拽归位 (relocation)</label>
+        <label class="ctrl-check"><input id="opt-deconstruct" type="checkbox" /> 上滑拆解 (deconstruct)</label>
+        <label class="ctrl-check"><input id="opt-sound" type="checkbox" /> Web Audio 机械音效</label>
+        <div class="ctrl-actions">
+          <button type="button" class="btn-lab btn-lab-primary" id="btn-rebuild">↻ 重新协同搭建</button>
+          <button type="button" class="btn-lab" id="btn-reveal">⚡ 立即全显</button>
+          <button type="button" class="btn-lab" id="btn-destroy">🧹 恢复原 DOM</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="swarm-stage" class="stage">
+      <section class="hero-panel">
+        <div>
+          <span class="slice-tag" data-cs="pop">CURSOR × GITHUB SWARM</span>
+          <h2>从静态画廊到多智能体协同工作区</h2>
+          <p>本仓库同时集成了<strong>前端多光标构建引擎</strong>（<code>assets/vendor/cursor-swarm/cursor-swarm.min.js</code>，MIT 协议零依赖）与<strong>Cursor Agent Swarm 工程规范</strong>（<code>.cursor/rules</code>、<code>.cursor/skills</code>、<code>.cursor/agents</code>、<code>.cursor/hooks.json</code>、<code>.cursor/mcp.json</code> 及 <code>.github/workflows/</code>）。</p>
+          <p>在 Cursor 中直接输入 <code>/swarm</code> 即可按无冲突切片调度并发子代理，并通过 GitHub Actions 自动部署 GitHub Pages 或触发 Cloud Agent PR。</p>
+        </div>
+        <div class="svg-frame">
+          <svg viewBox="0 0 420 250" role="img" aria-label="Cursor Swarm 多智能体协同拓扑图">
+            <defs>
+              <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#10222d" />
+                <stop offset="100%" stop-color="#173842" />
+              </linearGradient>
+            </defs>
+            <rect width="420" height="250" rx="12" fill="url(#bgGrad)" />
+            <g stroke="#2c6c78" stroke-width="1.5" stroke-dasharray="4 4">
+              <line x1="210" y1="48" x2="72" y2="128" />
+              <line x1="210" y1="48" x2="164" y2="128" />
+              <line x1="210" y1="48" x2="256" y2="128" />
+              <line x1="210" y1="48" x2="348" y2="128" />
+              <line x1="72" y1="158" x2="210" y2="208" />
+              <line x1="164" y1="158" x2="210" y2="208" />
+              <line x1="256" y1="158" x2="210" y2="208" />
+              <line x1="348" y1="158" x2="210" y2="208" />
+            </g>
+            <rect x="130" y="18" width="160" height="34" rx="8" fill="#147d75" stroke="#7bf5e9" stroke-width="1.2" />
+            <text x="210" y="39" fill="#ffffff" font-size="12" font-family="monospace" text-anchor="middle" font-weight="700">/swarm Orchestrator</text>
+
+            <rect x="30" y="124" width="84" height="36" rx="8" fill="#1b3a4b" stroke="#147d75" />
+            <text x="72" y="146" fill="#9be8df" font-size="11" font-family="monospace" text-anchor="middle">PRO1V</text>
+
+            <rect x="122" y="124" width="84" height="36" rx="8" fill="#1b3a4b" stroke="#e05a47" />
+            <text x="164" y="146" fill="#f7b3a8" font-size="11" font-family="monospace" text-anchor="middle">PRO2H</text>
+
+            <rect x="214" y="124" width="84" height="36" rx="8" fill="#1b3a4b" stroke="#e69d24" />
+            <text x="256" y="146" fill="#fbd792" font-size="11" font-family="monospace" text-anchor="middle">PRO3J</text>
+
+            <rect x="306" y="124" width="84" height="36" rx="8" fill="#1b3a4b" stroke="#2c6bed" />
+            <text x="348" y="146" fill="#aac6ff" font-size="11" font-family="monospace" text-anchor="middle">PRO4M/5C</text>
+
+            <rect x="115" y="196" width="190" height="34" rx="8" fill="#0f2833" stroke="#7bf5e9" />
+            <text x="210" y="217" fill="#7bf5e9" font-size="11" font-family="monospace" text-anchor="middle">GitHub main + Drive Sync</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="grid-cards" aria-label="Cursor Swarm 模块卡片">
+        <article class="slice-card" data-cs-copy="true">
+          <span class="slice-tag">.cursor/rules/*.mdc</span>
+          <h3>4 层协作与协同规则</h3>
+          <p>固化 <code>AGENTS.md</code> 50MB 防超限与双署名铁律、Swarm 切片解耦协议、零 CDN 前端规范与 <code>pstack</code> 模型路由。</p>
+        </article>
+
+        <article class="slice-card" data-cs-copy="true">
+          <span class="slice-tag">.cursor/skills/</span>
+          <h3>/swarm 与自动校验技能</h3>
+          <p>提供 <code>swarm/SKILL.md</code>（Frame → Fan out → Aggregate → Report）、<code>swarm-verify</code> 与 <code>cursor-swarm-ui</code>。</p>
+        </article>
+
+        <article class="slice-card" data-cs-copy="true">
+          <span class="slice-tag">.cursor/agents/</span>
+          <h3>4 个专职子代理</h3>
+          <p>内置 <code>swarm-planner</code>、<code>swarm-worker</code>、<code>swarm-verifier</code> 与 <code>github-sync-reviewer</code>，支持后台隔离执行。</p>
+        </article>
+
+        <article class="slice-card" data-cs-copy="true">
+          <span class="slice-tag">.github/workflows/</span>
+          <h3>Pages + CI + Swarm CLI</h3>
+          <p>自动运行 <code>verify_repo.py --strict</code>、发布静态站到 GitHub Pages，并支持 <code>/swarm</code> 评论触发 Cursor CLI PR。</p>
+        </article>
+      </section>
+
+      <section class="slice-card">
+        <span class="slice-tag">QUICKSTART CLI</span>
+        <h3>GitHub 端启用与触发命令</h3>
+        <pre class="code-box" data-cs="words"># 1. 为 GitHub Actions Cursor Swarm 配置 API Key Secret
+gh secret set CURSOR_API_KEY --repo jian8111/d --body "$CURSOR_API_KEY"
+
+# 2. 在仓库 Settings → Pages 中将 Build and deployment Source 设为 GitHub Actions
+# 3. 本地校验所有 Cursor 配置、SVG 与 50MB 规则
+python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict</pre>
+      </section>
+    </div>
+  </main>
+
+  <script src="./assets/vendor/cursor-swarm/cursor-swarm.min.js"></script>
+  <script src="./assets/js/swarm-ui.js"></script>
+  <script>
+    (function () {
+      var sound = window.SwarmGalleryUI.createSoundEngine();
+      var instance = null;
+
+      var elCursors = document.getElementById("opt-cursors");
+      var elSpeed = document.getElementById("opt-speed");
+      var elStart = document.getElementById("opt-start");
+      var elPalette = document.getElementById("opt-palette");
+      var elCopy = document.getElementById("opt-copy");
+      var elRelocate = document.getElementById("opt-relocate");
+      var elDeconstruct = document.getElementById("opt-deconstruct");
+      var elSound = document.getElementById("opt-sound");
+
+      var valCursors = document.getElementById("val-cursors");
+      var valSpeed = document.getElementById("val-speed");
+
+      function readOpts() {
+        var count = parseInt(elCursors.value, 10) || 5;
+        var speed = parseFloat(elSpeed.value) || 1.6;
+        var palKey = elPalette.value;
+        var palette = window.SwarmGalleryUI.PALETTE_PRESETS[palKey] || palKey;
+        var names = window.SwarmGalleryUI.TEAM_AGENTS.map(function (a) { return a.name; });
+        var fullNames = [];
+        for (var i = 0; i < count; i++) {
+          fullNames.push(names[i] || ("SWARM-" + (i + 1)));
+        }
+        return {
+          root: "#swarm-stage",
+          cursors: count,
+          names: fullNames,
+          palette: palette,
+          startPosition: elStart.value,
+          speed: speed,
+          copyPaste: elCopy.checked ? 0.65 : false,
+          relocation: elRelocate.checked ? 0.35 : false,
+          deconstruct: elDeconstruct.checked,
+          exitAfterBuild: "edge",
+          hud: true,
+          hudPosition: "bottom-left",
+          respectReducedMotion: true,
+          onBuild: function (_el, type) {
+            sound.tick(type);
+          }
+        };
+      }
+
+      function rebuild() {
+        if (instance) {
+          try { instance.destroy(); } catch (_) {}
+        }
+        if (window.CursorSwarm && !window.CursorSwarm.palettes.team) {
+          window.CursorSwarm.palettes.team = window.SwarmGalleryUI.PALETTE_PRESETS.team;
+        }
+        instance = new window.CursorSwarm(readOpts()).init();
+      }
+
+      elCursors.addEventListener("input", function () {
+        valCursors.textContent = elCursors.value;
+      });
+      elCursors.addEventListener("change", rebuild);
+      elStart.addEventListener("change", rebuild);
+      elCopy.addEventListener("change", rebuild);
+      elRelocate.addEventListener("change", rebuild);
+      elDeconstruct.addEventListener("change", rebuild);
+      elSpeed.addEventListener("input", function () {
+        valSpeed.textContent = elSpeed.value + "×";
+        if (instance && instance.state === "running") {
+          instance.setSpeed(parseFloat(elSpeed.value));
+        }
+      });
+      elPalette.addEventListener("change", function () {
+        var pal = window.SwarmGalleryUI.PALETTE_PRESETS[elPalette.value] || elPalette.value;
+        if (instance && instance.state !== "destroyed") {
+          instance.setPalette(pal);
+        }
+      });
+      elSound.addEventListener("change", function () {
+        sound.setEnabled(elSound.checked);
+      });
+
+      document.getElementById("btn-rebuild").addEventListener("click", rebuild);
+      document.getElementById("btn-reveal").addEventListener("click", function () {
+        if (instance) instance.stop({ reveal: true });
+      });
+      document.getElementById("btn-destroy").addEventListener("click", function () {
+        if (instance) instance.destroy();
+      });
+
+      rebuild();
+    })();
+  </script>
+</body>
+</html>

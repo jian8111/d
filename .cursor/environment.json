@@ -1,0 +1,10 @@
+{
+  "install": "python3 --version && node --version && python3 .cursor/skills/swarm-verify/scripts/verify_repo.py",
+  "start": "echo 'Cursor Cloud Agent environment ready for jian8111/d'",
+  "terminals": [
+    {
+      "name": "preview-server",
+      "command": "python3 -m http.server 8787"
+    }
+  ]
+}

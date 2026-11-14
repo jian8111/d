@@ -1,0 +1,27 @@
+# 署名: PRO1V(valerie...@gmail.com)
+name: Swarm & Repo Integrity Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run swarm-verify integrity checks
+        run: python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict
