@@ -2,14 +2,14 @@
 # PROGRESS.md — 跨号交接进度记录
 
 ## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
-- **更新时间**：2026-11-14 12:18 (PST)
+- **更新时间**：2026-11-14 12:30 (PST)
 - **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 确认为 `PRO1V`，已排除第 6 号纯网盘存储号 `466788455@qq.com`）
 - **已完成内容**：
-  1. **加密写入 Codespaces User Secret**：从本地 `~/.codex/auth.json` 读取密钥并通过 `gh secret set YLS_API_KEY --user -a codespaces --repos jian8111/d` 加密写入 GitHub Codespaces User Secret（仓库零明文落盘）。
-  2. **新增 [`.devcontainer/devcontainer.json`](./.devcontainer/devcontainer.json) 与 [`.devcontainer/setup-codex.sh`](./.devcontainer/setup-codex.sh)**：配置 `postStartCommand` 自动检测并安装 `@openai/codex`，读取容器环境变量 `$YLS_API_KEY` 生成 `~/.codex/auth.json`（`600`）与 `~/.codex/config.toml`（默认 `gpt-6.1-sol` + `xhigh` + `https://ylscode.com/codex` + `wire_api = "responses"` + `supports_websockets = false`）。
-  3. **校验、提交与云端重建**：通过零密钥泄露扫描与 `verify_repo.py --strict` 校验，推送至 `main` 并同步 Drive `download`，触发 `gh codespace rebuild -c urban-goldfish-vgqwrvgpxjr3xv74 --full`。
+  1. **加密写入 Codespaces User Secret**：从本地 `~/.codex/auth.json` 读取密钥并通过 `gh secret set YLS_API_KEY --user -a codespaces --repos jian8111/d` 加密写入 GitHub Codespaces User Secret（`visibility: selected`，仅授权 `jian8111/d`，仓库零明文落盘）。
+  2. **新增 [`.devcontainer/devcontainer.json`](./.devcontainer/devcontainer.json) 与 [`.devcontainer/setup-codex.sh`](./.devcontainer/setup-codex.sh)**：配置 `postStartCommand` 自动检测并安装 `@openai/codex`，读取容器环境变量 `$YLS_API_KEY` 生成 `~/.codex/auth.json`（`600`）与 `~/.codex/config.toml`（默认 `gpt-6.1-sol` + `xhigh` + `https://ylscode.com/codex` + `wire_api = "responses"` + `supports_websockets = false`），并通过本地沙盒测试、`verify_repo.py --strict` 与零密钥泄露扫描后提交至 `main`（`3947e4d`）及 Drive `download`（`.devcontainer` 文件夹 ID: `1_QHnI5F_eOrsBSZWbi9_TQg5PK8NrtWt`）。
+  3. **云端重建验证与可用 Codespace 就绪**：实测 `gh codespace rebuild -c urban-goldfish-vgqwrvgpxjr3xv74 --full` 返回 `EXIT_CODE=1`（同样依赖被沙盒代理阻断的会话 RPC 隧道，且旧实例创建于 `.devcontainer/` 提交前，`devcontainer_path: null`）；改用纯 HTTPS REST API 新建绑定 `.devcontainer/devcontainer.json` 的 2-core 实例 `friendly-goggles-qvx4rrv696grc96vq`，已确认恢复为 `state: Available`。
 - **当前状态与下一步待办**：
-  1. Codespace `urban-goldfish-vgqwrvgpxjr3xv74`（`https://urban-goldfish-vgqwrvgpxjr3xv74.github.dev`）已触发云端完整重建（若旧实例工作区尚未拉取 `.devcontainer/`，重建后若需应用新配置可直接 `git pull` 后再 Rebuild 或新开实例）。
+  1. 新 Codespace `friendly-goggles-qvx4rrv696grc96vq`（`https://friendly-goggles-qvx4rrv696grc96vq.github.dev`）已就绪并绑定 `.devcontainer/devcontainer.json` 与 `YLS_API_KEY`；用户打开网页终端后即可直接使用 `codex`（旧实例 `urban-goldfish-vgqwrvgpxjr3xv74` 暂未删除，可按需在 GitHub 网页清理或手动 `git pull` 后重建）。
 
 ## 历史记录
 - **2026-11-14 12:09 (PST)｜`PRO1V(valerie...@gmail.com)`**：明确 [`AGENTS.md`](./AGENTS.md) 第七条公开仓库零泄露边界并完成双端归档（`e140515`）。
