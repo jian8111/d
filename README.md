@@ -53,15 +53,19 @@
 │   ├── styles.css      # 海岸纸张质感原生样式表
 │   ├── app.js          # 双连杆 IK、齿轮同步与交互逻辑
 │   └── pelican-bicycle.svg # Pro4 独立纯矢量 SVG 源文件
-└── pro5/
+├── pro5/
+│   ├── README.md
+│   ├── index.html      # Pro5 零依赖单文件交互式 HTML + 内联 SVG 版（5 场景预设、2-Bone IK、CAD 蓝图遥测、Web Audio 车铃与导出/复制 SVG）
+│   └── pelican-bicycle.svg # Pro5 独立纯矢量 SVG 源文件
+└── pro6/
     ├── README.md
-    ├── index.html      # Pro5 零依赖单文件交互式 HTML + 内联 SVG 版（5 场景预设、2-Bone IK、CAD 蓝图遥测、Web Audio 车铃与导出/复制 SVG）
-    └── pelican-bicycle.svg # Pro5 独立纯矢量 SVG 源文件
+    ├── index.html      # Pro6 朱红复古钢架海港巡游版（4 套光影/工程蓝图、2-Bone IK 实时踩踏、Web Audio 车铃、喉囊弹鱼彩蛋与导出/复制 SVG）
+    └── pelican-bicycle.svg # Pro6 独立纯矢量 SVG 源文件（960×560）
 ```
 
 ## 本地预览
 
-直接用浏览器打开根目录 [`index.html`](./index.html) 即可浏览全部版本，或直接访问 [`pro1/index.html`](./pro1/index.html) / [`pro5/index.html`](./pro5/index.html) / [`pro4/index.html`](./pro4/index.html) / [`pro3/pelican.html`](./pro3/pelican.html)。所有页面均为零外部依赖，支持离线运行。
+直接用浏览器打开根目录 [`index.html`](./index.html) 即可浏览全部版本，或直接访问 [`pro6/index.html`](./pro6/index.html) / [`pro1/index.html`](./pro1/index.html) / [`pro5/index.html`](./pro5/index.html) / [`pro4/index.html`](./pro4/index.html) / [`pro3/pelican.html`](./pro3/pelican.html)。所有页面均为零外部依赖，支持离线运行。
 
 ---
-**最近更新署名**：`PRO1V(valerie...@gmail.com / Drive实测返回: 466788455@qq.com)`
+**最近更新署名**：`Antigravity (GitHub: jian8111 / Drive实测返回: 466788455@qq.com · 待确认 ~/.gemini/ACCOUNT_IDENTITY.txt)`
