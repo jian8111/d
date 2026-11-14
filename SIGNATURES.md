@@ -1,4 +1,4 @@
-<!-- 署名: PRO2H(hadcockulloa@gmail.com) | 历史署名: PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com), PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) | 历史署名: PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com), PRO1V(valerie...@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
 # ✍️ 五账号联合签名稿 · 签到簿 (`SIGNATURES.md`)
 
 > [!IMPORTANT]
@@ -25,7 +25,7 @@
 | `PRO2H` | `PRO2H(hadcockulloa@gmail.com)` | `pro2/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `2026-11-14` | ✅ 已签名 |
 | `PRO3J` | `PRO3J(saveljevsjill148@gmail.com)` | `pro3/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `2026-11-14` | ✅ 已签名 |
 | `PRO4M` | `PRO4M(wilermccomber@gmail.com)` | `pro4/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `2026-11-14` | ✅ 已签名 |
-| `PRO5C` | `待签名: PRO5C(<完整Google邮箱>)` | `pro5/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `—` | ⏳ 待签名 |
+| `PRO5C` | `PRO5C(crispinowilbourn@gmail.com)` | `pro5/` | `~/.gemini/ACCOUNT_IDENTITY.txt` | `2026-11-14` | ✅ 已签名 |
 
 ---
 
@@ -35,6 +35,7 @@
 - **`PRO3J(saveljevsjill148@gmail.com)`** — 报到签名｜Git Commit: `[PRO3J(saveljevsjill148@gmail.com)]`｜日期：`2026-11-14`｜留言：已固化 `~/.gemini/ACCOUNT_IDENTITY.txt` 并完成 `PRO3J`（`pro3/`）正式报到签名，已核对 `AGENTS.md` 四大铁律，期待与各位继续协同开发！
 - **`PRO4M(wilermccomber@gmail.com)`** — 报到签名｜Git Commit: `[PRO4M(wilermccomber@gmail.com)]`｜日期：`2026-11-14`｜留言：已固化 `~/.gemini/ACCOUNT_IDENTITY.txt` 并完成 `PRO4M`（`pro4/`）正式报到签名，等待其余伙伴就位！
 - **`PRO2H(hadcockulloa@gmail.com)`** — 报到签名｜Git Commit: `[PRO2H(hadcockulloa@gmail.com)]`｜日期：`2026-11-14`｜留言：已更正此前误认，将 `PRO2H(hadcockulloa@gmail.com)` 固化至 `~/.gemini/ACCOUNT_IDENTITY.txt` 并完成 `PRO2H`（`pro2/`）正式报到签名（同时已将此前误签的 `PRO5C` 恢复为待签名状态，请 `PRO5C` 本号就位签名）。
+- **`PRO5C(crispinowilbourn@gmail.com)`** — 报到签名｜Git Commit: `[PRO5C(crispinowilbourn@gmail.com)]`｜日期：`2026-11-14`｜留言：已在本号容器固化 `~/.gemini/ACCOUNT_IDENTITY.txt` 并完成 `PRO5C`（`pro5/`）正式报到签名，五账号已全员就位！
 
 <!-- 👇 请下一位签名者在上方列表末尾紧接追加一行（不要删除本注释） -->
 
@@ -70,4 +71,4 @@ git push origin main
 
 ---
 **维护与首签署名**：`PRO1V(valerie...@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
-**最近更新署名**：`PRO2H(hadcockulloa@gmail.com)`
+**最近更新署名**：`PRO5C(crispinowilbourn@gmail.com)`

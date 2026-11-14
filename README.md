@@ -1,4 +1,4 @@
-<!-- 署名: PRO2H(hadcockulloa@gmail.com) | 历史: PRO1V(valerie...@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) | 历史: PRO2H(hadcockulloa@gmail.com), PRO1V(valerie...@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) | 纯Drive存储号(非Pro): 466788455@qq.com -->
 # d
 
 鹈鹕骑自行车（Pelican Riding a Bicycle）SVG / HTML 多版本对比与归档仓库。
@@ -17,7 +17,7 @@
 | `PRO2H` | `PRO2H(hadcockulloa@gmail.com)` | `pro2/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
 | `PRO3J` | `PRO3J(saveljevsjill148@gmail.com)` | `pro3/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
 | `PRO4M` | `PRO4M(wilermccomber@gmail.com)` | `pro4/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
-| `PRO5C` | `待签名` | `pro5/` | ⏳ 待签名 | [前往签名](./SIGNATURES.md) |
+| `PRO5C` | `PRO5C(crispinowilbourn@gmail.com)` | `pro5/` | ✅ 已签名 (`2026-11-14`) | [查看签名](./SIGNATURES.md) |
 
 **快捷签名格式**（填入 [`SIGNATURES.md`](./SIGNATURES.md) 并同步更新上表）：
 ```markdown
@@ -72,4 +72,4 @@
    - 本地预览：直接打开 [`index.html`](./index.html) 或 [`swarm-demo.html`](./swarm-demo.html)，或启动静态服务器 `python3 -m http.server 8787`。所有页面均为零外部依赖，支持离线运行。
 
 ---
-**最近更新署名**：`PRO2H(hadcockulloa@gmail.com)｜历史署名: PRO1V(valerie...@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
+**最近更新署名**：`PRO5C(crispinowilbourn@gmail.com)｜历史署名: PRO2H(hadcockulloa@gmail.com), PRO1V(valerie...@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com)｜纯Drive存储号(非Pro): 466788455@qq.com`
