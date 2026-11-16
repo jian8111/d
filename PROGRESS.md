@@ -23,6 +23,31 @@
 - **记录署名**：`PRO2H(hadcockulloa@gmail.com)`
 
 <!-- 署名: PRO1V(valerie...@gmail.com) -->
+## 完整交付 — 《鹈鹕测试》（Pelican Test Cover） / PRO1V(valerie...@gmail.com)
+
+- **更新时间**：2026-11-16 UTC。身份已核对 `~/.gemini/ACCOUNT_IDENTITY.txt`：`PRO1V`。
+- **实际文件**：`pelican-test.html` 为 `135,603` 字节 / `1,032` 行、完整闭合的零外链纯代码单文件；137.0s / 120 BPM，1920×1080 @ 60fps。现有场景与引擎完整保留，本次展示接入不改动该文件。
+- **画面与运动**：无状态确定性 `renderAt(t)`、2-Bone Analytical IK、18 辐条连续骑行，20 时代 / 7 装裱 / 20 种解析微物理；唐宋连卷隔水绫裱与骑缝朱印、36 阶复数 DFT Fourier 本轮（`Σ c_k · exp(i·k·ω·t)`）及 Delaunay 三角网共同构成视觉系统。
+- **零采样音频**：Worker 合成与内外两级 `OfflineAudioContext`，原创双声道配乐穿越 20 种历史音乐调式；第 `#18` 幕 Vaporwave 先 `+4 semitone → 0.7937×`，经内层离线渲染、外层降速与 Wow/Flutter 磁带劣化处理。
+- **本地导出**：无损 PNG、PNG 序列 ZIP（StoredZip64：StoredZip 存储模式与 ZIP64 大归档支持）、`MediaRecorder` / `captureStream` WebM，以及 32kHz 双声道 16-bit PCM WAV；支持导出取消与临时资源释放。
+- **展示接入**：从 `/tmp/ours_dabe258/index.html` 提取《鹈鹕测试》博物馆风格内联 SVG 封面卡，置于 `index.html` 作品目录首位；仅该卡的全部 SVG `id`、`#` 引用与 `aria-labelledby` 从 `pt-` 改为 `ptc-`（`#ptc-` 前缀去重）。保留 `origin/main` 的 favicon、`the-pelican-test.html` 卡片及其他全部既有卡片；`README.md` 简介、作品列表、目录结构、GitHub Pages 与本地预览并列收录 `pelican-test.html`、`the-pelican-test.html` 与 `pelican-6000-pure-code.html`；`.github/workflows/pages.yml` 的 `cp` 清单同时包含两部 Pelican Test HTML，保留原有全部发布文件。
+- **本次验证**：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict` 通过（0 错误、0 警告），`git diff --check` 通过；Python 全页核对 `index.html` 共 38 个 ID、0 重复，新卡 11 个 `ptc-` 标识与全部引用匹配。Chromium 在 `1280×800` / `390×844` 下，搭建动画与点击「全显」后均无横向溢出；无控制台错误、JS 异常、失败请求或外部请求，两张卡的实际截图及 `pelican-test.html` 20 时代渲染/音频/PNG/WAV/22 帧 ZIP 导出均已目视与功能核验。原 favicon、`the-pelican-test.html` 卡片、`pelican-6000/` 及本节以下全部历史进度完整保留，Pages `_site/` 组装验证通过。
+- **当前状态与下一步**：已完成 Antigravity 独立复核、临时目录清理与密钥扫描，并通过 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 提交同步至 GitHub `main` 与 Google Drive `download` 文件夹（`1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`）。
+
+**记录署名**：PRO1V(valerie...@gmail.com)
+
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+## THE PELICAN TEST · 原创短片修复与集成 — `PRO1V(valerie...@gmail.com)`
+- **更新时间**：2026-11-16 12:46 UTC
+- **已完成**：保留完整原创 2:17 / 137 秒单文件 [`the-pelican-test.html`](./the-pelican-test.html) 与原有署名、离线 Canvas / Web Audio、确定性 `renderAt` 和响应式布局。Pixel Adventure 的 `SCORE 000020` / `+1UP` 移至主画布输出分辨率绘制，添加深色像素街机底牌，展墙缩略图同步清晰；二十时代的左下引语添加按实测文字宽度计算的半透明底牌，右缘保留至 `x = 717` 标题卡的间隔。
+- **手机与播放修复**：The Vertical Feed 的画框与骑行骨架共用收缩 / 展开进度，收缩画框为 `x = 422`、宽 `356`，同步缩放与水平居中，路面高光随屏幕边界移动。片尾停止时立即刷新 UI；导出文件名改为 `the-pelican-test-<时间>s.png` 和 `the-pelican-test-era20.svg`。
+- **仓库集成**：根据 `/tmp/our_stage/index.patch` 添加首页 favicon 与 640×420 内联 SVG 双语置顶卡，放映室 / 展墙链接均指向 `the-pelican-test.html`；Pages `_site/` 清单与 README 的介绍、作品列表、目录、Pages 说明和本地预览同步登记。原有全部首页卡片及 `pelican-6000-pure-code.html` 发布条目完整保留。
+- **验证结果**：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict` 为 `PASS (0 errors, 0 warnings)`；HTML 解析、内联 JavaScript 语法、重复 ID 与 `git diff --check` 通过。Chromium 实测首页 / 影片在 `320 / 390 / 768 / 1280px` 下均无横向溢出、无运行错误、无外部网络请求；20 幕引语底牌均不碰标题卡；手机六秒动画 180 帧采样最小左右边距约 `58.15 / 47.32px`，141 帧动态高光与屏幕边界一致；30 个关键时间点乱序重绘逐像素结果一致。已目视检查像素幕、真实展墙缩略图、手机画框与首页卡片；自然 2× 播放到 `137.0s` 后显示 `2:17.0`、播放按钮与逐帧按钮恢复、音频节点清零；PNG（1920×1080）与 SVG 实际下载名通过，`#wall` 跳转通过。Pages 构建命令已在 `/tmp` 组装并核对两个全片 HTML。
+- **并发文件保护**：`pelican-test.html`、`pelican-6000-pure-code.html` 与 `pelican-6000/` 合计 11 个现有文件的 SHA-256 均与开工时一致；除新增 favicon 与置顶卡外，首页原内容逐字节保留；本节以下历史进度完整保留。
+- **当前状态与下一步**：已完成 Antigravity 独立复核（`verify_repo.py --strict`、headless Chromium `1280×800` / `390×844` 与实际截图核验、密钥零泄露扫描），并通过 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 同步至 GitHub `main` 与 Google Drive `download` 文件夹；原有并发进行中的 `pelican-test.html`、`pelican-6000-pure-code.html` 与 `pelican-6000/` 完整保留未改。
+- **记录署名**：`PRO1V(valerie...@gmail.com)`
+
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## 最新视觉引擎进度 — `PRO1V(valerie...@gmail.com)`
 - **更新时间**：2026-11-16 12:21 UTC
 - **已完成**：在 `pelican-test.html` 第 128 行之后实现二十幕画作与确定性动态层、36 阶复数 DFT 本轮（768 点闭合鹈鹕自行车轮廓）、双腿解析 IK、18 辐条无滑移轮组、七种装裱、唐宋汴京隔水绫裱骑缝藏书印，以及二十类接缝微物理粒子；提供 `window.renderAt(t)`、开场与 132–137 秒地平线谢幕。

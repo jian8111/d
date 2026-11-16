@@ -1,0 +1,3561 @@
+<!doctype html>
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#151b1c" />
+    <meta
+      name="description"
+      content="An original 137-second procedural film. One white pelican, one bicycle, twenty ways of seeing, and one unanswered question. All graphics and music synthesized offline."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%232b4439'/%3E%3Cpath d='M8 25Q4 15 17 18Q20 5 25 10L26 15L37 18L25 20Q25 29 8 25' fill='%23f6eccf'/%3E%3C/svg%3E"
+    />
+    <title>THE PELICAN TEST · 鹈鹕测试 — An original procedural film</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #151b1c;
+        --panel: #1c2425;
+        --ink: #eee9da;
+        --muted: #a2aaa4;
+        --line: #36413e;
+        --accent: #f19a7c;
+        --soft: #263230;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+      }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      body.light {
+        color-scheme: light;
+        --bg: #eee9de;
+        --panel: #f7f3e9;
+        --ink: #243730;
+        --muted: #64746b;
+        --line: #c7cec2;
+        --accent: #a8432e;
+        --soft: #e2e6da;
+      }
+      button,
+      select,
+      input {
+        font: inherit;
+      }
+      button,
+      select {
+        color: var(--ink);
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      button:hover,
+      select:hover {
+        border-color: var(--accent);
+      }
+      button:focus-visible,
+      a:focus-visible,
+      select:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 4px;
+      }
+      button.active {
+        color: var(--bg);
+        background: var(--accent);
+        border-color: var(--accent);
+      }
+      button:disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+      a {
+        color: inherit;
+      }
+      main {
+        width: min(1180px, calc(100% - 56px));
+        margin: 32px auto 48px;
+        min-width: 0;
+      }
+      .mast {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+      }
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .museum-link {
+        text-decoration: none;
+      }
+      .theme {
+        font-size: 11px;
+        padding: 6px 10px;
+      }
+      .title-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        margin: 28px 0 24px;
+      }
+      h1 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(30px, 4.3vw, 58px);
+        font-weight: 400;
+        letter-spacing: -0.04em;
+        line-height: 1.02;
+        margin: 0;
+      }
+      h1 span {
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: 0.28em;
+        display: block;
+        margin-top: 12px;
+        color: var(--muted);
+      }
+      .intro {
+        max-width: 290px;
+        text-align: right;
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .intro strong {
+        color: var(--ink);
+        font-weight: 400;
+      }
+      .screen {
+        background: #0b1112;
+        border: 1px solid var(--line);
+        padding: 9px;
+        position: relative;
+        box-shadow: 0 22px 70px #0003;
+      }
+      .screen:before,
+      .screen:after {
+        content: "";
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border: 1px solid #aaac9a;
+        border-radius: 50%;
+        top: 2px;
+      }
+      .screen:before {
+        left: 2px;
+      }
+      .screen:after {
+        right: 2px;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #eee7d5;
+        touch-action: manipulation;
+        cursor: default;
+      }
+      .screen-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        align-items: center;
+        padding: 10px 4px 1px;
+        font-size: 10px;
+        color: #a8b4ac;
+        letter-spacing: 0.1em;
+      }
+      .live-dot {
+        display: inline-block;
+        background: #f2ad88;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        margin-right: 7px;
+      }
+      .caption {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 1px 13px;
+      }
+      .caption h2 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 21px;
+        line-height: 1.3;
+        font-weight: 400;
+        margin: 0;
+      }
+      .caption small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 4px;
+      }
+      .counter {
+        font:
+          11px ui-monospace,
+          monospace;
+        white-space: nowrap;
+        color: var(--accent);
+      }
+      .transport {
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 17px 0 15px;
+      }
+      .timeline-head {
+        display: flex;
+        justify-content: space-between;
+        font:
+          11px ui-monospace,
+          monospace;
+        color: var(--muted);
+      }
+      #clock {
+        color: var(--ink);
+      }
+      .timeline {
+        position: relative;
+        padding: 9px 0 12px;
+      }
+      input[type="range"] {
+        display: block;
+        width: 100%;
+        margin: 0;
+        accent-color: var(--accent);
+        height: 18px;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        background: transparent;
+      }
+      .ticks {
+        height: 7px;
+        position: absolute;
+        left: 7px;
+        right: 7px;
+        bottom: 6px;
+        pointer-events: none;
+      }
+      .ticks i {
+        position: absolute;
+        height: 5px;
+        width: 1px;
+        background: var(--line);
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .controls button {
+        font-size: 12px;
+        min-height: 37px;
+      }
+      .controls .play {
+        min-width: 106px;
+        background: var(--ink);
+        color: var(--bg);
+        border-color: var(--ink);
+      }
+      .controls .spacer {
+        flex: 1;
+      }
+      .controls label {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      select {
+        font-size: 12px;
+        padding: 8px 6px;
+      }
+      .audio-badge {
+        color: var(--muted);
+        font-size: 10px;
+        margin: 12px 0 0;
+        min-height: 15px;
+      }
+      .audio-badge.on {
+        color: var(--accent);
+      }
+      details {
+        border-bottom: 1px solid var(--line);
+        padding: 15px 0;
+      }
+      summary {
+        cursor: pointer;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .eras {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 14px;
+      }
+      .eras button {
+        font-size: 11px;
+        padding: 6px 9px;
+        text-align: left;
+        max-width: 100%;
+        min-width: 0;
+      }
+      .eras button span {
+        color: var(--muted);
+        margin-right: 6px;
+        font:
+          10px ui-monospace,
+          monospace;
+      }
+      .eras button.active span {
+        color: inherit;
+      }
+      .notes {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 25px;
+        padding-top: 20px;
+      }
+      .notes p {
+        font-size: 11px;
+        color: var(--muted);
+        max-width: 640px;
+        margin: 0;
+      }
+      .exports {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+      .exports button {
+        font-size: 10px;
+        white-space: nowrap;
+      }
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        margin-top: 25px;
+        color: var(--muted);
+        font-size: 9px;
+        letter-spacing: 0.06em;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+      @media (max-width: 650px) {
+        main {
+          width: calc(100% - 24px);
+          margin-top: 15px;
+        }
+        .eyebrow {
+          font-size: 8px;
+          letter-spacing: 0.1em;
+        }
+        .title-row {
+          display: block;
+          margin: 25px 0 20px;
+        }
+        h1 {
+          font-size: 37px;
+        }
+        h1 span {
+          font-size: 12px;
+        }
+        .intro {
+          text-align: left;
+          max-width: none;
+          margin-top: 17px;
+          font-size: 11px;
+        }
+        .screen {
+          padding: 4px;
+        }
+        .screen-meta {
+          font-size: 8px;
+          letter-spacing: 0.02em;
+          padding: 8px 3px 3px;
+        }
+        .caption {
+          gap: 10px;
+        }
+        .caption h2 {
+          font-size: 18px;
+        }
+        .caption small {
+          font-size: 10px;
+        }
+        .controls {
+          gap: 6px;
+        }
+        .controls button {
+          padding: 7px 9px;
+          font-size: 11px;
+        }
+        .controls .spacer {
+          display: none;
+        }
+        .controls label {
+          margin-left: auto;
+        }
+        .notes {
+          display: block;
+        }
+        .exports {
+          margin-top: 13px;
+        }
+        .eras {
+          max-height: 210px;
+          overflow: auto;
+          overscroll-behavior: contain;
+          padding: 2px;
+        }
+        footer {
+          font-size: 8px;
+        }
+        .intro br {
+          display: none;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="mast">
+          <a class="eyebrow museum-link" href="./index.html"
+            >← THE PROCEDURAL COLLECTION</a
+          ><button
+            id="theme"
+            class="theme"
+            aria-label="Toggle warm gallery / dark screening room"
+          >
+            ◐ Gallery light
+          </button>
+        </div>
+        <div class="title-row">
+          <h1>THE PELICAN TEST<span lang="zh-CN">鹈 鹕 测 试</span></h1>
+          <p class="intro">
+            <strong>One bird. Twenty ways of seeing.</strong> <br />A continuous
+            ride through the images we make. <br />137 seconds · original
+            pictures &amp; synthesized score
+          </p>
+        </div>
+      </header>
+      <section aria-label="Film screening room">
+        <div class="screen">
+          <canvas
+            id="film"
+            width="1200"
+            height="675"
+            tabindex="0"
+            aria-label="The Pelican Test animated film. Play with Space; use the era drawer to explore. Gallery paintings become clickable in the epilogue."
+          ></canvas>
+          <div class="screen-meta">
+            <span
+              ><i class="live-dot"></i>EXHIBITION 021 / A STUDY IN
+              TRANSLATION</span
+            ><span>120 BPM · 02:17 · OFFLINE</span>
+          </div>
+        </div>
+        <div class="caption">
+          <div>
+            <h2 id="eraTitle">The gallery threshold</h2>
+            <small id="eraMedium"
+              >Prologue · 序幕 / A line becomes a road</small
+            >
+          </div>
+          <span class="counter" id="eraCounter">00 / 21</span>
+        </div>
+        <div class="transport">
+          <div class="timeline-head">
+            <span id="clock">0:00.0</span
+            ><span id="scrubLabel">THE THRESHOLD</span><span>2:17.0</span>
+          </div>
+          <div class="timeline">
+            <label class="sr" for="scrubber">Film timeline in seconds</label
+            ><input
+              id="scrubber"
+              type="range"
+              min="0"
+              max="137"
+              step="0.001"
+              value="0"
+              aria-valuetext="Prologue, 0 seconds"
+            />
+            <div class="ticks" id="ticks"></div>
+          </div>
+          <div class="controls">
+            <button class="play" id="play" title="Space">▶ Play film</button
+            ><button id="restart" title="R">↺ Restart</button
+            ><button id="prev" title="[">‹ Era</button
+            ><button id="next" title="]">Era ›</button
+            ><button id="backFrame" title="ArrowLeft">−1f</button
+            ><button id="nextFrame" title="ArrowRight">+1f</button
+            ><span class="spacer"></span
+            ><button id="bell" title="B">Ring bell</button
+            ><button id="mute" title="M">Sound: off</button
+            ><label for="speed">Speed</label
+            ><select id="speed">
+              <option value="0.5">0.5×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </div>
+          <p id="audioStatus" class="audio-badge" role="status">
+            Muted — Click Play for Web Audio
+          </p>
+        </div>
+        <details open>
+          <summary>Chapter index · 二十时代 / jump into a frame</summary>
+          <nav class="eras" id="eras" aria-label="Era quick jumps"></nav>
+        </details>
+        <div class="notes">
+          <p>
+            One continuous road; one shared articulated rider. The frame edge
+            changes the medium, joint by joint. At the end, click a painting to
+            return to it. <span lang="zh-CN">二十份答卷，一席空位。</span
+            ><br />Keys: Space play · R restart · B bell · M sound · [ ]
+            chapters · ← → single frame.
+          </p>
+          <div class="exports">
+            <button id="exportPng">↓ Export frame PNG</button
+            ><button id="exportSvg">↓ Era 20 · SVG pelican</button>
+          </div>
+        </div>
+      </section>
+      <footer>
+        <span>ORIGINAL PROCEDURAL CINEMA / CANVAS + WEB AUDIO</span
+        ><span>PRO1V(valerie...@gmail.com)</span>
+      </footer>
+    </main>
+    <script>
+      "use strict";
+      // Original artwork, rig, compositions and score: PRO1V(valerie...@gmail.com).
+      // No network, imported assets, font files, sample libraries, or runtime randomness.
+      const DURATION = 137,
+        BPM = 120,
+        TAU = Math.PI * 2,
+        W = 1200,
+        H = 675;
+      const ERA = [
+        [
+          "c. 6000 BCE",
+          "Saharan Rock Art",
+          "撒哈拉岩画",
+          "Ochre, chalk & sandstone",
+          "#b86637",
+          "Even the sun follows a wheel.",
+        ],
+        [
+          "c. 150 CE",
+          "Han Stone Rubbing",
+          "汉代画像石拓片",
+          "Incised stone / ink rubbing",
+          "#52647c",
+          "An auspicious beast yields the right of way.",
+        ],
+        [
+          "c. 1080",
+          "Song Ink Landscape",
+          "北宋水墨山水",
+          "Ink & mist on xuan paper",
+          "#73817a",
+          "The mountain waits. The bird does not.",
+        ],
+        [
+          "c. 1490",
+          "Perspective Folio",
+          "文艺复兴透视手稿",
+          "Silverpoint & sepia on vellum",
+          "#9f794c",
+          "An elegant proof of a very unlikely commute.",
+        ],
+        [
+          "c. 1665",
+          "Dutch Chiaroscuro",
+          "荷兰黄金时代光影",
+          "Oil glaze & window light",
+          "#b18a4c",
+          "Still life, briefly interrupted.",
+        ],
+        [
+          "c. 1831",
+          "Ukiyo-e Woodblock",
+          "浮世绘木版画",
+          "Keyblock & mineral pigments",
+          "#407e9a",
+          "One small fish requests a lift.",
+        ],
+        [
+          "c. 1872",
+          "En Plein Air",
+          "印象派户外光影",
+          "Broken color / shifting daylight",
+          "#91a478",
+          "A butterfly mistakes the bell for a flower.",
+        ],
+        [
+          "c. 1889",
+          "Starry Swirl",
+          "后印象派星空厚涂",
+          "Directional impasto in cobalt & gold",
+          "#bdac59",
+          "The wheels lend the sky a little momentum.",
+        ],
+        [
+          "c. 1893",
+          "Fjord Dusk",
+          "表现主义黄昏呐喊",
+          "Tempera / the color of a held breath",
+          "#ca6848",
+          "A silent echo travels in both directions.",
+        ],
+        [
+          "c. 1913",
+          "Faceted Planes",
+          "立体派多视角几何",
+          "Collage & simultaneous viewpoints",
+          "#ba956c",
+          "The beak arrives from two directions.",
+        ],
+        [
+          "c. 1922",
+          "The Silent Reel",
+          "黑白默片与光影",
+          "Silver nitrate / 18 frames a second",
+          "#adaba0",
+          "IT PEDALS ONWARD.",
+        ],
+        [
+          "c. 1938",
+          "Geometric Poster",
+          "包豪斯几何构成",
+          "Primary color / form in motion",
+          "#d85a43",
+          "A circle auditions for the role of wheel.",
+        ],
+        [
+          "c. 1955",
+          "Phosphor Trace",
+          "荧光示波器矢量",
+          "P31 phosphor / harmonic persistence",
+          "#5fd99e",
+          "SIGNAL FOUND: unusually large waterbird.",
+        ],
+        [
+          "c. 1966",
+          "Halftone Comic",
+          "波普网点印刷",
+          "Ben-Day dots / four-color misregistration",
+          "#df709a",
+          "RING! The smallest sound gets the largest type.",
+        ],
+        [
+          "c. 1984",
+          "Pixel Adventure",
+          "8-bit 像素横版游戏",
+          "160 × 90 / sixteen-color adventure",
+          "#82b6d7",
+          "NO FISH COLLECTED. STILL A GOOD RUN.",
+        ],
+        [
+          "c. 1998",
+          "The Chat Window",
+          "千禧年初代聊天窗口",
+          "256 colors / one unread nudge",
+          "#94a9b2",
+          "Someone is typing… with their feet.",
+        ],
+        [
+          "c. 2012",
+          "VHS Daydream",
+          "蒸汽波磁带慢放",
+          "Chorus, neon & magnetic memory",
+          "#ca8fbc",
+          "PLAY ▷ 0.79 / tomorrow was recorded yesterday.",
+        ],
+        [
+          "c. 2018",
+          "Telemetry Mesh",
+          "故障切片与数字网格",
+          "Wireframe / unstable certainty",
+          "#61c7c5",
+          "CONFIDENCE 99.8% · SPECIES: CYCLIST?",
+        ],
+        [
+          "c. 2022",
+          "The Vertical Feed",
+          "竖屏短视频时代",
+          "9:16 / an endlessly renewable moment",
+          "#ec8a9e",
+          "The algorithm would like another lap.",
+        ],
+        [
+          "c. 2026",
+          "The Written Image",
+          "大模型代码美学 · 写回 SVG",
+          "Live markup / executable description",
+          "#8bbaac",
+          "The description becomes the described.",
+        ],
+      ];
+      const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+      const mix = (a, b, p) => a + (b - a) * p;
+      const smooth = (x) => {
+        x = clamp(x);
+        return x * x * (3 - 2 * x);
+      };
+      const hash = (n, s = 0) => {
+        let x = Math.imul(n + 374761393, s + 668265263);
+        x = Math.imul(x ^ (x >>> 13), 1274126177);
+        return ((x ^ (x >>> 16)) >>> 0) / 4294967296;
+      };
+      const eraAt = (t) =>
+        t < 5 ? -1 : t >= 125 ? 20 : Math.min(19, Math.floor((t - 5) / 6));
+      const localAt = (i, t) => t - 5 - i * 6;
+      function txt(
+        c,
+        s,
+        x,
+        y,
+        size = 16,
+        color = "#253f38",
+        font = "sans-serif",
+        align = "left",
+      ) {
+        c.fillStyle = color;
+        c.font = `${size}px ${font}`;
+        c.textAlign = align;
+        c.fillText(s, x, y);
+        c.textAlign = "left";
+      }
+      function path(c, d, fill, stroke, width = 2) {
+        const p = new Path2D(d);
+        if (fill) {
+          c.fillStyle = fill;
+          c.fill(p);
+        }
+        if (stroke) {
+          c.strokeStyle = stroke;
+          c.lineWidth = width;
+          c.stroke(p);
+        }
+      }
+      function line(c, x, y, x2, y2, col, width = 1) {
+        c.beginPath();
+        c.moveTo(x, y);
+        c.lineTo(x2, y2);
+        c.strokeStyle = col;
+        c.lineWidth = width;
+        c.stroke();
+      }
+      function ellipse(c, x, y, rx, ry, fill, stroke, width = 1) {
+        c.beginPath();
+        c.ellipse(x, y, Math.max(0.01, rx), Math.max(0.01, ry), 0, 0, TAU);
+        if (fill) {
+          c.fillStyle = fill;
+          c.fill();
+        }
+        if (stroke) {
+          c.strokeStyle = stroke;
+          c.lineWidth = width;
+          c.stroke();
+        }
+      }
+      function rect(c, x, y, w, h, col) {
+        c.fillStyle = col;
+        c.fillRect(x, y, w, h);
+      }
+      function gradient(c, top, bottom) {
+        const g = c.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, top);
+        g.addColorStop(1, bottom);
+        rect(c, 0, 0, W, H, g);
+      }
+      function grain(c, seed, col = "#493b2020", n = 550) {
+        c.fillStyle = col;
+        for (let k = 0; k < n; k++) {
+          const x = hash(k, seed) * W,
+            y = hash(k, seed + 71) * H;
+          c.fillRect(
+            x,
+            y,
+            1 + hash(k, seed + 31) * 2,
+            0.5 + hash(k, seed + 11) * 2,
+          );
+        }
+      }
+      function cloud(c, x, y, s, col) {
+        c.save();
+        c.translate(x, y);
+        c.scale(s, s);
+        path(
+          c,
+          "M-55 15 Q-62-7-36-10 Q-36-38-9-24 Q11-53 32-19 Q60-23 58 6 Q76 23 45 25 L-37 25Z",
+          col,
+        );
+        c.restore();
+      }
+      function star(c, x, y, r, col) {
+        c.save();
+        c.translate(x, y);
+        path(
+          c,
+          `M0 ${-r} Q2-2 ${r} 0 Q2 2 0 ${r} Q-2 2 ${-r} 0 Q-2-2 0 ${-r}Z`,
+          col,
+        );
+        c.restore();
+      }
+      function seal(c, x, y, s = 32) {
+        rect(c, x, y, s, s, "#b74831");
+        for (let j = 0; j < 3; j++)
+          for (let k = 0; k < 2; k++) {
+            line(
+              c,
+              x + 6 + j * 8,
+              y + 5 + k * 12,
+              x + 6 + j * 8,
+              y + 13 + k * 12,
+              "#e9c7a3",
+              2,
+            );
+            line(
+              c,
+              x + 6 + j * 8,
+              y + 5 + k * 12,
+              x + 11 + j * 8,
+              y + 5 + k * 12,
+              "#e9c7a3",
+              2,
+            );
+          }
+      }
+      // Two-bone IK, including a reach clamp, is shared by every medium and SVG export.
+      function solveIK(hip, foot, a = 67, b = 72, bend = 1) {
+        const dx = foot.x - hip.x,
+          dy = foot.y - hip.y,
+          d = Math.min(Math.hypot(dx, dy), a + b - 0.0001),
+          ang = Math.atan2(dy, dx),
+          q = Math.acos(clamp((a * a + d * d - b * b) / (2 * a * d), -1, 1));
+        return {
+          x: hip.x + Math.cos(ang - bend * q) * a,
+          y: hip.y + Math.sin(ang - bend * q) * a,
+        };
+      }
+      function phoneFrame(t) {
+        const lt = localAt(18, t),
+          p = smooth((lt - 1.15) / 0.9) * (1 - smooth((lt - 4.75) / 1.1));
+        return { p, x: mix(30, 422, p), ww: mix(1140, 356, p) };
+      }
+      function computeRig(t) {
+        const phase = t * TAU,
+          era = eraAt(t),
+          lt = localAt(era, t),
+          hop =
+            era === 14
+              ? 30 * Math.pow(Math.sin(Math.PI * clamp((lt - 2.1) / 1.5)), 2)
+              : 0;
+        const roadY = 508 - hop,
+          R = 65,
+          distance = t * 78,
+          bob = 2.5 * Math.sin(phase * 2),
+          hip = { x: 571, y: 351 + bob - hop };
+        const rear = { x: 484, y: roadY - R },
+          front = { x: 730, y: roadY - R },
+          bb = { x: 591, y: 438 - hop };
+        const pedals = [0, Math.PI].map((a) => ({
+          x: bb.x + 27 * Math.cos(phase + a),
+          y: bb.y + 27 * Math.sin(phase + a),
+        }));
+        const hips = [hip, { x: hip.x - 12, y: hip.y - 2 }],
+          knees = hips.map((p, i) =>
+            solveIK(p, pedals[i], 67, 72, i === 0 ? 1 : 1),
+          );
+        const phone = era === 18 ? phoneFrame(t).p : 0;
+        const camera = 1 - 0.43 * phone,
+          cameraX = mix(620, 600, phone),
+          project = (p) => ({
+            x: cameraX + (p.x - 620) * camera,
+            y: 350 + (p.y - 350) * camera,
+          });
+        return {
+          rear,
+          front,
+          R,
+          theta: distance / R,
+          distance,
+          worldX: distance,
+          roadY,
+          groundY: 508,
+          bb,
+          hip,
+          hips,
+          knees,
+          pedals,
+          bob,
+          hop,
+          phase,
+          frame: {
+            rearAxle: rear,
+            frontAxle: front,
+            bottomBracket: bb,
+            seatTubeTop: { x: 548, y: 365 - hop },
+            headTubeTop: { x: 696, y: 365 - hop },
+          },
+          saddle: { x: 544, y: 349 - hop },
+          handlebars: { x: 710, y: 326 - hop },
+          bell: { x: 708, y: 317 - hop },
+          basket: { x: 738, y: 347 - hop, w: 52, h: 32 },
+          head: { x: 689, y: 218 + bob - hop },
+          beakTip: { x: 840, y: 236 + bob - hop },
+          screen: {
+            rear: project(rear),
+            front: project(front),
+            R: R * camera,
+            roadY: project({ x: 0, y: roadY }).y,
+          },
+          blink: t % 4.7 > 4.56,
+          open: era === 8 ? Math.max(0, Math.sin(lt * 2)) * 12 : 0,
+          camera,
+          cameraX,
+          t,
+        };
+      }
+      // The same vector vocabulary feeds Canvas and the downloadable standalone SVG.
+      function rigParts(r) {
+        const z = r.bob - r.hop,
+          by = r.hop,
+          P = [];
+        const add = (d, f, s, w = 3, kind = "bird") =>
+          P.push({ d, f, s, w, kind });
+        for (const a of [1, 0]) {
+          const h = r.hips[a],
+            k = r.knees[a],
+            f = r.pedals[a];
+          if (a === 1)
+            add(
+              `M${h.x} ${h.y} L${k.x} ${k.y} L${f.x} ${f.y}`,
+              "none",
+              "far",
+              7,
+              "farLeg",
+            );
+        }
+        for (const wheel of [r.rear, r.front]) {
+          add(
+            `M${wheel.x + r.R} ${wheel.y} A65 65 0 1 0 ${wheel.x - r.R} ${wheel.y} A65 65 0 1 0 ${wheel.x + r.R} ${wheel.y}`,
+            "none",
+            "tire",
+            7,
+            "wheel",
+          );
+          add(
+            `M${wheel.x + 58} ${wheel.y} A58 58 0 1 0 ${wheel.x - 58} ${wheel.y} A58 58 0 1 0 ${wheel.x + 58} ${wheel.y}`,
+            "none",
+            "rim",
+            2,
+            "wheel",
+          );
+          for (let j = 0; j < 12; j++) {
+            const a = r.theta + (j * TAU) / 12;
+            add(
+              `M${wheel.x} ${wheel.y} L${wheel.x + 57 * Math.cos(a)} ${wheel.y + 57 * Math.sin(a)}`,
+              "none",
+              "spoke",
+              1.3,
+              "spoke",
+            );
+          }
+          add(
+            `M${wheel.x + 5} ${wheel.y} A5 5 0 1 0 ${wheel.x - 5} ${wheel.y} A5 5 0 1 0 ${wheel.x + 5} ${wheel.y}`,
+            "rim",
+            "ink",
+            1,
+            "wheel",
+          );
+        }
+        add(
+          `M484 ${443 - by} L548 ${365 - by} L591 ${438 - by} Z M548 ${365 - by} L696 ${365 - by} L591 ${438 - by} M696 ${365 - by} L730 ${443 - by} M696 ${365 - by} L683 ${332 - by}`,
+          "none",
+          "coral",
+          7,
+          "frame",
+        );
+        add(
+          `M548 ${365 - by} L544 ${349 - by} M522 ${347 - by} Q548 ${340 - by} 565 ${347 - by} L562 ${352 - by} L526 ${352 - by}Z`,
+          "tire",
+          "ink",
+          4,
+          "frame",
+        );
+        add(
+          `M683 ${332 - by} L710 ${326 - by} Q734 ${322 - by} 731 ${341 - by} L720 ${346 - by}`,
+          "none",
+          "ink",
+          5,
+          "frame",
+        );
+        add(
+          `M697 ${322 - by} Q697 ${312 - by} 708 ${312 - by} Q719 ${312 - by} 719 ${322 - by}Z`,
+          "gold",
+          "ink",
+          1.5,
+          "bell",
+        );
+        add(
+          `M738 ${347 - by} L790 ${347 - by} L784 ${379 - by} L746 ${379 - by}Z`,
+          "basket",
+          "ink",
+          2,
+          "basket",
+        );
+        for (let n = 0; n < 4; n++)
+          add(
+            `M${746 + n * 11} ${348 - by} L${749 + n * 10} ${377 - by}`,
+            "none",
+            "rim",
+            1,
+            "basket",
+          );
+        add(
+          `M${r.bb.x + 12} ${r.bb.y} A12 12 0 1 0 ${r.bb.x - 12} ${r.bb.y} A12 12 0 1 0 ${r.bb.x + 12} ${r.bb.y}`,
+          "ink",
+          "rim",
+          2,
+          "crank",
+        );
+        for (let j = 0; j < 2; j++) {
+          const p = r.pedals[j];
+          add(
+            `M${r.bb.x} ${r.bb.y} L${p.x} ${p.y} M${p.x - 12} ${p.y} L${p.x + 12} ${p.y}`,
+            "none",
+            "ink",
+            4,
+            "crank",
+          );
+        }
+        add(
+          `M498 ${323 + z} L444 ${293 + z} L463 ${338 + z} Q502 ${362 + z} 547 ${355 + z}Z`,
+          "shade",
+          "ink",
+          2.2,
+        );
+        add(
+          `M490 ${297 + z} C517 ${272 + z} 559 ${270 + z} 604 ${285 + z} C631 ${294 + z} 648 ${318 + z} 631 ${339 + z} C607 ${368 + z} 537 ${368 + z} 500 ${344 + z} Q479 ${329 + z} 490 ${297 + z}Z`,
+          "white",
+          "ink",
+          2.6,
+        );
+        add(
+          `M527 ${298 + z} C552 ${290 + z} 591 ${299 + z} 612 ${323 + z} Q588 ${347 + z} 533 ${326 + z} Q563 ${331 + z} 581 ${323 + z} Q549 ${318 + z} 527 ${298 + z}Z`,
+          "shade",
+          "feather",
+          1.8,
+        );
+        add(
+          `M603 ${304 + z} C635 ${281 + z} 619 ${249 + z} 642 ${219 + z} C657 ${199 + z} 690 ${193 + z} 707 ${211 + z} L701 ${239 + z} C669 ${234 + z} 664 ${249 + z} 667 ${282 + z} Q670 ${322 + z} 629 ${337 + z}Z`,
+          "white",
+          "ink",
+          2.7,
+        );
+        add(
+          `M653 ${211 + z} L647 ${187 + z} L666 ${203 + z} L671 ${185 + z} L679 ${204 + z}`,
+          "white",
+          "ink",
+          2,
+        );
+        add(
+          `M701 ${230 + z} L826 ${238 + z + r.open} Q775 ${287 + z} 727 ${274 + z} Q702 ${262 + z} 696 ${237 + z}Z`,
+          "pouch",
+          "beakline",
+          2,
+        );
+        add(
+          `M700 ${217 + z} L840 ${236 + z} L701 ${239 + z}Z`,
+          "beak",
+          "beakline",
+          2.5,
+        );
+        add(`M707 ${235 + z} L825 ${237 + z}`, "none", "beakline", 1);
+        const h = r.hips[0],
+          k = r.knees[0],
+          f = r.pedals[0];
+        add(
+          `M${h.x} ${h.y} L${k.x} ${k.y} L${f.x} ${f.y} L${f.x + 14} ${f.y - 3}`,
+          "none",
+          "leg",
+          6,
+          "nearLeg",
+        );
+        if (r.blink)
+          add(`M684 ${218 + z} L693 ${218 + z}`, "none", "ink", 2.5, "eye");
+        else {
+          add(
+            `M694 ${218 + z} A5 5 0 1 0 684 ${218 + z} A5 5 0 1 0 694 ${218 + z}`,
+            "ink",
+            "white",
+            1,
+            "eye",
+          );
+          add(`M691 ${216 + z} L692 ${216 + z}`, "none", "white", 2, "eye");
+        }
+        return P;
+      }
+      const BASE = {
+        white: "#fbf8e8",
+        shade: "#d8dfd3",
+        ink: "#283a3b",
+        tire: "#263337",
+        rim: "#b9c6bd",
+        spoke: "#879990",
+        coral: "#da5948",
+        gold: "#edb453",
+        basket: "#b3a08b",
+        beak: "#eea14a",
+        pouch: "#efbf72",
+        beakline: "#b37139",
+        feather: "#a6b9ab",
+        leg: "#d59041",
+        far: "#ae743b",
+      };
+      function palette(i) {
+        let p = { ...BASE };
+        if (i === 0)
+          Object.assign(p, {
+            white: "#dfc9a0",
+            shade: "#bd8c58",
+            ink: "#873e27",
+            tire: "#873e27",
+            coral: "#9e4b2c",
+            beak: "#b25c2f",
+            pouch: "#cc9555",
+            rim: "#d8ae7b",
+            spoke: "#8b492e",
+          });
+        if (i === 1)
+          for (const k in p)
+            p[k] = ["white", "rim", "spoke", "beak", "coral", "leg"].includes(k)
+              ? "#dfe1d3"
+              : "#8a9b9f";
+        if (i === 2)
+          Object.assign(p, {
+            white: "#e8e5d8",
+            shade: "#b9c2b4",
+            ink: "#2a3a34",
+            coral: "#3e4c43",
+            beak: "#7d7961",
+            pouch: "#ccc6a5",
+            tire: "#29382f",
+          });
+        if (i === 3)
+          for (const k in p)
+            p[k] = ["white", "shade", "pouch", "basket"].includes(k)
+              ? "#e7d8b3"
+              : "#715638";
+        if (i === 4)
+          Object.assign(p, {
+            white: "#e9d6a9",
+            shade: "#9c8b62",
+            ink: "#2d221b",
+            rim: "#857553",
+            pouch: "#bc924c",
+            beak: "#e6b766",
+            coral: "#9d4734",
+          });
+        if (i === 5)
+          Object.assign(p, {
+            white: "#f5e8c6",
+            shade: "#bbd3ca",
+            ink: "#142e44",
+            coral: "#a94c3a",
+            tire: "#17384b",
+          });
+        if (i === 7)
+          Object.assign(p, {
+            white: "#f6d997",
+            shade: "#78a1a4",
+            ink: "#162e65",
+            coral: "#d5a73c",
+            spoke: "#f0b944",
+            beak: "#e5a63b",
+          });
+        if (i === 8)
+          Object.assign(p, {
+            white: "#ead1a3",
+            shade: "#a6a381",
+            ink: "#443831",
+            coral: "#9d593a",
+          });
+        if (i === 9)
+          Object.assign(p, {
+            white: "#e6d8b1",
+            shade: "#aa9f89",
+            ink: "#352e32",
+            coral: "#a66545",
+          });
+        if (i === 10)
+          for (const k in p)
+            p[k] = ["white", "pouch", "beak"].includes(k)
+              ? "#dddcd1"
+              : ["shade", "basket"].includes(k)
+                ? "#888c87"
+                : "#242927";
+        if (i === 11)
+          Object.assign(p, {
+            white: "#fff4d5",
+            shade: "#e9ce68",
+            ink: "#202e36",
+            coral: "#df4333",
+            pouch: "#eac946",
+            beak: "#df4333",
+          });
+        if (i === 12)
+          for (const k in p)
+            p[k] = ["white", "beak", "coral", "leg", "rim"].includes(k)
+              ? "#9affb0"
+              : "#39bc7a";
+        if (i === 13)
+          Object.assign(p, {
+            white: "#fff9d8",
+            shade: "#74dce3",
+            ink: "#243c65",
+            coral: "#e44277",
+            pouch: "#ffd146",
+            beak: "#fba234",
+          });
+        if (i === 14 || i === 15)
+          Object.assign(p, {
+            white: "#fff4e3",
+            shade: "#b4c9c3",
+            ink: "#253b58",
+            coral: "#d74e5d",
+            beak: "#f5a74b",
+          });
+        if (i === 16)
+          Object.assign(p, {
+            white: "#f7e0f0",
+            shade: "#b8a2da",
+            ink: "#422c6b",
+            coral: "#f27ba4",
+            rim: "#66ecec",
+            beak: "#f3c88e",
+          });
+        return p;
+      }
+      function drawRig(c, i, t, r = computeRig(t), alpha = 1) {
+        c.save();
+        c.globalAlpha *= alpha;
+        const s = r.camera;
+        c.translate(r.cameraX - 620 * s, 350 * (1 - s));
+        c.scale(s, s);
+        c.lineCap = i === 9 ? "square" : "round";
+        c.lineJoin = i === 9 ? "miter" : "round";
+        const p = palette(i),
+          parts = rigParts(r),
+          reveal = i === 19 ? clamp((localAt(19, t) - 0.4) / 4.85) : 1;
+        if (i === 12) {
+          c.shadowBlur = 10;
+          c.shadowColor = "#68ffab";
+        }
+        if (i === 6) {
+          c.shadowColor = "#fff5b099";
+          c.shadowBlur = 6;
+        }
+        parts.forEach((part, n) => {
+          if (n / parts.length > reveal) return;
+          let f = part.f === "none" ? null : p[part.f],
+            scol = p[part.s],
+            width = part.w;
+          if (i === 12) {
+            f = null;
+            width = part.kind === "spoke" ? 1 : 2;
+          }
+          if (i === 1) {
+            f = part.kind === "bird" ? "#cdd4c129" : null;
+            width = Math.max(1.5, width * 0.7);
+          }
+          if (i === 0) {
+            width *= 1.5;
+            if (part.kind === "spoke" && n % 2) return;
+          }
+          if (i === 2) width *= 1 + 0.35 * Math.sin(n * 2.7);
+          if (i === 7) width *= 1.6;
+          if (i === 9 && part.kind === "spoke" && n % 2) return;
+          if (i === 19 && n / parts.length > reveal - 0.07) {
+            f = null;
+            c.setLineDash([30, 10]);
+          } else c.setLineDash([]);
+          path(c, part.d, f, scol, width);
+        });
+        c.setLineDash([]);
+        // Pigment lives within the shared silhouette, rather than changing its joints.
+        if ([0, 1, 2, 4, 5, 8, 11, 13, 15].includes(i)) {
+          c.save();
+          c.clip(new Path2D(parts.find((q) => q.d.startsWith("M490")).d));
+          if (i === 4) {
+            const glaze = c.createLinearGradient(500, 281, 609, 356);
+            glaze.addColorStop(0, "#fff0b699");
+            glaze.addColorStop(0.45, "#dab77211");
+            glaze.addColorStop(1, "#49382188");
+            rect(c, 480, 275 - r.hop, 180, 100, glaze);
+          }
+          for (let n = 0; n < 100; n++) {
+            const x = 487 + hash(n, 212) * 153,
+              y = 275 + hash(n, 213) * 85 + r.bob - r.hop;
+            if (i === 0)
+              ellipse(c, x, y, hash(n, 21) * 1.5 + 0.3, 0.7, "#803e3060");
+            if (i === 1) line(c, x, y, x + 5, y - 3, "#1b2c3680", 0.6);
+            if (i === 2) ellipse(c, x, y, 2 + hash(n, 37) * 6, 1, "#263c2c0c");
+            if (i === 4) line(c, x, y, x + 5, y + 1, "#e4d4a21c", 1);
+            if (i === 5) line(c, x, y, x, y + 6, "#3a61541a", 0.6);
+            if (i === 8)
+              line(
+                c,
+                x,
+                y,
+                x + 12,
+                y - 2,
+                n % 3 ? "#a6a17f99" : "#efd0a499",
+                2,
+              );
+            if (i === 15)
+              rect(
+                c,
+                Math.floor(x / 3) * 3,
+                Math.floor(y / 3) * 3,
+                1.5,
+                1.5,
+                "#5c878544",
+              );
+          }
+          if (i === 11) {
+            path(c, "M490 285 L548 290 L503 346Z", "#e9c335");
+            ellipse(c, 594, 321 + r.bob - r.hop, 18, 18, "#345f80");
+          }
+          if (i === 13)
+            for (let y = 280; y < 363; y += 7)
+              for (let x = 486; x < 640; x += 7)
+                ellipse(c, x, y + r.bob - r.hop, 1.2, 1.2, "#2c557858");
+          c.restore();
+        }
+        if ([1, 3, 10].includes(i)) {
+          c.save();
+          c.beginPath();
+          c.ellipse(559, 320 + r.bob - r.hop, 59, 32, 0, 0, TAU);
+          c.clip();
+          for (let n = 0; n < 24; n++)
+            line(
+              c,
+              480 + n * 7,
+              280,
+              550 + n * 7,
+              375,
+              i === 1 ? "#1a263688" : "#4b3b2940",
+              1,
+            );
+          c.restore();
+        }
+        if (i === 6 || i === 7) {
+          for (let n = 0; n < 60; n++) {
+            const x = 505 + hash(n, 13) * 107,
+              y = 294 + hash(n, 18) * 44 + r.bob - r.hop;
+            line(
+              c,
+              x,
+              y,
+              x + 6,
+              y - 2,
+              ["#f1e3ab", "#b4c6ad", "#f8f4cd", "#9aac9a"][n % 4],
+              i === 7 ? 3 : 4,
+            );
+          }
+        }
+        if (i === 9) {
+          path(
+            c,
+            `M514 ${299 + r.bob} L564 ${306 + r.bob} L545 ${342 + r.bob}Z`,
+            "#b7ae92",
+            "#55433c",
+            1,
+          );
+          path(
+            c,
+            `M646 ${224 + r.bob} L674 ${278 + r.bob} L628 ${311 + r.bob}Z`,
+            "#c9c2a0",
+            "#514741",
+            1,
+          );
+          path(
+            c,
+            `M706 ${218 + r.bob} L803 ${197 + r.bob} L761 ${236 + r.bob}Z`,
+            "#ce934f",
+            "#4e4137",
+            2,
+          );
+        }
+        if (i === 3) {
+          for (const w of [r.rear, r.front]) {
+            ellipse(c, w.x, w.y, 77, 77, null, "#8e6c4c66");
+            line(c, w.x - 88, w.y, w.x + 88, w.y, "#8e6c4c66");
+            line(c, w.x, w.y - 88, w.x, w.y + 88, "#8e6c4c66");
+          }
+          line(c, 445, 176, 840, 176, "#927352", 1);
+          txt(
+            c,
+            "FIG. XXI — MOTUS CONTINUUS",
+            474,
+            160,
+            12,
+            "#7f6141",
+            "serif",
+          );
+          txt(c, "r", 401, 446, 20, "#876a44", "serif");
+        }
+        if (i === 17) {
+          c.setLineDash([5, 5]);
+          c.strokeStyle = "#6cdec7";
+          c.lineWidth = 1;
+          c.strokeRect(425, 176, 438, 349);
+          c.setLineDash([]);
+          for (const point of [
+            ...r.knees,
+            ...r.pedals,
+            r.hip,
+            r.rear,
+            r.front,
+          ]) {
+            ellipse(c, point.x, point.y, 5, 5, "#11282b", "#a3f6cc", 1);
+            line(c, point.x - 9, point.y, point.x + 9, point.y, "#9be2d0");
+          }
+          txt(c, "RIG_001 / POSE LOCK", 433, 170, 10, "#b3e3d2", "monospace");
+        }
+        c.restore();
+      }
+      function road(c, i, t) {
+        const col = [1, 10, 12, 16, 17, 19].includes(i)
+          ? "#cfdfd260"
+          : "#3d594d55";
+        line(c, 32, 508, 1168, 508, col, 1.5);
+        if (i !== 2 && i !== 3 && i !== 9) {
+          for (let k = -1; k < 16; k++) {
+            const x = k * 100 - ((t * 78) % 100);
+            line(c, x, 536, x + 35, 536, col, 1);
+          }
+        }
+      }
+      function hills(c, t, col, y = 360, amp = 60, phase = 0) {
+        c.beginPath();
+        c.moveTo(0, 580);
+        for (let x = 0; x <= 1200; x += 15)
+          c.lineTo(
+            x,
+            y +
+              amp * Math.sin(x * 0.006 + phase) +
+              amp * 0.45 * Math.sin(x * 0.014 + phase + t * 0.025),
+          );
+        c.lineTo(1200, 580);
+        c.closePath();
+        c.fillStyle = col;
+        c.fill();
+      }
+
+      function syntaxLine(c, s, x, y) {
+        c.font = "10px monospace";
+        const tokens =
+          s.match(/"[^"]*"|<\/?[\w:-]+|[\w-]+(?==)|[^<\w"]+|[\w:-]+/g) || [];
+        for (const token of tokens) {
+          c.fillStyle =
+            token[0] === '"'
+              ? "#d9b783"
+              : token[0] === "<"
+                ? "#84bbc5"
+                : token.match(/^[\w-]+$/)
+                  ? "#afd3b2"
+                  : "#869b91";
+          c.fillText(token, x, y);
+          x += c.measureText(token).width;
+          if (x > 375) break;
+        }
+      }
+
+      function background(c, i, t) {
+        const lt = localAt(i, t),
+          drift = t * 14;
+        switch (i) {
+          case 0: {
+            gradient(c, "#c89760", "#d8b783");
+            for (let k = 0; k < 12; k++) {
+              const x = hash(k, 5) * 1200,
+                y = hash(k, 8) * 550;
+              path(
+                c,
+                `M${x} ${y} l-50 34 71 16 19-53 86 29`,
+                null,
+                "#99634144",
+                2,
+              );
+            }
+            grain(c, 7, "#79421d24", 1000);
+            ellipse(c, 941, 155, 55, 55, null, "#9a512d", 3);
+            for (let a = 0; a < 4 * TAU; a += 0.1)
+              line(
+                c,
+                941 + Math.cos(a) * (a * 2),
+                155 + Math.sin(a) * (a * 2),
+                941 + Math.cos(a + 0.1) * ((a + 0.1) * 2),
+                155 + Math.sin(a + 0.1) * ((a + 0.1) * 2),
+                "#9a512d",
+                2,
+              );
+            for (let k = 0; k < 7; k++) {
+              const x = ((((k * 190 - drift) % 1450) + 1450) % 1450) - 100,
+                y = 413 + (k % 2) * 12;
+              path(
+                c,
+                `M${x} ${y} l42 0 16-14 -3-17 8 11 -1 22 -12 5 -9 22 m-3-29 -7 29 m-19-30 -7 28 m13-49 20-14`,
+                null,
+                "#955433",
+                3,
+              );
+              for (let n = 0; n < 3; n++)
+                ellipse(c, x + n * 16, 476, 2, 2, "#945332");
+            }
+            break;
+          }
+          case 1: {
+            gradient(c, "#172431", "#30434c");
+            grain(c, 9, "#e3e5ce18", 900);
+            for (let y = 125; y < 430; y += 81) {
+              for (let x = -100; x < 1300; x += 250) {
+                const q = x - ((drift * 0.3) % 250);
+                path(
+                  c,
+                  `M${q} ${y} C${q + 120} ${y - 45} ${q + 177} ${y + 46} ${q + 229} ${y} Q${q + 252} ${y - 35} ${q + 211} ${y - 30} Q${q + 192} ${y - 26} ${q + 214} ${y - 15}`,
+                  null,
+                  "#9aa99a80",
+                  3,
+                );
+              }
+            }
+            for (let k = 0; k < 3; k++) {
+              const x = 110 + k * 375 + Math.sin(t * 0.6 + k) * 12;
+              path(
+                c,
+                `M${x} 412 l32-18 30 7 25-24 11 16 -21 24 -26 3 20 23 m-34-21 -17 25 m-14-26 -18 24 m13-50 -18-22 2 32`,
+                null,
+                "#dae0ca",
+                2.5,
+              );
+            }
+            seal(c, 1064, 109, 45);
+            break;
+          }
+          case 2: {
+            gradient(c, "#e7e4d5", "#d0d6c4");
+            for (let layer = 0; layer < 4; layer++) {
+              const y = 290 + layer * 55;
+              c.beginPath();
+              c.moveTo(-20, 550);
+              for (let x = -20; x < 1230; x += 12) {
+                const v = Math.pow(
+                  Math.abs(
+                    Math.sin(x * 0.005 + layer * 2) + 0.3 * Math.sin(x * 0.019),
+                  ),
+                  0.65,
+                );
+                c.lineTo(x, y - v * (90 + layer * 25));
+              }
+              c.lineTo(1220, 550);
+              c.fillStyle = [
+                "#8d9e9230",
+                "#718a7a40",
+                "#4c6c5960",
+                "#344e4170",
+              ][layer];
+              c.fill();
+            }
+            for (let k = 0; k < 8; k++) {
+              c.fillStyle = "#e9e9da55";
+              c.fillRect(0, 270 + k * 21, 1200, 10);
+            }
+            path(
+              c,
+              "M153 508 Q175 388 137 287 Q162 322 177 354 L224 328 M165 397 L100 364 M173 365 L213 293",
+              null,
+              "#34483c",
+              8,
+            );
+            for (let k = 0; k < 13; k++) {
+              const x = 100 + hash(k, 4) * 130,
+                y = 285 + hash(k, 2) * 87;
+              path(c, `M${x - 36} ${y + 8} l36-16 40 11 -47-3Z`, "#3c5142");
+            }
+            seal(c, 1050, 111);
+            seal(c, 1090, 151, 24);
+            grain(c, 33, "#655b3820");
+            break;
+          }
+          case 3: {
+            gradient(c, "#d4bd8d", "#f0dfb8");
+            grain(c, 22, "#5d412021", 800);
+            const vx = 924,
+              vy = 266;
+            for (let x = -500; x < 1800; x += 95)
+              line(c, vx, vy, x, 565, "#907b5260");
+            for (let y = 0; y < 8; y++) {
+              const yy = vy + Math.pow(y / 7, 2) * 300;
+              line(c, 35, yy, 1165, yy, "#907b5255");
+            }
+            for (let n = 0; n < 5; n++) {
+              c.beginPath();
+              c.arc(875, 245, 47 + n * 36, Math.PI * 0.9, TAU);
+              c.strokeStyle = "#95744855";
+              c.lineWidth = 1;
+              c.stroke();
+            }
+            c.save();
+            c.translate(288, 180);
+            c.scale(-1, 1);
+            txt(c, "rota et avis / studio XXI", 0, 0, 17, "#8e6e4a", "serif");
+            c.restore();
+            path(
+              c,
+              "M180 456 L180 250 L265 206 L351 250 L351 456 M180 250 L351 250 M265 206 L265 456",
+              null,
+              "#80664780",
+              1.5,
+            );
+            txt(
+              c,
+              "a² + b² = a pleasant afternoon",
+              70,
+              588,
+              13,
+              "#95744d",
+              "serif",
+            );
+            break;
+          }
+          case 4: {
+            gradient(c, "#171b16", "#463726");
+            rect(c, 50, 87, 225, 310, "#262a20");
+            for (let k = 0; k < 3; k++)
+              rect(c, 70 + k * 67, 107, 54, 155, "#a29c7066");
+            path(c, "M75 108 L252 108 L1060 508 L566 508Z", "#f8c36d15");
+            path(c, "M150 108 L204 108 L915 508 L766 508Z", "#ffce7420");
+            for (let k = 0; k < 60; k++) {
+              const x = 300 + hash(k, 91) * 720,
+                y = 140 + hash(k, 9) * 340;
+              ellipse(
+                c,
+                x + Math.sin(t * 0.3 + k) * 8,
+                y,
+                1.2,
+                1.2,
+                "#f5cb7b66",
+              );
+            }
+            rect(c, 898, 399, 190, 13, "#231b17");
+            path(
+              c,
+              "M930 394 Q907 356 934 340 L962 340 Q987 362 967 394Z",
+              "#8e6941",
+              "#b39158",
+              2,
+            );
+            ellipse(c, 1030, 380, 23, 14, "#b48a47");
+            for (let k = 0; k < 120; k++) {
+              line(c, k * 10, 80, k * 10, 560, "#d1b88305");
+              line(c, 40, k * 5, 1160, k * 5, "#d1b88305");
+            }
+            break;
+          }
+          case 5: {
+            gradient(c, "#538aab", "#e7e0c3");
+            path(c, "M870 376 L1001 200 L1132 376Z", "#547582");
+            path(
+              c,
+              "M958 258 L1001 200 L1046 260 L1016 250 L1001 268 L984 251Z",
+              "#f6ead1",
+            );
+            for (let j = 0; j < 3; j++) {
+              const yy = 423 - j * 33;
+              path(
+                c,
+                `M-20 ${yy} C128 ${yy - 60} 80 ${yy - 230} 213 ${yy - 250} C308 ${yy - 264} 347 ${yy - 179} 302 ${yy - 155} C291 ${yy - 188} 266 ${yy - 201} 239 ${yy - 194} C283 ${yy - 103} 404 ${yy - 65} 588 ${yy} L588 526 L-20 526Z`,
+                ["#183f60", "#2c6582", "#478da5"][j],
+                "#153851",
+                2,
+              );
+            }
+            for (let k = 0; k < 40; k++) {
+              const a = k * 0.18,
+                x = 220 + Math.cos(a) * 70,
+                y = 233 + Math.sin(a) * 50;
+              path(
+                c,
+                `M${x} ${y} q-12-23-16-25 q11 5 14 13 q9-21 11-22 q5 19-3 34Z`,
+                "#f3e9ca",
+                "#315775",
+                1,
+              );
+            }
+            for (let k = 0; k < 25; k++)
+              line(
+                c,
+                30 + k * 18,
+                444 + Math.sin(k + t) * 6,
+                100 + k * 18,
+                470 + Math.sin(k + t) * 6,
+                "#cce1d0",
+                2,
+              );
+            const fy = 320 - 50 * Math.sin(lt * 2);
+            path(
+              c,
+              `M912 ${fy} q20-22 40 0 q-21 20-40 0 l-12-10 0 20Z`,
+              "#d8925f",
+              "#183e52",
+              2,
+            );
+            break;
+          }
+          case 6: {
+            gradient(c, "#a8c8bf", "#ecdfa5");
+            for (let k = 0; k < 740; k++) {
+              const x = hash(k, 5) * W,
+                y = 100 + hash(k, 41) * 410,
+                col =
+                  y < 280
+                    ? ["#e0dfc2", "#bcd7cc", "#e9e7c7", "#a4c3b8"][k % 4]
+                    : ["#9cba88", "#b7b976", "#e8d69b", "#6e9e8c", "#e5d79f"][
+                        k % 5
+                      ];
+              line(
+                c,
+                x,
+                y,
+                x + 10 + hash(k, 6) * 24,
+                y + Math.sin(k + t * 0.5) * 3,
+                col,
+                3 + hash(k, 3) * 8,
+              );
+            }
+            path(
+              c,
+              "M-10 430 Q230 326 510 405 Q894 494 1210 355 L1210 460 Q823 537 510 451 Q223 377-10 480Z",
+              "#a4c8b2",
+            );
+            for (let k = 0; k < 160; k++) {
+              const x = hash(k, 27) * 1200,
+                y = 412 + hash(k, 34) * 62;
+              line(
+                c,
+                x + Math.sin(t + k) * 2,
+                y,
+                x + 15,
+                y,
+                ["#d5dfc2", "#789f9b", "#f0e0a8"][k % 3],
+                3,
+              );
+            }
+            const bx = 735 + Math.sin(t * 1.7) * 25,
+              by = 287 + Math.cos(t * 2) * 15;
+            ellipse(
+              c,
+              bx - 5,
+              by,
+              8,
+              Math.abs(Math.sin(t * 9)) * 8 + 2,
+              "#dbb368",
+            );
+            ellipse(
+              c,
+              bx + 5,
+              by,
+              8,
+              Math.abs(Math.sin(t * 9)) * 8 + 2,
+              "#f4d59b",
+            );
+            break;
+          }
+          case 7: {
+            gradient(c, "#142b62", "#386d86");
+            for (let k = 0; k < 540; k++) {
+              const x = hash(k, 31) * 1200,
+                y = 80 + hash(k, 56) * 350,
+                dx = x - 897,
+                dy = (y - 211) * 1.5,
+                a = Math.atan2(dy, dx) + Math.hypot(dx, dy) * 0.008 + t * 0.045;
+              line(
+                c,
+                x,
+                y,
+                x + Math.cos(a) * 18,
+                y + Math.sin(a) * 9,
+                ["#4973a1", "#6b9ab2", "#213c7e", "#9aaf96", "#315997"][k % 5],
+                3 + hash(k, 77) * 4,
+              );
+            }
+            for (let j = 0; j < 12; j++) {
+              const x = 75 + hash(j, 17) * 1080,
+                y = 100 + hash(j, 18) * 205;
+              ellipse(c, x, y, 10 + Math.sin(t * 2 + j), 10, "#e7be5d");
+              for (let n = 0; n < 3; n++)
+                ellipse(c, x, y, 17 + n * 8, 16 + n * 5, null, "#e6bc5840", 2);
+            }
+            hills(c, t, "#243f65", 445, 44);
+            hills(c, t, "#43616b", 493, 26, 3);
+            for (let k = 0; k < 90; k++) {
+              const x = hash(k, 22) * 1200,
+                y = 440 + hash(k, 14) * 62;
+              line(
+                c,
+                x,
+                y,
+                x + 14,
+                y - 4,
+                ["#7c936c", "#bdac5a", "#2f5062"][k % 3],
+                4,
+              );
+            }
+            break;
+          }
+          case 8: {
+            gradient(c, "#aa4639", "#dca05f");
+            for (let k = 0; k < 15; k++) {
+              c.beginPath();
+              for (let x = 0; x <= 1200; x += 15) {
+                const y =
+                  96 +
+                  k * 17 +
+                  Math.sin(x * 0.007 + t * 0.2 + k * 0.3) * 19 +
+                  Math.sin(x * 0.015 + k) * 9;
+                x ? c.lineTo(x, y) : c.moveTo(x, y);
+              }
+              c.strokeStyle = ["#d7774c", "#7e4941", "#eba35f", "#be583d"][
+                k % 4
+              ];
+              c.lineWidth = 8;
+              c.stroke();
+            }
+            path(
+              c,
+              "M0 328 Q180 306 323 382 Q523 472 1200 322 L1200 545 L0 545Z",
+              "#40545c",
+            );
+            path(c, "M0 443 L318 391 L1200 540 L1200 593 L0 524Z", "#846146");
+            for (let k = 0; k < 18; k++)
+              line(
+                c,
+                k * 80,
+                444 + k * 7,
+                k * 80 + 33,
+                524 + k * 4,
+                "#382f2c",
+                2,
+              );
+            line(c, 0, 400, 1200, 528, "#302d2d", 8);
+            const q = 153 + Math.sin(t) * 3;
+            ellipse(c, q, 347, 12, 18, "#282e30");
+            path(
+              c,
+              `M${q - 10} 368 L${q - 21} 412 L${q + 16} 412 L${q + 7} 370Z`,
+              "#303330",
+            );
+            path(c, `M${q - 8} 382 l-15-28 m29 28 12-28`, null, "#343431", 5);
+            break;
+          }
+          case 9: {
+            rect(c, 0, 0, 1200, 675, "#d9c9a6");
+            for (let k = 0; k < 48; k++) {
+              const x = hash(k, 11) * 1200 + Math.sin(t * 0.4 + k) * 5,
+                y = 80 + hash(k, 12) * 460,
+                sz = 50 + hash(k, 13) * 190;
+              path(
+                c,
+                `M${x} ${y} l${sz} ${sz * 0.14} -${sz * 0.4} ${sz * 0.7} -${sz * 0.9} -${sz * 0.25}Z`,
+                [
+                  "#766e66",
+                  "#a47853",
+                  "#c0a27c",
+                  "#494f50",
+                  "#eee1bd",
+                  "#a5aaa0",
+                ][k % 6],
+                "#3b363923",
+                1,
+              );
+            }
+            for (let k = 0; k < 7; k++)
+              line(c, k * 190, 80, k * 150 + 100, 550, "#51474055");
+            txt(c, "AVIS / ROTATION / XXI", 78, 184, 28, "#343b35", "serif");
+            break;
+          }
+          case 10: {
+            const flick = 0.88 + hash(Math.floor(t * 18), 4) * 0.12;
+            rect(
+              c,
+              0,
+              0,
+              1200,
+              675,
+              `rgb(${Math.round(158 * flick)},${Math.round(161 * flick)},${Math.round(150 * flick)})`,
+            );
+            path(
+              c,
+              "M1100 508 L842 235 L875 154 L749 116 L727 244 L573 287 L801 508Z",
+              "#28322d66",
+            );
+            for (let j = 0; j < 8; j++) {
+              const x = j * 170;
+              path(c, `M${x} 508 l-28-190 73-55 38 245Z`, "#39463e22");
+            }
+            grain(c, Math.floor(t * 18), "#101d1b44", 750);
+            for (let j = 0; j < 6; j++) {
+              const x = hash(j, Math.floor(t * 18)) * 1200;
+              line(c, x, 40, x + 2, 550, "#f2efce44");
+            }
+            if (lt > 3.8 && lt < 4.65) {
+              rect(c, 53, 130, 322, 140, "#252e28");
+              c.strokeStyle = "#dedeca";
+              c.lineWidth = 2;
+              c.strokeRect(61, 138, 306, 124);
+              txt(c, "IT PEDALS", 214, 190, 28, "#efedda", "serif", "center");
+              txt(c, "ONWARD.", 214, 229, 28, "#efedda", "serif", "center");
+            }
+            const g = c.createRadialGradient(600, 320, 100, 600, 320, 700);
+            g.addColorStop(0, "#0000");
+            g.addColorStop(1, "#030e0cdd");
+            rect(c, 0, 0, 1200, 675, g);
+            break;
+          }
+          case 11: {
+            rect(c, 0, 0, 1200, 675, "#eee8d4");
+            ellipse(c, 219, 230, 111, 111, "#e8bb35");
+            ellipse(c, 219, 230, 56, 56, "#eee8d4");
+            path(c, "M841 399 L1045 101 L1149 399Z", "#37698a");
+            c.save();
+            c.translate(456, 210);
+            c.rotate(-0.45);
+            rect(c, -380, 0, 1000, 23, "#e04b35");
+            rect(c, -300, 35, 870, 5, "#273c3c");
+            c.restore();
+            txt(c, "FORM", 77, 151, 54, "#253b3c");
+            txt(c, "IN MOTION", 80, 198, 28, "#253b3c");
+            txt(c, "20", 1015, 479, 76, "#db4f35");
+            ellipse(
+              c,
+              964 + Math.sin(t) * 38,
+              451,
+              22,
+              22,
+              "#e5b932",
+              "#283c3c",
+              2,
+            );
+            break;
+          }
+          case 12: {
+            rect(c, 0, 0, 1200, 675, "#071b15");
+            for (let x = 45; x < 1200; x += 45)
+              line(c, x, 70, x, 548, "#4a9d6330");
+            for (let y = 82; y < 555; y += 39)
+              line(c, 40, y, 1160, y, "#4a9d6330");
+            c.save();
+            c.shadowColor = "#44ed91";
+            c.shadowBlur = 8;
+            c.beginPath();
+            for (let n = 0; n < 500; n++) {
+              const a = (n * TAU) / 499,
+                x = 258 + Math.sin(a * 3 + t) * 133,
+                y = 264 + Math.sin(a * 2) * 89;
+              n ? c.lineTo(x, y) : c.moveTo(x, y);
+            }
+            c.strokeStyle = "#81e5a1";
+            c.lineWidth = 1.5;
+            c.stroke();
+            c.restore();
+            txt(
+              c,
+              "X: PEDAL / Y: POSSIBILITY",
+              77,
+              406,
+              12,
+              "#6dd89a",
+              "monospace",
+            );
+            txt(
+              c,
+              "120 Hz?  NO, 120 BPM.",
+              77,
+              430,
+              12,
+              "#6dd89a",
+              "monospace",
+            );
+            const g = c.createRadialGradient(600, 310, 200, 600, 310, 650);
+            g.addColorStop(0, "#0000");
+            g.addColorStop(1, "#000c");
+            rect(c, 0, 0, 1200, 675, g);
+            break;
+          }
+          case 13: {
+            rect(c, 0, 0, 1200, 675, "#ffdb61");
+            path(c, "M0 80 L667 80 L322 508 L0 508Z", "#75d9df");
+            path(c, "M1000 80 L1200 80 L1200 508 L735 508Z", "#ef7c9a");
+            for (let y = 82; y < 509; y += 12)
+              for (let x = 38; x < 1160; x += 12)
+                ellipse(c, x + (y % 24 ? 6 : 0), y, 1.65, 1.65, "#143b6533");
+            c.save();
+            c.translate(950, 222);
+            c.rotate(Math.sin(t * 2) * 0.04);
+            let d = "";
+            for (let k = 0; k < 24; k++) {
+              const a = (k * TAU) / 24,
+                rr = k % 2 ? 65 : 102;
+              d += (k ? "L" : "M") + Math.cos(a) * rr + " " + Math.sin(a) * rr;
+            }
+            path(c, d + "Z", "#fff6db", "#243c65", 4);
+            txt(c, "RING!", 0, 12, 31, "#263b65", "sans-serif", "center");
+            c.restore();
+            break;
+          }
+          case 14: {
+            rect(c, 0, 0, 1200, 675, "#7bb4ce");
+            for (let k = 0; k < 7; k++)
+              cloud(
+                c,
+                ((((k * 230 - t * 18) % 1500) + 1500) % 1500) - 100,
+                150 + (k % 3) * 43,
+                0.55,
+                "#eaf0d9",
+              );
+            for (let k = 0; k < 14; k++) {
+              rect(
+                c,
+                k * 96,
+                417 - (k % 3) * 16,
+                80,
+                91 + (k % 3) * 16,
+                ["#6b9a75", "#89ae75"][k % 2],
+              );
+              rect(c, k * 96 + 9, 425 - (k % 3) * 16, 8, 8, "#abc384");
+            }
+            rect(c, 0, 508, 1200, 86, "#a36f50");
+            for (let y = 508; y < 594; y += 24) {
+              for (let x = -24; x < 1230; x += 48) {
+                c.strokeStyle = "#644a42";
+                c.lineWidth = 3;
+                c.strokeRect(x + (y % 48 ? 24 : 0), y, 48, 24);
+              }
+            }
+            if (lt > 1.5 && lt < 4.5)
+              rect(c, 640 - lt * 43, 508, 83, 86, "#243b54");
+            for (let k = 0; k < 4; k++) {
+              const x = 254 + k * 185 - lt * 24;
+              ellipse(
+                c,
+                x,
+                272,
+                Math.abs(Math.cos(t * 5 + k)) * 12 + 2,
+                18,
+                "#f3cf58",
+                "#b3853b",
+                3,
+              );
+            }
+            break;
+          }
+          case 15: {
+            rect(c, 0, 0, 1200, 675, "#679296");
+            for (let k = 0; k < 8; k++)
+              rect(c, 45 + k * 155, 102 + (k % 2) * 100, 70, 80, "#7da3a244");
+            rect(c, 57, 79, 1088, 475, "#b6b9b2");
+            rect(c, 61, 83, 1080, 465, "#e4e1d4");
+            rect(c, 64, 86, 1074, 32, "#2c4e76");
+            txt(
+              c,
+              "PelicanChat v1.4 — the pond is online",
+              77,
+              108,
+              16,
+              "#fff5db",
+              "monospace",
+            );
+            rect(c, 1105, 91, 23, 22, "#bdbfb7");
+            txt(c, "×", 1110, 108, 19, "#253b4b");
+            rect(c, 77, 130, 281, 362, "#f3f0df");
+            line(c, 367, 130, 367, 494, "#858e91", 2);
+            txt(c, "pond_friend_03:", 92, 164, 13, "#436479", "monospace");
+            txt(
+              c,
+              "did you see that bird?",
+              92,
+              190,
+              13,
+              "#38494b",
+              "monospace",
+            );
+            txt(c, "you:", 92, 230, 13, "#8d5848", "monospace");
+            txt(
+              c,
+              "i think it has a bell.",
+              92,
+              255,
+              13,
+              "#38494b",
+              "monospace",
+            );
+            txt(c, "pond_friend_03:", 92, 301, 13, "#436479", "monospace");
+            txt(c, "Nudge!", 92, 326, 20, "#9e594d", "monospace");
+            txt(c, "... is typing", 92, 470, 11, "#657f72", "monospace");
+            rect(c, 78, 516, 1051, 23, "#cccfc6");
+            txt(
+              c,
+              "Connected · one bird / no attachments",
+              89,
+              533,
+              12,
+              "#53696a",
+              "monospace",
+            );
+            for (let y = 150; y < 480; y += 8)
+              for (let x = 390; x < 1115; x += 8) {
+                if (hash(x + y, 8) > 0.6) rect(c, x, y, 1, 1, "#73888055");
+              }
+            break;
+          }
+          case 16: {
+            gradient(c, "#302751", "#e991a4");
+            ellipse(c, 916, 242, 89, 89, "#f3bea8");
+            for (let k = 0; k < 8; k++)
+              rect(c, 820, 210 + k * 16, 193, 4 + k, "#c77e9b");
+            rect(c, 0, 390, 1200, 167, "#362d59");
+            for (let k = -8; k <= 8; k++)
+              line(c, 600, 390, 600 + k * 180, 557, "#7fbdc088");
+            for (let k = 0; k < 9; k++) {
+              const yy =
+                390 + ((k / 9 + ((t * 0.79 * 0.04) % 1)) % 1) ** 2 * 167;
+              line(c, 25, yy, 1175, yy, "#8ac2bc77");
+            }
+            path(c, "M171 507 L185 308 L195 305 L192 507Z", "#2e254c");
+            for (let k = 0; k < 8; k++) {
+              const a = (k * Math.PI) / 4,
+                x = 190 + Math.cos(a) * 114,
+                y = 315 + Math.sin(a) * 64;
+              path(
+                c,
+                `M190 315 Q${x} ${y - 40} ${x} ${y} Q${mix(190, x, 0.5)} ${mix(315, y, 0.5) - 10} 190 315Z`,
+                "#34294e",
+              );
+            }
+            path(
+              c,
+              "M1012 475 L1012 427 L1035 402 L1031 374 Q1001 366 1012 337 Q1032 315 1052 339 Q1060 356 1048 368 L1057 403 L1080 427 L1080 475Z",
+              "#c9c1d0",
+              "#9c94b4",
+              2,
+            );
+            rect(c, 996, 474, 101, 34, "#c9c1d0");
+            for (let k = 0; k < 7; k++)
+              rect(
+                c,
+                25,
+                90 + hash(k, Math.floor(t * 3)) * 430,
+                1150,
+                1,
+                "#f7d1eb24",
+              );
+            txt(c, "PLAY ▷  0.79", 78, 132, 16, "#f1ded5", "monospace");
+            break;
+          }
+          case 17: {
+            gradient(c, "#0d2026", "#16333a");
+            for (let j = 0; j < 13; j++) {
+              c.beginPath();
+              for (let x = 30; x <= 1170; x += 20) {
+                const y =
+                  350 +
+                  j * 15 +
+                  Math.sin(x * 0.009 + j * 0.5 + t * 0.4) * (30 - j);
+                x === 30 ? c.moveTo(x, y) : c.lineTo(x, y);
+              }
+              c.strokeStyle = "#4f9d9c55";
+              c.lineWidth = 1;
+              c.stroke();
+            }
+            for (let x = 30; x < 1170; x += 60)
+              line(c, 600 + (x - 600) * 0.36, 340, x, 548, "#51928f44");
+            for (let k = 0; k < 45; k++) {
+              const x = hash(k, 80) * 1100 + 50,
+                y = hash(k, 81) * 250 + 95;
+              ellipse(c, x, y, 1, 1, "#c8e9cc");
+            }
+            txt(
+              c,
+              "SYSTEM / OBSERVATION STREAM",
+              70,
+              117,
+              13,
+              "#71b9ae",
+              "monospace",
+            );
+            txt(
+              c,
+              `${Math.floor(t * 120)} packets  /  0 dropped wheels`,
+              70,
+              145,
+              12,
+              "#b7c7af",
+              "monospace",
+            );
+            break;
+          }
+          case 18: {
+            gradient(c, "#392c43", "#30515a");
+            for (let k = 0; k < 14; k++) {
+              ellipse(
+                c,
+                hash(k, 7) * 1200,
+                hash(k, 8) * 550,
+                80,
+                130,
+                ["#ebaaa61c", "#8bc0b31c", "#e6c0931c"][k % 3],
+              );
+            }
+            const { x, ww } = phoneFrame(t);
+            rect(c, x - 6, 77, ww + 12, 488, "#b6b2b477");
+            rect(c, x, 80, ww, 480, "#1c3442");
+            const g = c.createLinearGradient(0, 80, 0, 560);
+            g.addColorStop(0, "#779d9e");
+            g.addColorStop(1, "#d4bfa3");
+            rect(c, x + 3, 115, ww - 6, 410, g);
+            txt(c, "PelicanReel", x + 15, 105, 14, "#f7ead8");
+            txt(c, "@onecontinuousbird", x + 14, 483, 10, "#fff4dc");
+            txt(c, "original sound · 120 BPM", x + 14, 499, 9, "#fff4dc");
+            rect(c, x + 12, 537, (ww - 24) * clamp(lt / 6), 2, "#f2a998");
+            for (let k = 0; k < 5; k++) {
+              const yy = 460 - ((t * 55 + k * 61) % 280);
+              txt(
+                c,
+                "♥",
+                x + ww - 31 + Math.sin(t + k) * 5,
+                yy,
+                15 + (k % 3),
+                "#eeb2b5",
+              );
+            }
+            if (lt > 3 && lt < 3.13) {
+              rect(c, x, 115, ww, 410, "#fff9e8aa");
+              txt(
+                c,
+                "THAT MOMENT.",
+                600,
+                280,
+                18,
+                "#243b47",
+                "sans-serif",
+                "center",
+              );
+            }
+            txt(
+              c,
+              "09:16 / ANOTHER LOOP?",
+              85,
+              225,
+              17,
+              "#a6b9b9",
+              "monospace",
+            );
+            break;
+          }
+          case 19: {
+            rect(c, 0, 0, 1200, 675, "#13252b");
+            rect(c, 44, 86, 1112, 447, "#1b3037");
+            rect(c, 44, 86, 1112, 35, "#253d43");
+            ellipse(c, 62, 103, 4, 4, "#df9e88");
+            ellipse(c, 78, 103, 4, 4, "#d7bb79");
+            ellipse(c, 94, 103, 4, 4, "#86b69b");
+            txt(
+              c,
+              "PelicanIDE / specimen.svg",
+              113,
+              108,
+              12,
+              "#cfdbca",
+              "monospace",
+            );
+            line(c, 380, 122, 380, 531, "#6a8b7b66");
+            const code = svgPelican(t).replaceAll("><", ">\n<").split("\n"),
+              total = code.join("").length,
+              chars = Math.floor(clamp(lt / 5.2) * total);
+            let used = 0,
+              rows = [];
+            code.forEach((str, j) => {
+              if (chars > used)
+                rows.push({ str: str.slice(0, chars - used), num: j + 1 });
+              used += str.length;
+            });
+            rows = rows.slice(-13);
+            c.save();
+            c.beginPath();
+            c.rect(47, 133, 326, 373);
+            c.clip();
+            rows.forEach((row, j) => {
+              txt(
+                c,
+                String(row.num).padStart(2, "0"),
+                54,
+                155 + j * 25,
+                9,
+                "#658578",
+                "monospace",
+              );
+              syntaxLine(c, row.str, 82, 155 + j * 25);
+            });
+            c.restore();
+            txt(
+              c,
+              "LIVE VECTOR / SAME JOINTS, NEW LANGUAGE",
+              414,
+              146,
+              11,
+              "#9bc7ac",
+              "monospace",
+            );
+            if (lt > 5) {
+              c.save();
+              c.shadowColor = "#c5e6b6";
+              c.shadowBlur = 20;
+              line(c, 429, 520, 868, 520, "#bae1a8", 2);
+              c.restore();
+            }
+            break;
+          }
+        }
+        road(c, i, t);
+      }
+      const pixelCanvas = document.createElement("canvas");
+      pixelCanvas.width = 160;
+      pixelCanvas.height = 90;
+      const px = pixelCanvas.getContext("2d");
+      function scene(c, i, t, rig = computeRig(t)) {
+        c.save();
+        if (i === 14) {
+          px.save();
+          px.setTransform(160 / 1200, 0, 0, 90 / 675, 0, 0);
+          background(px, i, t);
+          drawRig(px, i, t, rig);
+          px.restore();
+          c.imageSmoothingEnabled = false;
+          c.drawImage(pixelCanvas, 0, 0, W, H);
+          // Arcade text stays at output resolution, including in gallery thumbnails.
+          const lt = localAt(i, t),
+            arcadeLabel = (label, x, y, size) => {
+              c.font = `bold ${size}px monospace`;
+              const w = Math.ceil(c.measureText(label).width) + 24;
+              y = Math.round(y);
+              rect(c, x + 4, y, w - 8, 40, "#14293ff2");
+              rect(c, x, y + 4, w, 32, "#14293ff2");
+              line(c, x + 4, y + 2, x + w - 4, y + 2, "#a2d4dd", 2);
+              c.fillStyle = "#fff4cf";
+              c.textAlign = "left";
+              c.fillText(label, x + 12, y + 28);
+            };
+          arcadeLabel("SCORE 000020", 68, 96, 24);
+          if (lt > 2.8 && lt < 4.3)
+            arcadeLabel("+1UP", 603, 152 - (lt - 2.8) * 25, 26);
+        } else {
+          if (i === 15) {
+            const q = Math.exp(-Math.pow((localAt(i, t) - 3.1) * 6, 2)) * 5;
+            c.translate(Math.sin(t * 91) * q, Math.cos(t * 83) * q);
+          }
+          background(c, i, t);
+          if (i === 12) {
+            drawRig(c, i, t - 0.065, computeRig(t - 0.065), 0.1);
+            c.save();
+            c.translate(-3, 0);
+            drawRig(c, i, t, rig, 0.2);
+            c.restore();
+          }
+          if (i === 13 || i === 16 || i === 17) {
+            c.save();
+            c.translate(i === 13 ? 3 : 2.5, 0);
+            c.globalCompositeOperation = "screen";
+            drawRig(c, i, t, rig, 0.18);
+            c.restore();
+          }
+          drawRig(c, i, t, rig);
+          if (i === 18) {
+            const { p, x, ww } = phoneFrame(t);
+            if (p > 0) {
+              const yy = rig.screen.roadY;
+              line(c, x + 6, yy, x + ww - 6, yy, "#667c6266", 1);
+            }
+          }
+          if (i === 16)
+            for (let y = 90; y < 550; y += 5)
+              rect(c, 36, y, 1128, 1, "#efd0e00c");
+          if (i === 17) {
+            for (let j = 0; j < 4; j++) {
+              const pulse = Math.pow(Math.max(0, Math.cos(t * TAU * 2)), 18),
+                y = 140 + hash(j, Math.floor(t * 2)) * 330;
+              rect(c, 35, y, 1130, 2 + pulse * 3, "#d3fff226");
+              if (pulse > 0.6 && localAt(i, t) > 1.1) {
+                c.save();
+                c.beginPath();
+                c.rect(425, y, 438, 9);
+                c.clip();
+                rect(c, 425, y, 438, 9, "#16333a");
+                c.translate(j % 2 ? -12 : 12, 0);
+                drawRig(c, i, t, rig);
+                c.restore();
+                rect(c, 430 + j * 45, y, 200, 3, "#f3887c99");
+                line(c, 600, y + 6, 970, y + 6, "#62e0d499", 2);
+              }
+            }
+          }
+        }
+        c.restore();
+      }
+      const FRAME = [
+        ["#9c7149", "#e6c28b"],
+        ["#354756", "#c3d0bd"],
+        ["#788b74", "#dfe1cc"],
+        ["#a08a5f", "#f4e2b6"],
+        ["#7d6037", "#d0b177"],
+        ["#2c5260", "#dfd3ad"],
+        ["#98a286", "#e8dfbb"],
+        ["#aa8f4c", "#ecd18a"],
+        ["#885a41", "#dfa374"],
+        ["#70685c", "#c7b48f"],
+        ["#4d5951", "#bec1af"],
+        ["#43554e", "#e5dfbf"],
+        ["#184a30", "#83dca0"],
+        ["#37516b", "#f9d9a0"],
+        ["#39526c", "#bed3b6"],
+        ["#a7b2aa", "#efead7"],
+        ["#705a80", "#e6afc5"],
+        ["#355c58", "#9acdb9"],
+        ["#6a7e81", "#edc6b6"],
+        ["#45665b", "#bad6b6"],
+      ];
+      function frameMotif(c, i, x, y, s = 1) {
+        c.save();
+        c.translate(x, y);
+        c.scale(s, s);
+        const col = FRAME[Math.max(0, i)][1];
+        if (i === 0) {
+          path(c, "M-4-7 4 0-4 7", null, col, 1.3);
+          ellipse(c, 1, 0, 1, 1, col);
+        } else if (i === 1 || i === 7) {
+          path(c, "M0-8 q8 2 1 9 q-6 3-3-3 q4-2 4 2", null, col, 1.4);
+        } else if (i === 2 || i === 6) {
+          line(c, -2, -7, 2, 7, col, 2);
+          line(c, 1, -4, 3, 5, col, 1);
+        } else if (i === 3) {
+          ellipse(c, 0, 0, 3, 3, null, col, 1);
+          line(c, -4, -7, 4, -7, col, 1);
+        } else if (i === 4) {
+          path(c, "M0-8 C8-3 4 1 0 6 C-4 1-8-3 0-8Z", col);
+          ellipse(c, 0, 8, 1.3, 1.3, col);
+        } else if (i === 5) {
+          path(c, "M-3-8 3-3-3 2 3 7", null, col, 1.5);
+        } else if (i === 8) {
+          path(c, "M0-8 Q7-4 0 0 Q-7 4 0 8", null, col, 2);
+        } else if (i === 9) {
+          path(c, "M-4-8 4-2-4 7Z", col);
+        } else if (i === 10) {
+          rect(c, -2, -5, 4, 9, col);
+        } else if (i === 11) {
+          ellipse(c, 0, -4, 3, 3, "#e8c344");
+          rect(c, -3, 2, 6, 5, "#d76c4c");
+        } else if (i === 12) {
+          line(c, 0, -9, 0, 9, col, 1);
+          ellipse(c, 0, 0, 2, 2, col);
+        } else if (i === 13) {
+          for (let j = -1; j <= 1; j++) ellipse(c, 0, j * 5, 1.3, 1.3, col);
+        } else if (i === 14) {
+          rect(c, -4, -8, 4, 4, col);
+          rect(c, 0, -4, 4, 8, col);
+          rect(c, -4, 4, 4, 4, col);
+        } else if (i === 15) {
+          rect(c, -4, -6, 8, 12, "#d2d5c6");
+          line(c, -4, -6, 3, -6, "#fff6d7");
+          line(c, 4, -6, 4, 6, "#627870");
+        } else if (i === 16) {
+          line(c, -2, -8, -2, 8, "#72cece", 2);
+          line(c, 2, -4, 2, 4, "#e8a9c9", 2);
+        } else if (i === 17) {
+          line(c, -4, -5, 3, -5, col, 2);
+          line(c, -1, 0, 5, 0, "#de9885", 2);
+          line(c, -4, 5, 4, 5, col, 1);
+        } else if (i === 18) {
+          path(c, "M0 6 C-10-1-3-7 0-2 C3-7 10-1 0 6Z", col);
+        } else {
+          txt(c, "<>", 0, 4, 8, col, "monospace", "center");
+        }
+        c.restore();
+      }
+      function molding(c, i, x = null) {
+        const spec = FRAME[Math.max(0, i)];
+        c.save();
+        if (x !== null) {
+          rect(c, x - 13, 20, 26, 614, spec[0]);
+          rect(c, x - 9, 20, 3, 614, spec[1]);
+          rect(c, x + 6, 20, 2, 614, spec[1]);
+          for (let y = 38; y < 625; y += 25) frameMotif(c, i, x, y);
+          c.restore();
+          return;
+        }
+        c.strokeStyle = spec[0];
+        c.lineWidth = 13;
+        c.strokeRect(25, 23, 1150, 609);
+        c.strokeStyle = spec[1];
+        c.lineWidth = 2;
+        c.strokeRect(22, 20, 1156, 615);
+        c.strokeRect(33, 31, 1134, 593);
+        c.strokeStyle = "#172a3522";
+        c.lineWidth = 1;
+        c.strokeRect(36, 34, 1128, 587);
+        for (const xx of [25, 1175])
+          for (let yy = 61; yy < 602; yy += 35) frameMotif(c, i, xx, yy, 0.6);
+        if (i < 6) {
+          for (const xx of [41, 1159])
+            for (const yy of [39, 616]) {
+              c.save();
+              c.translate(xx, yy);
+              c.rotate(xx > 600 ? Math.PI : 0);
+              path(
+                c,
+                "M0 0 q12 0 14 13 q-3-9-11-5 q6 5 1 11 q-10-7-4-19Z",
+                spec[0],
+              );
+              c.restore();
+            }
+        }
+        c.restore();
+      }
+      function hud(c, i, alpha = 1) {
+        if (i < 0) return;
+        c.save();
+        c.globalAlpha = alpha;
+        const e = ERA[i],
+          dark = [1, 4, 7, 10, 12, 16, 17, 18, 19].includes(i),
+          ink = dark ? "#f0e7cb" : "#314238";
+        rect(c, 47, 46, 273, 34, dark ? "#15242bc7" : "#f2ecd5d9");
+        txt(
+          c,
+          `${String(i + 1).padStart(2, "0")} / 20  ·  ${e[0]}`,
+          62,
+          68,
+          13,
+          ink,
+          "monospace",
+        );
+        rect(c, 717, 556, 434, 53, dark ? "#19282adf" : "#eee8d6ed");
+        txt(c, e[1], 733, 578, 19, ink, "serif");
+        txt(c, `${e[2]} · ${e[3]}`, 733, 598, 10, ink);
+        c.font = "12px serif";
+        const quoteWidth = Math.min(c.measureText(e[5]).width + 24, 717 - 47 - 16);
+        rect(c, 47, 566, quoteWidth, 34, dark ? "#15242bc7" : "#f2ecd5d9");
+        c.fillStyle = ink;
+        c.fillText(e[5], 59, 588, quoteWidth - 24);
+        c.restore();
+      }
+      function prologue(c, t) {
+        gradient(c, "#eee7d6", "#e5e4d1");
+        grain(c, 101, "#7b6e4220", 700);
+        const p = smooth(t / 3);
+        c.save();
+        c.globalAlpha = 0.38;
+        for (let n = 0; n < 5; n++) {
+          c.beginPath();
+          c.arc(745, 445, 80 + n * 34, -Math.PI, -Math.PI + TAU * p);
+          c.strokeStyle = "#668c82";
+          c.lineWidth = 1;
+          c.stroke();
+        }
+        line(c, 48, 508, 48 + 1104 * smooth(t / 2), 508, "#527c6d", 2);
+        line(c, 48, 520, 48 + 1104 * smooth((t - 0.5) / 2), 520, "#8b9a7e");
+        c.restore();
+        c.save();
+        c.globalAlpha = 0.55 + 0.45 * smooth((t - 0.15) / 1.1);
+        txt(
+          c,
+          "AN ORIGINAL PROCEDURAL SHORT",
+          77,
+          137,
+          12,
+          "#698074",
+          "monospace",
+        );
+        txt(c, "THE", 73, 224, 53, "#263e36", "serif");
+        txt(c, "PELICAN", 70, 298, 81, "#263e36", "serif");
+        txt(c, "TEST", 73, 371, 76, "#263e36", "serif");
+        txt(c, "鹈 鹕 测 试", 78, 417, 22, "#5b7768");
+        txt(
+          c,
+          "20 answers.  One unasked question.",
+          77,
+          456,
+          16,
+          "#5c7467",
+          "serif",
+        );
+        c.restore();
+        c.save();
+        c.translate(130 * (1 - smooth((t - 0.3) / 2)), 0);
+        drawRig(
+          c,
+          -1,
+          t,
+          computeRig(t),
+          0.35 + 0.65 * smooth((t - 0.25) / 1.5),
+        );
+        c.restore();
+        for (let k = 0; k < 4; k++)
+          ellipse(
+            c,
+            85 + k * 20,
+            568,
+            3.5,
+            3.5,
+            t > 2.5 + k * 0.5 ? "#b76d50" : "#c7c6ad",
+          );
+        txt(c, "A LINE BECOMES A ROAD", 77, 599, 10, "#6b7d6c", "monospace");
+        txt(
+          c,
+          "137 SECONDS / 120 BPM",
+          1130,
+          591,
+          11,
+          "#6b7d6c",
+          "monospace",
+          "right",
+        );
+        molding(c, 2);
+      }
+      const thumbs = [];
+      function thumbnail(i) {
+        if (!thumbs[i]) {
+          const cv = document.createElement("canvas");
+          cv.width = 360;
+          cv.height = 203;
+          const cc = cv.getContext("2d");
+          cc.scale(0.3, 203 / 675);
+          scene(cc, i, 5 + i * 6 + (i === 19 ? 5.85 : 3.1));
+          molding(cc, i);
+          thumbs[i] = cv;
+        }
+        return thumbs[i];
+      }
+      // A single camera matrix is shared by wall painting, hit testing and accessibility jumps.
+      function wallCamera(t) {
+        const p = smooth((t - 130) / 5.8),
+          s = mix(1, 4.2, p),
+          target = { x: 1065.5, y: 439.5 };
+        return {
+          s,
+          x: mix(0, 600 - target.x * s, p),
+          y: mix(0, 325 - target.y * s, p),
+        };
+      }
+      function wallCell(k) {
+        return {
+          x: 51 + (k % 7) * 157,
+          y: 113 + Math.floor(k / 7) * 137,
+          w: 145,
+          h: 105,
+        };
+      }
+      function emptySeat(c, x, y, w, h, detail = false) {
+        c.save();
+        c.translate(x, y);
+        c.scale(w / 360, h / 203);
+        gradientSeat(c);
+        rect(c, 108, 104, 144, 15, "#6f7568");
+        path(c, "M129 109 L135 175 L225 175 L232 109Z", "#777c6b");
+        rect(c, 157, 63, 49, 47, "#8f9b82");
+        rect(c, 158, 107, 47, 9, "#74826d");
+        line(c, 164, 114, 161, 130, "#4f6253", 3);
+        line(c, 200, 114, 204, 130, "#4f6253", 3);
+        for (const xx of [128, 232]) {
+          line(c, xx, 105, xx + (xx < 180 ? -12 : 12), 77, "#324d44", 2);
+          ellipse(c, xx + (xx < 180 ? -12 : 12), 77, 8, 3, "#314c43");
+        }
+        rect(c, 91, 136, 180, 20, "#efe8d6");
+        txt(
+          c,
+          "PELICAN (IN PERSON) · 鹈鹕（本人）",
+          181,
+          149,
+          7.8,
+          "#334e43",
+          "sans-serif",
+          "center",
+        );
+        if (detail) {
+          txt(
+            c,
+            "NO STATEMENT AT THIS TIME",
+            180,
+            188,
+            7,
+            "#83937d",
+            "monospace",
+            "center",
+          );
+        }
+        c.restore();
+      }
+      function gradientSeat(c) {
+        const g = c.createLinearGradient(0, 0, 0, 203);
+        g.addColorStop(0, "#d3d9bd");
+        g.addColorStop(1, "#e9e5cf");
+        rect(c, 0, 0, 360, 203, g);
+        for (let j = 0; j < 8; j++)
+          line(c, 38 + j * 42, 0, 38 + j * 42, 203, "#a7b59b33");
+      }
+      function wall(c, t) {
+        gradient(c, "#e9e5d7", "#d1d7c3");
+        grain(c, 146, "#5e60341a", 650);
+        const cam = wallCamera(t);
+        c.save();
+        c.translate(cam.x, cam.y);
+        c.scale(cam.s, cam.s);
+        txt(c, "TWENTY WAYS OF SEEING", 52, 66, 25, "#2d493e", "serif");
+        txt(
+          c,
+          "AND ONE VOICE STILL MISSING.",
+          1140,
+          67,
+          11,
+          "#6f806c",
+          "monospace",
+          "right",
+        );
+        for (let k = 0; k < 21; k++) {
+          const cell = wallCell(k),
+            fold = smooth((t - 125 - k * 0.035) / 1.3);
+          c.save();
+          const delay = (1 - fold) * 150 * (k % 2 ? 1 : -1);
+          c.globalAlpha = k === 20 ? 1 : 1 - smooth((t - 132) / 3);
+          c.translate(cell.x + cell.w / 2, cell.y + cell.h / 2 + delay);
+          c.scale(0.1 + 0.9 * fold, 0.12 + 0.88 * fold);
+          c.rotate((1 - fold) * (k % 2 ? 0.25 : -0.25));
+          c.shadowColor = "#273b3840";
+          c.shadowBlur = 6;
+          c.shadowOffsetY = 3;
+          rect(
+            c,
+            -cell.w / 2 - 3,
+            -cell.h / 2 - 3,
+            cell.w + 6,
+            cell.h + 6,
+            k === 20 ? "#78917e" : "#978868",
+          );
+          c.shadowBlur = 0;
+          c.shadowOffsetY = 0;
+          if (k < 20)
+            c.drawImage(thumbnail(k), -cell.w / 2, -cell.h / 2, cell.w, cell.h);
+          else emptySeat(c, -cell.w / 2, -cell.h / 2, cell.w, cell.h, true);
+          c.restore();
+          c.save();
+          c.globalAlpha = fold * (1 - smooth((t - 130) / 2));
+          txt(
+            c,
+            `${String(k + 1).padStart(2, "0")} / ${k < 20 ? ERA[k][0] : "AWAITING COMMENT"}`,
+            cell.x,
+            cell.y + cell.h + 14,
+            7,
+            "#536d5b",
+            "monospace",
+          );
+          c.restore();
+        }
+        line(c, 50, 565, 1150, 565, "#9eab92");
+        c.restore();
+        if (t < 126.7) {
+          c.save();
+          const p = smooth((t - 125) / 1.7);
+          c.globalAlpha = 1 - p;
+          c.translate(600 * p, 325 * p);
+          c.scale(1 - 0.88 * p, 1 - 0.88 * p);
+          scene(c, 19, 124.999);
+          molding(c, 19);
+          c.restore();
+        }
+        const fade = smooth((t - 128.2) / 1.2);
+        c.save();
+        c.globalAlpha = fade;
+        rect(c, 36, 574, 1128, 66, "#ebe8d9ee");
+        txt(
+          c,
+          "To date, humankind has handed in 20 answers. The pelican itself has yet to comment.",
+          600,
+          599,
+          17,
+          "#3c5747",
+          "serif",
+          "center",
+        );
+        txt(
+          c,
+          "「截至目前，人类共提交了 20 份答卷。鹈鹕本人对此尚未发表评论。」",
+          600,
+          625,
+          14,
+          "#647b61",
+          "sans-serif",
+          "center",
+        );
+        c.restore();
+        if (t < 130) {
+          txt(
+            c,
+            "CLICK A PAINTING TO REVISIT ITS WORLD",
+            600,
+            548,
+            10,
+            "#70856c",
+            "monospace",
+            "center",
+          );
+        } else {
+          txt(c, "21 / THE EMPTY SEAT", 51, 54, 12, "#355442", "monospace");
+        }
+      }
+      function renderAt(ctx, t, w = ctx.canvas.width, h = ctx.canvas.height) {
+        t = clamp(t, 0, DURATION);
+        ctx.save();
+        ctx.setTransform(w / W, 0, 0, h / H, 0, 0);
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = "source-over";
+        ctx.setLineDash([]);
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.lineCap = "butt";
+        ctx.lineJoin = "miter";
+        ctx.textBaseline = "alphabetic";
+        ctx.imageSmoothingEnabled = true;
+        ctx.filter = "none";
+        ctx.clearRect(0, 0, W, H);
+        if (t < 5) prologue(ctx, t);
+        else if (t >= 125) wall(ctx, t);
+        else {
+          const i = eraAt(t),
+            lt = localAt(i, t),
+            rig = computeRig(t);
+          if (lt < 1.1) {
+            const p = smooth(lt / 1.1),
+              dividerX = W * (1 - p);
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, 0, dividerX, H);
+            ctx.clip();
+            if (i === 0) prologue(ctx, t);
+            else scene(ctx, i - 1, t, rig);
+            ctx.restore();
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(dividerX, 0, W - dividerX, H);
+            ctx.clip();
+            scene(ctx, i, t, rig);
+            ctx.restore();
+            molding(ctx, i);
+            molding(ctx, i, dividerX);
+            if (i > 0) hud(ctx, i - 1, 1 - p);
+            hud(ctx, i, p);
+          } else {
+            scene(ctx, i, t, rig);
+            molding(ctx, i);
+            hud(ctx, i);
+          }
+        }
+        ctx.restore();
+      }
+      // Original 16-note motif, D Dorian. Notes are absolute film beats, never RAF-dependent.
+      class AudioEngine {
+        constructor() {
+          this.ctx = null;
+          this.master = null;
+          this.nodes = new Set();
+          this.enabled = false;
+          this.timer = null;
+          this.origin = 0;
+          this.position = 0;
+          this.speed = 1;
+          this.nextStep = 0;
+          this.nextBell = 5;
+          this.playing = false;
+          this.bellCount = 0;
+        }
+        async unlock() {
+          try {
+            if (!this.ctx) {
+              this.ctx = new (
+                window.AudioContext || window.webkitAudioContext
+              )();
+              this.master = this.ctx.createGain();
+              this.master.gain.value = 0.34;
+              const comp = this.ctx.createDynamicsCompressor();
+              comp.threshold.value = -15;
+              comp.ratio.value = 5;
+              this.master.connect(comp);
+              comp.connect(this.ctx.destination);
+              this.noise = this.ctx.createBuffer(
+                1,
+                this.ctx.sampleRate * 0.12,
+                this.ctx.sampleRate,
+              );
+              const d = this.noise.getChannelData(0);
+              for (let i = 0; i < d.length; i++)
+                d[i] = (hash(i, 413) * 2 - 1) * Math.exp((-i / d.length) * 5);
+            }
+            await this.ctx.resume();
+            return true;
+          } catch {
+            return false;
+          }
+        }
+        setEnabled(v) {
+          this.enabled = v;
+          if (this.master)
+            this.master.gain.setTargetAtTime(
+              v ? 0.34 : 0,
+              this.ctx.currentTime,
+              0.018,
+            );
+          this.status();
+        }
+        status() {
+          const el = document.getElementById("audioStatus");
+          el.textContent =
+            this.enabled && this.ctx?.state === "running"
+              ? "Sound On · original 120 BPM synthesized score"
+              : "Muted — Click Play for Web Audio";
+          el.classList.toggle(
+            "on",
+            this.enabled && this.ctx?.state === "running",
+          );
+          document.getElementById("mute").textContent = this.enabled
+            ? "Sound: on"
+            : "Sound: off";
+        }
+        stop() {
+          clearInterval(this.timer);
+          this.timer = null;
+          this.playing = false;
+          for (const node of this.nodes) {
+            try {
+              node.stop(this.ctx.currentTime);
+            } catch {}
+            try {
+              node.disconnect();
+            } catch {}
+          }
+          this.nodes.clear();
+        }
+        start(position, speed) {
+          this.stop();
+          this.position = position;
+          this.speed = speed;
+          this.playing = true;
+          if (!this.ctx || !this.enabled) return;
+          this.origin = this.ctx.currentTime + 0.035;
+          this.nextStep = Math.ceil((position - 1e-7) * 4);
+          this.nextBell =
+            5 + Math.max(0, Math.ceil((position - 5 - 1e-7) / 6)) * 6;
+          this.schedule();
+          this.timer = setInterval(() => this.schedule(), 25);
+        }
+        track(node) {
+          this.nodes.add(node);
+          node.onended = () => {
+            this.nodes.delete(node);
+            node.disconnect();
+          };
+          return node;
+        }
+        tone(
+          freq,
+          when,
+          dur,
+          type = "sine",
+          gain = 0.1,
+          detune = 0,
+          cutoff = 10000,
+        ) {
+          const o = this.track(this.ctx.createOscillator()),
+            g = this.ctx.createGain(),
+            f = this.ctx.createBiquadFilter();
+          o.type = type;
+          o.frequency.value = freq;
+          o.detune.value = detune;
+          f.type = "lowpass";
+          f.frequency.value = cutoff;
+          o.connect(f);
+          f.connect(g);
+          g.connect(this.master);
+          g.gain.setValueAtTime(0.0001, when);
+          g.gain.exponentialRampToValueAtTime(
+            Math.max(0.001, gain),
+            when + 0.008,
+          );
+          g.gain.exponentialRampToValueAtTime(
+            0.0001,
+            when + Math.max(0.025, dur),
+          );
+          o.onended = () => {
+            this.nodes.delete(o);
+            o.disconnect();
+            f.disconnect();
+            g.disconnect();
+          };
+          o.start(when);
+          o.stop(when + dur + 0.03);
+          return o;
+        }
+        noiseHit(when, gain = 0.04) {
+          const n = this.track(this.ctx.createBufferSource()),
+            g = this.ctx.createGain(),
+            f = this.ctx.createBiquadFilter();
+          n.buffer = this.noise;
+          f.type = "highpass";
+          f.frequency.value = 1700;
+          n.connect(f);
+          f.connect(g);
+          g.connect(this.master);
+          g.gain.setValueAtTime(gain, when);
+          g.gain.exponentialRampToValueAtTime(0.0001, when + 0.1);
+          n.onended = () => {
+            this.nodes.delete(n);
+            n.disconnect();
+            f.disconnect();
+            g.disconnect();
+          };
+          n.start(when);
+          n.stop(when + 0.12);
+        }
+        bell(when = this.ctx?.currentTime || 0) {
+          if (!this.ctx || !this.enabled) return;
+          this.bellCount++;
+          this.tone(1860, when, 0.8, "sine", 0.115);
+          this.tone(2795, when, 1.05, "sine", 0.055);
+          this.tone(4174, when, 0.27, "sine", 0.012);
+          this.noiseHit(when, 0.018);
+        }
+        note(step, filmTime, when) {
+          const motif = [
+              62, 69, 65, 67, 69, 72, 69, 64, 65, 69, 74, 72, 69, 67, 64, 62,
+            ],
+            midi = motif[((step % 16) + 16) % 16],
+            freq = 440 * 2 ** ((midi - 69) / 12),
+            i = eraAt(filmTime),
+            beat = step % 2 === 0,
+            dec = 0.25 / this.speed;
+          if (i === 20) {
+            if (step % 8 === 0) {
+              for (const n of [50, 57, 62, 65])
+                this.tone(
+                  440 * 2 ** ((n - 69) / 12),
+                  when,
+                  Math.min(3.8, (137 - filmTime) / this.speed + 0.1),
+                  "sine",
+                  0.035,
+                );
+            }
+            return;
+          }
+          const profiles = [
+              ["sine", 0.13, 0.21],
+              ["triangle", 0.11, 0.45],
+              ["triangle", 0.1, 0.65],
+              ["sawtooth", 0.07, 0.18],
+              ["triangle", 0.07, 0.65],
+              ["triangle", 0.1, 0.24],
+              ["sine", 0.13, 0.7],
+              ["sawtooth", 0.055, 0.65],
+              ["triangle", 0.07, 0.22],
+              ["triangle", 0.12, 0.16],
+              ["square", 0.05, 0.16],
+              ["triangle", 0.12, 0.13],
+              ["sine", 0.12, 0.14],
+              ["square", 0.055, 0.15],
+              ["square", 0.06, 0.13],
+              ["sine", 0.13, 0.3],
+              ["sawtooth", 0.05, 1.0],
+              ["square", 0.035, 0.08],
+              ["triangle", 0.11, 0.24],
+              ["sine", 0.12, 0.5],
+            ],
+            pr = profiles[Math.max(0, i)];
+          const f = i === 16 ? freq * 0.79 : freq,
+            o = this.tone(
+              f,
+              when,
+              pr[2] / this.speed,
+              pr[0],
+              pr[1] * (beat ? 1 : 0.72),
+              i === 16 ? -8 : 0,
+              i === 16 ? 1300 : [3, 7, 8].includes(i) ? 2400 : 7000,
+            );
+          if (i === 16) {
+            this.tone(f, when, 0.9 / this.speed, "sawtooth", 0.025, 9, 1100);
+            o.frequency.exponentialRampToValueAtTime(
+              f * 0.975,
+              when + 0.6 / this.speed,
+            );
+          }
+          if (i === 0) {
+            this.tone(f * 2.73, when, 0.07 / this.speed, "sine", 0.035);
+            if (step % 4 === 0)
+              this.tone(f / 2, when, 0.5 / this.speed, "sine", 0.04);
+          }
+          if ([1, 2, 5].includes(i))
+            this.tone(f * 2, when, 0.24 / this.speed, "sine", 0.026);
+          if (i === 12)
+            this.tone(f * 2.005, when, 0.12 / this.speed, "sine", 0.023);
+          if (i === 15 && step % 8 === 0) {
+            this.tone(1174.66, when, 0.12, "sine", 0.04);
+            this.tone(1567.98, when + 0.1 / this.speed, 0.18, "sine", 0.04);
+          }
+          if (i === 17 || i === 19) this.noiseHit(when, 0.012);
+          if (step % 4 === 0) {
+            const root = [50, 53, 55, 57][Math.floor(step / 16) % 4];
+            this.tone(
+              440 * 2 ** ((root - 69) / 12),
+              when,
+              Math.min(0.48, dec * 2.5),
+              "triangle",
+              0.08,
+            );
+            if (i >= 13) {
+              const kick = this.tone(
+                i === 18 ? 90 : 115,
+                when,
+                0.19 / this.speed,
+                "sine",
+                0.13,
+              );
+              kick.frequency.exponentialRampToValueAtTime(
+                42,
+                when + 0.14 / this.speed,
+              );
+            }
+          }
+          if (i >= 13 && step % 4 === 2) this.noiseHit(when, 0.035);
+          if ([4, 7, 8, 16].includes(i) && step % 8 === 0)
+            for (const n of [50, 57, 65])
+              this.tone(
+                440 * 2 ** ((n - 69) / 12),
+                when,
+                1.2 / this.speed,
+                "triangle",
+                0.016,
+                5,
+                1000,
+              );
+        }
+        schedule() {
+          if (!this.playing || !this.enabled) return;
+          const horizon = this.ctx.currentTime + 0.14;
+          while (this.nextStep / 4 < DURATION) {
+            const ft = this.nextStep / 4,
+              when = this.origin + (ft - this.position) / this.speed;
+            if (when > horizon) break;
+            if (when >= this.ctx.currentTime - 0.006)
+              this.note(
+                this.nextStep,
+                ft,
+                Math.max(when, this.ctx.currentTime),
+              );
+            this.nextStep++;
+          }
+          while (this.nextBell <= 125) {
+            const when =
+              this.origin + (this.nextBell - this.position) / this.speed;
+            if (when > horizon) break;
+            if (when >= this.ctx.currentTime - 0.006)
+              this.bell(Math.max(when, this.ctx.currentTime));
+            this.nextBell += 6;
+          }
+        }
+      }
+      const canvas = document.getElementById("film"),
+        ctx = canvas.getContext("2d", { alpha: false }),
+        audio = new AudioEngine();
+      let position = 0,
+        playing = false,
+        speed = 1,
+        last = 0,
+        dirty = true,
+        displayed = -9,
+        audioPreference = null;
+      const el = (id) => document.getElementById(id),
+        starts = [0, ...ERA.map((_, i) => 5 + i * 6), 125];
+      function updateUI() {
+        const i = eraAt(position);
+        el("clock").textContent =
+          `${Math.floor(position / 60)}:${String(Math.floor(position % 60)).padStart(2, "0")}.${Math.floor((position % 1) * 10)}`;
+        el("scrubber").value = position;
+        el("scrubber").title =
+          i < 0 ? "Prologue" : i === 20 ? "The 21st empty seat" : ERA[i][1];
+        el("scrubber").setAttribute(
+          "aria-valuetext",
+          `${position.toFixed(2)} seconds, ${el("scrubber").title}`,
+        );
+        el("play").textContent = playing ? "Ⅱ Pause" : "▶ Play film";
+        el("backFrame").disabled = playing;
+        el("nextFrame").disabled = playing;
+        if (displayed !== i) {
+          displayed = i;
+          el("eraTitle").textContent =
+            i < 0
+              ? "The gallery threshold"
+              : i === 20
+                ? "The twenty-first seat"
+                : ERA[i][1];
+          el("eraMedium").textContent =
+            i < 0
+              ? "Prologue · 序幕 / A line becomes a road"
+              : i === 20
+                ? "Epilogue · 第二十一席 / Awaiting comment"
+                : `${ERA[i][2]} · ${ERA[i][0]} / ${ERA[i][3]}`;
+          el("eraCounter").textContent =
+            `${String(i + 1).padStart(2, "0")} / 21`;
+          el("scrubLabel").textContent =
+            i < 0
+              ? "THE THRESHOLD"
+              : i === 20
+                ? "AWAITING COMMENT"
+                : `${String(i + 1).padStart(2, "0")} / ${ERA[i][0]}`;
+          document.querySelectorAll("#eras button").forEach((b, j) => {
+            b.classList.toggle("active", j === i + 1);
+            b.setAttribute("aria-current", j === i + 1 ? "true" : "false");
+          });
+        }
+        canvas.style.cursor = position >= 127 ? "pointer" : "default";
+      }
+      function seek(t) {
+        position = clamp(Number(t) || 0, 0, DURATION);
+        last = performance.now();
+        dirty = true;
+        if (playing) audio.start(position, speed);
+        else audio.stop();
+        updateUI();
+        paint();
+        return getState();
+      }
+      function paint() {
+        renderAt(ctx, position, canvas.width, canvas.height);
+        dirty = false;
+      }
+      async function togglePlay() {
+        if (playing) {
+          playing = false;
+          audio.stop();
+          dirty = true;
+        } else {
+          if (position >= DURATION) position = 0;
+          playing = true;
+          last = performance.now();
+          const ok = await audio.unlock();
+          if (ok) audio.setEnabled(audioPreference !== false);
+          if (playing) audio.start(position, speed);
+        }
+        updateUI();
+      }
+      function pause() {
+        playing = false;
+        audio.stop();
+        updateUI();
+      }
+      async function toggleMute() {
+        if (audio.enabled) {
+          audioPreference = false;
+          audio.setEnabled(false);
+          audio.stop();
+        } else if (await audio.unlock()) {
+          audioPreference = true;
+          audio.setEnabled(true);
+          if (playing) audio.start(position, speed);
+        }
+        audio.status();
+      }
+      async function ringBell() {
+        if (await audio.unlock()) {
+          audio.setEnabled(true);
+          if (playing && !audio.timer) audio.start(position, speed);
+          audio.bell();
+        }
+        audioPreference = true;
+        return audio.bellCount;
+      }
+      function getState() {
+        const i = eraAt(position);
+        return {
+          time: position,
+          duration: DURATION,
+          playing,
+          speed,
+          era: i,
+          eraIndex: i + 1,
+          title: i < 0 ? "Prologue" : i === 20 ? "The empty seat" : ERA[i][1],
+          localTime:
+            i >= 0 && i < 20
+              ? localAt(i, position)
+              : position - (i === 20 ? 125 : 0),
+          sound: audio.enabled,
+          audioState: audio.ctx?.state || "locked",
+          activeAudioNodes: audio.nodes.size,
+          bellCount: audio.bellCount,
+          roadY: computeRig(position).roadY,
+        };
+      }
+      function jump(d) {
+        const current = starts.reduce(
+          (n, v, j) => (position + 0.001 >= v ? j : n),
+          0,
+        );
+        seek(starts[clamp(current + d, 0, starts.length - 1)]);
+      }
+      function download(blob, name) {
+        const a = document.createElement("a"),
+          u = URL.createObjectURL(blob);
+        a.href = u;
+        a.download = name;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(u), 1000);
+      }
+      function svgPelican(t = 122) {
+        const r = computeRig(t),
+          p = palette(19);
+        return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="400 165 475 365" role="img" aria-labelledby="title desc"><!-- 署名: PRO1V(valerie...@gmail.com) --><title id="title">The Written Image — original pelican and modern bicycle</title><desc id="desc">Shared two-bone IK rider, no-slip wheels and a coral diamond bicycle. An original frame from The Pelican Test, era 20.</desc><g stroke-linecap="round" stroke-linejoin="round">${rigParts(
+          r,
+        )
+          .map(
+            (q) =>
+              `<path d="${q.d.replace(/-?\d+(?:\.\d+)?(?:e[-+]?\d+)?/gi, (n) => String(Number(Number(n).toFixed(3))))}" fill="${q.f === "none" ? "none" : p[q.f]}" stroke="${p[q.s]}" stroke-width="${q.w}"/>`,
+          )
+          .join("")}</g></svg>`;
+      }
+      starts.forEach((s, j) => {
+        const b = document.createElement("button");
+        b.innerHTML = `<span>${j === 0 ? "00" : String(j).padStart(2, "0")}</span>${j === 0 ? "Threshold" : j === 21 ? "The empty seat" : ERA[j - 1][1]}`;
+        b.title =
+          j > 0 && j < 21
+            ? `${ERA[j - 1][2]} · ${ERA[j - 1][0]}`
+            : j === 0
+              ? "序幕"
+              : "第二十一席";
+        b.onclick = () => seek(s === 0 ? 0 : s === 125 ? 128 : s + 1.11);
+        el("eras").append(b);
+        if (j > 0) {
+          const tick = document.createElement("i");
+          tick.style.left = (s / DURATION) * 100 + "%";
+          el("ticks").append(tick);
+        }
+      });
+      el("play").onclick = togglePlay;
+      el("restart").onclick = () => seek(0);
+      el("prev").onclick = () => jump(-1);
+      el("next").onclick = () => jump(1);
+      el("backFrame").onclick = () => {
+        if (!playing) seek(position - 1 / 60);
+      };
+      el("nextFrame").onclick = () => {
+        if (!playing) seek(position + 1 / 60);
+      };
+      el("bell").onclick = ringBell;
+      el("mute").onclick = toggleMute;
+      el("scrubber").oninput = (e) => seek(e.target.value);
+      el("speed").onchange = (e) => {
+        speed = Number(e.target.value);
+        last = performance.now();
+        if (playing) audio.start(position, speed);
+        updateUI();
+      };
+      el("theme").onclick = () => {
+        document.body.classList.toggle("light");
+        el("theme").textContent = document.body.classList.contains("light")
+          ? "◐ Screening room"
+          : "◐ Gallery light";
+      };
+      el("exportPng").onclick = () => {
+        const cv = document.createElement("canvas");
+        cv.width = 1920;
+        cv.height = 1080;
+        renderAt(cv.getContext("2d"), position, cv.width, cv.height);
+        cv.toBlob((b) => {
+          if (b) download(b, `the-pelican-test-${position.toFixed(2)}s.png`);
+        }, "image/png");
+      };
+      el("exportSvg").onclick = () =>
+        download(
+          new Blob([svgPelican(eraAt(position) === 19 ? position : 122)], {
+            type: "image/svg+xml;charset=utf-8",
+          }),
+          "the-pelican-test-era20.svg",
+        );
+      canvas.onclick = (e) => {
+        if (position < 127) return;
+        const box = canvas.getBoundingClientRect(),
+          x = ((e.clientX - box.left) / box.width) * 1200,
+          y = ((e.clientY - box.top) / box.height) * 675,
+          cam = wallCamera(position),
+          wx = (x - cam.x) / cam.s,
+          wy = (y - cam.y) / cam.s;
+        for (let k = 0; k < 21; k++) {
+          const cell = wallCell(k);
+          if (
+            wx >= cell.x &&
+            wx <= cell.x + cell.w &&
+            wy >= cell.y &&
+            wy <= cell.y + cell.h
+          ) {
+            seek(k < 20 ? 6.11 + k * 6 : 134);
+            break;
+          }
+        }
+      };
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.target.matches("input,select,textarea") ||
+          e.altKey ||
+          e.ctrlKey ||
+          e.metaKey
+        )
+          return;
+        const k = e.key.toLowerCase();
+        if (
+          [" ", "r", "b", "m", "[", "]", "arrowleft", "arrowright"].includes(k)
+        )
+          e.preventDefault();
+        if (e.repeat) return;
+        if (k === " ") togglePlay();
+        if (k === "r") seek(0);
+        if (k === "b") ringBell();
+        if (k === "m") toggleMute();
+        if (k === "[") jump(-1);
+        if (k === "]") jump(1);
+        if (!playing && k === "arrowleft") seek(position - 1 / 60);
+        if (!playing && k === "arrowright") seek(position + 1 / 60);
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && playing) pause();
+      });
+      function resize() {
+        const box = canvas.getBoundingClientRect(),
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.max(320, Math.round(box.width * dpr));
+        canvas.height = Math.round((canvas.width * 9) / 16);
+        dirty = true;
+        paint();
+      }
+      new ResizeObserver(resize).observe(canvas);
+      function frame(now) {
+        if (playing) {
+          const dt = Math.max(0, (now - last) / 1000);
+          position = clamp(position + dt * speed, 0, DURATION);
+          dirty = true;
+          if (position >= DURATION) {
+            playing = false;
+            audio.stop();
+            updateUI();
+          }
+        }
+        last = now;
+        if (dirty) paint();
+        if (playing) updateUI();
+        requestAnimationFrame(frame);
+      }
+      window.__PELICAN_TEST__ = Object.freeze({
+        seek,
+        getState,
+        renderAt(t) {
+          const cv = document.createElement("canvas");
+          cv.width = 1200;
+          cv.height = 675;
+          renderAt(cv.getContext("2d"), Number(t) || 0, 1200, 675);
+          return cv;
+        },
+        ringBell,
+        computeRig,
+        solveIK,
+        svg: svgPelican,
+        eras: ERA.map((e, i) => ({
+          index: i + 1,
+          start: 5 + i * 6,
+          title: e[1],
+          year: e[0],
+        })),
+        wallCell,
+        wallCamera,
+      });
+      function hashJump() {
+        const hashValue = location.hash;
+        if (hashValue === "#wall") seek(128);
+        else {
+          const m = hashValue.match(/^#era=(\d+)$/);
+          if (m) {
+            const n = clamp(Number(m[1]), 0, 21);
+            seek(n === 0 ? 0 : n >= 21 ? 128 : 6.11 + (n - 1) * 6);
+          }
+        }
+      }
+      window.addEventListener("hashchange", hashJump);
+      updateUI();
+      resize();
+      hashJump();
+      requestAnimationFrame(frame);
+    </script>
+  </body>
+</html>

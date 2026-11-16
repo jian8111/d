@@ -327,7 +327,8 @@ case 19:{
  path(c,'M712 80H1208Q1250 80 1250 123V955Q1250 1000 1208 1000H712Q670 1000 670 955V123Q670 80 712 80Z','#080f14','#596467',4);
  c.save();c.beginPath();c.roundRect(708,88,504,896,30);c.clip();c.fillStyle=grad(c,690,100,1230,980,[[0,'#e2b98d'],[.5,'#659e99'],[1,'#344d5b']]);c.fillRect(688,100,544,880);
  for(let i=0;i<9;i++){const x=690+i*72;poly(c,[[x,720],[x+25,380+(i%3)*40],[x+57,720]],i%2?'#5e8a7e':'#92b09a');}c.fillStyle='#475d55';c.fillRect(688,820,544,160);
- text(c,'关注    推荐',960,163,20,'#fff6e1',serif,'center');line(c,[[990,176],[1030,176]],'#fff6e1',2);text(c,'@一只跨时代的鹈鹕',716,882,21,'#fff7e3');text(c,'骑了 6000 年，终于刷到你。',716,916,17,'#f5ebd7');text(c,'♫ 原创声音 · The Pelican Test',716,949,13,'#e9e1cb',mono);
+ c.fillStyle=grad(c,0,828,0,978,[[0,'#10232b00'],[.17,'#10232b99'],[1,'#10232bc4']]);c.fillRect(708,828,504,150);
+ text(c,'关注    推荐',960,163,20,'#fff6e1',serif,'center');line(c,[[990,176],[1030,176]],'#fff6e1',2);text(c,'@一只跨时代的鹈鹕',716,860,21,'#fff7e3');text(c,'骑了 6000 年，终于刷到你。',716,892,17,'#f5ebd7');text(c,'♫ 原创声音 · The Pelican Test',716,950,13,'#e9e1cb',mono);
  for(let i=0;i<4;i++){const y=528+i*76;if(i===0)path(c,`M1168 ${y+6}c-32-19-32-42-13-41q13 0 13 12q3-17 18-11q25 15-18 40Z`,'#eee4cc');else if(i===1){ellipse(c,1168,y-9,18,14,'#eee4cc');poly(c,[[1157,y-1],[1151,y+14],[1174,y+1]],'#eee4cc');}else if(i===2)path(c,`M1150 ${y-22}h33v32l-16-10-17 10Z`,'#eee4cc');else path(c,`M1150 ${y-8}l29-14v9l13 5-13 7v9Z`,'#eee4cc');text(c,['6.0万','274','137','分享'][i],1168,y+31,12,'#f2e7cf',mono,'center');}c.restore();
  c.fillStyle='#080d11';c.beginPath();c.roundRect(878,103,164,25,12);c.fill();text(c,'9:16 / INFINITE FEED',1480,530,18,'#81958e',mono,'center');text(c,'再看一遍，就又过了六千年。',1475,566,17,'#a5ad97',serif,'center');break;}
 case 20:{
@@ -531,7 +532,10 @@ function drawEraScene(c,e,t,roadOffset){
   drawRoad(c,e,t,roadOffset);drawPelicanRig(c,e,t,roadOffset);c.restore();
  }else{drawRoad(c,e,t,roadOffset);drawPelicanRig(c,e,t,roadOffset);}
  drawFrameBorder(c,e,t);
- c.fillStyle=e.id>=12?'#07191c99':'#e9d9b5b8';c.fillRect(105,96,480,76);text(c,`${num(e.id)} / ${e.name}`,125,127,23,e.id>=12?e.colors[3]:e.colors[1]);text(c,`${e.year}  ·  ${e.en}`,125,154,12,e.id>=12?e.colors[3]:e.colors[1],mono);
+ const darkPlaque = [3,12,13,14,15,16,18,19,20].includes(e.id);
+ const inkPlaque = [13,14].includes(e.id) ? '#efe4c8' : e.colors[1];
+ c.fillStyle = darkPlaque ? '#0b1619c8' : '#efe3c6d8';
+ c.fillRect(105,96,480,76);text(c,`${num(e.id)} / ${e.name}`,125,127,23,inkPlaque);text(c,`${e.year}  ·  ${e.en}`,125,154,12,inkPlaque,mono);
  c.restore();
 }
 function drawStyledScene(c,e,t,roadOffset){
@@ -551,7 +555,7 @@ function drawHistory(c,t,roadOffset){
 }
 function drawOpening(c,t,roadOffset){
  const reveal=smooth(3.1,4,t);drawStyledScene(c,ERAS[0],t,roadOffset);
- c.save();c.globalAlpha=1-reveal;c.fillStyle='#182022';c.fillRect(0,0,W,H);const fade=smooth(0,.75,t);c.globalAlpha*=fade;
+ c.save();c.globalAlpha=1-reveal;c.fillStyle='#182022';c.fillRect(0,0,W,H);const fade=1;c.globalAlpha*=fade;
  text(c,'A SIX-THOUSAND-YEAR RIDE',960,236,20,'#bba276',mono,'center');text(c,'鹈鹕测试',960,430,124,'#eee3c6',serif,'center');text(c,'THE PELICAN TEST',960,492,29,'#bda780',mono,'center');
  line(c,[[570,540],[1350,540]],'#b799644d',1);text(c,'「人类自古以来就痴迷于画鹈鹕骑自行车。',960,624,27,'#d5ceb5',serif,'center');text(c,'——早在自行车被发明之前。」',960,670,27,'#d5ceb5',serif,'center');text(c,'《鹈鹕骑行艺术通史》 · 卷一（虚构文献）',960,720,17,'#929f95',serif,'center');
  text(c,'20 ERAS  /  7 MOUNTS  /  ONE CONTINUOUS ROAD',960,952,17,'#a1a995',mono,'center');seal(c,1330,402,64,'純碼繪製',fade);
@@ -581,3 +585,448 @@ function renderAt(time){
 }
 window.renderAt=renderAt;
 // === PART 2 VISUAL ENGINE COMPLETE ===
+
+/* 署名: PRO1V(valerie...@gmail.com) — PART 3 / original score, transport, local exports. */
+const SR=32000,TAPE_RATE=.7937;
+const nextTask=()=>new Promise(resolve=>setTimeout(resolve,0));
+let audioMasterPromise=null,audioMaster=null;
+
+// Self-contained DSP kernel: also runs verbatim in a Blob worker. Each note uses
+// cached, band-limited tables; no oscillator nodes or trigonometry per sample.
+async function synthesizeScore(eras,sampleRate,duration,tapeOnly=false){
+ const size=4096,mask=size-1,tau=Math.PI*2;
+ const left=new Float32Array(Math.ceil(sampleRate*duration)),right=new Float32Array(left.length);
+ const sine=Float32Array.from({length:size},(_,i)=>Math.sin(i*tau/size));
+ const noise=new Float32Array(32768);let seed=8111137;
+ for(let i=0;i<noise.length;i++){seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;noise[i]=(seed>>>0)/2147483648-1;}
+ const tables=new Map(),envelopes={};
+ const profiles={
+  vowel:[[1,.55],[2,.16],[3,.5],[5,.3],[7,.14],[9,.08]],
+  harp:[[1,1],[2,.36],[3,.18],[4,.09],[6,.05]],
+  gong:[[1,.6],[1.48,.4],[2.09,.35],[2.71,.2],[3.91,.11],[5.43,.06]],
+  pipa:[[1,.65],[2,.45],[3,.34],[4,.23],[6,.12],[8,.08]],
+  bili:[[1,.65],[2,.48],[3,.36],[4,.22],[5,.18],[7,.1]],
+  guqin:[[1,.5],[2,.65],[3,.35],[4,.25],[6,.15],[8,.09]],
+  dizi:[[1,.8],[2,.16],[3,.23],[4,.05],[5,.04]],
+  sheng:[[1,.5],[2,.3],[3,.25],[4,.16],[5,.1]],
+  ocarina:[[1,1],[2,.09],[3,.035]],
+  sitar:[[1,.5],[2,.6],[3,.45],[4,.3],[5,.19],[7,.16],[9,.09]],
+  tanpura:[[1,.6],[2,.5],[3,.34],[4,.2],[6,.13]],
+  xiao:[[1,1],[2,.08],[3,.06]],
+  gamelan:[[1,.8],[1.52,.4],[2.76,.2],[3.9,.1],[5.4,.05]],
+  shamisen:[[1,.6],[2,.6],[3,.4],[4,.34],[5,.2],[7,.14],[9,.08]],
+  shakuhachi:[[1,1],[2,.1],[3,.08],[5,.025]],
+  strings:[[1,.6],[2,.3],[3,.2],[4,.15],[5,.12],[6,.1],[8,.06]],
+  tack:[[1,.65],[2,.4],[3,.23],[4.015,.16],[6.03,.08]],
+  organ:[[1,.7],[2,.45],[3,.22],[4,.25],[6,.1],[8,.1]],
+  ep:[[1,.9],[2,.07],[3,.2],[4,.025]],
+  poly:[[1,.6],[2,.3],[3,.2],[4,.15],[5,.1],[7,.07]],
+  sine:[[1,1]],triangle:[[1,1],[3,-1/9],[5,1/25],[7,-1/49],[9,1/81]]
+ };
+ function table(kind){
+  if(tables.has(kind))return tables.get(kind);
+  const v=new Float32Array(size);let peak=0;
+  for(let i=0;i<size;i++){
+   const x=i/size,a=x*tau;let s=0;
+   if(kind==='fm')s=Math.sin(a+1.7*Math.sin(2*a));
+   else if(kind==='pulse1'||kind==='pulse2'){
+    const duty=kind==='pulse1'?.25:.5;
+    for(let h=1;h<=15;h++)s+=2*Math.sin(Math.PI*h*duty)*Math.cos(h*(a-Math.PI*duty))/(Math.PI*h);
+   }else if(kind==='supersaw'){
+    for(let h=1;h<=18;h++)s+=Math.sin(a*h)/h;
+   }else if(kind.startsWith('add')){
+    const center=Number(kind.slice(3));
+    for(let h=1;h<=36;h++)s+=Math.sin(a*h)*Math.exp(-Math.abs(h-center)/6)/(h**.6);
+   }else for(const [h,g] of profiles[kind]||profiles.sine)s+=Math.sin(a*h)*g;
+   v[i]=s;peak=Math.max(peak,Math.abs(s));
+  }
+  for(let i=0;i<size;i++)v[i]/=peak||1;
+  tables.set(kind,v);return v;
+ }
+ for(const kind of ['pluck','bell','pad','wind','short']){
+  const v=new Float32Array(2048);
+  for(let i=0;i<v.length;i++){
+   const x=i/(v.length-1),attack=Math.min(1,x/(kind==='pad'?.2:kind==='wind'?.09:.008));
+   const release=Math.min(1,(1-x)/(kind==='pad'?.28:.13));
+   v[i]=attack*release*(kind==='pluck'?Math.exp(-x*5):kind==='bell'?Math.exp(-x*3):kind==='short'?Math.exp(-x*8):.85+.15*Math.sin(x*Math.PI));
+  }envelopes[kind]=v;
+ }
+ function note(at,len,freq,amp,kind,shape='pluck',pan=0,bend=0,vibrato=0){
+  const wave=table(kind),env=envelopes[shape],first=Math.max(0,Math.round(at*sampleRate));
+  const count=Math.min(Math.round(len*sampleRate),left.length-first);if(count<=0)return;
+  const lg=amp*Math.sqrt((1-pan)*.5),rg=amp*Math.sqrt((1+pan)*.5);
+  let phase=0,step=freq*size/sampleRate,envPos=0;
+  const envStep=2047/Math.max(1,Math.round(len*sampleRate)-1),delta=step*bend/count;
+  for(let j=0;j<count;j++){
+   const pi=phase|0,f=phase-pi;
+   let v=(wave[pi]*(1-f)+wave[(pi+1)&mask]*f)*env[envPos|0];
+   if(vibrato)v*=.86+.14*sine[((j*5.3/sampleRate*size)|0)&mask];
+   left[first+j]+=v*lg;right[first+j]+=v*rg;
+   phase+=step;phase-=Math.floor(phase/size)*size;step+=delta;envPos+=envStep;
+  }
+ }
+ function drum(at,kind,amp,pan=0,rate=1){
+  const len=(kind==='gong'?1.4:kind==='kick'||kind==='tabla'?.25:kind==='wind'?.8:.12)*rate;
+  const first=Math.max(0,Math.round(at*sampleRate)),count=Math.min(Math.ceil(len*sampleRate),left.length-first);
+  const lg=amp*(1-pan)*.65,rg=amp*(1+pan)*.65,decay=Math.exp(-7/Math.max(1,count));
+  let env=1,phase=0,step=(kind==='tabla'?155:kind==='wood'?710:kind==='slit'?330:95)*size/sampleRate/rate;
+  let prev=0;
+  for(let j=0;j<count;j++){
+   const n=noise[(j+first)&32767],high=n-prev;prev=n;let v;
+   if(kind==='hat'||kind==='sistrum')v=high*.45;
+   else if(kind==='clap')v=high*(j<sampleRate*.025*rate?(.4+.6*sine[((j*1100/sampleRate*size)|0)&mask]**2):.5);
+   else if(kind==='wind')v=n*.25;
+   else {v=sine[(phase|0)&mask]+n*.08;phase+=step;if(kind==='kick'||kind==='tabla')step*=.9995;}
+   v*=env;env*=decay;left[first+j]+=v*lg;right[first+j]+=v*rg;
+  }
+ }
+ const motif=[0,2,4,2,1,3,2,0,4,3,2,1,0,2,1,0];
+ const hz=m=>440*2**((m-69)/12),quant=(e,d)=>e.root+e.scale[d%e.scale.length]+12*Math.floor(d/e.scale.length);
+ for(const e of eras){
+  if((e.id===18)!==tapeOnly)continue;
+  const rate=tapeOnly?.7937:1,pitch=tapeOnly?2**(4/12):1,start=tapeOnly?0:e.start;
+  const count=Math.round(e.duration/.25),remaining=e.duration*rate;
+  const voice=(at,len,m,amp,kind,shape='pluck',pan=0,bend=0,vib=0)=>note(start+at*rate,Math.min(len*rate,Math.max(.01,remaining-at*rate)),hz(m)*pitch,amp,kind,shape,pan,bend,vib);
+  for(let k=0;k<count;k++){
+   const at=k*.25,m=quant(e,motif[k%16]),beat=k%2===0,bar=k%8===0,pan=k%2?-.22:.22;
+   switch(e.id){
+   case 1:voice(at,.65,m,.12,'vowel','wind',pan);if(beat)drum(start+at,'kick',.16);break;
+   case 2:voice(at,.8,m,.17,'harp','pluck',pan);if(beat)drum(start+at,'sistrum',.065,.35);break;
+   case 3:if(beat){voice(at,1.3,m,.13,'gong','bell',pan);voice(at,1.1,m+12.18,.055,'gong','bell',-pan);voice(at,1.2,m+12*Math.log2(1.48),.05,'sine','bell',-.4);voice(at,1,m+12*Math.log2(2.09),.035,'sine','bell',.4);}break;
+   case 4:for(let j=0;j<3;j++)voice(at+j*.066,.32,m,.075,'pipa','pluck',pan);if(bar)voice(at,1.5,m+12,.085,'bili','wind',-.3);break;
+   case 5:if(beat)voice(at,1.6,m+(bar?12:0),.17,'guqin','bell',pan);if(bar)drum(start+at,'wind',.05,-.4);break;
+   case 6:voice(at,.44,m+12,.12,'dizi','wind',pan,0,1);if(bar)voice(at,1.8,e.root,.09,'sheng','pad',-.4);if(beat)drum(start+at,'wood',.06);break;
+   case 7:voice(at,.43,m+12,.15,'ocarina','wind',pan);if(beat)drum(start+at,'slit',.12,-pan);break;
+   case 8:voice(at,1,m,.15,'sitar','pluck',pan,-.018);if(bar)voice(at,2,e.root-12,.11,'tanpura','pad',-.3);if(beat)drum(start+at,'tabla',.13,pan);break;
+   case 9:if(k%4===0)voice(at,1.3,m,.2,'xiao','wind',-.3,-.025,1);if(bar)drum(start+at+.75,'wood',.08,.35);break;
+   case 10:if(beat){voice(at,1.35,m-.045,.13,'gamelan','bell',-.5);voice(at,1.35,m+.045,.13,'gamelan','bell',.5);}break;
+   case 11:voice(at,.45,m,.13,'shamisen','pluck',pan);if(bar)voice(at,1.7,m+12,.1,'shakuhachi','wind',-.4,-.055,1);break;
+   case 12:voice(at,.85,m,.115,'strings','pad',pan,0,1);voice(at,.8,m+12,.075,'harp','pluck',-pan);break;
+   case 13:if(beat){voice(at,1.1,m,.13,'strings','pad',-.4,.13,1);voice(at,1.1,m+1,.1,'strings','pad',.4,-.09,1);}break;
+   case 14:voice(at,.7,m,.15,'tack','pluck',pan);if(bar){voice(at,1.9,e.root-12,.12,'organ','pad',-.25);voice(at,1.9,e.root+7,.06,'organ','pad',.3);}break;
+   case 15:voice(at,.48,m,.16,'fm','bell',pan);if(beat)voice(at,.5,e.root-12,.09,'sine','bell',-pan);break;
+   case 16:
+    // Four monophonic hardware lanes: pulse 1, pulse 2, triangle, noise.
+    voice(at,.22,m,.115,'pulse1','short',-.35);
+    voice(at,.22,quant(e,motif[(k+4)%16])-12,.08,'pulse2','short',.35);
+    if(beat)voice(at,.46,e.root-24+(k%8===4?7:0),.15,'triangle','short');
+    drum(start+at,k%4===0?'clap':'hat',k%4===0?.1:.035);break;
+   case 17:voice(at,.8,m,.15,'ep','bell',pan);if(bar)voice(at,1.8,m-12,.1,'poly','pad',-.35);
+    if(k<3)voice(at*.8,.7,e.root+[12,16,19][k],.12,'sine','bell',.35);break;
+   case 18:voice(at,.95,m,.16,'ep','bell',pan);if(bar){voice(at,1.9,m-12,.12,'poly','pad',-.35);voice(at,1.9,m-5,.08,'poly','pad',.35);}
+    if(beat)drum(start+at*rate,k%4===0?'kick':'clap',.08,0,rate);break;
+   case 19:voice(at,.4,m-.07,.08,'supersaw','short',-.6);voice(at,.4,m+.07,.08,'supersaw','short',.6);voice(at,.4,m,.06,'supersaw','short');
+    if(beat)voice(at,.45,e.root-24,.18,'sine','short');drum(start+at,k%4===0?'kick':k%4===2?'clap':'hat',k%2?.04:.13);break;
+   case 20:voice(at,.8,m,.17,`add${1+Math.floor(k/count*35)}`,'pad',pan);if(bar)voice(at,1.8,e.root-12,.1,'sine','pad');break;
+   }
+  }
+  if(!tapeOnly){
+   // A tiny material impact at every exact visual seam; deterministic foley.
+   drum(e.start,e.id<7?'wood':e.id<15?'slit':'hat',.055,(e.id%3-1)*.4);
+   const edge=Math.round(e.start*sampleRate),n=Math.round(e.duration*sampleRate),fade=Math.round(.018*sampleRate);
+   for(let j=0;j<fade;j++){const a=Math.min(left.length-1,edge+j),b=Math.min(left.length-1,edge+n-1-j),gain=j/fade;left[a]*=gain;right[a]*=gain;left[b]*=gain;right[b]*=gain;}
+  }
+  await new Promise(resolve=>setTimeout(resolve,0));
+ }
+ if(!tapeOnly){
+  drum(110,'hat',.055,.4);
+  for(let k=0;k<8;k++)note(k*.5,.8,hz(50+[0,3,7,5,0,3,10,7][k]),.07,'guqin','bell',k%2?.3:-.3);
+  for(let k=0;k<10;k++)note(132+k*.5,Math.min(1.5,5-k*.5),hz(48+[0,4,7,9,12,9,7,4,2,0][k]),.1,'harp','bell',k%2?.3:-.3);
+ }
+ const fade=Math.min(left.length,Math.round(sampleRate*.08));
+ for(let j=0;j<fade;j++){const gain=j/fade;left[j]*=gain;right[j]*=gain;left[left.length-1-j]*=gain;right[right.length-1-j]*=gain;}
+ return {left,right};
+}
+async function synthesizeWithFallback(){
+ // file:// goes directly to the same chunked kernel: opaque-origin workers are
+ // inconsistently allowed. HTTP workers can also fail due to CSP or browser policy.
+ if(location.protocol!=='file:'&&typeof Worker==='function'){
+  let worker,url;
+  try{
+   url=URL.createObjectURL(new Blob([`postMessage({ready:true});const synthesizeScore=${synthesizeScore.toString()};onmessage=async e=>{try{const r=await synthesizeScore(...e.data);postMessage(r,[r.left.buffer,r.right.buffer]);}catch(err){postMessage({error:String(err)});}};`],{type:'text/javascript'}));
+   worker=new Worker(url);
+   return await new Promise((resolve,reject)=>{
+    const timeout=setTimeout(()=>reject(new Error('Audio worker unavailable')),300);
+    worker.onmessage=event=>{clearTimeout(timeout);if(event.data.ready)return;event.data.error?reject(new Error(event.data.error)):resolve(event.data);};
+    worker.onerror=()=>{clearTimeout(timeout);reject(new Error('Audio worker blocked'));};
+    worker.onmessageerror=worker.onerror;
+    worker.postMessage([ERAS,SR,DURATION,false]);
+   });
+  }catch(_){/* Seamlessly retry without worker support or origin privileges. */}
+  finally{if(worker)worker.terminate();if(url)URL.revokeObjectURL(url);}
+ }
+ return synthesizeScore(ERAS,SR,DURATION);
+}
+async function renderAudioMaster(){
+ if(!audioMasterPromise){
+  audioMasterPromise=(async()=>{
+   const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;
+   if(!Offline)throw new Error('此浏览器不支持离线音频合成');
+   const [score,tape]=await Promise.all([synthesizeWithFallback(),synthesizeScore([ERAS[17]],SR,8*TAPE_RATE,true)]);
+   const toBuffer=(context,data)=>{const b=context.createBuffer(2,data.left.length,SR);b.copyToChannel(data.left,0);b.copyToChannel(data.right,1);return b;};
+   // Mandatory two-stage tape process: a +4-semitone, tempo-compressed phrase
+   // is rendered INSIDE an inner context, then physically slowed in the master.
+   const inner=new Offline(2,Math.ceil(8*TAPE_RATE*SR),SR),pre=inner.createBufferSource();
+   pre.buffer=toBuffer(inner,tape);pre.connect(inner.destination);pre.start();
+   const tapeBuffer=await inner.startRendering();
+   const master=new Offline(2,Math.round(DURATION*SR),SR),bed=master.createBufferSource();
+   const output=master.createGain();output.gain.value=.88;output.connect(master.destination);
+   bed.buffer=toBuffer(master,score);bed.connect(output);bed.start(0);
+   const source=master.createBufferSource(),warmth=master.createBiquadFilter(),tapeGain=master.createGain();
+   source.buffer=tapeBuffer;source.playbackRate.value=TAPE_RATE;
+   warmth.type='lowpass';warmth.frequency.value=3200;warmth.Q.value=.6;
+   tapeGain.gain.setValueAtTime(0,110);tapeGain.gain.linearRampToValueAtTime(.92,110.035);
+   tapeGain.gain.setValueAtTime(.92,117.94);tapeGain.gain.linearRampToValueAtTime(0,118);
+   source.connect(warmth);warmth.connect(tapeGain);tapeGain.connect(output);
+   for(const [frequency,cents] of [[.58,8],[6.7,1.5]]){
+    const lfo=master.createOscillator(),depth=master.createGain();lfo.type='sine';lfo.frequency.value=frequency;depth.gain.value=cents;
+    lfo.connect(depth);depth.connect(source.detune);lfo.start(110);lfo.stop(118);
+   }
+   source.start(110);source.stop(118);
+   audioMaster=await master.startRendering();return audioMaster;
+  })().catch(error=>{audioMasterPromise=null;throw error;});
+ }
+ return audioMasterPromise;
+}
+
+/* Transport has one clock anchor. Seeking and speed changes replace the source,
+ * so visuals and live audio always address the same position in the master. */
+let currentTime=0,playing=false,speed=1,audioEnabled=false;
+let audioContext=null,liveGain=null,liveSource=null,anchorTime=0,anchorWall=0,anchorAudio=0,raf=0;
+let exportJob=null,toastTimer=0;
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),4200);}
+function transportTime(){
+ if(!playing)return currentTime;
+ const elapsed=liveSource&&audioContext?.state==='running'?audioContext.currentTime-anchorAudio:(performance.now()-anchorWall)/1000;
+ return clamp(anchorTime+elapsed*speed,0,DURATION);
+}
+function stopLiveSource(){if(liveSource){liveSource.onended=null;try{liveSource.stop();}catch(_){}liveSource.disconnect();liveSource=null;}}
+function ensureAudioContext(){
+ if(!audioContext){const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)throw new Error('此浏览器不支持 Web Audio');audioContext=new Audio({sampleRate:SR});liveGain=audioContext.createGain();liveGain.gain.value=.9;liveGain.connect(audioContext.destination);}
+ return audioContext;
+}
+function syncAudio(){
+ stopLiveSource();anchorTime=currentTime;anchorWall=performance.now();
+ if(!playing||!audioEnabled||!audioMaster||!audioContext||audioContext.state!=='running'||currentTime>=DURATION)return;
+ const source=audioContext.createBufferSource();source.buffer=audioMaster;source.playbackRate.value=speed;source.connect(liveGain);
+ anchorAudio=audioContext.currentTime;source.start(anchorAudio,currentTime);liveSource=source;
+}
+const eraCards=[];
+function updateHUD(state){
+ const e=state.era,prologue=state.t<4,finale=state.t>=132;
+ $('timecode').textContent=timecode(state.t);
+ $('scrubber').value=String(state.t);$('scrubber').style.setProperty('--progress',`${state.t/DURATION*100}%`);$('scrubber').setAttribute('aria-valuetext',timecode(state.t));
+ $('hud-frame').textContent=`${String(state.frame).padStart(4,'0')} / 8220`;
+ $('hud-beat').textContent=`${String(state.beat+1).padStart(3,'0')} · ${num(state.bar+1)}.${state.beat%4+1}`;
+ $('hud-era').textContent=prologue?'序章 · 无尽的路':finale?'终章 · 线的记忆':`${num(e.id)} / ${e.name}`;
+ $('hud-mount').textContent=prologue?'7 大装裱体系':state.mount.short;
+ $('hud-physics').textContent=prologue?'等待第一次材料接缝':state.physics;
+ $('hud-mode').textContent=prologue?'原创主题 / PRELUDE':`${e.mode} · ${e.timbre}`;
+ $('caption-title').textContent=prologue?'序章 · 一段尚未发生的旅程':finale?'终章 · 路没有尽头，线也没有。':`${num(e.id)} · ${e.name}`;
+ $('caption-detail').textContent=prologue?'从史前岩壁，到旋转的复数矢量。':finale?'六千年的观看，汇成同一条线。':`${e.year} · ${e.medium}`;
+ eraCards.forEach((card,i)=>{const active=!prologue&&!finale&&e.id===i+1;card.classList.toggle('active',active);card.setAttribute('aria-pressed',String(active));});
+}
+function paintCurrent(){updateHUD(renderAt(currentTime));}
+function updatePlayButton(){
+ $('play').setAttribute('aria-pressed',String(playing));$('play').setAttribute('aria-label',playing?'暂停':'播放');
+ $('play').innerHTML=playing?'<svg viewBox="0 0 24 24"><path d="M7 5h3v14H7Zm7 0h3v14h-3Z"/></svg>':'<svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg>';
+}
+function tick(){
+ if(!playing)return;currentTime=transportTime();paintCurrent();
+ if(currentTime>=DURATION){pause();return;}raf=requestAnimationFrame(tick);
+}
+function seekTo(time){
+ const value=Number(time);currentTime=clamp(Number.isFinite(value)?value:0,0,DURATION);syncAudio();paintCurrent();
+ if(currentTime>=DURATION&&playing)pause();return currentTime;
+}
+function play(){
+ if(exportJob)return;if(playing)return;
+ if(currentTime>=DURATION)currentTime=0;
+ playing=true;syncAudio();updatePlayButton();raf=requestAnimationFrame(tick);
+ if(audioEnabled&&audioContext?.state==='suspended')audioContext.resume().then(()=>{if(playing){currentTime=transportTime();syncAudio();}}).catch(error=>toast(error.message));
+}
+function pause(){currentTime=transportTime();playing=false;cancelAnimationFrame(raf);stopLiveSource();updatePlayButton();paintCurrent();}
+function updateAudioButton(busy=false){
+ $('audio').setAttribute('aria-pressed',String(audioEnabled));$('audio').setAttribute('aria-label',audioEnabled?'关闭声音':'合成并开启声音');
+ $('audio-label').textContent=busy?'正在合成…':audioEnabled?'声音已开启':audioMaster?'声音已关闭':'合成音轨';
+ $('audio').querySelector('path').setAttribute('d',audioEnabled?'M11 4 6 8H3v8h3l5 4ZM16 8q6 4 0 8m3-11q9 7 0 14':'M11 4 6 8H3v8h3l5 4ZM16 9l5 6m0-6-5 6');
+}
+async function toggleAudio(){
+ currentTime=transportTime();audioEnabled=!audioEnabled;
+ if(!audioEnabled){syncAudio();updateAudioButton();return false;}
+ try{
+  const context=ensureAudioContext(),resumed=context.resume();updateAudioButton(!audioMaster);
+  await Promise.all([resumed,renderAudioMaster()]);currentTime=transportTime();syncAudio();updateAudioButton();return audioEnabled;
+ }catch(error){audioEnabled=false;syncAudio();updateAudioButton();toast(`音频合成失败：${error.message}`);return false;}
+}
+function setSpeed(value){currentTime=transportTime();speed=clamp(Number(value)||1,.5,2);$('speed').value=String(speed);syncAudio();paintCurrent();}
+async function toggleFullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else if($('cinema').requestFullscreen)await $('cinema').requestFullscreen();else toast('此浏览器不支持全屏，请横屏观看');}catch(error){toast(`全屏不可用：${error.message}`);}}
+function getState(){return {currentTime:transportTime(),playing,speed,audioEnabled,audioReady:!!audioMaster,exporting:!!exportJob,reducedMotion:reducedMotion.matches,era:eraAt(transportTime()).id};}
+
+/* Local exports: PNG snapshots, stored ZIP/ZIP64, WebM, and PCM WAVE. */
+function downloadBlob(blob,name){const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}
+function pngBlob(){return new Promise((resolve,reject)=>stage.toBlob(blob=>blob?resolve(blob):reject(new Error('PNG 编码失败')),'image/png'));}
+async function exportPngFrame(){
+ if(exportJob)return;currentTime=transportTime();const frame=Math.round(currentTime*FPS);paintCurrent();
+ try{downloadBlob(await pngBlob(),`pelican-test-frame-${frame}.png`);toast(`已导出第 ${frame} 帧`);}catch(error){toast(error.message);}
+}
+function checkJob(job){if(job.signal.aborted)throw new DOMException('已取消导出','AbortError');}
+function jobProgress(job,amount,message){checkJob(job);$('job-progress').value=clamp(amount);$('job-status').textContent=message;}
+async function runExport(task){
+ if(exportJob){toast('请先完成或取消当前导出');return;}
+ const savedTime=transportTime(),wasPlaying=playing;pause();
+ const controller=new AbortController(),job={signal:controller.signal,controller};exportJob=job;
+ const controls=[...document.querySelectorAll('#play,#restart,#speed,#scrubber,#audio,#export-png,#export-sequence,#export-wav,#export-format,#export-range,#export-fps,.era-card')];
+ controls.forEach(control=>control.disabled=true);$('job').hidden=false;$('job-progress').value=0;$('cancel-export').disabled=false;
+ try{await task(job);checkJob(job);$('job-progress').value=1;$('job-status').textContent='导出完成';toast('导出已完成');}
+ catch(error){$('job-status').textContent=error.name==='AbortError'?'已取消导出':`导出失败：${error.message}`;toast($('job-status').textContent);}
+ finally{exportJob=null;controls.forEach(control=>control.disabled=false);$('cancel-export').disabled=true;seekTo(savedTime);updateAudioButton();if(wasPlaying)play();}
+}
+async function exportWavMaster(){return runExport(async job=>{
+ jobProgress(job,.02,'合成 137 秒双声道母带…');const buffer=await renderAudioMaster();checkJob(job);
+ const n=buffer.length,bytes=new ArrayBuffer(44+n*4),view=new DataView(bytes);
+ const ascii=(at,s)=>{for(let i=0;i<s.length;i++)view.setUint8(at+i,s.charCodeAt(i));};
+ ascii(0,'RIFF');view.setUint32(4,36+n*4,true);ascii(8,'WAVE');ascii(12,'fmt ');view.setUint32(16,16,true);view.setUint16(20,1,true);view.setUint16(22,2,true);
+ view.setUint32(24,SR,true);view.setUint32(28,SR*4,true);view.setUint16(32,4,true);view.setUint16(34,16,true);ascii(36,'data');view.setUint32(40,n*4,true);
+ const left=buffer.getChannelData(0),right=buffer.getChannelData(1);
+ for(let start=0;start<n;start+=131072){
+  checkJob(job);const end=Math.min(n,start+131072);
+  for(let i=start;i<end;i++){const l=clamp(left[i],-1,1),r=clamp(right[i],-1,1);view.setInt16(44+i*4,Math.round(l*(l<0?32768:32767)),true);view.setInt16(46+i*4,Math.round(r*(r<0?32768:32767)),true);}
+  jobProgress(job,.1+.9*end/n,`写入 PCM 母带 ${Math.round(end/n*100)}%`);if(start%524288===0)await nextTask();
+ }
+ downloadBlob(new Blob([bytes],{type:'audio/wav'}),'pelican-test-master-137s.wav');
+});}
+const crcTable=Uint32Array.from({length:256},(_,n)=>{for(let k=0;k<8;k++)n=n&1?0xedb88320^(n>>>1):n>>>1;return n>>>0;});
+function crc32(bytes){let crc=0xffffffff;for(let i=0;i<bytes.length;i++)crc=crcTable[(crc^bytes[i])&255]^(crc>>>8);return (crc^0xffffffff)>>>0;}
+class StoredZip{
+ constructor(writable=null){this.writable=writable;this.parts=[];this.entries=[];this.offset=0;}
+ async write(part){if(this.writable)await this.writable.write(part);else this.parts.push(part instanceof Blob?part:new Blob([part]));this.offset+=part.size??part.byteLength;}
+ async add(name,blob){
+  const filename=new TextEncoder().encode(name),crc=crc32(new Uint8Array(await blob.arrayBuffer())),offset=this.offset;
+  const header=new Uint8Array(30+filename.length),v=new DataView(header.buffer);
+  v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint16(6,0x800,true);v.setUint16(12,0x21,true);v.setUint32(14,crc,true);v.setUint32(18,blob.size,true);v.setUint32(22,blob.size,true);v.setUint16(26,filename.length,true);header.set(filename,30);
+  await this.write(header);await this.write(blob);this.entries.push({filename,crc,size:blob.size,offset});
+ }
+ async finish(){
+  const centralOffset=this.offset;
+  for(const entry of this.entries){
+   const zip64=entry.offset>=0xffffffff,extra=zip64?12:0,header=new Uint8Array(46+entry.filename.length+extra),v=new DataView(header.buffer);
+   v.setUint32(0,0x02014b50,true);v.setUint16(4,45,true);v.setUint16(6,zip64?45:20,true);v.setUint16(8,0x800,true);v.setUint16(14,0x21,true);v.setUint32(16,entry.crc,true);v.setUint32(20,entry.size,true);v.setUint32(24,entry.size,true);v.setUint16(28,entry.filename.length,true);v.setUint16(30,extra,true);v.setUint32(42,zip64?0xffffffff:entry.offset,true);header.set(entry.filename,46);
+   if(zip64){const p=46+entry.filename.length;v.setUint16(p,1,true);v.setUint16(p+2,8,true);v.setBigUint64(p+4,BigInt(entry.offset),true);}
+   await this.write(header);
+  }
+  const centralSize=this.offset-centralOffset,count=this.entries.length;
+  if(centralOffset>=0xffffffff||centralSize>=0xffffffff||count>=65535){
+   const endOffset=this.offset,record=new Uint8Array(56),v=new DataView(record.buffer);v.setUint32(0,0x06064b50,true);v.setBigUint64(4,44n,true);v.setUint16(12,45,true);v.setUint16(14,45,true);v.setBigUint64(24,BigInt(count),true);v.setBigUint64(32,BigInt(count),true);v.setBigUint64(40,BigInt(centralSize),true);v.setBigUint64(48,BigInt(centralOffset),true);await this.write(record);
+   const locator=new Uint8Array(20),lv=new DataView(locator.buffer);lv.setUint32(0,0x07064b50,true);lv.setBigUint64(8,BigInt(endOffset),true);lv.setUint32(16,1,true);await this.write(locator);
+  }
+  const end=new Uint8Array(22),v=new DataView(end.buffer);v.setUint32(0,0x06054b50,true);v.setUint16(8,Math.min(count,65535),true);v.setUint16(10,Math.min(count,65535),true);v.setUint32(12,Math.min(centralSize,0xffffffff),true);v.setUint32(16,Math.min(centralOffset,0xffffffff),true);await this.write(end);
+  if(this.writable){await this.writable.close();return null;}return new Blob(this.parts,{type:'application/zip'});
+ }
+ async abort(){this.parts.length=0;if(this.writable)try{await this.writable.abort();}catch(_){}}
+}
+function selectedRange(){
+ const range=$('export-range').value;
+ if(range==='era'){if(currentTime<4)return [0,4];if(currentTime>=132)return [132,DURATION];const e=eraAt(currentTime);return [e.start,e.end];}
+ if(range==='clip')return [Math.min(currentTime,DURATION-1/FPS),Math.min(DURATION,currentTime+2)];
+ return [0,DURATION];
+}
+async function exportPngSequence(job,format){
+ const range=selectedRange(),fps=Number($('export-fps').value),sample=format==='png-sample';
+ const times=sample?[0,...ERAS.map(e=>e.start+e.duration*.47),134.5]:Array.from({length:Math.ceil((range[1]-range[0])*fps-1e-8)},(_,i)=>range[0]+i/fps);
+ const name=sample?'pelican-test-22-prints.zip':`pelican-test-frames-${fps}fps.zip`;
+ let writable=null,zip=null;
+ try{
+  // Stream directly to disk when available. The portable Blob path retains
+  // compressed PNG blobs, and never holds an entire raw frame sequence in RAM.
+  if(times.length>240&&typeof window.showSaveFilePicker==='function'){
+   const handle=await window.showSaveFilePicker({suggestedName:name,types:[{description:'PNG ZIP archive',accept:{'application/zip':['.zip']}}]});
+   checkJob(job);writable=await handle.createWritable();
+  }
+  zip=new StoredZip(writable);
+  for(let i=0;i<times.length;i++){
+   checkJob(job);currentTime=times[i];paintCurrent();const blob=await pngBlob();checkJob(job);
+   const frame=Math.round(times[i]*FPS),label=sample?`${num(i)}-${i===0?'prologue':i===21?'finale':`era-${num(i)}`}`:String(i).padStart(6,'0');
+   await zip.add(`${label}-frame-${frame}.png`,blob);jobProgress(job,(i+1)/times.length,`PNG ${i+1} / ${times.length} · ${W}×${H}`);await nextTask();
+  }
+  checkJob(job);const blob=await zip.finish();if(blob)downloadBlob(blob,name);
+ }catch(error){if(zip)await zip.abort();else if(writable)await writable.abort();throw error;}
+}
+async function exportWebm(job){
+ if(!window.MediaRecorder||!stage.captureStream)throw new Error('此浏览器不支持 WebM，请选择 PNG 序列');
+ const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(type=>MediaRecorder.isTypeSupported(type));
+ if(!mime)throw new Error('此浏览器没有 WebM 编码器，请选择 PNG 序列');
+ const range=selectedRange(),context=ensureAudioContext();await context.resume();
+ jobProgress(job,.01,'准备画面与双声道音轨…');const master=await renderAudioMaster();checkJob(job);
+ currentTime=range[0];paintCurrent();const stream=stage.captureStream(FPS),destination=context.createMediaStreamDestination(),source=context.createBufferSource();
+ source.buffer=master;source.connect(destination);destination.stream.getAudioTracks().forEach(track=>stream.addTrack(track));
+ const chunks=[];let recorder=null,recordRaf=0,stopRequested=false;
+ try{
+  recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:14000000,audioBitsPerSecond:192000});
+  const finished=new Promise((resolve,reject)=>{recorder.ondataavailable=event=>{if(event.data.size)chunks.push(event.data);};recorder.onstop=resolve;recorder.onerror=event=>reject(event.error||new Error('视频编码失败'));});
+  const stop=()=>{if(!stopRequested){stopRequested=true;cancelAnimationFrame(recordRaf);try{source.stop();}catch(_){}if(recorder.state!=='inactive')recorder.stop();}};
+  job.signal.addEventListener('abort',stop,{once:true});
+  recorder.start(1000);const start=context.currentTime+.04;source.start(start,range[0],range[1]-range[0]);
+  const recordFrame=()=>{
+   if(job.signal.aborted){stop();return;}
+   const t=Math.min(range[1],range[0]+Math.max(0,context.currentTime-start));currentTime=t;paintCurrent();
+   jobProgress(job,(t-range[0])/(range[1]-range[0]),`WebM ${timecode(t-range[0])} / ${timecode(range[1]-range[0])}`);
+   if(t>=range[1])stop();else recordRaf=requestAnimationFrame(recordFrame);
+  };
+  recordRaf=requestAnimationFrame(recordFrame);await finished;job.signal.removeEventListener('abort',stop);checkJob(job);
+  downloadBlob(new Blob(chunks,{type:recorder.mimeType}),'pelican-test-film.webm');
+ }finally{
+  cancelAnimationFrame(recordRaf);try{source.stop();}catch(_){}source.disconnect();if(recorder?.state==='recording')recorder.stop();stream.getTracks().forEach(track=>track.stop());destination.disconnect();
+ }
+}
+function exportSequence(){return runExport(job=>$('export-format').value==='webm'?exportWebm(job):exportPngSequence(job,$('export-format').value));}
+
+$('play').addEventListener('click',()=>playing?pause():play());
+$('restart').addEventListener('click',()=>seekTo(0));
+$('speed').addEventListener('change',event=>setSpeed(event.target.value));
+$('scrubber').addEventListener('input',event=>seekTo(event.target.value));
+$('audio').addEventListener('click',toggleAudio);
+$('fullscreen').addEventListener('click',toggleFullscreen);
+$('export-png').addEventListener('click',exportPngFrame);
+$('export-sequence').addEventListener('click',exportSequence);
+$('export-wav').addEventListener('click',exportWavMaster);
+$('cancel-export').addEventListener('click',()=>{if(exportJob){exportJob.controller.abort();$('job-status').textContent='正在取消…';$('cancel-export').disabled=true;}});
+window.addEventListener('keydown',event=>{
+ if(event.ctrlKey||event.metaKey||event.altKey||event.target.closest('input,select,textarea,[contenteditable="true"]'))return;
+ if(event.code==='Space'&&event.target.closest('button'))return;
+ const key=event.key.toLowerCase();if(![' ','arrowleft','arrowright','r','m','f','[',']'].includes(key))return;
+ event.preventDefault();if(exportJob){if(key==='f')toggleFullscreen();return;}
+ if(key===' ')playing?pause():play();
+ else if(key==='arrowleft'||key==='arrowright'){pause();seekTo(currentTime+(key==='arrowleft'?-1:1)*(event.shiftKey?1/FPS:1));}
+ else if(key==='r')seekTo(0);else if(key==='m')toggleAudio();else if(key==='f')toggleFullscreen();
+ else {const options=[.5,1,1.5,2],i=options.indexOf(speed);setSpeed(options[clamp(i+(key==='['?-1:1),0,options.length-1)]);}
+});
+const motionChanged=event=>{if(event.matches&&playing)pause();};
+if(reducedMotion.addEventListener)reducedMotion.addEventListener('change',motionChanged);
+else if(reducedMotion.addListener)reducedMotion.addListener(motionChanged);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&playing){currentTime=transportTime();paintCurrent();}});
+
+// The exact styled card vocabulary is shared by desktop and phone layouts.
+function element(tag,className,textValue){const el=document.createElement(tag);if(className)el.className=className;if(textValue!==undefined)el.textContent=textValue;return el;}
+const preview=canvas(320,180),previewContext=preview.getContext('2d',{alpha:false});
+for(const e of ERAS){
+ const marker=element('span','timeline-marker');marker.style.left=`${e.start/DURATION*100}%`;marker.title=`${num(e.id)} · ${e.name} · ${timecode(e.start)}`;marker.append(element('em','',num(e.id)));$('markers').append(marker);
+ const card=element('button','era-card');card.type='button';card.setAttribute('aria-label',`${num(e.id)} · ${e.name}，跳转到 ${timecode(e.start)}`);card.setAttribute('aria-pressed','false');
+ renderAt(e.start+e.duration*.47);previewContext.drawImage(stage,0,0,320,180);
+ const image=element('img','era-preview');image.width=320;image.height=180;image.alt=`${e.name}：${e.medium}`;image.src=preview.toDataURL('image/png');image.decoding='async';
+ const body=element('div','era-card-body'),meta=element('div','era-meta');meta.append(element('span','',`№ ${num(e.id)}`),element('span','',e.year));
+ body.append(meta,element('h3','',e.name),element('p','era-medium',e.medium));
+ const details=element('dl');for(const [label,value] of [['装裱',MOUNTS[e.mount].short],['音阶',e.mode],['音色',e.timbre]])details.append(element('dt','',label),element('dd','',value));body.append(details);
+ card.append(image,element('span','card-time',`${timecode(e.start)} — ${timecode(e.end)}`),body);
+ card.addEventListener('click',()=>{if(exportJob)return;seekTo(Math.max(0,e.start-($('boundary-jump').checked?.85:0)));if(!reducedMotion.matches)play();});
+ eraCards.push(card);$('era-grid').append(card);
+}
+window.renderAt = renderAt;
+window.PELICAN_TEST = { DURATION, BPM, FPS, WIDTH: W, HEIGHT: H, MOUNTS, ERAS, renderAt, seekTo, play, pause, toggleAudio, renderAudioMaster, exportPngFrame, exportWavMaster, getState };
+// Preview capture moves the painting canvas; always finish on the prologue cover.
+updateHUD(renderAt(0));updatePlayButton();updateAudioButton();
+})();
+</script>
+</body>
+</html>
