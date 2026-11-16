@@ -2,6 +2,17 @@
 # PROGRESS.md — 跨号交接进度记录
 
 <!-- 署名: PRO1V(valerie...@gmail.com) -->
+## THE PELICAN TEST · 原创短片修复与集成 — `PRO1V(valerie...@gmail.com)`
+- **更新时间**：2026-11-16 12:46 UTC
+- **已完成**：保留完整原创 2:17 / 137 秒单文件 [`the-pelican-test.html`](./the-pelican-test.html) 与原有署名、离线 Canvas / Web Audio、确定性 `renderAt` 和响应式布局。Pixel Adventure 的 `SCORE 000020` / `+1UP` 移至主画布输出分辨率绘制，添加深色像素街机底牌，展墙缩略图同步清晰；二十时代的左下引语添加按实测文字宽度计算的半透明底牌，右缘保留至 `x = 717` 标题卡的间隔。
+- **手机与播放修复**：The Vertical Feed 的画框与骑行骨架共用收缩 / 展开进度，收缩画框为 `x = 422`、宽 `356`，同步缩放与水平居中，路面高光随屏幕边界移动。片尾停止时立即刷新 UI；导出文件名改为 `the-pelican-test-<时间>s.png` 和 `the-pelican-test-era20.svg`。
+- **仓库集成**：根据 `/tmp/our_stage/index.patch` 添加首页 favicon 与 640×420 内联 SVG 双语置顶卡，放映室 / 展墙链接均指向 `the-pelican-test.html`；Pages `_site/` 清单与 README 的介绍、作品列表、目录、Pages 说明和本地预览同步登记。原有全部首页卡片及 `pelican-6000-pure-code.html` 发布条目完整保留。
+- **验证结果**：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict` 为 `PASS (0 errors, 0 warnings)`；HTML 解析、内联 JavaScript 语法、重复 ID 与 `git diff --check` 通过。Chromium 实测首页 / 影片在 `320 / 390 / 768 / 1280px` 下均无横向溢出、无运行错误、无外部网络请求；20 幕引语底牌均不碰标题卡；手机六秒动画 180 帧采样最小左右边距约 `58.15 / 47.32px`，141 帧动态高光与屏幕边界一致；30 个关键时间点乱序重绘逐像素结果一致。已目视检查像素幕、真实展墙缩略图、手机画框与首页卡片；自然 2× 播放到 `137.0s` 后显示 `2:17.0`、播放按钮与逐帧按钮恢复、音频节点清零；PNG（1920×1080）与 SVG 实际下载名通过，`#wall` 跳转通过。Pages 构建命令已在 `/tmp` 组装并核对两个全片 HTML。
+- **并发文件保护**：`pelican-test.html`、`pelican-6000-pure-code.html` 与 `pelican-6000/` 合计 11 个现有文件的 SHA-256 均与开工时一致；除新增 favicon 与置顶卡外，首页原内容逐字节保留；本节以下历史进度完整保留。
+- **当前状态与下一步**：已完成 Antigravity 独立复核（`verify_repo.py --strict`、headless Chromium `1280×800` / `390×844` 与实际截图核验、密钥零泄露扫描），并通过 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 同步至 GitHub `main` 与 Google Drive `download` 文件夹；原有并发进行中的 `pelican-test.html`、`pelican-6000-pure-code.html` 与 `pelican-6000/` 完整保留未改。
+- **记录署名**：`PRO1V(valerie...@gmail.com)`
+
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## 最新视觉引擎进度 — `PRO1V(valerie...@gmail.com)`
 - **更新时间**：2026-11-16 12:21 UTC
 - **已完成**：在 `pelican-test.html` 第 128 行之后实现二十幕画作与确定性动态层、36 阶复数 DFT 本轮（768 点闭合鹈鹕自行车轮廓）、双腿解析 IK、18 辐条无滑移轮组、七种装裱、唐宋汴京隔水绫裱骑缝藏书印，以及二十类接缝微物理粒子；提供 `window.renderAt(t)`、开场与 132–137 秒地平线谢幕。
