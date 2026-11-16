@@ -63,4 +63,12 @@ supports_websockets = false
 EOF
 chmod 600 "$HOME/.codex/config.toml"
 
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  git fetch origin main --quiet || true
+  if [ "$(git branch --show-current)" = "main" ] && [ -z "$(git status --porcelain)" ]; then
+    git merge --ff-only origin/main --quiet || true
+  fi
+fi
+
+echo "[setup-codex] AI 开工前请先阅读 AGENTS.md 与 PROGRESS.md。"
 echo "[setup-codex] Codex configured: $(command -v codex || echo 'not-on-path')"

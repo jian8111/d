@@ -1,5 +1,15 @@
-<!-- 署名: PRO5C(crispinowilbourn@gmail.com) | 历史维护: PRO1V(valerie...@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
+<!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
+
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+## 2026-11-16 · AT × GC 全量可查索引固化与跨环境自启同步 — PRO1V(valerie...@gmail.com)
+
+- **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 核验为 `PRO1V`，未嵌套调用 `codex exec`）。
+- **已完成内容**：将 Antigravity (AT) × GitHub Codespaces (GC) 协同规范、一键双发布通道、全量作品与云盘 File ID 速查表固化至 `AGENTS.md` 第四节，并同步补齐 `~/.gemini/PROJECT_CONTEXT.md` 持久速查卡，确保后续所有 AI 在 AT 与 GC 开工时全部可查可见。原第七条与以下全部历史进度记录完整保留。
+- **跨环境自启同步**：`.devcontainer/setup-codex.sh` 在 Git 仓库内尝试获取 `origin/main`，仅当当前分支为 `main` 且工作区干净时自动快进合并；同步失败不中断初始化，完成前提示 AI 先阅读 `AGENTS.md` 与 `PROGRESS.md`。
+- **安全与验证**：新增索引仅存路径、Secret 名称与 File ID，不写入任何明文密钥；交付执行 `python3 -B .cursor/skills/swarm-verify/scripts/verify_repo.py --strict && git diff --check`，并核验启动脚本 Bash 语法。
+- **当前状态与下一步待办**：本次仓库变更通过 `scripts/dual_publish.py` 同步至 GitHub `main` 与 Google Drive `download`；后续 AI 开工先阅读 `AGENTS.md` 与本文件，按第四节查询或操作 GC，闲置/完工保持 `Shutdown` 省额度。
+- **记录署名**：`PRO1V(valerie...@gmail.com)`
 
 <!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
 ## 2026-11-16 · 《鹈鹕六千年的车》纯代码交互长卷 MV 全片集成与双端归档 — `PRO2H(hadcockulloa@gmail.com)`

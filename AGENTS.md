@@ -95,6 +95,60 @@
 
 ---
 
+## 四、Antigravity (AT) × GitHub Codespaces (GC) 协同与全量可查索引（供后续 AI 直接读取）
+
+### 1. GitHub Codespaces (GC) 常驻实例与无 SSH 操控机制
+
+- **实例名**：`friendly-goggles-qvx4rrv696grc96vq`（Web 地址：`https://friendly-goggles-qvx4rrv696grc96vq.github.dev`，2-core，闲置/完工后保持 `Shutdown` 省额度）。
+- **自动初始化**：绑定 `.devcontainer/devcontainer.json` 与 `.devcontainer/setup-codex.sh`，容器启动时自动安装 `@openai/codex`、从 Codespaces User Secret `YLS_API_KEY` 生成 `~/.codex/auth.json` 与 `~/.codex/config.toml`（默认 `gpt-6.1-sol` + `xhigh`），并在当前分支为 `main` 且工作区干净时自动快进同步 `origin/main`。
+- **AT 跨环境操控规范**：因 Antigravity 沙盒出站走 `agy-plugin-proxy` 无法直连 `gh codespace ssh`，后续 AI 统一使用 GitHub REST API 或 `scripts/dual_publish.py` 操作 GC。加载 `~/.config/gh/pat.env` 后执行：
+
+  ```bash
+  # 查询状态
+  gh api user/codespaces/friendly-goggles-qvx4rrv696grc96vq --jq "{name,state}"
+  # 唤醒
+  gh api -X POST user/codespaces/friendly-goggles-qvx4rrv696grc96vq/start
+  # 无 SSH 导出未提交改动并双发
+  python3 -B scripts/dual_publish.py --from-codespace friendly-goggles-qvx4rrv696grc96vq --all-changed -m "[PRO1V(valerie...@gmail.com)] sync codespace"
+  # 关机省额
+  gh codespace stop --codespace friendly-goggles-qvx4rrv696grc96vq
+  ```
+
+### 2. 一键双端自动发布通道（`scripts/dual_publish.py`）
+
+- 仓库内置 `./scripts/dual_publish.py`（说明见 `./scripts/README.md`），自动执行 `~/.gemini/ACCOUNT_IDENTITY.txt` 身份核验、`verify_repo.py --strict`、暂存区密钥正则扫描、`< 50 MiB`（GitHub `main` + Google Drive `download` 原地更新保留 fileId）/ `>= 50 MiB`（仅 Drive）分流发布：
+
+  ```bash
+  python3 -B scripts/dual_publish.py --all-changed -m "[PRO1V(valerie...@gmail.com)] <提交说明>"
+  ```
+
+### 3. 跨会话持久存储与云盘 File ID 全量速查表（仅存文件 ID 与路径，禁放明文 Key）
+
+- **Antigravity 跨容器持久目录（`/shared/user/.gemini`）**：`~/.gemini/ACCOUNT_IDENTITY.txt`（当前算力号标识）与 `~/.gemini/PROJECT_CONTEXT.md`（AT × GC 全量持久速查卡）。
+- **Google Drive `download` 根目录 ID**：`1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`
+- **Drive `codex_key.txt` 文件 ID**：`1_R2q1lI3KJIzmzGkDyYwqIXj84R8OohV`
+- **Drive `github_token.txt` 文件 ID**：`1hOZQ788YDCIl4X2oAnXY15skAuMGhhtv`（本机缓存于 `~/.config/gh/pat.env`，严禁入库）
+- **已归档核心作品与对应 Drive File ID**：
+
+  | 作品路径 | 说明 | Drive File ID |
+  | --- | --- | --- |
+  | `index.html` | 总览导航页 | `1WEvA-ab3LkKdoizM-6WhhhB6ovDjWMWU` |
+  | `pelican-6000-mv.html` & `pelican-6000/` | PRO2H 1.88 MiB 原创纯代码交互长卷 MV | `1sm85zrNoqTdArbi3VpNFqF3x0wI_owXW` / 目录 `1ebSo5tI8rd6ox_SA1As3vI1_0QiqgsH8` |
+  | `pelican-6000-years-mv.html` | PRO5C 165.7 KiB 全程序化单文件音画 MV | `10iPEB2UqIh4LVa2DLN6QN7ZKp-I0-fmy` |
+  | `pelican-test.html` | PRO1V Pelican Test Cover 20 时代纯代码短片 | `1mkzfj8n7w3PLkwtc9xoL72R1J6PAQuYu` |
+  | `the-pelican-test.html` | PRO1V THE PELICAN TEST 原创 137 秒程序短片 | `1V1LH5YCxF8mEYgiShPVeHLGrQMitnzxp` |
+  | `pelican-6000-pure-code.html` | PRO1V Pure-Code Edition v1.1.0 | `1ml-IPExWF-SG6yEngc95byMV-6GvAdNY` |
+  | `cursor-swarm-city.html` | PRO1V NEON HARBOR 赛博港湾造城 | `1emPGgy1GLuk1zy4KUV5SPiR8iH7zELFl` |
+  | `cursor-swarm-foundry.html` | PRO1V AETHER FOUNDRY 星港精密蓝图 | `12QDCinx230PA1_E6czRjv_b-VI5a1Bcn` |
+  | `pelican-swarm-coaster.html` | PRO1V SKYRAIL COASTER 光标造桥 × 鹈鹕骑行庆典 | `1B2Ob9fxGNzqryTxa-6jTbpvbNCyoDhlo` |
+  | `pelican-ride.html` / `pelican-ride.svg` | PRO1V GC 提取《顺风出逃》 | `1-cF1BSIk7Blp_7OuXVf7_ulcOLzv4jI-` / `1RFplu5gNSTn-pheKA202VcWgxMycJEHf` |
+  | `pelican_bike.html` | PRO1V 单文件鹈鹕骑行 | `1kiXuC7G0Enw1N5PHYZnSPLj3bcEJ8l58` |
+  | `pelican-swarm-demo.html` | 历史多光标演示 | `1anOJdep-f1M4Ijh_Tn4gfeQvQDNXRyrc` |
+  | `swarm-demo.html` | 多光标实验场 | `1LqGUbkSD4mpC6kS7e6-yk1siBIVw5ljc` |
+  | `pro1/`–`pro6/` | 历史作品目录 | 按仓库路径检索 |
+
+---
+
 ### 第七条：仅限公开 Git 仓库禁明文密钥，绝不影响对话参数
 - **仅限公开 Git 仓库不放明文密钥（`git open -> no plaintext key`）**：因 GitHub 仓库 `jian8111/d` 为公开状态（open / not private），本规则**仅**限制 Git 仓库追踪文件、HTML 注释与 Commit 历史不得提交或推送明文 API Key（`yls-`）、GitHub Token（`ghp_` / `github_pat_`）、cookie 或凭证配置；私钥凭证仅保存在本地忽略文件或 Google Drive `download`（`codex_key.txt` / `github_token.txt`）。
 - **提交前安检（仅检查 Git 暂存区）**：每次执行 `git commit` 与 `git push` 前，仅对暂存区执行密钥正则扫描（`git diff --cached | grep -E "yls-[a-zA-Z0-9]{16,}|ghp_[a-zA-Z0-9]{20,}|github_pat_"`）；命中敏感串时中止提交并移出暂存区。
