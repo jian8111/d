@@ -3,6 +3,9 @@
 
 鹈鹕骑自行车（Pelican Riding a Bicycle）SVG / HTML 多版本对比与归档仓库。
 
+<!-- 署名: PRO1V(valerie...@gmail.com) | 原创纯代码动画短片：Pelican Test Cover -->
+最新原创 **《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）：137.0 秒 / 120 BPM 的零外链纯代码单文件短片，20 种历史媒介与音乐调式、7 套装裱和 20 种解析微物理串起连续骑行；无状态确定性 `renderAt(t)`、2-Bone Analytical IK、36 阶复数 Fourier 本轮与 Delaunay 网格共同驱动画面，零采样双声道 `OfflineAudioContext` 原创配乐支持本地 PNG / PNG ZIP / WebM / WAV 导出。文件为 135,603 字节（约 132 KiB），可离线打开。
+
 <!-- 署名: PRO1V(valerie...@gmail.com) | 原创程序短片 -->
 新增 **[THE PELICAN TEST · 鹈鹕测试](./the-pelican-test.html)**（`the-pelican-test.html`）：原创 2:17 / 137 秒程序短片，以同一只白鹈鹕、同一辆单车穿过二十种艺术与媒介，最终汇成 7×3 展墙与第二十一席空椅。Canvas 图像与 120 BPM Web Audio 配乐全部离线合成，支持确定性时间轴、二十章节、[可点击展墙](./the-pelican-test.html#wall)及 PNG / SVG 导出；单文件、零外部依赖，适配手机与桌面。
 
@@ -14,6 +17,7 @@
 
 ## 作品列表
 
+- **《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）：原创 137.0 秒 / 120 BPM 纯代码短片，20 时代 × 7 装裱、确定性渲染与零采样立体声配乐；含唐宋连卷隔水绫裱和骑缝朱印，支持 PNG / ZIP / WebM / WAV 导出。
 - **[THE PELICAN TEST · 鹈鹕测试](./the-pelican-test.html)**：原创 137 秒 / 二十时代艺术史代码短片，支持拖动时间轴、可点击展墙及 PNG / SVG 导出，图像与配乐离线合成。
 - **[鹈鹕六千年的车 · Pure-Code Edition](./pelican-6000-pure-code.html)**：提取自 [wwh5441/pelican-6000-pure-code](https://github.com/wwh5441/pelican-6000-pure-code)，v1.1.0 纯代码单文件版；Hydrogen 创作的 2 分 55 秒 / 20 幕艺术史音画全片，点击画面开始播放。
 
@@ -57,6 +61,7 @@
 ├── SIGNATURES.md               # ✍️ 五账号联合签名稿 / 签到簿（置顶报到）
 ├── README.md
 ├── index.html                  # 作品总览导航页（集成 5 账号 CursorSwarm 多光标搭建动画与控制台）
+├── pelican-test.html           # 《鹈鹕测试》（Pelican Test Cover）：137.0 秒 / 20 时代 × 7 装裱，PNG·ZIP·WebM·WAV 导出
 ├── the-pelican-test.html       # THE PELICAN TEST · 鹈鹕测试（原创 137 秒离线程序短片）
 ├── pelican-6000-pure-code.html # 提取自 wwh5441/pelican-6000-pure-code，v1.1.0 纯代码单文件版
 ├── cursor-swarm-city.html      # NEON HARBOR 赛博港湾造城（离线单文件）
@@ -96,17 +101,18 @@
    - 在 Agent 对话中输入 `/swarm <目标>`，主控代理会按互不冲突的目录切片派发 `swarm-worker` 并行开发，并调用 `swarm-verifier` 与 [`verify_repo.py`](./.cursor/skills/swarm-verify/scripts/verify_repo.py) 完成全量校验。
    - 如需在 MCP 中启用 GitHub Server，在本地导出 `GITHUB_PERSONAL_ACCESS_TOKEN` 环境变量即可（[`.cursor/mcp.json`](./.cursor/mcp.json) 使用 `${env:...}` 占位，不存放明文密钥）。
 2. **GitHub Actions 与 GitHub Pages**：
-   - **GitHub Pages**（[`.github/workflows/pages.yml`](./.github/workflows/pages.yml)）：在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，推送 `main` 后即自动发布 `the-pelican-test.html`（THE PELICAN TEST · 鹈鹕测试）原创程序短片、`pelican-6000-pure-code.html` 纯代码全片、三部 CursorSwarm 作品、`index.html`、`pelican-swarm-demo.html`、`swarm-demo.html`、Codespace 提取作品与 `pro1/`–`pro6/`。
+   - **GitHub Pages**（[`.github/workflows/pages.yml`](./.github/workflows/pages.yml)）：在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，推送 `main` 后即自动发布 **《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）、`the-pelican-test.html`（THE PELICAN TEST · 鹈鹕测试）原创程序短片、`pelican-6000-pure-code.html` 纯代码全片、三部 CursorSwarm 作品、`index.html`、`pelican-swarm-demo.html`、`swarm-demo.html`、Codespace 提取作品与 `pro1/`–`pro6/`。
    - **Cursor Agent Swarm CI**（[`.github/workflows/cursor-agent-swarm.yml`](./.github/workflows/cursor-agent-swarm.yml)）：配置仓库 Secret 后可通过 `Actions → Cursor Agent Swarm CI` 手动触发，或在 Issue/PR 评论中输入 `/swarm <任务>` 自动开分支并发起 PR：
      ```bash
      gh secret set CURSOR_API_KEY --repo jian8111/d --body "$CURSOR_API_KEY"
      ```
 3. **本地校验与预览**：
    - 运行校验：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict`
-   - 本地预览：直接打开 [`index.html`](./index.html)、[`the-pelican-test.html`](./the-pelican-test.html)（THE PELICAN TEST · 鹈鹕测试，原创 137 秒程序短片）、[`pelican-6000-pure-code.html`](./pelican-6000-pure-code.html)（原作 v1.1.0 纯代码单文件版）、[`cursor-swarm-city.html`](./cursor-swarm-city.html)、[`cursor-swarm-foundry.html`](./cursor-swarm-foundry.html)、[`pelican-swarm-coaster.html`](./pelican-swarm-coaster.html)、[`pelican-swarm-demo.html`](./pelican-swarm-demo.html)、[`pelican-ride.html`](./pelican-ride.html)、[`pelican_bike.html`](./pelican_bike.html) 或 [`swarm-demo.html`](./swarm-demo.html)。所有页面均为零外部依赖，支持离线运行；两部音画短片均通过播放手势解锁声音。
+   - 本地预览：直接打开 [`index.html`](./index.html)、**《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）、[`the-pelican-test.html`](./the-pelican-test.html)（THE PELICAN TEST · 鹈鹕测试，原创 137 秒程序短片）、[`pelican-6000-pure-code.html`](./pelican-6000-pure-code.html)（原作 v1.1.0 纯代码单文件版）、[`cursor-swarm-city.html`](./cursor-swarm-city.html)、[`cursor-swarm-foundry.html`](./cursor-swarm-foundry.html)、[`pelican-swarm-coaster.html`](./pelican-swarm-coaster.html)、[`pelican-swarm-demo.html`](./pelican-swarm-demo.html)、[`pelican-ride.html`](./pelican-ride.html)、[`pelican_bike.html`](./pelican_bike.html) 或 [`swarm-demo.html`](./swarm-demo.html)。所有页面均为零外部依赖，支持离线运行；三部音画短片均通过播放手势解锁声音。
    - 使用静态服务器预览纯代码全片：
      ```bash
      python3 -m http.server 8787 --bind 127.0.0.1
+     # 浏览器打开 http://127.0.0.1:8787/pelican-test.html （《鹈鹕测试》）
      # 浏览器打开 http://127.0.0.1:8787/the-pelican-test.html（THE PELICAN TEST · 鹈鹕测试）
      # 浏览器打开 http://127.0.0.1:8787/pelican-6000-pure-code.html
      ```

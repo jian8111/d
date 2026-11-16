@@ -1,6 +1,19 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+## 完整交付 — 《鹈鹕测试》（Pelican Test Cover） / PRO1V(valerie...@gmail.com)
+
+- **更新时间**：2026-11-16 UTC。身份已核对 `~/.gemini/ACCOUNT_IDENTITY.txt`：`PRO1V`。
+- **实际文件**：`pelican-test.html` 为 `135,603` 字节 / `1,032` 行、完整闭合的零外链纯代码单文件；137.0s / 120 BPM，1920×1080 @ 60fps。现有场景与引擎完整保留，本次展示接入不改动该文件。
+- **画面与运动**：无状态确定性 `renderAt(t)`、2-Bone Analytical IK、18 辐条连续骑行，20 时代 / 7 装裱 / 20 种解析微物理；唐宋连卷隔水绫裱与骑缝朱印、36 阶复数 DFT Fourier 本轮（`Σ c_k · exp(i·k·ω·t)`）及 Delaunay 三角网共同构成视觉系统。
+- **零采样音频**：Worker 合成与内外两级 `OfflineAudioContext`，原创双声道配乐穿越 20 种历史音乐调式；第 `#18` 幕 Vaporwave 先 `+4 semitone → 0.7937×`，经内层离线渲染、外层降速与 Wow/Flutter 磁带劣化处理。
+- **本地导出**：无损 PNG、PNG 序列 ZIP（StoredZip64：StoredZip 存储模式与 ZIP64 大归档支持）、`MediaRecorder` / `captureStream` WebM，以及 32kHz 双声道 16-bit PCM WAV；支持导出取消与临时资源释放。
+- **展示接入**：从 `/tmp/ours_dabe258/index.html` 提取《鹈鹕测试》博物馆风格内联 SVG 封面卡，置于 `index.html` 作品目录首位；仅该卡的全部 SVG `id`、`#` 引用与 `aria-labelledby` 从 `pt-` 改为 `ptc-`（`#ptc-` 前缀去重）。保留 `origin/main` 的 favicon、`the-pelican-test.html` 卡片及其他全部既有卡片；`README.md` 简介、作品列表、目录结构、GitHub Pages 与本地预览并列收录 `pelican-test.html`、`the-pelican-test.html` 与 `pelican-6000-pure-code.html`；`.github/workflows/pages.yml` 的 `cp` 清单同时包含两部 Pelican Test HTML，保留原有全部发布文件。
+- **本次验证**：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict` 通过（0 错误、0 警告），`git diff --check` 通过；Python 全页核对 `index.html` 共 38 个 ID、0 重复，新卡 11 个 `ptc-` 标识与全部引用匹配。Chromium 在 `1280×800` / `390×844` 下，搭建动画与点击「全显」后均无横向溢出；无控制台错误、JS 异常、失败请求或外部请求，两张卡的实际截图及 `pelican-test.html` 20 时代渲染/音频/PNG/WAV/22 帧 ZIP 导出均已目视与功能核验。原 favicon、`the-pelican-test.html` 卡片、`pelican-6000/` 及本节以下全部历史进度完整保留，Pages `_site/` 组装验证通过。
+- **当前状态与下一步**：已完成 Antigravity 独立复核、临时目录清理与密钥扫描，并通过 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 提交同步至 GitHub `main` 与 Google Drive `download` 文件夹（`1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`）。
+
+**记录署名**：PRO1V(valerie...@gmail.com)
+
 <!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## THE PELICAN TEST · 原创短片修复与集成 — `PRO1V(valerie...@gmail.com)`
 - **更新时间**：2026-11-16 12:46 UTC
