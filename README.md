@@ -3,10 +3,17 @@
 
 鹈鹕骑自行车（Pelican Riding a Bicycle）SVG / HTML 多版本对比与归档仓库。
 
+<!-- 署名: PRO1V(valerie...@gmail.com) | 原作提取: wwh5441/pelican-6000-pure-code (v1.1.0, Hydrogen 纯代码全片) -->
+最新收录 **[鹈鹕六千年的车 · Pure-Code Edition](./pelican-6000-pure-code.html)**（`pelican-6000-pure-code.html`）：提取自 [wwh5441/pelican-6000-pure-code](https://github.com/wwh5441/pelican-6000-pure-code) 的 **v1.1.0 纯代码单文件版**，由 Hydrogen 创作。2 分 55 秒音画全片包含铁匠铺篆刻开场、20 幕艺术史长卷与 AudioWorklet 实时中文人声 / 器乐合成，零 MP3/WAV、零外部贴图、零外置字体；HTML 为 2.56 MiB，原作 ZIP 为 1.93 MB。原始 HTML 与内嵌 VFS payload 完整保留，仅新增统一署名注释。
+
 <!-- 署名: PRO1V(valerie...@gmail.com) | 创作: Codespaces Codex (gpt-6.1-sol/xhigh) 提取核验双发布 -->
 最新归档包含三部离线 CursorSwarm 作品：**[NEON HARBOR · 赛博港湾造城](./cursor-swarm-city.html)**、**[AETHER FOUNDRY · 星港精密蓝图](./cursor-swarm-foundry.html)** 与 **[SKYRAIL COASTER · 光标造桥 × 鹈鹕骑行庆典](./pelican-swarm-coaster.html)**。每部作品都是零外链单文件，内含 SVG 场景、协作光标、主题与交互控制，可直接用手机或桌面浏览器离线打开。另收录 Codespace 提取作品 **[顺风出逃 · 骑到海边去](./pelican-ride.html)** · [独立 SVG 插画](./pelican-ride.svg) 与 [`pelican_bike.html`](./pelican_bike.html)。
 
-## 离线 CursorSwarm 作品
+## 作品列表
+
+- **[鹈鹕六千年的车 · Pure-Code Edition](./pelican-6000-pure-code.html)**：提取自 [wwh5441/pelican-6000-pure-code](https://github.com/wwh5441/pelican-6000-pure-code)，v1.1.0 纯代码单文件版；Hydrogen 创作的 2 分 55 秒 / 20 幕艺术史音画全片，点击画面开始播放。
+
+### 离线 CursorSwarm 作品
 
 - **[NEON HARBOR · 赛博港湾造城](./cursor-swarm-city.html)**：赛博港湾天际线、跨海天桥与五光标分区建造。
 - **[AETHER FOUNDRY · 星港精密蓝图](./cursor-swarm-foundry.html)**：星港总装蓝图、低温环、CAD 透视与分解装配。
@@ -46,6 +53,7 @@
 ├── SIGNATURES.md               # ✍️ 五账号联合签名稿 / 签到簿（置顶报到）
 ├── README.md
 ├── index.html                  # 作品总览导航页（集成 5 账号 CursorSwarm 多光标搭建动画与控制台）
+├── pelican-6000-pure-code.html # 提取自 wwh5441/pelican-6000-pure-code，v1.1.0 纯代码单文件版
 ├── cursor-swarm-city.html      # NEON HARBOR 赛博港湾造城（离线单文件）
 ├── cursor-swarm-foundry.html   # AETHER FOUNDRY 星港精密蓝图（离线单文件）
 ├── pelican-swarm-coaster.html  # SKYRAIL COASTER 光标造桥 × 鹈鹕骑行庆典（离线单文件）
@@ -83,14 +91,19 @@
    - 在 Agent 对话中输入 `/swarm <目标>`，主控代理会按互不冲突的目录切片派发 `swarm-worker` 并行开发，并调用 `swarm-verifier` 与 [`verify_repo.py`](./.cursor/skills/swarm-verify/scripts/verify_repo.py) 完成全量校验。
    - 如需在 MCP 中启用 GitHub Server，在本地导出 `GITHUB_PERSONAL_ACCESS_TOKEN` 环境变量即可（[`.cursor/mcp.json`](./.cursor/mcp.json) 使用 `${env:...}` 占位，不存放明文密钥）。
 2. **GitHub Actions 与 GitHub Pages**：
-   - **GitHub Pages**（[`.github/workflows/pages.yml`](./.github/workflows/pages.yml)）：在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，推送 `main` 后即自动发布三部 CursorSwarm 作品、`index.html`、`pelican-swarm-demo.html`、`swarm-demo.html`、Codespace 提取作品与 `pro1/`–`pro6/`。
+   - **GitHub Pages**（[`.github/workflows/pages.yml`](./.github/workflows/pages.yml)）：在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，推送 `main` 后即自动发布 `pelican-6000-pure-code.html` 纯代码全片、三部 CursorSwarm 作品、`index.html`、`pelican-swarm-demo.html`、`swarm-demo.html`、Codespace 提取作品与 `pro1/`–`pro6/`。
    - **Cursor Agent Swarm CI**（[`.github/workflows/cursor-agent-swarm.yml`](./.github/workflows/cursor-agent-swarm.yml)）：配置仓库 Secret 后可通过 `Actions → Cursor Agent Swarm CI` 手动触发，或在 Issue/PR 评论中输入 `/swarm <任务>` 自动开分支并发起 PR：
      ```bash
      gh secret set CURSOR_API_KEY --repo jian8111/d --body "$CURSOR_API_KEY"
      ```
 3. **本地校验与预览**：
    - 运行校验：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict`
-   - 本地预览：直接打开 [`index.html`](./index.html)、[`cursor-swarm-city.html`](./cursor-swarm-city.html)、[`cursor-swarm-foundry.html`](./cursor-swarm-foundry.html)、[`pelican-swarm-coaster.html`](./pelican-swarm-coaster.html)、[`pelican-swarm-demo.html`](./pelican-swarm-demo.html)、[`pelican-ride.html`](./pelican-ride.html)、[`pelican_bike.html`](./pelican_bike.html) 或 [`swarm-demo.html`](./swarm-demo.html)，或启动静态服务器 `python3 -m http.server 8787`。所有页面均为零外部依赖，支持离线运行。
+   - 本地预览：直接打开 [`index.html`](./index.html)、[`pelican-6000-pure-code.html`](./pelican-6000-pure-code.html)（原作 v1.1.0 纯代码单文件版）、[`cursor-swarm-city.html`](./cursor-swarm-city.html)、[`cursor-swarm-foundry.html`](./cursor-swarm-foundry.html)、[`pelican-swarm-coaster.html`](./pelican-swarm-coaster.html)、[`pelican-swarm-demo.html`](./pelican-swarm-demo.html)、[`pelican-ride.html`](./pelican-ride.html)、[`pelican_bike.html`](./pelican_bike.html) 或 [`swarm-demo.html`](./swarm-demo.html)。所有页面均为零外部依赖，支持离线运行；纯代码全片点击画面解锁声音并播放。
+   - 使用静态服务器预览纯代码全片：
+     ```bash
+     python3 -m http.server 8787 --bind 127.0.0.1
+     # 浏览器打开 http://127.0.0.1:8787/pelican-6000-pure-code.html
+     ```
 
 ---
 **最近更新署名**：`PRO1V(valerie...@gmail.com)｜五号全员集结: PRO2H, PRO3J, PRO4M, PRO5C｜纯Drive存储号(非Pro): 466788455@qq.com`
