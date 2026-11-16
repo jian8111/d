@@ -2,6 +2,22 @@
 # PROGRESS.md — 跨号交接进度记录
 
 <!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
+## 2026-11-16 · MV 确定性时间轴与 MDP3 音频引擎 — `PRO2H(hadcockulloa@gmail.com)`
+- **已完成**：新增 `pelican-6000/src/core/prng.js`、`timeline.js`、`src/audio/lzma-worker.js`、`dsp-worklet.js`、`audio-engine.js`，统一使用当前 PRO2H 头部署名。实现可逆 C¹ Fritsch-Carlson 时间映射、243 拍与 375 次金属瞬态、LZMA-alone/MDP3 解码、按需逆 STFT、16 抽头 Blackman sinc 重采样、立体声与磁带 flutter、Blob Worker/AudioWorklet 及 ScriptProcessor 自动回退。默认延迟加载实际 `audio-mdp3.js`，可直接消费 `AUDIO_TELEMETRY.sample`。
+- **验证结果**：在 `node --input-type=module` 中调用 Python 标准库 LZMA 和 NumPy 合成 MDP3，20 组不同属性/字典回绕/已知或未知长度解码通过；重建与 Python 量化频谱参考的最大绝对误差 `1.11e-16`，原始信号相对 RMS 误差 `0.4643%`，48 kHz 输出 RMS 误差 `2.20e-9`。时间映射往返误差 `<5e-12s`，最小速率 `0.127845`，各锚点 C¹ 连续。独立 Worker/Worklet 源码执行一致，模拟 Blob 阻止、Worker 超时、44.1 kHz ScriptProcessor 回退、静音与暂停/跳转通过。
+- **实际数据验收**：成功解码当前 174.64 秒、16,373 帧的四轨载荷，在 `0/15.71/37/90/123/134/169s` 重建有限立体声样本；实际 telemetry 与时间轴采样一致，默认载荷预热和末尾结束状态通过。全部测试在内存运行，无临时测试文件；未读取 `vendor/` 内容。
+- **当前状态与交接**：五个模块与本记录按仓库约定提交至 GitHub `main` 并同步 Drive `download` 对应路径。后续由 MV 集成入口在用户手势内调用 `unlockAndPlay()`；浏览器真实播放验收由完整 HTML 集成阶段执行。
+- **记录署名**：`PRO2H(hadcockulloa@gmail.com)`
+
+<!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
+## 2026-11-16 · Act I 铁匠序章与 Act II 十二抽屉 — `PRO2H(hadcockulloa@gmail.com)`
+- **已完成**：新增 `pelican-6000/src/render/act1-intro.js`，导出 `createAct1SvgLayer`、`renderAct1Overlay`、`renderAct2Accordion`。包含黑曜石漆碑、双金线宋锦边框、四角羽轮纹章、轮廓字标题与导入的小篆印章；持久 SVG 双铁匠采用四条解析二骨 IK 手臂、三种雕版纹理和纯矢量锻打光线，严格按数据中的 14 个敲击时间计算回弹、闪光与抛物线火花，全程无 SVG filter。
+- **时间与回放**：`3.55..4.35s` 斜向金闸使用互补裁切揭示十二时代抽屉与巨型骑行鹈鹕剪影；`10.02..11.45s` 首抽屉从 80 扩至 960，将其余抽屉向右推出。SVG 在 `t > 4.40s` 隐藏，回拖自动恢复；所有姿态按绝对时间直接计算，支持时间线 `state.realT`。
+- **验证结果**：ESM 导入与语法检查通过；4K backing store 的 Chromium 检查共 232 项通过，覆盖全部敲击、0.28 秒效果尾界、回拖复现、零 filter、Canvas 状态恢复、抽屉单调展开及 960 像素终点。已查看铁匠、金闸、骑行剪影与抽屉展开的实际画面；仓库严格校验通过。
+- **当前状态与下一步**：本文件和本进度记录同步归档至 GitHub `main` 与 Drive `download` 对应目录。主舞台每帧调用 SVG 控制器 `renderAt(state)` 及两个 Canvas 渲染函数；`renderAct2Accordion` 返回 `drawer01Width`、`opening` 和 `complete` 供导演在 `11.45s` 交棒 Scene 01。
+- **记录署名**：`PRO2H(hadcockulloa@gmail.com)`
+
+<!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
 ## 2026-11-16 · 鹈鹕六千年 MV 场景、歌词与字形数据 — `PRO2H(hadcockulloa@gmail.com)`
 - **已完成**：在 `pelican-6000/` 新建 `src/data/scenes-meta.js`、`src/data/lyrics-data.js` 和 `tools/extract_glyphs.py`，并运行脚本生成 `src/data/glyphs.js`。包含 20 个连续场景、12 个代表性抽屉、7 套画框，以及 36 条歌词、335 个逐字发音/音符/时间数据。宋代山水推镜与黑绒幕布 9:16 裁切均有独立相机配置。
 - **验证结果**：场景覆盖 `11.45..148.56s` 且无缝衔接；歌词覆盖 `15.71..161.65s` 且单行、逐字时间均单调无重叠。两套字体各 562 字形（空格以外 561 个非空轮廓），1000 upm 整数量化，生成文件 612,194 字节。Chromium 实测 Canvas/SVG 字形均正向，轮廓像素差低于 0.14%；逐字颜色、缩放、描边和回调通过。仓库严格校验通过（0 错误、0 警告）。字形文件内保留 Noto 字体 OFL 许可。
