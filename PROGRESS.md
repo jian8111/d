@@ -1,5 +1,26 @@
-<!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) | 历史维护: PRO1V(valerie...@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
+
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) -->
+## 最新进度记录 — 《鹈鹕六千年的车》全程序化单文件音画 MV / `PRO5C(crispinowilbourn@gmail.com)`
+
+- **更新时间**：2026-11-16 UTC（`~/.gemini/ACCOUNT_IDENTITY.txt` 已核验为 `PRO5C(crispinowilbourn@gmail.com)`；严格委派 Codex `gpt-6.1-sol/xhigh` 生成与打磨后，由 Antigravity 完成独立验证与双端归档）。
+- **交付产物**：[`pelican-6000-years-mv.html`](./pelican-6000-years-mv.html) — **`165,754` 字节**（约 `161.9 KiB`，远低于 `2,097,152` 字节 / `2 MB` 上限；100% 零外部依赖，含零外部音频/图片/字体、`0` `http(s)://`、`0` `fetch()`）。
+- **五段式视觉结构与交互**：
+  1. **0–3.6s 铁匠铺开场**：左侧黑曜石碑文与纯矢量 `Path2D` 朱文小篆印章，右侧双 2-Bone IK 矢量铁匠随金属打击乐交替抡锤打铁并迸发抛物线火星（竖屏隐藏墙挂工具防止遮挡碑文）。
+  2. **3.6–11.5s 手风琴转场**：对角金幕切入 12 扇艺术史手风琴画框，前景 2-Bone IK 骑行白鹈鹕滑入第 1 幕。
+  3. **11.5–148.5s 穿越 20 个艺术时代**：沿连续地面依次穿过撒哈拉岩画、埃及壁画、汉画像石、唐白描、宋山水、清明上河图、玛雅抄本、莫卧儿、八大山人、爪哇皮影、浮世绘、星月夜、呐喊、诺斯费拉图、示波器、8-bit 游戏、千禧聊天窗、蒸汽波、9:16 竖屏短视频、36 阶傅立叶代码美学（512 点闭合轮廓真实复数 DFT + 本轮叠加 + 频谱柱），含独立画框装裱、博物馆聚光灯、铭牌、对应微动画及 52 句 / 447 字逐字卡点空间动态歌词。
+  4. **148.5–174.6s 结幕彩蛋**：20 幕折叠为美术馆展墙 + 第 21 席聚光空椅；右上角模拟下载胶囊变形为中央展示卡，实时固定点自校准统计并公布精确源字节数 `165,754 BYTES`（`mv-serialization-delta="+0000000022"`，`MVByteAudit.calibrated === true`）。
+  5. **完整交互**：支持点击画面 / `Space` 播放暂停、双击 / `F` 全屏、`M` 静音、`R` 重播、`←`/`→` 跳转 5 秒、60fps/30fps 切换与时间轴指针拖拽定位。
+- **Web Audio / AudioWorklet 4 轨实时合成**：
+  - 含中文主唱（声母/韵母双共振峰滤波器 + 二合元音滑音 + 四声调值曲线与三声变调 + 颤音包络）、Karplus-Strong 物理建模木吉他分解和弦、物理建模金属铁砧敲击声（对齐 `HAMMER_TIMES`）、以及 20 个时代特色器乐变奏（含第 18 幕 `0.79×` 降速降调磁带蒸汽波 + Wow/Flutter 抖动、第 20 幕 36 阶加法谐波，及 22 声过框铜铃）。
+  - 用户手势 `unlock()` 内同步构建原生 4 轨图避免首敲 `0.38s` 丢音，`file://` 下直接出声，HTTP 下自动加载 Blob `AudioWorkletNode` (`pelican-native-dsp`) 热切换平滑运行。
+- **仓库集成与验收**：
+  - 已先 `git pull --ff-only origin main` 合入上游最新展示（`pelican-test.html`、`the-pelican-test.html`、`pelican-6000-pure-code.html`），完整保留全部既有卡片与历史记录。
+  - 更新 [`index.html`](./index.html)（置顶新增《鹈鹕六千年的车》展示卡，`pmv-` 独立 SVG ID 去重）、[`README.md`](./README.md)、[`.github/workflows/pages.yml`](./.github/workflows/pages.yml) 与本 [`PROGRESS.md`](./PROGRESS.md)。
+  - 无头 Chromium CDP 实测 `1280×960` 与 `390×844` 双端布局零横向溢出、0 控制台/异常/外部请求；全按键/拖拽/全屏交互、全 20 时代四轨非零 RMS 音频合成、暂停后节点清零、`file://` 字节自校准及 HTTP `AudioWorklet` 模式均实测通过，并已目视核对最新重渲染关键帧截图；`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict` 通过（`0 errors, 0 warnings`）。
+- **当前状态**：已完成 `/tmp` 临时测试产物清理与暂存区密钥零泄露扫描，通过 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 同步推送至 GitHub `main` 与 Google Drive `download`（`1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`）。
+- **记录署名**：`PRO5C(crispinowilbourn@gmail.com)`
 
 ## 完整交付 — 《鹈鹕测试》（Pelican Test Cover） / PRO1V(valerie...@gmail.com)
 
