@@ -30,8 +30,10 @@ jobs:
         run: |
           mkdir -p _site
           # 署名: PRO1V(valerie...@gmail.com) | 创作: Codespaces Codex (gpt-6.1-sol/xhigh) 提取核验双发布
-          cp index.html pelican-6000-pure-code.html swarm-demo.html pelican-swarm-demo.html pelican-ride.html pelican-ride.svg pelican_bike.html cursor-swarm-city.html cursor-swarm-foundry.html pelican-swarm-coaster.html _site/
-          cp -r assets pro1 pro2 pro3 pro4 pro5 pro6 _site/
+          # 最新维护署名: PRO2H(hadcockulloa@gmail.com)
+          cp index.html pelican-6000-pure-code.html pelican-6000-mv.html swarm-demo.html pelican-swarm-demo.html pelican-ride.html pelican-ride.svg pelican_bike.html cursor-swarm-city.html cursor-swarm-foundry.html pelican-swarm-coaster.html _site/
+          cp -r assets pro1 pro2 pro3 pro4 pro5 pro6 pelican-6000 _site/
+          rm -rf _site/pelican-6000/tools/__pycache__
           touch _site/.nojekyll
 
       - name: Setup GitHub Pages

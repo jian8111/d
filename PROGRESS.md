@@ -1,6 +1,27 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+<!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
+## 2026-11-16 · 《鹈鹕六千年的车》纯代码交互长卷 MV 全片集成与双端归档 — `PRO2H(hadcockulloa@gmail.com)`
+- **更新时间**：2026-11-16 13:31 UTC
+- **执行身份**：`PRO2H(hadcockulloa@gmail.com)`（已读取 `AGENTS.md` 与 `~/.gemini/ACCOUNT_IDENTITY.txt` 核验为 `PRO2H`，严格排除非 Pro 纯存储账号；全程委派 `codex exec` `gpt-6.1-sol/xhigh` 实施构建，并完成浏览器与仓库严格验收）。
+- **已完成事项**：
+  1. **纯代码 MV 全片集成与字形/单文件重构（`pelican-6000/` & [`pelican-6000-mv.html`](./pelican-6000-mv.html)）**：
+     - 完整集成 `174.64s`（0 外部 MP3/WAV、0 外部 PNG/JPG、0 外部 WOFF2/TTF）交互式视听长卷，包含 Fritsch-Carlson `C¹` 双向时间映射（243 拍节拍与 375 次金属瞬态）、Act I 黑曜石漆碑 + 14 击 2-Bone IK `<svg>` 双铁匠打铁（0 `<filter>`）、斜切金幕与 Act II 12 扇手风琴序幕、Act III 连续道路 20 幕六千年艺术史长卷（7 套画框体系、36 句自适应 `paper_ink`/`ivory_gold` 空间卡拉 OK 歌词、Scene 19 竖屏 9:16 裁切、Scene 20 36 阶复数傅立叶本轮）、Act IV 21 席画廊结幕及下载胶囊揭示卡片。
+     - [`pelican-6000/tools/extract_glyphs.py`](./pelican-6000/tools/extract_glyphs.py) 提取并量化 `622` 个字形（`621` 个非空轮廓，100% 覆盖源码与歌词字库，`glyphs.js` 共 `676,228` 字节）；[`pelican-6000/tools/build_single_html.py`](./pelican-6000/tools/build_single_html.py) 将 `22` 个 VFS 文件与 `20` 个拓扑排序 ESM 模块 gzip（level 9）打包为 `1,967,228` 字节（`1.88 MiB`）单文件离线 HTML，通过 `--check` 一致性校验与精确字节数自检。
+     - 修复 `ivory_gold` 描边填充次序、Scene 05 长焦重影及 p5 翻译 JSON 离线拦截，消除离线/HTTP 环境全部 404/Console 报错。
+  2. **首页展廊、文档与 GitHub Pages 注册**：
+     - 在 [`index.html`](./index.html) 作品目录置顶「鹈鹕六千年的车 · 原创纯代码交互长卷 MV」卡片（原创 `mv2-` 博物馆聚光灯 + 六千年朱印 + 二十时代徽标内联 SVG 封面、单文件播放/源码入口/离线下载按钮）。
+     - 同步更新 [`README.md`](./README.md) 作品介绍与目录结构，以及 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) 发布清单（纳入 `pelican-6000-mv.html` 与 `pelican-6000/` 并清理 `__pycache__`）。
+- **验证结果**：
+  - **语法与构建**：`node --check` 覆盖入口与渲染核心模块 0 报错；`extract_glyphs.py` 与 `build_single_html.py --check` 全部 `PASS`；`yaml.safe_load` 验证 `.github/workflows/pages.yml` 合法。
+  - **Chromium 实机全链路验收**：HTTP 单文件版 `1920×1440`（`0` Console/Network 错误、`0` SVG filter、`exactBytesMeta === 1967228`、`audioMode: "worklet"`、Play/`Space`/`M`/`ArrowLeft`/`ArrowRight`/`R` 全通过）、`file://` 离线版（`playing: true`、`audioReady: true`、`audioMode: "script"` 自动回退、`audioError: null`）、`?scale=3`（`2880×2160`）及 `pelican-6000/index.html` 未打包版均通过；视觉复核 17 帧全幕截图无 `?` 缺字与越界；`index.html` 在桌面 `1280×800` 与移动端 `390×844` 下均 `0` 错误、`0` 重复 ID、`0` 横向溢出（`scrollW <= clientW`），截屏确认首页 MV 卡片渲染清晰。
+  - **仓库严格校验**：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict` 返回 `PASS (0 errors, 0 warnings)`。
+- **当前状态与下一步**：
+  - 本次全部变更与新增产物（均 `< 50 MiB`）已通过 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 同步提交至 GitHub `main` 并镜像归档至 Google Drive `download`。
+  - 后续可直接打开 [`pelican-6000-mv.html`](./pelican-6000-mv.html) 或 GitHub Pages 体验完整 2 分 55 秒交互音画长卷；如不再保留历史临时分支/Codespace，可按需核对清理。
+- **记录署名**：`PRO2H(hadcockulloa@gmail.com)`
+
 <!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## 最新视觉引擎进度 — `PRO1V(valerie...@gmail.com)`
 - **更新时间**：2026-11-16 12:21 UTC

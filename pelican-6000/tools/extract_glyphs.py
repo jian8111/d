@@ -9,6 +9,7 @@ The generated ES module has no external dependencies or runtime font requests.
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -236,14 +237,16 @@ export function drawGlyphText(ctx, text, x, y, fontSize = 16, options = {}) {
           const fill = style.fill ?? options.fill;
           if (fill !== false) {
             ctx.fillStyle = color ?? (typeof fill === "string" ? fill : ctx.fillStyle);
-            ctx.fill(path);
           }
           const stroke = style.stroke ?? options.stroke;
           if (stroke) {
             ctx.strokeStyle = typeof stroke === "string" ? stroke : color ?? ctx.fillStyle;
             ctx.lineWidth = (style.lineWidth ?? options.lineWidth ?? 1) / Math.max(Math.abs(sx), Math.abs(sy));
+            ctx.lineJoin = "round";
+            ctx.lineCap = "round";
             ctx.stroke(path);
           }
+          if (fill !== false) ctx.fill(path);
         } finally {
           ctx.restore();
         }
@@ -300,8 +303,19 @@ export function buildGlyphSvgPaths(text, fontSize = 16, family = "serif", letter
 '''
 
 
+JS_TEXT_OR_COMMENT = re.compile(
+    r'''("(?:\\[\s\S]|[^"\\])*"|'(?:\\[\s\S]|[^'\\])*'|`(?:\\[\s\S]|[^`\\])*`)'''
+    r'''|//[^\r\n]*|/\*[\s\S]*?\*/'''
+)
+
+
+def strip_js_comments(source: str) -> str:
+    """Keep quoted literals (including escaped quotes and URLs) intact."""
+    return JS_TEXT_OR_COMMENT.sub(lambda match: match[1] or "\n", source)
+
+
 def collect_characters() -> list[str]:
-    """Evaluate actual exports rather than guessing at JS quoting or factories."""
+    """Combine evaluated scene/lyric exports with text used throughout the app."""
     node = shutil.which("node")
     if not node:
         raise RuntimeError("Node.js is required to read the scene and lyric exports")
@@ -330,6 +344,13 @@ process.stdout.write(JSON.stringify(texts));
     texts = json.loads(result.stdout)
     chars = set("".join(texts) + "".join(EXTRA_TEXT))
     chars.update(chr(code) for code in range(32, 127))
+    # Generated outlines and opaque audio data are never text repertoire sources.
+    excluded = {"glyphs.js", "audio-mdp3.js", "audio-telemetry.js"}
+    for path in sorted((ROOT / "src").rglob("*.js")):
+        if path.name in excluded:
+            continue
+        source = strip_js_comments(path.read_text(encoding="utf-8"))
+        chars.update(ch for ch in source if ord(ch) > 127 and ch.isprintable())
     return sorted((ch for ch in chars if ch.isprintable()), key=ord)
 
 
@@ -339,10 +360,16 @@ def extract_family(font_path: Path, chars: list[str]) -> dict[str, list]:
     # Open lazily and process one face at a time, never loading the entire TTC.
     with TTCollection(str(font_path), lazy=True) as collection:
         font = collection.fonts[FONT_NUMBER]
-        cmap = font.getBestCmap()
+        # Include every Unicode subtable, then prefer the face's best mappings.
+        cmap = {}
+        for table in font["cmap"].tables:
+            if table.isUnicode() and table.format != 14:
+                cmap.update(table.cmap)
+        cmap.update(font.getBestCmap() or {})
         missing = [ch for ch in chars if ord(ch) not in cmap]
         if missing:
-            raise RuntimeError(f"Missing glyphs in {font_path.name}: {''.join(missing)}")
+            detail = ", ".join(f"{ch!r} (U+{ord(ch):04X})" for ch in missing)
+            raise RuntimeError(f"Missing glyphs in {font_path.name}: {detail}")
         glyph_set = font.getGlyphSet()
         scale = UPM / font["head"].unitsPerEm
         metrics = font["hmtx"].metrics
