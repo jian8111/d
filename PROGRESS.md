@@ -1,6 +1,20 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
+- **更新时间**：2026-11-16 12:18 UTC
+- **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `AGENTS.md`、`PROGRESS.md` 与 `~/.gemini/ACCOUNT_IDENTITY.txt` 核验为 `PRO1V`；完成新容器 `codex`/`opencode`/`openai` 全量初始化并严格委派 `codex exec` `gpt-6.1-sol/xhigh` 执行后，由 Antigravity 核验并双端发布）。
+- **已完成事项**：
+  1. 从 `wwh5441/pelican-6000-pure-code`（v1.1.0）提取单文件版作品至 [`pelican-6000-pure-code.html`](./pelican-6000-pure-code.html)（`2,685,401` 字节 / `2.56 MiB`），仅第 2 行加入统一署名，移除署名行后与上游 `鹈鹕骑行_纯代码全片_单文件版.html` 逐字节一致（`EXACT_MATCH_WITH_SIG: True`）。
+  2. 解压校验内嵌 `vfs-payload` 完整性：涵盖 `10` 份 JSON 配置（`20` 幕艺术史场景、`36` 行逐字对齐歌词、`174.64s` 时长）、`5` 条编码音频流与 `60` 个 JS 模块。
+  3. 在 [`index.html`](./index.html) 作品目录置顶「鹈鹕六千年的车 · Pure-Code Edition」卡片（配铁匠铺金刻 + 骑车鹈鹕 + 20 格胶片内联 SVG 封面与打开 / 下载 / 原作仓库按钮）；同步更新 [`README.md`](./README.md) 与 [Pages 工作流](./.github/workflows/pages.yml)。
+  4. 核验通过：`verify_repo.py --strict` 返回 `PASS (0 errors, 0 warnings)`；Chromium 无头实测 `index.html` 在 `1280×800` 与 `390×844` 下均 `0` 异常、`0` 横向溢出；由 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 完成 GitHub `main` 与 Google Drive `download` 双端同步。
+- **当前状态与下一步待办**：
+  1. 容器无头 Chromium 缺乏 GPU 硬件加速，软件 SwiftShader 下 `p5.brush` 多画布预烘焙初始化超时（`>30s`）；单文件 HTML 与 VFS 载荷未做任何逻辑改动，可在手机或桌面浏览器实机直开验收完整 2 分 55 秒音画播放。
+  2. 若不再需要历史临时分支或闲置 Codespace，可按需核对 `codespace-friendly-goggles-qvx4rrv696grc96vq` 与 `friendly-goggles-qvx4rrv696grc96vq` 状态。
+- **记录署名**：`PRO1V(valerie...@gmail.com)`
+
 <!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
 ## 2026-11-16 · MV 确定性时间轴与 MDP3 音频引擎 — `PRO2H(hadcockulloa@gmail.com)`
 - **已完成**：新增 `pelican-6000/src/core/prng.js`、`timeline.js`、`src/audio/lzma-worker.js`、`dsp-worklet.js`、`audio-engine.js`，统一使用当前 PRO2H 头部署名。实现可逆 C¹ Fritsch-Carlson 时间映射、243 拍与 375 次金属瞬态、LZMA-alone/MDP3 解码、按需逆 STFT、16 抽头 Blackman sinc 重采样、立体声与磁带 flutter、Blob Worker/AudioWorklet 及 ScriptProcessor 自动回退。默认延迟加载实际 `audio-mdp3.js`，可直接消费 `AUDIO_TELEMETRY.sample`。
@@ -25,8 +39,7 @@
 - **下一步**：后续画面与音频模块直接消费这三个数据模块；文字绘制的 `y` 为基线，`buildGlyphSvgPaths` 返回基线位于原点、已翻转纵轴的 SVG `d` 字符串。
 - **记录署名**：`PRO2H(hadcockulloa@gmail.com)`
 
-<!-- 署名: PRO1V(valerie...@gmail.com) -->
-## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
+## 上次已归档进度（离线 CursorSwarm 作品） — `PRO1V(valerie...@gmail.com)`
 - **更新时间**：2026-11-14 14:15 PST / 22:15 UTC
 - **执行身份**：`PRO1V(valerie...@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 并完成核验，已排除纯存储号 `466788455@qq.com`；当前容器 `gdrive` 已实测连通可用）。
 - **已完成事项**：
