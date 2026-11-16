@@ -1,6 +1,14 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+<!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
+## 2026-11-16 · 鹈鹕六千年 MV 场景、歌词与字形数据 — `PRO2H(hadcockulloa@gmail.com)`
+- **已完成**：在 `pelican-6000/` 新建 `src/data/scenes-meta.js`、`src/data/lyrics-data.js` 和 `tools/extract_glyphs.py`，并运行脚本生成 `src/data/glyphs.js`。包含 20 个连续场景、12 个代表性抽屉、7 套画框，以及 36 条歌词、335 个逐字发音/音符/时间数据。宋代山水推镜与黑绒幕布 9:16 裁切均有独立相机配置。
+- **验证结果**：场景覆盖 `11.45..148.56s` 且无缝衔接；歌词覆盖 `15.71..161.65s` 且单行、逐字时间均单调无重叠。两套字体各 562 字形（空格以外 561 个非空轮廓），1000 upm 整数量化，生成文件 612,194 字节。Chromium 实测 Canvas/SVG 字形均正向，轮廓像素差低于 0.14%；逐字颜色、缩放、描边和回调通过。仓库严格校验通过（0 错误、0 警告）。字形文件内保留 Noto 字体 OFL 许可。
+- **当前状态**：本任务四个交付文件及本记录按仓库规范同步至 GitHub `main` 与 Drive `download` 对应路径；其他并行任务文件不包含在本次提交中。
+- **下一步**：后续画面与音频模块直接消费这三个数据模块；文字绘制的 `y` 为基线，`buildGlyphSvgPaths` 返回基线位于原点、已翻转纵轴的 SVG `d` 字符串。
+- **记录署名**：`PRO2H(hadcockulloa@gmail.com)`
+
 <!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## 最新进度记录 — `PRO1V(valerie...@gmail.com)`
 - **更新时间**：2026-11-14 14:15 PST / 22:15 UTC
