@@ -1,6 +1,22 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+<!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
+## 2026-11-18 · 全环境注册 `gpt-6.2-sol` / `gpt-6.2-astra`（含 Codespaces）并交付 3 部 `gpt-6.2-sol/xhigh` 单文件新作 — `PRO2H(hadcockulloa@gmail.com)`
+
+- **执行身份**：`PRO2H(hadcockulloa@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 核验为 `PRO2H`，严禁使用纯 Drive 存储号 `466788455@qq.com`；全部创作代码均通过 `codex exec -m gpt-6.2-sol -c model_reasoning_effort="xhigh"` 执行）。
+- **已完成模型升级（全环境对齐 `6.2`）**：
+  - 已在本地 Codex（`~/.codex/config.toml`、`~/.codex/auth.json`、`sol`/`astra`/`gpt-6-2-sol`/`gpt-6-2-astra`/`gpt-6-1-sol`/`terra`/`gpt-6-astra`/`grok` 8 套 profile）、OpenCode（`~/.config/opencode/opencode.json`）、`~/.gemini/PROJECT_CONTEXT.md`、Google Drive `download/codex_key.txt`（`1_R2q1lI3KJIzmzGkDyYwqIXj84R8OohV`）、仓库 [`.devcontainer/setup-codex.sh`](./.devcontainer/setup-codex.sh) 及 [`AGENTS.md`](./AGENTS.md) 全量注册 `gpt-6.2-sol`（默认）与 `gpt-6.2-astra`，并完整保留 `gpt-6.1-sol`、`gpt-6.1-terra`、`gpt-6-astra`、`grok-4.7`。
+- **已完成 3 部 `gpt-6.2-sol/xhigh` 全离线单文件作品（`0` 外链、`0` `fetch(`）**：
+  1. [`pelican-sol-ride.html`](./pelican-sol-ride.html)（`73,977` 字节 / `1,201` 行）：纯矢量 SVG 海岸骑行交互页，含 2-Bone 解析 IK 踩踏、6 档变速齿轮、工程蓝图膝角读数、晴海晨光 / 琥珀落日 / 港湾星夜切换、Web Audio 铜铃与喉囊弹鱼彩蛋及 SVG 导出。
+  2. [`meadow-cottage-3d.html`](./meadow-cottage-3d.html)（`352,053` 字节 / `4,061` 行）：内置 gzip Three.js 3D 无尽草原场景，含亮窗原木小屋与飘升炊烟、高架木槽驱动水车溅起白沫涟漪、睡莲后院池塘与木栈桥、14 只自主漫步可点击惊跳绵羊、四机位漫游、晴朗晨牧 / 金色暮光 / 暮蓝星夜萤火虫与 Web Audio 水风声。
+  3. [`sky-castle-cliff-3d.html`](./sky-castle-cliff-3d.html)（`333,568` 字节 / `1,549` 行）：内置 gzip Three.js 3D 海岸浮空移动城堡，含灯塔海崖与盘旋海鸥、沿航线巡航蒸汽朋克城堡（铜绿穹顶、啮合齿轮、4 具黄铜螺旋桨、苍蓝悬浮核心、悬链与尾烟）、四视角与锁定跟随、巡航雷达图及 Web Audio 声景。
+- **展廊注册与全面验证**：
+  - 在 [`index.html`](./index.html) 作品目录置顶 3 张定制内联 SVG 封面卡（`psr-`、`mc3d-`、`scc3d-` 独立 ID 前缀、0 `<filter>`、完整保留 15 张既有卡片共 18 张），同步更新 [`README.md`](./README.md) 与 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)（实测 `_site` 组装 `68` 文件通过）。
+  - 静态与实机验收通过：`python3 -B .cursor/skills/swarm-verify/scripts/verify_repo.py --strict` 返回 `PASS (0 errors, 0 warnings)`、`git diff --check` 通过；无头 Chromium + SwiftShader WebGL2 实测 3 部作品及 `index.html` 0 控制台/运行错误、0 外部请求、`1280×800` / `390×844` / `320×640` 0 横向溢出，并目视复核所有桌面、夜间、移动端与首页卡片截图。
+- **当前状态与下一步**：即将通过 `scripts/dual_publish.py` 执行 Stage 1 双端发布，随后重建并验证配置 `gpt-6.2` 的 GitHub Codespaces 实例（确认 `Available` 后执行 `gh codespace stop` 保持 `Shutdown` 省额度），最后回填新 Codespace 名与 3 部作品 Drive File ID 至 `AGENTS.md` / `PROJECT_CONTEXT.md` / `PROGRESS.md` 完成 Stage 2 终版归档。
+- **记录署名**：`PRO2H(hadcockulloa@gmail.com)`
+
 <!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## 2026-11-16 · AT × GC 全量可查索引固化与跨环境自启同步 — PRO1V(valerie...@gmail.com)
 

@@ -38,12 +38,14 @@
 ### 铁律四：自然语言极简派活与默认满血档位
 - **强制委派 Codex**：收到简短自然语言派活指令时，**严禁 Antigravity 自己写代码代劳**，必须确保加载云盘 `download/codex_key.txt` 后调用 `codex exec` 执行（命令末尾必须加 `< /dev/null` 防止挂起；若 `https://ylscode.com/codex` 超时，自动切换备用地址 `https://code.ylsagi.com/codex`。注：本条仅约束主代理 Antigravity；当已在 `codex exec` 内部执行时，直接创建并写入目标产物，**禁止再次嵌套/递归调用 `codex exec`**）。
 - **默认满血基准（未指定模型与档位时一律走此默认）**：
-  - Codex CLI：`codex exec -m gpt-6.1-sol -c model_reasoning_effort="xhigh" "<任务>" < /dev/null`
-  - Python `/responses` 脚本：`base_url="https://ylscode.com/codex/v1"`、`model="gpt-6.1-sol"`、`reasoning={"effort": "max"}`
+  - Codex CLI：`codex exec -m gpt-6.2-sol -c model_reasoning_effort="xhigh" "<任务>" < /dev/null`
+  - Python `/responses` 脚本：`base_url="https://ylscode.com/codex/v1"`、`model="gpt-6.2-sol"`、`reasoning={"effort": "max"}`
 - **显式覆盖简写（仅在明确点名时覆盖）**：
-  - `sol` / `6.1sol` -> `gpt-6.1-sol`（主力全能，\$1.8/\$9）
+  - `sol` / `6.2sol` -> `gpt-6.2-sol`（主力全能最新版，\$1.8/\$9）
+  - `6.1sol` -> `gpt-6.1-sol`（上代主力全能，\$1.8/\$9）
   - `terra` / `6.1terra` -> `gpt-6.1-terra`（省钱高速，\$1/\$5）
-  - `astra` / `6astra` -> `gpt-6-astra`（旗舰重推理，\$9/\$45）
+  - `astra` / `6.2astra` -> `gpt-6.2-astra`（旗舰重推理最新版，\$9/\$45）
+  - `6astra` -> `gpt-6-astra`（上代旗舰重推理，\$9/\$45）
   - `grok` / `grok4.7` -> `grok-4.7`（xAI，\$2/\$6，最高支持 `xhigh`）
   - 推理档位按需覆盖：`max` / `最大`（CLI 用 `xhigh`，Python 直连 `/responses` 用 `max`）、`xhigh` / `超高`、`high` / `高`、`medium` / `中`、`low` / `低`。
   - **禁用红线**：**严禁**传入会触发 HTTP 500 的 `minimal` 档位及会被网关静默改为 `medium` 的 `none` 档位；**严禁**自动选用高价旧版 `gpt-5.6-sol` 或 `gpt-5.6-terra`（除非用户明确点名）。
@@ -78,7 +80,7 @@
    - `~/.codex/config.toml`（顶层字段必须在 `[model_providers.ylscode]` 之前）：
      ```toml
      model_provider = "ylscode"
-     model = "gpt-6.1-sol"
+     model = "gpt-6.2-sol"
      model_reasoning_effort = "xhigh"
      approval_policy = "never"
      sandbox_mode = "danger-full-access"
@@ -90,8 +92,9 @@
      requires_openai_auth = true
      supports_websockets = false
      ```
+   - 可选多模型 Profile（`~/.codex/<profile>.config.toml`，权限 `600`，用 `codex -p <profile>` 快速切换）：`sol` / `gpt-6-2-sol`（`gpt-6.2-sol`）、`astra` / `gpt-6-2-astra`（`gpt-6.2-astra`）、`gpt-6-1-sol`（`gpt-6.1-sol`）、`terra`（`gpt-6.1-terra`）、`gpt-6-astra`（`gpt-6-astra`）、`grok`（`grok-4.7`），推理强度均为 `xhigh`。
 4. **生成 OpenCode CLI 配置**：
-   - `~/.config/opencode/opencode.json`（权限 `600`）：使用 `@ai-sdk/openai` 对接 `baseURL: "https://ylscode.com/codex"`，默认模型 `ylsCode/gpt-6.1-sol`，注册 `gpt-6.1-sol`、`gpt-6.1-terra`、`gpt-6-astra`、`grok-4.7`（`reasoningEffort: "xhigh"`）。
+   - `~/.config/opencode/opencode.json`（权限 `600`）：使用 `@ai-sdk/openai` 对接 `baseURL: "https://ylscode.com/codex"`，默认模型 `ylsCode/gpt-6.2-sol`，注册 `gpt-6.2-sol`、`gpt-6.2-astra`、`gpt-6.1-sol`、`gpt-6.1-terra`、`gpt-6-astra`、`grok-4.7`（`reasoningEffort: "xhigh"`）。
 
 ---
 
@@ -100,7 +103,7 @@
 ### 1. GitHub Codespaces (GC) 常驻实例与无 SSH 操控机制
 
 - **实例名**：`friendly-goggles-qvx4rrv696grc96vq`（Web 地址：`https://friendly-goggles-qvx4rrv696grc96vq.github.dev`，2-core，闲置/完工后保持 `Shutdown` 省额度）。
-- **自动初始化**：绑定 `.devcontainer/devcontainer.json` 与 `.devcontainer/setup-codex.sh`，容器启动时自动安装 `@openai/codex`、从 Codespaces User Secret `YLS_API_KEY` 生成 `~/.codex/auth.json` 与 `~/.codex/config.toml`（默认 `gpt-6.1-sol` + `xhigh`），并在当前分支为 `main` 且工作区干净时自动快进同步 `origin/main`。
+- **自动初始化**：绑定 `.devcontainer/devcontainer.json` 与 `.devcontainer/setup-codex.sh`，容器启动时自动安装 `@openai/codex`、从 Codespaces User Secret `YLS_API_KEY` 生成 `~/.codex/auth.json`、`~/.codex/config.toml`（默认 `gpt-6.2-sol` + `xhigh`）、全模型 Profile（含 `gpt-6.2-sol` 与 `gpt-6.2-astra`）及 `~/.config/opencode/opencode.json`，并在当前分支为 `main` 且工作区干净时自动快进同步 `origin/main`。
 - **AT 跨环境操控规范**：因 Antigravity 沙盒出站走 `agy-plugin-proxy` 无法直连 `gh codespace ssh`，后续 AI 统一使用 GitHub REST API 或 `scripts/dual_publish.py` 操作 GC。加载 `~/.config/gh/pat.env` 后执行：
 
   ```bash
