@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# 署名: PRO1V(valerie...@gmail.com)
-# Codespaces postStartCommand: auto-install @openai/codex and write ~/.codex config from $YLS_API_KEY.
+# 署名: PRO1V(valerie...@gmail.com) | 更新: PRO2H(hadcockulloa@gmail.com)
+# Codespaces postStartCommand: auto-install/update @openai/codex & opencode-ai and write ~/.codex + opencode configs from $YLS_API_KEY.
 set -euo pipefail
 
 set +u
@@ -30,22 +30,34 @@ if [ -z "${SETUP_CODEX_REEXEC:-}" ] && git rev-parse --is-inside-work-tree >/dev
   fi
 fi
 
-MISSING_PKGS=()
-command -v codex >/dev/null 2>&1 || MISSING_PKGS+=("@openai/codex@latest")
-command -v opencode >/dev/null 2>&1 || MISSING_PKGS+=("opencode-ai@latest")
-if [ "${#MISSING_PKGS[@]}" -gt 0 ]; then
-  if ! npm install -g "${MISSING_PKGS[@]}"; then
+mkdir -p "$HOME/.codex"
+chmod 700 "$HOME/.codex"
+
+CURRENT_REV="$(git rev-parse HEAD 2>/dev/null || echo 'no-git')"
+STAMP_FILE="$HOME/.codex/.setup-rev"
+PREV_REV="$(cat "$STAMP_FILE" 2>/dev/null || true)"
+
+NEED_INSTALL=0
+command -v codex >/dev/null 2>&1 || NEED_INSTALL=1
+command -v opencode >/dev/null 2>&1 || NEED_INSTALL=1
+if [ "$NEED_INSTALL" -eq 1 ] || [ -n "${SETUP_CODEX_REEXEC:-}" ] || [ "${SETUP_CODEX_UPDATE:-0}" = "1" ] || [ "$PREV_REV" != "$CURRENT_REV" ]; then
+  PKGS=("@openai/codex@latest" "opencode-ai@latest")
+  if ! npm install -g "${PKGS[@]}"; then
     mkdir -p "$HOME/.npm-global"
     npm config set prefix "$HOME/.npm-global"
     grep -q '.npm-global/bin' "$HOME/.bashrc" 2>/dev/null || echo 'export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
     grep -q '.npm-global/bin' "$HOME/.profile" 2>/dev/null || echo 'export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"' >> "$HOME/.profile"
     export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
-    npm install -g "${MISSING_PKGS[@]}"
+    if ! npm install -g "${PKGS[@]}"; then
+      if ! command -v codex >/dev/null 2>&1; then
+        echo "[setup-codex] Error: failed to install @openai/codex" >&2
+        exit 1
+      fi
+      echo "[setup-codex] Warning: npm update failed; keeping existing installed CLIs." >&2
+    fi
   fi
+  printf '%s\n' "$CURRENT_REV" > "$STAMP_FILE"
 fi
-
-mkdir -p "$HOME/.codex"
-chmod 700 "$HOME/.codex"
 
 if [ -n "${YLS_API_KEY:-}" ]; then
   python3 - <<'PY'
@@ -61,7 +73,7 @@ os.chmod(auth_path, 0o600)
 opencode_dir = Path.home() / ".config" / "opencode"
 opencode_dir.mkdir(parents=True, exist_ok=True)
 
-def model_entry(name: str, effort: str = "xhigh") -> dict:
+def model_entry(name: str, effort: str = "max") -> dict:
     return {
         "name": name,
         "tool_call": True,
@@ -86,12 +98,12 @@ opencode_cfg = {
                 "setCacheKey": True,
             },
             "models": {
-                "gpt-6.2-sol": model_entry("gpt-6.2-sol"),
-                "gpt-6.2-astra": model_entry("gpt-6.2-astra"),
-                "gpt-6.1-sol": model_entry("gpt-6.1-sol"),
-                "gpt-6.1-terra": model_entry("gpt-6.1-terra"),
-                "gpt-6-astra": model_entry("gpt-6-astra"),
-                "grok-4.7": model_entry("grok-4.7"),
+                "gpt-6.2-sol": model_entry("gpt-6.2-sol", "max"),
+                "gpt-6.2-astra": model_entry("gpt-6.2-astra", "max"),
+                "gpt-6.1-sol": model_entry("gpt-6.1-sol", "max"),
+                "gpt-6.1-terra": model_entry("gpt-6.1-terra", "max"),
+                "gpt-6-astra": model_entry("gpt-6-astra", "max"),
+                "grok-4.7": model_entry("grok-4.7", "xhigh"),
             },
         }
     },
@@ -107,7 +119,7 @@ fi
 cat <<'EOF' > "$HOME/.codex/config.toml"
 model_provider = "ylscode"
 model = "gpt-6.2-sol"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "max"
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 
@@ -126,13 +138,13 @@ from pathlib import Path
 
 codex_dir = Path.home() / ".codex"
 profiles = {
-    "sol": ("gpt-6.2-sol", "xhigh"),
-    "astra": ("gpt-6.2-astra", "xhigh"),
-    "gpt-6-2-sol": ("gpt-6.2-sol", "xhigh"),
-    "gpt-6-2-astra": ("gpt-6.2-astra", "xhigh"),
-    "gpt-6-1-sol": ("gpt-6.1-sol", "xhigh"),
-    "terra": ("gpt-6.1-terra", "xhigh"),
-    "gpt-6-astra": ("gpt-6-astra", "xhigh"),
+    "sol": ("gpt-6.2-sol", "max"),
+    "astra": ("gpt-6.2-astra", "max"),
+    "gpt-6-2-sol": ("gpt-6.2-sol", "max"),
+    "gpt-6-2-astra": ("gpt-6.2-astra", "max"),
+    "gpt-6-1-sol": ("gpt-6.1-sol", "max"),
+    "terra": ("gpt-6.1-terra", "max"),
+    "gpt-6-astra": ("gpt-6-astra", "max"),
     "grok": ("grok-4.7", "xhigh"),
 }
 for name, (model, effort) in profiles.items():

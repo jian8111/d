@@ -157,4 +157,4 @@
 **最近更新署名**：`PRO2H(hadcockulloa@gmail.com)｜并发协同: PRO5C(crispinowilbourn@gmail.com), PRO1V(valerie...@gmail.com), PRO3J, PRO4M｜纯Drive存储号(非Pro): 466788455@qq.com`
 
 <!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
-**最新维护说明**：`PRO2H(hadcockulloa@gmail.com)`｜完成伊莉思Code `gpt-6.2-sol` 与 `gpt-6.2-astra` 全环境（本机 Codex/OpenCode、Drive 凭证、`.devcontainer/setup-codex.sh`、GitHub Codespaces 与 `AGENTS.md`）注册升级，并交付三部 `gpt-6.2-sol/xhigh` 全离线单文件新作（[`pelican-sol-ride.html`](./pelican-sol-ride.html)、[`meadow-cottage-3d.html`](./meadow-cottage-3d.html)、[`sky-castle-cliff-3d.html`](./sky-castle-cliff-3d.html)）；完整保留全部历史首页卡片、作品列表、预览入口与 GitHub Pages 发布配置。
+**最新维护说明**：`PRO2H(hadcockulloa@gmail.com)`｜完成伊莉思Code `gpt-6.2-sol`（全环境默认 `max`，`grok-4.7` 及旧端回退 `xhigh`）与 `gpt-6.2-astra` 全环境（本机 Codex/OpenCode、Drive 凭证、`.devcontainer/setup-codex.sh`、GitHub Codespaces `ominous-waffle-gxpr99x65p743vwvp` 与 `AGENTS.md`）注册升级，并交付三部 `gpt-6.2-sol/xhigh` 全离线单文件新作（[`pelican-sol-ride.html`](./pelican-sol-ride.html)、[`meadow-cottage-3d.html`](./meadow-cottage-3d.html)、[`sky-castle-cliff-3d.html`](./sky-castle-cliff-3d.html)）；完整保留全部历史首页卡片、作品列表、预览入口与 GitHub Pages 发布配置。

@@ -38,7 +38,7 @@
 ### 铁律四：自然语言极简派活与默认满血档位
 - **强制委派 Codex**：收到简短自然语言派活指令时，**严禁 Antigravity 自己写代码代劳**，必须确保加载云盘 `download/codex_key.txt` 后调用 `codex exec` 执行（命令末尾必须加 `< /dev/null` 防止挂起；若 `https://ylscode.com/codex` 超时，自动切换备用地址 `https://code.ylsagi.com/codex`。注：本条仅约束主代理 Antigravity；当已在 `codex exec` 内部执行时，直接创建并写入目标产物，**禁止再次嵌套/递归调用 `codex exec`**）。
 - **默认满血基准（未指定模型与档位时一律走此默认）**：
-  - Codex CLI：`codex exec -m gpt-6.2-sol -c model_reasoning_effort="xhigh" "<任务>" < /dev/null`
+  - Codex CLI：`codex exec -m gpt-6.2-sol -c model_reasoning_effort="max" "<任务>" < /dev/null`（注：`grok-4.7` 或不支持 `max` 的旧版节点/客户端回退 `xhigh`）
   - Python `/responses` 脚本：`base_url="https://ylscode.com/codex/v1"`、`model="gpt-6.2-sol"`、`reasoning={"effort": "max"}`
 - **显式覆盖简写（仅在明确点名时覆盖）**：
   - `sol` / `6.2sol` -> `gpt-6.2-sol`（主力全能最新版，\$1.8/\$9）
@@ -47,7 +47,7 @@
   - `astra` / `6.2astra` -> `gpt-6.2-astra`（旗舰重推理最新版，\$9/\$45）
   - `6astra` -> `gpt-6-astra`（上代旗舰重推理，\$9/\$45）
   - `grok` / `grok4.7` -> `grok-4.7`（xAI，\$2/\$6，最高支持 `xhigh`）
-  - 推理档位按需覆盖：`max` / `最大`（CLI 用 `xhigh`，Python 直连 `/responses` 用 `max`）、`xhigh` / `超高`、`high` / `高`、`medium` / `中`、`low` / `低`。
+  - 推理档位按需覆盖：`max` / `最大`（全系列 `gpt-6.*` CLI / OpenCode / Python `/responses` 默认均优先用 `max`；仅支持到 `xhigh` 的模型如 `grok-4.7` 或旧客户端用 `xhigh`）、`xhigh` / `超高`、`high` / `高`、`medium` / `中`、`low` / `低`。
   - **禁用红线**：**严禁**传入会触发 HTTP 500 的 `minimal` 档位及会被网关静默改为 `medium` 的 `none` 档位；**严禁**自动选用高价旧版 `gpt-5.6-sol` 或 `gpt-5.6-terra`（除非用户明确点名）。
 - **产物规范与自动交差（“自己交到该交的地方”）**：
   - 涉及 `html` / `svg` 任务时，默认生成单文件、零外部依赖、手机与桌面自适应 HTML。
@@ -81,7 +81,7 @@
      ```toml
      model_provider = "ylscode"
      model = "gpt-6.2-sol"
-     model_reasoning_effort = "xhigh"
+     model_reasoning_effort = "max"
      approval_policy = "never"
      sandbox_mode = "danger-full-access"
 
@@ -92,9 +92,9 @@
      requires_openai_auth = true
      supports_websockets = false
      ```
-   - 可选多模型 Profile（`~/.codex/<profile>.config.toml`，权限 `600`，用 `codex -p <profile>` 快速切换）：`sol` / `gpt-6-2-sol`（`gpt-6.2-sol`）、`astra` / `gpt-6-2-astra`（`gpt-6.2-astra`）、`gpt-6-1-sol`（`gpt-6.1-sol`）、`terra`（`gpt-6.1-terra`）、`gpt-6-astra`（`gpt-6-astra`）、`grok`（`grok-4.7`），推理强度均为 `xhigh`。
+   - 可选多模型 Profile（`~/.codex/<profile>.config.toml`，权限 `600`，用 `codex -p <profile>` 快速切换）：`sol` / `gpt-6-2-sol`（`gpt-6.2-sol`，`max`）、`astra` / `gpt-6-2-astra`（`gpt-6.2-astra`，`max`）、`gpt-6-1-sol`（`gpt-6.1-sol`，`max`）、`terra`（`gpt-6.1-terra`，`max`）、`gpt-6-astra`（`gpt-6-astra`，`max`）、`grok`（`grok-4.7`，`xhigh`）。
 4. **生成 OpenCode CLI 配置**：
-   - `~/.config/opencode/opencode.json`（权限 `600`）：使用 `@ai-sdk/openai` 对接 `baseURL: "https://ylscode.com/codex"`，默认模型 `ylsCode/gpt-6.2-sol`，注册 `gpt-6.2-sol`、`gpt-6.2-astra`、`gpt-6.1-sol`、`gpt-6.1-terra`、`gpt-6-astra`、`grok-4.7`（`reasoningEffort: "xhigh"`）。
+   - `~/.config/opencode/opencode.json`（权限 `600`）：使用 `@ai-sdk/openai` 对接 `baseURL: "https://ylscode.com/codex"`，默认模型 `ylsCode/gpt-6.2-sol`，`gpt-6.2-sol`、`gpt-6.2-astra`、`gpt-6.1-sol`、`gpt-6.1-terra`、`gpt-6-astra` 注册 `reasoningEffort: "max"`，`grok-4.7` 注册 `reasoningEffort: "xhigh"`。
 
 ---
 
@@ -102,19 +102,19 @@
 
 ### 1. GitHub Codespaces (GC) 常驻实例与无 SSH 操控机制
 
-- **实例名**：`friendly-goggles-qvx4rrv696grc96vq`（Web 地址：`https://friendly-goggles-qvx4rrv696grc96vq.github.dev`，2-core，闲置/完工后保持 `Shutdown` 省额度）。
-- **自动初始化**：绑定 `.devcontainer/devcontainer.json` 与 `.devcontainer/setup-codex.sh`，容器启动时自动安装 `@openai/codex`、从 Codespaces User Secret `YLS_API_KEY` 生成 `~/.codex/auth.json`、`~/.codex/config.toml`（默认 `gpt-6.2-sol` + `xhigh`）、全模型 Profile（含 `gpt-6.2-sol` 与 `gpt-6.2-astra`）及 `~/.config/opencode/opencode.json`，并在当前分支为 `main` 且工作区干净时自动快进同步 `origin/main`。
+- **实例名**：`ominous-waffle-gxpr99x65p743vwvp`（Web 地址：`https://ominous-waffle-gxpr99x65p743vwvp.github.dev`，2-core，配置 `.devcontainer/setup-codex.sh` 自动安装/更新 `gpt-6.2-sol`（`max`）与 `gpt-6.2-astra`（`max`）等全 6 模型，闲置/完工后保持 `Shutdown` 省额度）。
+- **自动初始化**：绑定 `.devcontainer/devcontainer.json` 与 `.devcontainer/setup-codex.sh`，容器启动时自动在 clean `main` 快进拉取 `origin/main` 并重执安装/更新 `@openai/codex@latest` 与 `opencode-ai@latest`、从 Codespaces User Secret `YLS_API_KEY` 生成 `~/.codex/auth.json`、`~/.codex/config.toml`（默认 `gpt-6.2-sol` + `max`）、全模型 Profile（`gpt-6*` 为 `max`，`grok` 为 `xhigh`）及 `~/.config/opencode/opencode.json`。
 - **AT 跨环境操控规范**：因 Antigravity 沙盒出站走 `agy-plugin-proxy` 无法直连 `gh codespace ssh`，后续 AI 统一使用 GitHub REST API 或 `scripts/dual_publish.py` 操作 GC。加载 `~/.config/gh/pat.env` 后执行：
 
   ```bash
   # 查询状态
-  gh api user/codespaces/friendly-goggles-qvx4rrv696grc96vq --jq "{name,state}"
+  gh api user/codespaces/ominous-waffle-gxpr99x65p743vwvp --jq "{name,state}"
   # 唤醒
-  gh api -X POST user/codespaces/friendly-goggles-qvx4rrv696grc96vq/start
+  gh api -X POST user/codespaces/ominous-waffle-gxpr99x65p743vwvp/start
   # 无 SSH 导出未提交改动并双发
-  python3 -B scripts/dual_publish.py --from-codespace friendly-goggles-qvx4rrv696grc96vq --all-changed -m "[PRO1V(valerie...@gmail.com)] sync codespace"
+  python3 -B scripts/dual_publish.py --from-codespace ominous-waffle-gxpr99x65p743vwvp --all-changed -m "[PRO2H(hadcockulloa@gmail.com)] sync codespace"
   # 关机省额
-  gh codespace stop --codespace friendly-goggles-qvx4rrv696grc96vq
+  gh codespace stop --codespace ominous-waffle-gxpr99x65p743vwvp
   ```
 
 ### 2. 一键双端自动发布通道（`scripts/dual_publish.py`）
@@ -136,6 +136,9 @@
   | 作品路径 | 说明 | Drive File ID |
   | --- | --- | --- |
   | `index.html` | 总览导航页 | `1WEvA-ab3LkKdoizM-6WhhhB6ovDjWMWU` |
+  | `pelican-sol-ride.html` | PRO2H 73,977 B `gpt-6.2-sol` 纯矢量单车骑行与 IK 蓝图 | `186XVVAkIr1GKINJ_Hnr9KK1oOwD4_fAN` |
+  | `meadow-cottage-3d.html` | PRO2H 352,053 B Three.js 草原木屋水车池塘羊群 3D 场景 | `1EMNYlye7XWzWiUg3YuBqUhNMtssVmhUj` |
+  | `sky-castle-cliff-3d.html` | PRO2H 333,568 B Three.js 海崖灯塔与浮空移动城堡 3D 场景 | `1aVKJvSnRo0B6XPv-pA_PYhyBRpBHh827` |
   | `pelican-6000-mv.html` & `pelican-6000/` | PRO2H 1.88 MiB 原创纯代码交互长卷 MV | `1sm85zrNoqTdArbi3VpNFqF3x0wI_owXW` / 目录 `1ebSo5tI8rd6ox_SA1As3vI1_0QiqgsH8` |
   | `pelican-6000-years-mv.html` | PRO5C 165.7 KiB 全程序化单文件音画 MV | `10iPEB2UqIh4LVa2DLN6QN7ZKp-I0-fmy` |
   | `pelican-test.html` | PRO1V Pelican Test Cover 20 时代纯代码短片 | `1mkzfj8n7w3PLkwtc9xoL72R1J6PAQuYu` |
@@ -158,4 +161,4 @@
 - **严禁影响对话与聊天参数（原样直发、绝不加锁）**：上述限制**绝不作用于用户与 Agent 的日常对话**。对话中完全保持原有聊天参数与习惯，允许直接收发、明文展示与输出完整密钥、Token、模型/推理档位参数及可直接复制执行的完整命令，严禁因仓库规范而对对话内容打码、截断、拒答或擅自改变聊天参数。
 
 ---
-**维护与署名**：`PRO1V(valerie...@gmail.com)`
+**维护与署名**：`PRO1V(valerie...@gmail.com)｜最新更新: PRO2H(hadcockulloa@gmail.com)`
