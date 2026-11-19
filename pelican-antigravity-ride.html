@@ -1,0 +1,2635 @@
+<!DOCTYPE html>
+<!-- 署名: PRO1V(valerie...@gmail.com) | Antigravity 原创直写（非 Codex） -->
+<html lang="zh-CN" data-theme="azure">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f4ec">
+<title>海风邮差号 · Pelican Antigravity Ride</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2312767e'/%3E%3Cpath d='M9 17c4-7 10-7 15-3-4 2-6 5-10 5-2 0-4-1-5-2Z' fill='%23fff8ea'/%3E%3Cpath d='M18 13l8 2-6 3Z' fill='%23f59e42'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --page-bg: #f6f2e8;
+    --panel-bg: #fffdf8;
+    --panel-soft: #f1eadc;
+    --ink: #172b38;
+    --muted: #556a78;
+    --line: #dfd5c1;
+    --accent: #12767e;
+    --accent-hover: #0d5c63;
+    --accent-soft: #dff1f0;
+    --accent-ink: #0c5258;
+    --shadow: rgba(20, 44, 58, 0.11);
+    --badge-bg: rgba(23, 43, 56, 0.78);
+    --badge-ink: #fdf9f0;
+    --kbd-bg: #ebe3d2;
+    --stage-border: #cfc4ae;
+    color-scheme: light;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+  }
+
+  html[data-theme="tangerine"] {
+    --page-bg: #faf0e6;
+    --panel-bg: #fffaf4;
+    --panel-soft: #f5e5d5;
+    --ink: #2c1b26;
+    --muted: #6f525d;
+    --line: #e4ccb9;
+    --accent: #c94e2c;
+    --accent-hover: #a83d20;
+    --accent-soft: #fce3d8;
+    --accent-ink: #8f3218;
+    --shadow: rgba(65, 29, 28, 0.12);
+    --badge-bg: rgba(44, 27, 38, 0.8);
+    --badge-ink: #fff6ea;
+    --kbd-bg: #efdccb;
+    --stage-border: #d9b8a1;
+  }
+
+  html[data-theme="lantern"] {
+    --page-bg: #0e1625;
+    --panel-bg: #152136;
+    --panel-soft: #1c2c47;
+    --ink: #eef4fc;
+    --muted: #98aec8;
+    --line: #283c5c;
+    --accent: #efb447;
+    --accent-hover: #f7c768;
+    --accent-soft: #273752;
+    --accent-ink: #ffd780;
+    --shadow: rgba(3, 8, 18, 0.45);
+    --badge-bg: rgba(12, 22, 39, 0.84);
+    --badge-ink: #f5f0dc;
+    --kbd-bg: #223452;
+    --stage-border: #2c4368;
+    color-scheme: dark;
+  }
+
+  html[data-theme="sakura"] {
+    --page-bg: #faf2f4;
+    --panel-bg: #fffbfc;
+    --panel-soft: #f5e5ea;
+    --ink: #292030;
+    --muted: #6c5b71;
+    --line: #e5cfd6;
+    --accent: #c14a70;
+    --accent-hover: #9f3859;
+    --accent-soft: #fae0e8;
+    --accent-ink: #8c2c4c;
+    --shadow: rgba(58, 28, 46, 0.11);
+    --badge-bg: rgba(41, 32, 48, 0.78);
+    --badge-ink: #fff7fa;
+    --kbd-bg: #efdde2;
+    --stage-border: #dabcc6;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: clip;
+    background: var(--page-bg);
+    color: var(--ink);
+    transition: background-color 0.2s ease;
+  }
+
+  button, select {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  button:focus-visible, select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .wrap {
+    width: min(100% - 48px, 1340px);
+    margin: 0 auto;
+    padding: 14px 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .masthead {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 3px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .eyebrow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  .masthead h1 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.55rem, 3vw, 2.45rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .masthead .sub {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.42;
+  }
+
+  .theme-bar {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px;
+    background: var(--panel-bg);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px -10px var(--shadow);
+  }
+
+  .theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 12px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .theme-btn:hover {
+    background: var(--panel-soft);
+    color: var(--ink);
+  }
+
+  .theme-btn[aria-pressed="true"] {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+  }
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: inline-block;
+    flex: none;
+  }
+
+  .stage-card {
+    position: relative;
+    margin: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--stage-border);
+    background: #6ab5dc;
+    box-shadow: 0 20px 48px -24px var(--shadow);
+  }
+
+  #scene {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1280 / 550;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .stage-hud {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 12px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    pointer-events: none;
+  }
+
+  .hud-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 11px;
+    border-radius: 999px;
+    background: var(--badge-bg);
+    color: var(--badge-ink);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .hud-pill strong {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hud-toast {
+    position: absolute;
+    left: 50%;
+    bottom: 14px;
+    transform: translate(-50%, 8px);
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--badge-bg);
+    color: var(--badge-ink);
+    font-size: 0.8rem;
+    font-weight: 650;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+    max-width: calc(100% - 28px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hud-toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 13px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--panel-bg);
+    color: var(--ink);
+    font-size: 0.84rem;
+    font-weight: 680;
+    white-space: nowrap;
+    transition: transform 0.12s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .btn:hover {
+    background: var(--panel-soft);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    min-width: 96px;
+  }
+
+  html[data-theme="lantern"] .btn.primary {
+    color: #121c2d;
+  }
+
+  .btn.primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+
+  .btn[aria-pressed="true"]:not(.primary) {
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  }
+
+  .gear-box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background: var(--panel-bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    min-height: 44px;
+  }
+
+  .gear-box select {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    min-height: 42px;
+    padding: 0 30px 0 34px;
+    font-size: 0.84rem;
+    font-weight: 680;
+    cursor: pointer;
+  }
+
+  .gear-icon {
+    position: absolute;
+    left: 10px;
+    width: 17px;
+    height: 17px;
+    pointer-events: none;
+    color: var(--accent);
+  }
+
+  .gear-chevron {
+    position: absolute;
+    right: 9px;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    color: var(--muted);
+  }
+
+  .ico {
+    width: 17px;
+    height: 17px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.85;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .spacer {
+    margin-inline-start: auto;
+  }
+
+  kbd {
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--kbd-bg);
+    color: var(--muted);
+    font: 700 0.65rem/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .telemetry {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    background: var(--panel-bg);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .telemetry > div {
+    min-width: 0;
+    padding: 10px 14px;
+  }
+
+  .telemetry > div + div {
+    border-left: 1px solid var(--line);
+  }
+
+  .telemetry dt {
+    margin: 0 0 3px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .telemetry dd {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 3px 6px;
+    font-size: 1.24rem;
+    font-weight: 780;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+
+  .telemetry .unit {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .foot-note {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding: 0 2px;
+  }
+
+  #hit-pelican, #hit-bell, #hit-road, #hit-sky {
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    .wrap {
+      width: calc(100% - 28px);
+      padding: 16px 0 24px;
+    }
+    #scene {
+      aspect-ratio: 1280 / 680;
+    }
+    .spacer {
+      margin-inline-start: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .wrap {
+      width: calc(100% - 20px);
+      padding: 12px 0 20px;
+      gap: 10px;
+    }
+    .masthead {
+      gap: 10px;
+    }
+    .masthead .sub {
+      font-size: 0.82rem;
+    }
+    .theme-bar {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 3px;
+    }
+    .theme-btn {
+      padding: 0 4px;
+      gap: 4px;
+      font-size: 0.74rem;
+      min-height: 38px;
+    }
+    .swatch {
+      width: 8px;
+      height: 8px;
+    }
+    .stage-card {
+      border-radius: 13px;
+    }
+    #scene {
+      aspect-ratio: 1.15;
+    }
+    .stage-hud {
+      left: 8px;
+      right: 8px;
+      top: 8px;
+    }
+    .hud-pill {
+      padding: 5px 9px;
+      font-size: 0.69rem;
+    }
+    .hud-hint {
+      display: none;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .btn {
+      min-width: 0;
+      padding: 0 6px;
+      font-size: 0.76rem;
+      gap: 4px;
+      min-height: 44px;
+    }
+    .btn.primary {
+      min-width: 0;
+    }
+    .gear-box {
+      min-width: 0;
+    }
+    .gear-box select {
+      width: 100%;
+      padding: 0 22px 0 7px;
+      font-size: 0.72rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gear-chevron {
+      right: 6px;
+      width: 12px;
+      height: 12px;
+    }
+    .gear-icon, kbd {
+      display: none;
+    }
+    .telemetry {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .telemetry > div {
+      padding: 9px 10px;
+    }
+    .telemetry > div:nth-child(3) {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+    .telemetry > div:nth-child(4) {
+      border-top: 1px solid var(--line);
+    }
+    .telemetry dd {
+      font-size: 1.06rem;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="masthead">
+    <div class="brand">
+      <p class="eyebrow"><span class="eyebrow-dot"></span>ANTIGRAVITY ORIGINAL · PURE SVG &amp; 2-BONE IK</p>
+      <h1>海风邮差号</h1>
+      <p class="sub">戴水手帽的白鹈鹕骑着复古海湾单车沿堤岸送航空信——零外链纯矢量动画、真实无滑移轮速与可互动海风物理。</p>
+    </div>
+    <div class="theme-bar" role="group" aria-label="海岸天色">
+      <button type="button" class="theme-btn" data-theme="azure" aria-pressed="true"><span class="swatch" style="background:#3e9fd6"></span>晴汐蓝</button>
+      <button type="button" class="theme-btn" data-theme="tangerine" aria-pressed="false"><span class="swatch" style="background:#e87d44"></span>橘子海</button>
+      <button type="button" class="theme-btn" data-theme="lantern" aria-pressed="false"><span class="swatch" style="background:#7eb3ff"></span>夏夜萤火</button>
+      <button type="button" class="theme-btn" data-theme="sakura" aria-pressed="false"><span class="swatch" style="background:#e58ca8"></span>樱风薄雾</button>
+    </div>
+  </header>
+
+  <figure class="stage-card">
+    <svg id="scene" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 680" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="svg-title svg-desc">
+      <title id="svg-title">海风邮差号 · 海岸骑行的白鹈鹕</title>
+      <desc id="svg-desc">戴着深蓝邮差帽与珊瑚红条纹围巾的白鹈鹕，骑着满载航空信件与鲜活沙丁鱼的复古绿松石单车，沿地中海风格的跨海堤岸迎风骑行。</desc>
+      <defs>
+        <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop id="sky-s0" offset="0%" stop-color="#3c8fc9"/>
+          <stop id="sky-s1" offset="52%" stop-color="#87c8e6"/>
+          <stop id="sky-s2" offset="100%" stop-color="#f8ebd2"/>
+        </linearGradient>
+        <radialGradient id="orb-halo" cx="50%" cy="50%" r="50%">
+          <stop id="halo-s0" offset="0%" stop-color="#fff8d6" stop-opacity="0.92"/>
+          <stop id="halo-s1" offset="38%" stop-color="#ffe8a8" stop-opacity="0.45"/>
+          <stop id="halo-s2" offset="100%" stop-color="#ffe8a8" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="sea-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop id="sea-s0" offset="0%" stop-color="#3593b3"/>
+          <stop id="sea-s1" offset="45%" stop-color="#227796"/>
+          <stop id="sea-s2" offset="100%" stop-color="#175873"/>
+        </linearGradient>
+        <linearGradient id="road-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop id="road-s0" offset="0%" stop-color="#5d6b78"/>
+          <stop id="road-s1" offset="60%" stop-color="#45525f"/>
+          <stop id="road-s2" offset="100%" stop-color="#323d48"/>
+        </linearGradient>
+        <linearGradient id="wall-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop id="wall-s0" offset="0%" stop-color="#f2e4cb"/>
+          <stop id="wall-s1" offset="100%" stop-color="#cbb899"/>
+        </linearGradient>
+        <linearGradient id="beam-grad" x1="0" y1="0.5" x2="1" y2="0.5">
+          <stop offset="0%" stop-color="#fff0a6" stop-opacity="0.62"/>
+          <stop offset="55%" stop-color="#ffd56b" stop-opacity="0.22"/>
+          <stop offset="100%" stop-color="#ffd56b" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="body-grad" x1="0.1" y1="0" x2="0.8" y2="1">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="68%" stop-color="#f7f2e7"/>
+          <stop offset="100%" stop-color="#e3d9c8"/>
+        </linearGradient>
+        <linearGradient id="wing-grad" x1="0" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#fffdf8"/>
+          <stop offset="62%" stop-color="#ebe3d5"/>
+          <stop offset="100%" stop-color="#cfc5b6"/>
+        </linearGradient>
+        <linearGradient id="beak-top-grad" x1="0" y1="0" x2="1" y2="0.3">
+          <stop offset="0%" stop-color="#ffd978"/>
+          <stop offset="72%" stop-color="#f5b349"/>
+          <stop offset="100%" stop-color="#e37c34"/>
+        </linearGradient>
+        <linearGradient id="pouch-grad" x1="0" y1="0" x2="0.4" y2="1">
+          <stop offset="0%" stop-color="#f9aa4e"/>
+          <stop offset="60%" stop-color="#ec7f3a"/>
+          <stop offset="100%" stop-color="#c95b2b"/>
+        </linearGradient>
+        <linearGradient id="frame-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#26a3a6"/>
+          <stop offset="55%" stop-color="#14797e"/>
+          <stop offset="100%" stop-color="#0d5358"/>
+        </linearGradient>
+        <linearGradient id="leather-grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b5643b"/>
+          <stop offset="100%" stop-color="#6e361c"/>
+        </linearGradient>
+        <linearGradient id="fish-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#e8f9ff"/>
+          <stop offset="48%" stop-color="#7dc7e4"/>
+          <stop offset="100%" stop-color="#2e6b8e"/>
+        </linearGradient>
+        <radialGradient id="lamp-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff4b8" stop-opacity="0.9"/>
+          <stop offset="45%" stop-color="#ffca64" stop-opacity="0.38"/>
+          <stop offset="100%" stop-color="#ffca64" stop-opacity="0"/>
+        </radialGradient>
+
+        <!-- Reusable 18-Spoke Vintage Wheel -->
+        <g id="wheel-def">
+          <circle r="82" fill="none" stroke="#1e2730" stroke-width="11"/>
+          <circle r="76" fill="none" stroke="#efe4cc" stroke-width="3.6"/>
+          <circle r="71" fill="none" stroke="#c7b79c" stroke-width="2.4"/>
+          <circle r="67" fill="none" stroke="#7d8f9c" stroke-width="1.4" stroke-opacity="0.65"/>
+          <g id="wheel-spokes" stroke="#d8e2e8" stroke-width="1.35" stroke-opacity="0.88"></g>
+          <rect x="-2.2" y="-68" width="4.4" height="9" rx="1.5" fill="#e5b34c" stroke="#24313b" stroke-width="1"/>
+          <circle r="11" fill="#d9a441" stroke="#1e2730" stroke-width="2.2"/>
+          <circle r="4.5" fill="#fff3d1"/>
+        </g>
+      </defs>
+
+      <!-- 1. SKY & CELESTIAL LAYER -->
+      <rect id="hit-sky" width="1280" height="390" fill="url(#sky-grad)"/>
+      <g id="stars-layer" opacity="0"></g>
+
+      <g id="celestial" transform="translate(970, 128)">
+        <circle r="142" fill="url(#orb-halo)"/>
+        <circle id="orb-ring" r="52" fill="none" stroke="#fff7d6" stroke-width="1.5" stroke-opacity="0.32" stroke-dasharray="6 8"/>
+        <circle id="orb-core" r="34" fill="#fff7d4"/>
+        <path id="moon-crescent" d="M 6,-32 A 32,32 0 1 1 -28,16 A 25,25 0 1 0 6,-32 Z" fill="#fff6cc" opacity="0"/>
+      </g>
+
+      <!-- Slow Parallax Clouds -->
+      <g id="clouds-far"></g>
+      <g id="clouds-near"></g>
+      <g id="birds-layer"></g>
+
+      <!-- 2. DISTANT ARCHIPELAGO & CLIFFSIDE TOWN -->
+      <g id="islands-layer"></g>
+
+      <!-- 3. OCEAN & SPARKLING WATER -->
+      <rect y="330" width="1280" height="148" fill="url(#sea-grad)"/>
+      <g id="sea-shimmer"></g>
+      <g id="boats-layer"></g>
+      <g id="sea-waves"></g>
+      <g id="sea-fish-layer"></g>
+
+      <!-- 4. COASTAL PROMENADE SEAWALL, TREES & LAMPOSTS -->
+      <rect y="458" width="1280" height="44" fill="url(#wall-grad)"/>
+      <rect y="454" width="1280" height="8" fill="#fbf3e2"/>
+      <line x1="0" y1="462" x2="1280" y2="462" stroke="#b39d7b" stroke-width="1.5"/>
+      <g id="balustrade-layer"></g>
+      <g id="promenade-layer"></g>
+
+      <!-- 5. COASTAL BIKEWAY ROAD -->
+      <rect id="hit-road" y="500" width="1280" height="180" fill="url(#road-grad)"/>
+      <rect y="500" width="1280" height="7" fill="#d9cbb3"/>
+      <line x1="0" y1="507" x2="1280" y2="507" stroke="#2c3640" stroke-opacity="0.4" stroke-width="2"/>
+      <line x1="0" y1="628" x2="1280" y2="628" stroke="#f2e4c7" stroke-opacity="0.45" stroke-width="3"/>
+      <g id="road-dashes"></g>
+      <g id="mileposts-layer"></g>
+
+      <!-- Dynamic Slipstream & Speed Ribbons (behind bike) -->
+      <g id="wind-ribbons" fill="none" stroke-linecap="round"></g>
+
+      <!-- Ground Contact Shadow -->
+      <ellipse id="bike-shadow" cx="634" cy="575" rx="192" ry="12" fill="#131c24" opacity="0.34"/>
+
+      <!-- 6. HERO RIG: VINTAGE POSTMAN BICYCLE + WHITE PELICAN (Origin = Rear Wheel Hub) -->
+      <g id="rig-root" transform="translate(520, 486)">
+        <g id="rig-pitch">
+          <!-- Warm Headlamp Beam (brightens in Dusk/Night) -->
+          <polygon id="headlamp-beam" points="212,-95 690,-185 690,95 212,-85" fill="url(#beam-grad)" opacity="0.14"/>
+
+          <!-- FAR SIDE: Left Crank, Left Pedal & Far IK Leg -->
+          <g id="far-drivetrain">
+            <line id="crank-far" x1="92" y1="6" x2="62" y2="6" stroke="#85929c" stroke-width="5.5" stroke-linecap="round"/>
+            <g id="leg-far" stroke-linecap="round" stroke-linejoin="round">
+              <path id="leg-far-outline" d="" fill="none" stroke="#22303c" stroke-width="14"/>
+              <path id="leg-far-fill" d="" fill="none" stroke="#c97435" stroke-width="9"/>
+              <path id="foot-far" d="" fill="#c97435" stroke="#22303c" stroke-width="2.2"/>
+            </g>
+            <g id="pedal-far" transform="translate(62,6)">
+              <rect x="-15" y="-4" width="30" height="8" rx="3" fill="#2d3944" stroke="#182028" stroke-width="1.6"/>
+              <rect x="-10" y="-1.5" width="20" height="3" rx="1" fill="#e59f42"/>
+            </g>
+          </g>
+
+          <!-- FAR WING ARM (Reaching to Far Handlebar Grip) -->
+          <g id="wing-far">
+            <path id="wing-far-path" d="M88,-178 Q122,-176 146,-163" fill="none" stroke="#22303c" stroke-width="11" stroke-linecap="round"/>
+            <path id="wing-far-inner" d="M88,-178 Q122,-176 146,-163" fill="none" stroke="#dcd3c2" stroke-width="7" stroke-linecap="round"/>
+          </g>
+
+          <!-- WHEELS -->
+          <g id="wheel-rear" transform="translate(0,0)">
+            <use href="#wheel-def"/>
+          </g>
+          <g id="wheel-front" transform="translate(228,0)">
+            <use href="#wheel-def"/>
+          </g>
+
+          <!-- FENDERS / MUDGUARDS -->
+          <g fill="none" stroke-linecap="round">
+            <path d="M-86,-16 A89,89 0 0 1 60,-66" stroke="#1b2630" stroke-width="11"/>
+            <path d="M-86,-16 A89,89 0 0 1 60,-66" stroke="#1c8b8f" stroke-width="7"/>
+            <path d="M-86,-16 A89,89 0 0 1 56,-68" stroke="#8ad7d5" stroke-width="1.8" stroke-opacity="0.7"/>
+            <path d="M-76,-42 L0,0 M-32,-83 L0,0" stroke="#c8d4dc" stroke-width="2"/>
+
+            <path d="M150,-52 A89,89 0 0 1 304,-42" stroke="#1b2630" stroke-width="11"/>
+            <path d="M150,-52 A89,89 0 0 1 304,-42" stroke="#1c8b8f" stroke-width="7"/>
+            <path d="M150,-52 A89,89 0 0 1 300,-45" stroke="#8ad7d5" stroke-width="1.8" stroke-opacity="0.7"/>
+            <path d="M294,-42 L228,0 M262,-82 L228,0" stroke="#c8d4dc" stroke-width="2"/>
+          </g>
+
+          <!-- REAR MAIL RACK & AIRMAIL PARCELS -->
+          <g id="mail-rack" stroke-linejoin="round" stroke-linecap="round">
+            <!-- Rack struts -->
+            <path d="M-56,-96 L46,-96 M-48,-96 L0,0 M18,-96 L0,0 M46,-96 L58,-108" fill="none" stroke="#22303c" stroke-width="6.5"/>
+            <path d="M-56,-96 L46,-96 M-48,-96 L0,0 M18,-96 L0,0 M46,-96 L58,-108" fill="none" stroke="#d9a441" stroke-width="3.2"/>
+            <!-- Leather Pannier Satchel -->
+            <rect x="-54" y="-92" width="66" height="46" rx="8" fill="url(#leather-grad)" stroke="#22303c" stroke-width="2.4"/>
+            <path d="M-54,-82 Q-21,-66 12,-82 L12,-92 L-54,-92 Z" fill="#c97445" stroke="#22303c" stroke-width="2.2"/>
+            <rect x="-42" y="-88" width="7" height="24" rx="2" fill="#e5b34c" stroke="#22303c" stroke-width="1.5"/>
+            <rect x="-7" y="-88" width="7" height="24" rx="2" fill="#e5b34c" stroke="#22303c" stroke-width="1.5"/>
+            <circle cx="-21" cy="-62" r="5" fill="#f7ebd2" stroke="#22303c" stroke-width="1.4"/>
+            <!-- Tied Stack of Airmail Letters on Rack -->
+            <g transform="translate(-44, -118) rotate(-5)">
+              <rect x="0" y="6" width="56" height="17" rx="3" fill="#fcf7eb" stroke="#22303c" stroke-width="2"/>
+              <path d="M2,8 L28,17 L54,8" fill="none" stroke="#d85b42" stroke-width="1.8"/>
+              <rect x="4" y="-6" width="50" height="14" rx="2.5" fill="#fffdf6" stroke="#22303c" stroke-width="2"/>
+              <path d="M6,-4 L29,4 L52,-4" fill="none" stroke="#2484a3" stroke-width="1.6"/>
+              <circle cx="29" cy="4" r="3.4" fill="#d94d3a"/>
+              <path d="M18,-6 L18,23 M40,-6 L40,23" stroke="#d9a441" stroke-width="2.4"/>
+            </g>
+          </g>
+
+          <!-- CHAIN & SPROCKETS -->
+          <g id="drivetrain-core">
+            <circle cx="0" cy="0" r="11" fill="#3a4a56" stroke="#1e2730" stroke-width="2"/>
+            <path id="chain-upper" d="" fill="none" stroke="#202a33" stroke-width="4.2"/>
+            <path id="chain-upper-links" d="" fill="none" stroke="#d4c7a9" stroke-width="2" stroke-dasharray="4 4"/>
+            <path id="chain-lower" d="" fill="none" stroke="#202a33" stroke-width="4.2"/>
+            <path id="chain-lower-links" d="" fill="none" stroke="#d4c7a9" stroke-width="2" stroke-dasharray="4 4"/>
+          </g>
+
+          <!-- BICYCLE FRAME (Cruiser Geometry) -->
+          <g id="bike-frame" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Outline pass -->
+            <g fill="none" stroke="#1b2630" stroke-width="12.5">
+              <path d="M0,0 L92,6"/>
+              <path d="M0,0 Q34,-54 58,-108"/>
+              <path d="M92,6 L58,-108"/>
+              <path d="M58,-108 Q116,-122 172,-124"/>
+              <path d="M92,6 Q142,-36 182,-88"/>
+              <path d="M172,-124 L182,-88"/>
+              <path d="M182,-88 Q208,-42 228,0"/>
+            </g>
+            <!-- Enamel fill pass -->
+            <g fill="none" stroke="url(#frame-grad)" stroke-width="8">
+              <path d="M0,0 L92,6"/>
+              <path d="M0,0 Q34,-54 58,-108"/>
+              <path d="M92,6 L58,-108"/>
+              <path d="M58,-108 Q116,-122 172,-124"/>
+              <path d="M92,6 Q142,-36 182,-88"/>
+              <path d="M172,-124 L182,-88"/>
+              <path d="M182,-88 Q208,-42 228,0"/>
+            </g>
+            <!-- Specular highlight lines -->
+            <g fill="none" stroke="#8fe3df" stroke-width="2" stroke-opacity="0.68">
+              <path d="M62,-107 Q116,-120 168,-122"/>
+              <path d="M97,2 Q142,-36 179,-84"/>
+              <path d="M184,-84 Q207,-42 225,-5"/>
+            </g>
+            <!-- Brass Headbadge & Lugs -->
+            <circle cx="58" cy="-108" r="6" fill="#e5b34c" stroke="#1b2630" stroke-width="1.8"/>
+            <circle cx="177" cy="-106" r="5" fill="#e5b34c" stroke="#1b2630" stroke-width="1.6"/>
+            <circle cx="92" cy="6" r="10" fill="#14797e" stroke="#1b2630" stroke-width="2.2"/>
+
+            <!-- Seatpost & Vintage Leather Spring Saddle -->
+            <line x1="58" y1="-108" x2="50" y2="-135" stroke="#1b2630" stroke-width="8"/>
+            <line x1="58" y1="-108" x2="50" y2="-135" stroke="#dce5ea" stroke-width="4.5"/>
+            <path d="M32,-130 Q36,-123 41,-130 M42,-130 Q46,-123 51,-130" fill="none" stroke="#d9a441" stroke-width="2.4"/>
+            <path d="M18,-138 Q48,-149 78,-137 Q70,-128 48,-128 Q26,-128 18,-138 Z" fill="url(#leather-grad)" stroke="#1b2630" stroke-width="2.4"/>
+            <circle cx="28" cy="-136" r="1.8" fill="#f0c869"/>
+            <circle cx="35" cy="-134" r="1.8" fill="#f0c869"/>
+
+            <!-- Stem, Cruiser Handlebars & Leather Grips -->
+            <path d="M172,-124 L164,-154 Q161,-162 151,-161 L138,-158" fill="none" stroke="#1b2630" stroke-width="8.5"/>
+            <path d="M172,-124 L164,-154 Q161,-162 151,-161 L138,-158" fill="none" stroke="#e2eaef" stroke-width="4.8"/>
+            <!-- Far handlebar stub -->
+            <path d="M161,-158 L146,-163" fill="none" stroke="#1b2630" stroke-width="6.5"/>
+            <path d="M161,-158 L146,-163" fill="none" stroke="#99512c" stroke-width="4"/>
+            <!-- Near leather grip -->
+            <path d="M148,-160 L132,-156" fill="none" stroke="#1b2630" stroke-width="10"/>
+            <path d="M148,-160 L132,-156" fill="none" stroke="#b5643b" stroke-width="6.5"/>
+
+            <!-- Vintage Brass Headlamp -->
+            <g transform="translate(198, -94)">
+              <path d="M-16,4 L-2,0" stroke="#1b2630" stroke-width="4"/>
+              <path d="M-4,-9 L10,-9 C16,-9 16,9 10,9 L-4,9 Z" fill="#d9a441" stroke="#1b2630" stroke-width="2"/>
+              <ellipse id="lamp-lens" cx="12" cy="0" rx="4.5" ry="8.2" fill="#fff4b5" stroke="#1b2630" stroke-width="1.6"/>
+            </g>
+          </g>
+
+          <!-- FRONT WICKER BASKET WITH SARDINE, THERMOS & SEA CHART -->
+          <g id="front-basket" transform="translate(182, -148)">
+            <!-- Basket struts -->
+            <path d="M4,4 L-12,18 M24,42 L46,148" fill="none" stroke="#6f808c" stroke-width="2.4"/>
+            <!-- Rolled Sea Chart -->
+            <g transform="translate(8, -18) rotate(-18)">
+              <rect x="0" y="0" width="12" height="30" rx="4" fill="#f7eed7" stroke="#22303c" stroke-width="1.8"/>
+              <line x1="0" y1="14" x2="12" y2="14" stroke="#d94d3a" stroke-width="2.2"/>
+            </g>
+            <!-- Striped Thermos -->
+            <g transform="translate(21, -22) rotate(10)">
+              <rect x="0" y="4" width="13" height="28" rx="3" fill="#e66345" stroke="#22303c" stroke-width="1.8"/>
+              <rect x="0" y="12" width="13" height="6" fill="#fff5df"/>
+              <rect x="2" y="0" width="9" height="5" rx="2" fill="#d9a441" stroke="#22303c" stroke-width="1.6"/>
+            </g>
+            <!-- Fresh Sardine Peeking Out of Basket -->
+            <g id="basket-fish" transform="translate(42, -10) rotate(-26)">
+              <path d="M-10,0 Q4,-10 18,-2 Q8,8 -10,0 Z" fill="url(#fish-grad)" stroke="#1b2630" stroke-width="1.7"/>
+              <path d="M16,-2 L24,-9 L22,5 Z" fill="#7dc7e4" stroke="#1b2630" stroke-width="1.5"/>
+              <circle cx="-1" cy="-2" r="1.6" fill="#1b2630"/>
+            </g>
+            <!-- Woven Wicker Body -->
+            <path d="M-2,0 L56,0 L48,44 L6,44 Z" fill="#e5b067" stroke="#22303c" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M0,12 L54,12 M2,24 L52,24 M4,35 L50,35" stroke="#99642c" stroke-width="1.8"/>
+            <path d="M12,0 L15,44 M27,0 L27,44 M42,0 L39,44" stroke="#99642c" stroke-width="1.5" stroke-opacity="0.72"/>
+            <rect x="-5" y="-3" width="64" height="7" rx="3.5" fill="#c78a3e" stroke="#22303c" stroke-width="2"/>
+          </g>
+
+          <!-- INTERACTIVE BRASS BELL -->
+          <g id="hit-bell" transform="translate(154, -165)" role="button" aria-label="按响铜车铃">
+            <circle cx="0" cy="0" r="18" fill="transparent"/>
+            <path d="M-8,2 A8,8 0 0 1 8,2 Z" fill="#f0c154" stroke="#1b2630" stroke-width="2"/>
+            <path d="M-4,-3 A5,5 0 0 1 3,-3" fill="none" stroke="#fff6d6" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="-10" y1="2" x2="10" y2="2" stroke="#1b2630" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="0" cy="-6.5" r="1.8" fill="#1b2630"/>
+            <g id="bell-rings" fill="none" stroke="#ffe184" stroke-width="2.4" opacity="0">
+              <circle id="bell-ring-1" r="12"/>
+              <circle id="bell-ring-2" r="22"/>
+            </g>
+          </g>
+
+          <!-- CHAINRING (Rotates with crank) -->
+          <g id="chainring" transform="translate(92, 6)">
+            <circle r="20" fill="#e8edf0" stroke="#1e2730" stroke-width="2.5"/>
+            <circle r="13" fill="none" stroke="#1e2730" stroke-width="1.8"/>
+            <path d="M0,-13 L0,13 M-11.2,-6.5 L11.2,6.5 M-11.2,6.5 L11.2,-6.5" stroke="#1e2730" stroke-width="2.4"/>
+            <circle r="5" fill="#d9a441" stroke="#1e2730" stroke-width="1.8"/>
+          </g>
+
+          <!-- THE WHITE PELICAN RIDER (Breathing & Lean Group) -->
+          <g id="hit-pelican" role="button" aria-label="点击鹈鹕抛接沙丁鱼">
+            <g id="pelican-body-group">
+              <!-- Flowing Sailor Scarf Tail (behind neck/body) -->
+              <path id="scarf-tail-shadow" d="" fill="none" stroke="#1b2630" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+              <path id="scarf-tail-main" d="" fill="none" stroke="#e4573d" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path id="scarf-tail-stripe" d="" fill="none" stroke="#fff4dc" stroke-width="4" stroke-dasharray="9 11" stroke-linecap="round"/>
+
+              <!-- Tail Feathers -->
+              <g id="pelican-tail" transform="translate(-30, -158)">
+                <path d="M0,4 C-26,-8 -42,-16 -52,-8 C-40,2 -24,10 -4,14 Z" fill="#e8dfd0" stroke="#1b2630" stroke-width="2.3" stroke-linejoin="round"/>
+                <path d="M4,10 C-22,4 -38,2 -46,12 C-32,18 -14,22 6,20 Z" fill="#f7f2e7" stroke="#1b2630" stroke-width="2.3" stroke-linejoin="round"/>
+              </g>
+
+              <!-- Plump White Pelican Body & S-Curve Neck -->
+              <path id="pelican-torso"
+                d="M-28,-154
+                   C-6,-186 42,-196 84,-186
+                   C90,-206 82,-234 94,-258
+                   C103,-274 124,-280 135,-268
+                   C142,-260 138,-245 127,-236
+                   C114,-226 116,-198 118,-174
+                   C120,-142 96,-120 56,-118
+                   C14,-116 -18,-128 -28,-154 Z"
+                fill="url(#body-grad)" stroke="#1b2630" stroke-width="2.8" stroke-linejoin="round"/>
+
+              <!-- Soft Chest & Belly Plumage Accent -->
+              <path d="M18,-128 C48,-122 86,-128 104,-150 C96,-132 68,-120 34,-122 Z" fill="#dfd4c2" opacity="0.72"/>
+
+              <!-- Scarf Neck Wrap -->
+              <path d="M84,-216 Q104,-204 120,-214 L117,-201 Q101,-192 85,-203 Z" fill="#e4573d" stroke="#1b2630" stroke-width="2.2" stroke-linejoin="round"/>
+              <path d="M90,-210 Q104,-202 116,-208" fill="none" stroke="#fff4dc" stroke-width="2.6" stroke-linecap="round"/>
+
+              <!-- Head, Postman Cap, Expressive Eye & Articulated Beak/Pouch -->
+              <g id="pelican-head" transform="translate(115, -268)">
+                <!-- Head Crest Tufts -->
+                <path d="M-22,-10 C-34,-16 -38,-8 -28,-2 C-36,0 -36,8 -22,6" fill="#fffdf8" stroke="#1b2630" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+                <!-- Articulated Lower Beak + Inflatable Gular Pouch -->
+                <g id="pelican-jaw" transform="translate(18, 2)">
+                  <path id="pouch-shape"
+                    d="M-2,2 C8,34 42,40 72,22 C86,14 96,4 102,-2 L-2,-2 Z"
+                    fill="url(#pouch-grad)" stroke="#1b2630" stroke-width="2.4" stroke-linejoin="round"/>
+                  <path id="pouch-highlight"
+                    d="M12,12 C28,26 52,26 72,14"
+                    fill="none" stroke="#ffd28a" stroke-width="2.6" stroke-linecap="round" opacity="0.75"/>
+                  <path d="M-2,-2 L104,-2 L99,4 L-2,3 Z" fill="#f3a942" stroke="#1b2630" stroke-width="2"/>
+                </g>
+
+                <!-- Upper Mandible with Hooked Nail Tip -->
+                <g id="pelican-upper-beak" transform="translate(18, 0)">
+                  <path d="M-4,-14 C30,-14 78,-10 112,-3 C117,-2 117,5 111,6 C106,6 105,1 101,1 L-4,2 Z"
+                        fill="url(#beak-top-grad)" stroke="#1b2630" stroke-width="2.5" stroke-linejoin="round"/>
+                  <path d="M6,-9 C38,-9 76,-6 104,-2" fill="none" stroke="#fff2c4" stroke-width="2.4" stroke-linecap="round" opacity="0.8"/>
+                  <ellipse cx="14" cy="-6" rx="3.4" ry="1.6" fill="#9c5420" opacity="0.75"/>
+                </g>
+
+                <!-- Cheek Patch & Eye -->
+                <ellipse cx="8" cy="-8" rx="9" ry="7.5" fill="#fde3bd"/>
+                <circle cx="9" cy="-9" r="5.2" fill="#18242e"/>
+                <circle id="eye-pupil" cx="10.4" cy="-10.2" r="2" fill="#ffffff"/>
+                <circle cx="7.4" cy="-7.2" r="0.9" fill="#ffffff" opacity="0.75"/>
+                <path id="eyelid" d="M2,-9 Q9,-16 16,-9" fill="#fffdf8" stroke="#1b2630" stroke-width="2" opacity="0"/>
+
+                <!-- Vintage Navy Postman Cap -->
+                <g id="postman-cap" transform="translate(-4, -22) rotate(-8)">
+                  <path d="M-20,6 C-22,-10 -8,-18 10,-16 C22,-14 28,-6 26,6 Z" fill="#1d3b5c" stroke="#142233" stroke-width="2.4" stroke-linejoin="round"/>
+                  <path d="M-20,6 L26,6 L24,11 L-18,11 Z" fill="#e5b34c" stroke="#142233" stroke-width="1.8"/>
+                  <path d="M10,7 C24,5 36,9 38,14 C28,15 16,13 8,11 Z" fill="#132030" stroke="#0d1722" stroke-width="2" stroke-linejoin="round"/>
+                  <circle cx="5" cy="-3" r="4" fill="#f5c65b" stroke="#142233" stroke-width="1.4"/>
+                  <path d="M5,-5.5 L5,-0.5 M3,-3 L7,-3" stroke="#142233" stroke-width="1.2" stroke-linecap="round"/>
+                </g>
+              </g>
+
+              <!-- NEAR WING (Layered Feathers + Forewing Reaching to Near Grip) -->
+              <g id="wing-near" transform="translate(76, -172)">
+                <!-- Flapping Upper Flight Wing (flares during wheelie / jump) -->
+                <g id="wing-flap">
+                  <path d="M-6,-4 C-44,-14 -82,2 -102,22 C-80,30 -54,28 -30,22 C-42,32 -66,38 -84,36 C-56,46 -18,44 10,24 C20,16 14,-2 -6,-4 Z"
+                        fill="url(#wing-grad)" stroke="#1b2630" stroke-width="2.5" stroke-linejoin="round"/>
+                  <path d="M-12,8 C-38,10 -64,16 -84,22 M-8,18 C-32,22 -54,28 -70,32"
+                        fill="none" stroke="#a69c8e" stroke-width="1.9" stroke-linecap="round"/>
+                </g>
+                <!-- Articulated Forewing Arm Holding Handlebar -->
+                <path id="arm-near-outline" d="M12,4 Q42,22 62,14" fill="none" stroke="#1b2630" stroke-width="13" stroke-linecap="round"/>
+                <path id="arm-near-fill" d="M12,4 Q42,22 62,14" fill="none" stroke="#fffdf7" stroke-width="8.5" stroke-linecap="round"/>
+                <!-- Wingtip Feather Fingers Wrapping Grip -->
+                <circle id="hand-near" cx="62" cy="14" r="6" fill="#fffdf7" stroke="#1b2630" stroke-width="2.2"/>
+              </g>
+            </g>
+          </g>
+
+          <!-- NEAR SIDE: Right IK Leg, Right Crank & Right Pedal -->
+          <g id="near-drivetrain">
+            <g id="leg-near" stroke-linecap="round" stroke-linejoin="round">
+              <path id="leg-near-outline" d="" fill="none" stroke="#1b2630" stroke-width="15.5"/>
+              <path id="leg-near-fill" d="" fill="none" stroke="#f09644" stroke-width="10.2"/>
+              <path id="leg-near-hi" d="" fill="none" stroke="#ffd28a" stroke-width="2.8" stroke-opacity="0.72"/>
+              <path id="foot-near" d="" fill="#f09644" stroke="#1b2630" stroke-width="2.4"/>
+            </g>
+            <line id="crank-near" x1="92" y1="6" x2="122" y2="6" stroke="#1b2630" stroke-width="9" stroke-linecap="round"/>
+            <line id="crank-near-hi" x1="92" y1="6" x2="122" y2="6" stroke="#dce5ea" stroke-width="4.5" stroke-linecap="round"/>
+            <circle cx="92" cy="6" r="4.5" fill="#e5b34c" stroke="#1b2630" stroke-width="1.6"/>
+            <g id="pedal-near" transform="translate(122,6)">
+              <rect x="-17" y="-4.5" width="34" height="9" rx="3.2" fill="#222d37" stroke="#10161c" stroke-width="1.8"/>
+              <rect x="-11" y="-1.8" width="22" height="3.6" rx="1.2" fill="#f3b649"/>
+            </g>
+          </g>
+
+          <!-- TOSSED SARDINE (Arcs out of Pelican's Pouch!) -->
+          <g id="tossed-fish" opacity="0">
+            <path d="M-14,0 C-4,-11 10,-9 20,-1 C10,9 -4,11 -14,0 Z" fill="url(#fish-grad)" stroke="#1b2630" stroke-width="2"/>
+            <path d="M18,-1 L28,-10 L26,8 Z" fill="#7dc7e4" stroke="#1b2630" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M-2,-4 Q4,-1 10,-3" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/>
+            <circle cx="-5" cy="-2" r="2" fill="#1b2630"/>
+            <circle cx="-5.6" cy="-2.6" r="0.7" fill="#ffffff"/>
+          </g>
+
+          <!-- ENGINEERING BLUEPRINT / 2-BONE IK OVERLAY (Toggleable) -->
+          <g id="ik-blueprint" opacity="0" pointer-events="none">
+            <rect x="-152" y="-320" width="498" height="414" rx="12" fill="#0d2238" fill-opacity="0.22" stroke="#6ce8ff" stroke-width="1.4" stroke-dasharray="6 5"/>
+            <circle cx="0" cy="0" r="82" fill="none" stroke="#6ce8ff" stroke-width="1.3" stroke-dasharray="4 4" opacity="0.75"/>
+            <circle cx="228" cy="0" r="82" fill="none" stroke="#6ce8ff" stroke-width="1.3" stroke-dasharray="4 4" opacity="0.75"/>
+            <circle cx="92" cy="6" r="30" fill="none" stroke="#ffdf73" stroke-width="1.4" stroke-dasharray="3 3"/>
+            <path id="ik-vec-far" d="" fill="none" stroke="#8ad2ff" stroke-width="2" stroke-dasharray="4 3"/>
+            <path id="ik-vec-near" d="" fill="none" stroke="#6ce8ff" stroke-width="2.6"/>
+            <circle id="ik-hip-r" r="5" fill="#ffdf73" stroke="#0b1d30" stroke-width="1.6"/>
+            <circle id="ik-knee-r" r="5.5" fill="#6ce8ff" stroke="#0b1d30" stroke-width="1.6"/>
+            <circle id="ik-ankle-r" r="5" fill="#ff7d6b" stroke="#0b1d30" stroke-width="1.6"/>
+            <circle id="ik-knee-l" r="4.2" fill="#8ad2ff" stroke="#0b1d30" stroke-width="1.4"/>
+            <g transform="translate(-140, -308)">
+              <rect width="198" height="72" rx="8" fill="#0b1d30" fill-opacity="0.88" stroke="#6ce8ff" stroke-opacity="0.75"/>
+              <text x="11" y="19" fill="#6ce8ff" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5" font-weight="700">2-BONE IK TELEMETRY</text>
+              <text id="bp-angles" x="11" y="37" fill="#eef9ff" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10.5">R-KNEE 112.0° · L-KNEE 98.4°</text>
+              <text id="bp-crank" x="11" y="53" fill="#ffdf73" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="10">CRANK 000° · L1=88 L2=90</text>
+              <text id="bp-slip" x="11" y="66" fill="#9de8c2" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="9.5">WHEEL SLIP 0.00% · RATIO 1.85×</text>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- 7. FOREGROUND PARTICLES (Sparkles, Petals, Fireflies, Sea Spray) -->
+      <g id="particles-layer" pointer-events="none"></g>
+    </svg>
+
+    <div class="stage-hud">
+      <span class="hud-pill"><span>⚓</span><span id="hud-theme-name">晴汐蓝 · Setouchi Breeze</span></span>
+      <span class="hud-pill hud-hint">点鹈鹕抛鱼 · 点车铃响铃 · 点路面翘头 · 点天空唤风</span>
+    </div>
+    <div id="hud-toast" class="hud-toast" role="status" aria-live="polite"></div>
+  </figure>
+
+  <section class="controls" aria-label="骑行控制台">
+    <button type="button" id="btn-play" class="btn primary" aria-pressed="true">
+      <svg class="ico" id="ico-play" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/></svg>
+      <span id="lbl-play">暂停</span> <kbd>P</kbd>
+    </button>
+
+    <label class="gear-box" aria-label="变速档位">
+      <svg class="gear-icon ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9l2.1 2.1m10 10 2.1 2.1M4.9 19.1 7 17m10-10 2.1-2.1"/></svg>
+      <select id="gear-select">
+        <option value="1">1 档 · 港口漫游</option>
+        <option value="2">2 档 · 轻风赏海</option>
+        <option value="3" selected>3 档 · 邮差巡航</option>
+        <option value="4">4 档 · 踏浪提速</option>
+        <option value="5">5 档 · 追日疾行</option>
+        <option value="6">6 档 · 海风冲刺</option>
+      </select>
+      <svg class="gear-chevron ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </label>
+
+    <button type="button" id="btn-bell" class="btn">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+      响铃 <kbd>B</kbd>
+    </button>
+
+    <button type="button" id="btn-fish" class="btn">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 12c3.5-5 9.5-5 13 0-3.5 5-9.5 5-13 0Z"/><path d="M6.5 12 2.5 8.5v7L6.5 12Z"/><circle cx="15.5" cy="11.2" r="1" fill="currentColor" stroke="none"/></svg>
+      抛鱼 <kbd>F</kbd>
+    </button>
+
+    <button type="button" id="btn-hop" class="btn">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>
+      翘头 <kbd>Space</kbd>
+    </button>
+
+    <button type="button" id="btn-gust" class="btn">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h12a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h9a2.5 2.5 0 1 1-2.5 2.5"/></svg>
+      顺风 <kbd>W</kbd>
+    </button>
+
+    <button type="button" id="btn-ik" class="btn spacer" aria-pressed="false">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.2"/><circle cx="15" cy="12" r="2.2"/><circle cx="9" cy="19" r="2.2"/><path d="m7.8 7.2 5.4 3.6m.1 2.7-2.9 3.8"/></svg>
+      IK 蓝图 <kbd>X</kbd>
+    </button>
+
+    <button type="button" id="btn-sound" class="btn" aria-pressed="false">
+      <svg class="ico" id="ico-sound" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m22 9-6 6m0-6 6 6"/></svg>
+      <span id="lbl-sound">声景关</span> <kbd>M</kbd>
+    </button>
+
+    <button type="button" id="btn-export" class="btn">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-4 5 5 5-5M4 19h16"/></svg>
+      导出 SVG <kbd>S</kbd>
+    </button>
+  </section>
+
+  <dl class="telemetry" aria-label="实时骑行遥测">
+    <div>
+      <dt>巡航速度</dt>
+      <dd><span id="t-speed">22.4</span><span class="unit">km/h</span></dd>
+    </div>
+    <div>
+      <dt>曲柄踏频 / 齿比</dt>
+      <dd><span id="t-rpm">68</span><span class="unit" id="t-ratio">RPM · 1.85×</span></dd>
+    </div>
+    <div>
+      <dt>海岸里程</dt>
+      <dd><span id="t-dist">0.00</span><span class="unit">km</span></dd>
+    </div>
+    <div>
+      <dt>喉囊接鱼 · 膝角</dt>
+      <dd><span id="t-fish">0</span><span class="unit" id="t-knee">条 · R 112°</span></dd>
+    </div>
+  </dl>
+
+  <footer class="foot-note">
+    <span>单文件零外链 · 纯矢量 SVG + Web Audio 物理合成 + 解析 2-Bone IK</span>
+    <span>署名: PRO1V(valerie...@gmail.com) · Antigravity 原创直写</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  const el = (id) => document.getElementById(id);
+  const svgEl = (tag, attrs = {}) => {
+    const node = document.createElementNS(SVG_NS, tag);
+    for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, String(v));
+    return node;
+  };
+
+  /* -------------------- Theme Definitions -------------------- */
+  const THEMES = {
+    azure: {
+      name: "晴汐蓝 · Setouchi Breeze",
+      meta: "#f6f2e8",
+      sky: ["#3c8fc9", "#87c8e6", "#f8ebd2"],
+      halo: ["#fff8d6", "#ffe8a8", "#ffe8a8"],
+      orbCore: "#fff7d4",
+      orbPos: [970, 128],
+      moonAlpha: 0,
+      starsAlpha: 0,
+      sea: ["#3593b3", "#227796", "#175873"],
+      shimmer: "#fff7cf",
+      waveStroke: "#d9f4fb",
+      islandFar: "#6da5bf",
+      islandMid: "#4d8aa3",
+      townWall: "#faf0dc",
+      townRoof: "#d66849",
+      windowLit: "#4d6b7d",
+      windowGlow: 0,
+      wall: ["#f2e4cb", "#cbb899"],
+      road: ["#5d6b78", "#45525f", "#323d48"],
+      dash: "#f5e8cc",
+      cloud: "#fffdf8",
+      cloudShadow: "#c9e0ec",
+      treeLeaf: ["#2d7d63", "#3d9976", "#1f614d"],
+      beamAlpha: 0.08,
+      lampGlowAlpha: 0,
+      lampGlass: "#e6f2f5",
+      particleType: "spray"
+    },
+    tangerine: {
+      name: "橘子海 · Tangerine Dusk",
+      meta: "#faf0e6",
+      sky: ["#473668", "#d16c63", "#ffcb85"],
+      halo: ["#fff0b8", "#ff9e5e", "#ff9e5e"],
+      orbCore: "#ffe7a3",
+      orbPos: [920, 224],
+      moonAlpha: 0,
+      starsAlpha: 0.25,
+      sea: ["#d66e5c", "#8f4c63", "#493152"],
+      shimmer: "#ffd485",
+      waveStroke: "#ffd9b8",
+      islandFar: "#7c5373",
+      islandMid: "#5b3d5c",
+      townWall: "#f2cfb1",
+      townRoof: "#9e3f35",
+      windowLit: "#ffdc7d",
+      windowGlow: 0.72,
+      wall: ["#dfb99c", "#a37b6c"],
+      road: ["#57495e", "#3d3347", "#292133"],
+      dash: "#ffdcb3",
+      cloud: "#ffe4c7",
+      cloudShadow: "#c98582",
+      treeLeaf: ["#4a5e4d", "#667855", "#324239"],
+      beamAlpha: 0.36,
+      lampGlowAlpha: 0.58,
+      lampGlass: "#ffe596",
+      particleType: "ember"
+    },
+    lantern: {
+      name: "夏夜萤火 · Lantern Harbor",
+      meta: "#0e1625",
+      sky: ["#0b1428", "#182d52", "#2e4b73"],
+      halo: ["#fff7d1", "#9ec9ff", "#9ec9ff"],
+      orbCore: "#fff5cc",
+      orbPos: [950, 114],
+      moonAlpha: 0.94,
+      starsAlpha: 0.95,
+      sea: ["#173557", "#102540", "#091729"],
+      shimmer: "#d6ebff",
+      waveStroke: "#74a8cf",
+      islandFar: "#1d3557",
+      islandMid: "#132642",
+      townWall: "#273f61",
+      townRoof: "#1b2b45",
+      windowLit: "#ffd86e",
+      windowGlow: 1,
+      wall: ["#4f5c73", "#2e394d"],
+      road: ["#243042", "#1a2333", "#111824"],
+      dash: "#95adc9",
+      cloud: "#324c70",
+      cloudShadow: "#1b2e4a",
+      treeLeaf: ["#194246", "#225757", "#102d33"],
+      beamAlpha: 0.76,
+      lampGlowAlpha: 0.95,
+      lampGlass: "#fff0a6",
+      particleType: "firefly"
+    },
+    sakura: {
+      name: "樱风薄雾 · Sakura Mist",
+      meta: "#faf2f4",
+      sky: ["#9c9fd4", "#e3b4ca", "#fde8e0"],
+      halo: ["#fff7ef", "#ffd6df", "#ffd6df"],
+      orbCore: "#fff6ec",
+      orbPos: [955, 148],
+      moonAlpha: 0,
+      starsAlpha: 0,
+      sea: ["#6ea7b8", "#4d879c", "#356478"],
+      shimmer: "#fff0e6",
+      waveStroke: "#fde6ee",
+      islandFar: "#9e98ba",
+      islandMid: "#7d7ea3",
+      townWall: "#fcf0f2",
+      townRoof: "#cc6c7f",
+      windowLit: "#6d7491",
+      windowGlow: 0.12,
+      wall: ["#f2e1e0", "#c9b3b5"],
+      road: ["#656275", "#4c495c", "#383545"],
+      dash: "#fae4e8",
+      cloud: "#fff5f7",
+      cloudShadow: "#d9bccb",
+      treeLeaf: ["#e89db6", "#f5bccf", "#c97493"],
+      beamAlpha: 0.14,
+      lampGlowAlpha: 0.15,
+      lampGlass: "#fff1e6",
+      particleType: "petal"
+    }
+  };
+
+  /* -------------------- Gear Ratios & Kinematics -------------------- */
+  const GEARS = {
+    1: { label: "1 档 · 港口漫游", rpm: 48, ratio: 1.28 },
+    2: { label: "2 档 · 轻风赏海", rpm: 58, ratio: 1.54 },
+    3: { label: "3 档 · 邮差巡航", rpm: 68, ratio: 1.85 },
+    4: { label: "4 档 · 踏浪提速", rpm: 78, ratio: 2.18 },
+    5: { label: "5 档 · 追日疾行", rpm: 88, ratio: 2.52 },
+    6: { label: "6 档 · 海风冲刺", rpm: 98, ratio: 2.86 }
+  };
+
+  const WHEEL_R = 82;
+  const CRANK_R = 30;
+  const BB = { x: 92, y: 6 };
+  const HIP_R = { x: 54, y: -124 };
+  const HIP_L = { x: 60, y: -127 };
+  const L1 = 88;
+  const L2 = 90;
+  const RIG_BASE_X = 520;
+  const RIG_BASE_Y = 486;
+
+  /* -------------------- Build Static Procedural Vector Details -------------------- */
+  function initWheelSpokes() {
+    const group = el("wheel-spokes");
+    const count = 18;
+    for (let i = 0; i < count; i++) {
+      const a = (i / count) * Math.PI * 2;
+      const b = a + 0.24;
+      group.appendChild(svgEl("line", {
+        x1: (Math.cos(a) * 10).toFixed(2),
+        y1: (Math.sin(a) * 10).toFixed(2),
+        x2: (Math.cos(b) * 69).toFixed(2),
+        y2: (Math.sin(b) * 69).toFixed(2)
+      }));
+    }
+  }
+
+  function initChainTangents() {
+    const r1 = 10, r2 = 20;
+    const dx = BB.x, dy = BB.y;
+    const d = Math.hypot(dx, dy);
+    const base = Math.atan2(dy, dx);
+    const beta = Math.asin((r2 - r1) / d);
+    const nTop = base - Math.PI / 2 - beta;
+    const nBot = base + Math.PI / 2 + beta;
+
+    const topD = `M ${(Math.cos(nTop) * r1).toFixed(2)},${(Math.sin(nTop) * r1).toFixed(2)} L ${(BB.x + Math.cos(nTop) * r2).toFixed(2)},${(BB.y + Math.sin(nTop) * r2).toFixed(2)}`;
+    const botD = `M ${(Math.cos(nBot) * r1).toFixed(2)},${(Math.sin(nBot) * r1).toFixed(2)} L ${(BB.x + Math.cos(nBot) * r2).toFixed(2)},${(BB.y + Math.sin(nBot) * r2).toFixed(2)}`;
+
+    el("chain-upper").setAttribute("d", topD);
+    el("chain-upper-links").setAttribute("d", topD);
+    el("chain-lower").setAttribute("d", botD);
+    el("chain-lower-links").setAttribute("d", botD);
+  }
+
+  const starsData = [];
+  function initStars() {
+    const g = el("stars-layer");
+    let seed = 4219;
+    const rand = () => {
+      seed = (seed * 16807) % 2147483647;
+      return (seed - 1) / 2147483646;
+    };
+    for (let i = 0; i < 68; i++) {
+      const cx = rand() * 1260 + 10;
+      const cy = rand() * 240 + 14;
+      const r = rand() * 1.7 + 0.6;
+      const phase = rand() * Math.PI * 2;
+      const star = svgEl("circle", { cx: cx.toFixed(1), cy: cy.toFixed(1), r: r.toFixed(2), fill: "#fff9dc" });
+      g.appendChild(star);
+      starsData.push({ el: star, phase, base: r });
+    }
+  }
+
+  const cloudsFar = [];
+  const cloudsNear = [];
+  function makeCloud(scale, opacity) {
+    const g = svgEl("g", { opacity });
+    const sh = svgEl("path", {
+      d: "M-66,14 C-78,14 -82,-2 -66,-6 C-62,-24 -38,-32 -20,-22 C-8,-40 26,-40 38,-20 C58,-24 76,-10 72,6 C82,10 78,18 66,18 L-62,18 Z",
+      fill: "#c9e0ec",
+      transform: `translate(0, 4) scale(${scale})`,
+      class: "cloud-shadow"
+    });
+    const body = svgEl("path", {
+      d: "M-64,12 C-76,12 -80,-4 -64,-8 C-60,-26 -36,-34 -18,-24 C-6,-42 28,-42 40,-22 C60,-26 78,-12 74,4 C84,8 80,15 66,15 L-60,15 Z",
+      fill: "#fffdf8",
+      transform: `scale(${scale})`,
+      class: "cloud-body"
+    });
+    g.appendChild(sh);
+    g.appendChild(body);
+    return g;
+  }
+
+  function initClouds() {
+    const cf = el("clouds-far");
+    [[140, 92, 0.85], [490, 68, 0.72], [860, 98, 0.92], [1190, 74, 0.78]].forEach(([x, y, s]) => {
+      const node = makeCloud(s, 0.72);
+      cf.appendChild(node);
+      cloudsFar.push({ el: node, x, y, speed: 0.035 });
+    });
+    const cn = el("clouds-near");
+    [[260, 148, 1.05], [740, 142, 0.94], [1160, 160, 1.12]].forEach(([x, y, s]) => {
+      const node = makeCloud(s, 0.88);
+      cn.appendChild(node);
+      cloudsNear.push({ el: node, x, y, speed: 0.075 });
+    });
+  }
+
+  const birds = [];
+  function initBirds() {
+    const g = el("birds-layer");
+    [
+      { x: 240, y: 122, s: 1.0, p: 0.2 },
+      { x: 288, y: 108, s: 0.82, p: 1.6 },
+      { x: 760, y: 92, s: 0.92, p: 3.1 },
+      { x: 1040, y: 158, s: 0.76, p: 4.5 }
+    ].forEach((b) => {
+      const path = svgEl("path", {
+        d: "",
+        fill: "none",
+        stroke: "#26465c",
+        "stroke-width": (2 * b.s).toFixed(1),
+        "stroke-linecap": "round"
+      });
+      g.appendChild(path);
+      birds.push({ ...b, el: path, scatterY: 0, scatterVy: 0 });
+    });
+  }
+
+  const islands = [];
+  let windmillBlades = null;
+  function initIslands() {
+    const g = el("islands-layer");
+    // Tile width 1600, two copies for seamless wrap
+    for (let copy = 0; copy < 2; copy++) {
+      const tile = svgEl("g");
+      // Far mountain archipelago
+      tile.appendChild(svgEl("path", {
+        d: "M0,332 L0,290 Q95,232 215,264 Q330,295 430,254 Q560,204 700,262 Q825,314 960,258 Q1115,198 1265,244 Q1420,290 1600,290 L1600,332 Z",
+        class: "island-far",
+        fill: "#6da5bf"
+      }));
+      // Mid peninsula + cliffside Mediterranean town
+      tile.appendChild(svgEl("path", {
+        d: "M80,332 Q195,262 340,274 Q465,284 565,332 Z M850,332 Q980,256 1125,242 Q1255,228 1390,280 Q1470,310 1530,332 Z",
+        class: "island-mid",
+        fill: "#4d8aa3"
+      }));
+
+      // Charming Coastal Cliff Town (x ~ 1030..1280)
+      const town = svgEl("g", { transform: "translate(1035, 224)" });
+      const houses = [
+        [0, 32, 34, 34], [32, 22, 38, 44], [68, 30, 32, 36],
+        [98, 16, 42, 50], [138, 28, 36, 38], [172, 36, 34, 30]
+      ];
+      houses.forEach(([x, y, w, h], idx) => {
+        town.appendChild(svgEl("rect", { x, y, width: w, height: h, fill: "#faf0dc", class: "town-wall", stroke: "#284154", "stroke-width": "1.2" }));
+        town.appendChild(svgEl("polygon", {
+          points: `${x - 3},${y} ${x + w / 2},${y - 12 - (idx % 2) * 4} ${x + w + 3},${y}`,
+          fill: "#d66849",
+          class: "town-roof",
+          stroke: "#284154",
+          "stroke-width": "1.1"
+        }));
+        for (let wy = y + 8; wy < y + h - 8; wy += 12) {
+          town.appendChild(svgEl("rect", { x: x + 7, y: wy, width: 6, height: 7, rx: 1, fill: "#4d6b7d", class: "town-win" }));
+          town.appendChild(svgEl("rect", { x: x + w - 13, y: wy, width: 6, height: 7, rx: 1, fill: "#4d6b7d", class: "town-win" }));
+        }
+      });
+      town.appendChild(svgEl("rect", { x: -6, y: 66, width: 218, height: 6, rx: 2, fill: "#d9ccb4", stroke: "#284154", "stroke-width": "1" }));
+      // White Coastal Windmill perched on hilltop
+      const mill = svgEl("g", { transform: "translate(238, 280)" });
+      mill.appendChild(svgEl("path", { d: "M-12,32 L-7,-12 L7,-12 L12,32 Z", fill: "#faf0dc", class: "town-wall", stroke: "#284154", "stroke-width": "1.3" }));
+      mill.appendChild(svgEl("path", { d: "M-10,-12 Q0,-26 10,-12 Z", fill: "#d66849", class: "town-roof", stroke: "#284154", "stroke-width": "1.2" }));
+      mill.appendChild(svgEl("rect", { x: -3, y: 12, width: 6, height: 10, rx: 2, fill: "#4d6b7d", class: "town-win" }));
+      const blades = svgEl("g", { transform: "translate(0, -10)", class: "windmill-blades" });
+      for (let k = 0; k < 4; k++) {
+        const bg = svgEl("g", { transform: `rotate(${k * 90})` });
+        bg.appendChild(svgEl("line", { x1: 0, y1: 0, x2: 0, y2: -32, stroke: "#284154", "stroke-width": "2" }));
+        bg.appendChild(svgEl("rect", { x: 1, y: -30, width: 7, height: 22, fill: "#fff7e8", stroke: "#284154", "stroke-width": "1" }));
+        blades.appendChild(bg);
+      }
+      blades.appendChild(svgEl("circle", { r: 3, fill: "#d9a441", stroke: "#284154", "stroke-width": "1" }));
+      mill.appendChild(blades);
+      tile.appendChild(mill);
+      tile.appendChild(town);
+
+      // Striped Coastal Lighthouse on far cape (x ~ 502)
+      const lh = svgEl("g", { transform: "translate(502, 240)" });
+      lh.appendChild(svgEl("path", { d: "M-26,72 Q-8,52 2,54 Q18,56 30,72 Z", class: "island-mid", fill: "#4d8aa3" }));
+      lh.appendChild(svgEl("path", { d: "M-10,64 L-6,12 L6,12 L10,64 Z", fill: "#fff9ec", stroke: "#25394a", "stroke-width": "1.4" }));
+      lh.appendChild(svgEl("path", { d: "M-8,28 L8,28 L9,42 L-9,42 Z M-9,52 L9,52 L10,62 L-10,62 Z", fill: "#d95b43" }));
+      lh.appendChild(svgEl("rect", { x: -9, y: 8, width: 18, height: 5, rx: 1.5, fill: "#284154" }));
+      lh.appendChild(svgEl("rect", { x: -6, y: -2, width: 12, height: 10, fill: "#fff0a6", stroke: "#25394a", "stroke-width": "1.2" }));
+      lh.appendChild(svgEl("path", { d: "M-9,-2 L0,-11 L9,-2 Z", fill: "#d95b43", stroke: "#25394a", "stroke-width": "1.2" }));
+      tile.appendChild(lh);
+
+      g.appendChild(tile);
+      islands.push({ el: tile, offset: copy * 1600 });
+    }
+    windmillBlades = g.querySelectorAll(".windmill-blades");
+  }
+
+  const shimmerBars = [];
+  function initSeaShimmer() {
+    const g = el("sea-shimmer");
+    for (let i = 0; i < 12; i++) {
+      const y = 338 + i * 10.5;
+      const w = 110 - i * 5 + (i % 3) * 18;
+      const line = svgEl("line", {
+        x1: 0, y1: y, x2: w, y2: y,
+        stroke: "#fff7cf",
+        "stroke-width": (3.2 - i * 0.14).toFixed(2),
+        "stroke-linecap": "round",
+        opacity: (0.58 - i * 0.032).toFixed(2)
+      });
+      g.appendChild(line);
+      shimmerBars.push({ el: line, y, w, phase: i * 0.72 });
+    }
+  }
+
+  const boats = [];
+  function initBoats() {
+    const g = el("boats-layer");
+    [
+      { x: 220, y: 368, s: 0.78, speed: 0.08, sail2: "#e86b4a", p: 0.4 },
+      { x: 760, y: 392, s: 1.0, speed: 0.12, sail2: "#f0b646", p: 2.1 },
+      { x: 1180, y: 360, s: 0.7, speed: 0.07, sail2: "#47a39b", p: 4.0 }
+    ].forEach((b) => {
+      const node = svgEl("g");
+      const inner = svgEl("g", { transform: `scale(${b.s})` });
+      inner.appendChild(svgEl("line", { x1: 0, y1: -44, x2: 0, y2: 2, stroke: "#243747", "stroke-width": "2" }));
+      inner.appendChild(svgEl("path", { d: "M-2,-42 C-4,-24 -14,-10 -24,-2 L-2,-2 Z", fill: "#fff9ec", stroke: "#243747", "stroke-width": "1.5", "stroke-linejoin": "round" }));
+      inner.appendChild(svgEl("path", { d: "M2,-36 C12,-22 20,-12 24,-2 L2,-2 Z", fill: b.sail2, stroke: "#243747", "stroke-width": "1.5", "stroke-linejoin": "round" }));
+      inner.appendChild(svgEl("path", { d: "M-28,0 L28,0 L20,10 L-20,10 Z", fill: "#284154", stroke: "#182733", "stroke-width": "1.5", "stroke-linejoin": "round" }));
+      inner.appendChild(svgEl("line", { x1: -23, y1: 4, x2: 23, y2: 4, stroke: "#f5e8cc", "stroke-width": "1.4" }));
+      node.appendChild(inner);
+      g.appendChild(node);
+      boats.push({ ...b, el: node });
+    });
+  }
+
+  const waves = [];
+  function initWaves() {
+    const g = el("sea-waves");
+    for (let i = 0; i < 18; i++) {
+      const row = i % 4;
+      const x = (i * 89) % 1420;
+      const y = 348 + row * 28 + (i % 2) * 8;
+      const len = 42 + (i % 5) * 14;
+      const path = svgEl("path", {
+        d: `M0,0 Q${(len * 0.25).toFixed(1)},-4 ${(len * 0.5).toFixed(1)},0 T${len},0`,
+        fill: "none",
+        stroke: "#d9f4fb",
+        "stroke-width": (1.8 + row * 0.25).toFixed(2),
+        "stroke-opacity": (0.34 + row * 0.08).toFixed(2),
+        "stroke-linecap": "round"
+      });
+      g.appendChild(path);
+      waves.push({ el: path, x, y, speed: 0.14 + row * 0.06, phase: i * 0.8 });
+    }
+  }
+
+  const seaJumpers = [];
+  function initSeaFish() {
+    const g = el("sea-fish-layer");
+    for (let i = 0; i < 2; i++) {
+      const node = svgEl("g", { opacity: 0 });
+      node.appendChild(svgEl("path", { d: "M-8,0 Q2,-6 11,0 Q2,6 -8,0 Z", fill: "#d8f5ff", stroke: "#1d4b63", "stroke-width": "1.2" }));
+      node.appendChild(svgEl("path", { d: "M-7,0 L-13,-4 L-12,4 Z", fill: "#9bd7eb" }));
+      g.appendChild(node);
+      seaJumpers.push({ el: node, active: false, t: 0, dur: 1.0, x: 400, y: 410, timer: 2.5 + i * 4.5 });
+    }
+  }
+
+  const balustrades = [];
+  function initBalustrade() {
+    const g = el("balustrade-layer");
+    const spacing = 64;
+    const count = Math.ceil(1280 / spacing) + 2;
+    for (let i = 0; i < count; i++) {
+      const pillar = svgEl("g");
+      pillar.appendChild(svgEl("rect", { x: -6, y: 462, width: 12, height: 38, rx: 2, fill: "#dfd0b4", stroke: "#8f7d63", "stroke-width": "1.2" }));
+      pillar.appendChild(svgEl("path", { d: "M12,494 L12,478 A18,16 0 0 1 52,478 L52,494", fill: "none", stroke: "#8f7d63", "stroke-width": "2.2", "stroke-opacity": "0.52" }));
+      g.appendChild(pillar);
+      balustrades.push({ el: pillar, x: i * spacing });
+    }
+  }
+
+  const promenadeProps = [];
+  function initPromenade() {
+    const g = el("promenade-layer");
+    // Mix of coastal pine trees and harbor lampposts spaced along 1680px loop
+    const items = [
+      { kind: "lamp", x: 110 },
+      { kind: "tree", x: 290, s: 1.0 },
+      { kind: "lamp", x: 520 },
+      { kind: "tree", x: 740, s: 0.86 },
+      { kind: "tree", x: 860, s: 1.08 },
+      { kind: "lamp", x: 1050 },
+      { kind: "tree", x: 1290, s: 0.94 },
+      { kind: "lamp", x: 1490 }
+    ];
+    items.forEach((it) => {
+      const node = svgEl("g");
+      if (it.kind === "lamp") {
+        // Vintage cast-iron coastal lamppost
+        node.appendChild(svgEl("rect", { x: -5, y: 454, width: 10, height: 46, rx: 2, fill: "#283947" }));
+        node.appendChild(svgEl("rect", { x: -3, y: 342, width: 6, height: 118, fill: "#2c404f" }));
+        node.appendChild(svgEl("path", { d: "M0,344 C0,322 24,322 28,334", fill: "none", stroke: "#283947", "stroke-width": "4.2", "stroke-linecap": "round" }));
+        node.appendChild(svgEl("circle", { cx: 28, cy: 344, r: 44, fill: "url(#lamp-glow)", class: "lamp-halo", opacity: 0 }));
+        node.appendChild(svgEl("path", { d: "M21,334 L35,334 L32,350 L24,350 Z", fill: "#e6f2f5", class: "lamp-glass", stroke: "#21313d", "stroke-width": "1.6" }));
+        node.appendChild(svgEl("path", { d: "M19,334 L28,326 L37,334 Z", fill: "#283947" }));
+      } else {
+        // Coastal stone pine / sakura tree
+        const sc = it.s;
+        const inner = svgEl("g", { transform: `translate(0, 496) scale(${sc})` });
+        inner.appendChild(svgEl("path", { d: "M-6,0 Q-2,-46 -8,-88 L4,-88 Q8,-44 8,0 Z", fill: "#6e4c36", stroke: "#2b1d15", "stroke-width": "1.6" }));
+        inner.appendChild(svgEl("path", { d: "M-2,-52 L-24,-74 M3,-58 L22,-78", stroke: "#6e4c36", "stroke-width": "4.5", "stroke-linecap": "round" }));
+        inner.appendChild(svgEl("circle", { cx: -24, cy: -86, r: 24, fill: "#1f614d", class: "tree-leaf-2" }));
+        inner.appendChild(svgEl("circle", { cx: 22, cy: -88, r: 23, fill: "#2d7d63", class: "tree-leaf-0" }));
+        inner.appendChild(svgEl("circle", { cx: 0, cy: -104, r: 30, fill: "#3d9976", class: "tree-leaf-1" }));
+        node.appendChild(inner);
+      }
+      g.appendChild(node);
+      promenadeProps.push({ ...it, el: node });
+    });
+  }
+
+  const roadDashes = [];
+  function initRoadDashes() {
+    const g = el("road-dashes");
+    const spacing = 160;
+    const count = Math.ceil(1280 / spacing) + 2;
+    for (let i = 0; i < count; i++) {
+      const r = svgEl("rect", {
+        x: 0, y: 562, width: 78, height: 6.5, rx: 3.2,
+        fill: "#f5e8cc", opacity: 0.72, class: "road-dash"
+      });
+      g.appendChild(r);
+      roadDashes.push({ el: r, x: i * spacing });
+    }
+  }
+
+  const mileposts = [];
+  function initMileposts() {
+    const g = el("mileposts-layer");
+    const post = svgEl("g");
+    post.appendChild(svgEl("rect", { x: -16, y: 472, width: 32, height: 32, rx: 5, fill: "#fff8ea", stroke: "#283a47", "stroke-width": "2" }));
+    post.appendChild(svgEl("rect", { x: -16, y: 472, width: 32, height: 10, rx: 4, fill: "#d95b43" }));
+    const txt = svgEl("text", {
+      x: 0, y: 496, "text-anchor": "middle", fill: "#1e2e3b",
+      "font-family": "ui-monospace,SFMono-Regular,Menlo,monospace", "font-size": "10", "font-weight": "700"
+    });
+    txt.textContent = "01k";
+    post.appendChild(txt);
+    g.appendChild(post);
+    mileposts.push({ el: post, txt, x: 1180, num: 1 });
+  }
+
+  const windRibbons = [];
+  function initWindRibbons() {
+    const g = el("wind-ribbons");
+    for (let i = 0; i < 6; i++) {
+      const p = svgEl("path", { d: "", stroke: "#ffffff", "stroke-width": (1.8 + (i % 2) * 0.9).toFixed(1), opacity: 0 });
+      g.appendChild(p);
+      windRibbons.push({
+        el: p,
+        x: 200 + i * 210,
+        y: 220 + i * 48,
+        len: 95 + (i % 3) * 45,
+        phase: i * 1.15
+      });
+    }
+  }
+
+  const particles = [];
+  function initParticles() {
+    const g = el("particles-layer");
+    for (let i = 0; i < 24; i++) {
+      const c = svgEl("ellipse", { cx: 0, cy: 0, rx: 4, ry: 2.5, fill: "#ffffff", opacity: 0 });
+      g.appendChild(c);
+      particles.push({
+        el: c,
+        x: (i * 57) % 1280,
+        y: 120 + (i * 23) % 440,
+        vx: -80 - (i % 5) * 28,
+        vy: 14 + (i % 4) * 9,
+        phase: i * 0.9,
+        rot: i * 35,
+        burst: false,
+        life: 1
+      });
+    }
+  }
+
+  /* -------------------- Procedural Web Audio Soundscape -------------------- */
+  const Sound = (() => {
+    let ctx = null;
+    let enabled = false;
+    let masterGain = null;
+    let oceanGain = null;
+    let windFilter = null;
+    let windGain = null;
+
+    function ensureCtx() {
+      if (ctx) return true;
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+      ctx = new AC();
+      masterGain = ctx.createGain();
+      masterGain.gain.value = 0.0001;
+      masterGain.connect(ctx.destination);
+
+      // Synthesize seamless 2s noise buffer for ocean waves & coastal breeze
+      const sr = ctx.sampleRate;
+      const len = sr * 2;
+      const buf = ctx.createBuffer(1, len, sr);
+      const data = buf.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < len; i++) {
+        const w = Math.random() * 2 - 1;
+        last = (last + 0.04 * w) / 1.04;
+        data[i] = last * 3.2;
+      }
+
+      // Ocean surf bed
+      const surfSrc = ctx.createBufferSource();
+      surfSrc.buffer = buf;
+      surfSrc.loop = true;
+      const surfFilter = ctx.createBiquadFilter();
+      surfFilter.type = "lowpass";
+      surfFilter.frequency.value = 340;
+      oceanGain = ctx.createGain();
+      oceanGain.gain.value = 0.14;
+      const surfLfo = ctx.createOscillator();
+      surfLfo.frequency.value = 0.14;
+      const surfLfoGain = ctx.createGain();
+      surfLfoGain.gain.value = 0.06;
+      surfLfo.connect(surfLfoGain).connect(oceanGain.gain);
+      surfSrc.connect(surfFilter).connect(oceanGain).connect(masterGain);
+      surfSrc.start();
+      surfLfo.start();
+
+      // Speed-coupled coastal wind
+      const windSrc = ctx.createBufferSource();
+      windSrc.buffer = buf;
+      windSrc.loop = true;
+      windFilter = ctx.createBiquadFilter();
+      windFilter.type = "bandpass";
+      windFilter.frequency.value = 520;
+      windFilter.Q.value = 1.6;
+      windGain = ctx.createGain();
+      windGain.gain.value = 0.04;
+      windSrc.connect(windFilter).connect(windGain).connect(masterGain);
+      windSrc.start();
+
+      return true;
+    }
+
+    function setEnabled(flag) {
+      enabled = flag;
+      if (enabled) {
+        if (!ensureCtx()) return false;
+        if (ctx.state === "suspended") ctx.resume();
+        masterGain.gain.setTargetAtTime(0.65, ctx.currentTime, 0.08);
+      } else if (ctx && masterGain) {
+        masterGain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.06);
+      }
+      return enabled;
+    }
+
+    function updateAmbience(speedKmh, gustStrength) {
+      if (!enabled || !ctx || !windFilter || !windGain) return;
+      const now = ctx.currentTime;
+      const freq = 380 + speedKmh * 14 + gustStrength * 420;
+      const gain = Math.min(0.24, 0.02 + speedKmh * 0.002 + gustStrength * 0.11);
+      windFilter.frequency.setTargetAtTime(freq, now, 0.12);
+      windGain.gain.setTargetAtTime(gain, now, 0.12);
+    }
+
+    function playBell() {
+      if (!enabled || !ensureCtx()) return;
+      if (ctx.state === "suspended") ctx.resume();
+      const now = ctx.currentTime;
+      const partials = [
+        { f: 1568, g: 0.24, d: 1.25 },
+        { f: 3136, g: 0.11, d: 0.72 },
+        { f: 4280, g: 0.06, d: 0.44 }
+      ];
+      [0, 0.11].forEach((offset, hit) => {
+        partials.forEach((p) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(p.f * (hit ? 1.006 : 1), now + offset);
+          gain.gain.setValueAtTime(0.0001, now + offset);
+          gain.gain.linearRampToValueAtTime(p.g, now + offset + 0.006);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + p.d);
+          osc.connect(gain).connect(masterGain);
+          osc.start(now + offset);
+          osc.stop(now + offset + p.d + 0.04);
+        });
+      });
+    }
+
+    function playFishToss() {
+      if (!enabled || !ensureCtx()) return;
+      if (ctx.state === "suspended") ctx.resume();
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(360, now);
+      osc.frequency.exponentialRampToValueAtTime(760, now + 0.14);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.2, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
+      osc.connect(gain).connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 0.22);
+    }
+
+    function playFishCatch() {
+      if (!enabled || !ensureCtx()) return;
+      if (ctx.state === "suspended") ctx.resume();
+      const now = ctx.currentTime;
+      [523.25, 659.25, 783.99].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+        gain.gain.setValueAtTime(0.001, now + idx * 0.055);
+        gain.gain.linearRampToValueAtTime(0.14, now + idx * 0.055 + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.055 + 0.22);
+        osc.connect(gain).connect(masterGain);
+        osc.start(now + idx * 0.055);
+        osc.stop(now + idx * 0.055 + 0.24);
+      });
+    }
+
+    function playHop() {
+      if (!enabled || !ensureCtx()) return;
+      if (ctx.state === "suspended") ctx.resume();
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sawtooth";
+      const filt = ctx.createBiquadFilter();
+      filt.type = "lowpass";
+      filt.frequency.value = 640;
+      osc.frequency.setValueAtTime(210, now);
+      osc.frequency.exponentialRampToValueAtTime(390, now + 0.16);
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.linearRampToValueAtTime(0.13, now + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.24);
+      osc.connect(filt).connect(gain).connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 0.26);
+    }
+
+    function playTick() {
+      if (!enabled || !ctx || ctx.state !== "running") return;
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(980, now);
+      osc.frequency.exponentialRampToValueAtTime(420, now + 0.02);
+      gain.gain.setValueAtTime(0.026, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.024);
+      osc.connect(gain).connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 0.026);
+    }
+
+    return { setEnabled, updateAmbience, playBell, playFishToss, playFishCatch, playHop, playTick };
+  })();
+
+  /* -------------------- Analytical 2-Bone IK Solver -------------------- */
+  function solve2BoneIK(hip, target, l1, l2) {
+    const dx = target.x - hip.x;
+    const dy = target.y - hip.y;
+    const rawD = Math.hypot(dx, dy);
+    const minD = Math.abs(l1 - l2) + 0.5;
+    const maxD = l1 + l2 - 0.5;
+    const d = Math.max(minD, Math.min(maxD, rawD));
+    const ux = dx / (rawD || 1);
+    const uy = dy / (rawD || 1);
+
+    const a = (l1 * l1 - l2 * l2 + d * d) / (2 * d);
+    const hSq = Math.max(0, l1 * l1 - a * a);
+    const h = Math.sqrt(hSq);
+
+    // Forward (+x) knee bend in SVG (+x right, +y down): rotate u by -90° => (uy, -ux)
+    const kx = hip.x + a * ux + h * uy;
+    const ky = hip.y + a * uy - h * ux;
+
+    const cosKnee = Math.max(-1, Math.min(1, (l1 * l1 + l2 * l2 - d * d) / (2 * l1 * l2)));
+    const kneeDeg = Math.acos(cosKnee) * (180 / Math.PI);
+
+    return { knee: { x: kx, y: ky }, kneeDeg };
+  }
+
+  /* -------------------- Interactive Simulation State -------------------- */
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const state = {
+    playing: !prefersReduced,
+    theme: "azure",
+    gear: 3,
+    blueprint: false,
+    sound: false,
+    time: 0,
+    crankAngle: 0.4,
+    wheelAngle: 0,
+    chainOffset: 0,
+    distanceM: 0,
+    speedKmh: 22.4,
+    rpm: 68,
+    gust: 0,
+    hopY: 0,
+    hopVy: 0,
+    wheelie: 0,
+    wheelieV: 0,
+    bellAnim: 0,
+    fish: { active: false, t: 0, dur: 1.05, caught: 0 },
+    jawAngle: 0,
+    pouchJiggle: 0,
+    blinkTimer: 2.8,
+    blinkDur: 0,
+    windmillAngle: 0,
+    lastHalfTurn: 0
+  };
+
+  /* -------------------- Theme Application -------------------- */
+  function applyTheme(name) {
+    const t = THEMES[name] || THEMES.azure;
+    state.theme = name;
+    document.documentElement.setAttribute("data-theme", name);
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.setAttribute("content", t.meta);
+
+    el("hud-theme-name").textContent = t.name;
+    el("sky-s0").setAttribute("stop-color", t.sky[0]);
+    el("sky-s1").setAttribute("stop-color", t.sky[1]);
+    el("sky-s2").setAttribute("stop-color", t.sky[2]);
+    el("halo-s0").setAttribute("stop-color", t.halo[0]);
+    el("halo-s1").setAttribute("stop-color", t.halo[1]);
+    el("halo-s2").setAttribute("stop-color", t.halo[2]);
+    el("orb-core").setAttribute("fill", t.orbCore);
+    el("orb-core").setAttribute("opacity", t.moonAlpha > 0 ? "0" : "1");
+    el("celestial").setAttribute("transform", `translate(${t.orbPos[0]}, ${t.orbPos[1]})`);
+    el("moon-crescent").setAttribute("opacity", t.moonAlpha);
+    el("stars-layer").setAttribute("opacity", t.starsAlpha);
+
+    el("sea-s0").setAttribute("stop-color", t.sea[0]);
+    el("sea-s1").setAttribute("stop-color", t.sea[1]);
+    el("sea-s2").setAttribute("stop-color", t.sea[2]);
+    el("wall-s0").setAttribute("stop-color", t.wall[0]);
+    el("wall-s1").setAttribute("stop-color", t.wall[1]);
+    el("road-s0").setAttribute("stop-color", t.road[0]);
+    el("road-s1").setAttribute("stop-color", t.road[1]);
+    el("road-s2").setAttribute("stop-color", t.road[2]);
+    el("headlamp-beam").setAttribute("opacity", t.beamAlpha);
+
+    document.querySelectorAll(".cloud-body").forEach((n) => n.setAttribute("fill", t.cloud));
+    document.querySelectorAll(".cloud-shadow").forEach((n) => n.setAttribute("fill", t.cloudShadow));
+    document.querySelectorAll(".island-far").forEach((n) => n.setAttribute("fill", t.islandFar));
+    document.querySelectorAll(".island-mid").forEach((n) => n.setAttribute("fill", t.islandMid));
+    document.querySelectorAll(".town-wall").forEach((n) => n.setAttribute("fill", t.townWall));
+    document.querySelectorAll(".town-roof").forEach((n) => n.setAttribute("fill", t.townRoof));
+    document.querySelectorAll(".town-win").forEach((n) => n.setAttribute("fill", t.windowLit));
+    document.querySelectorAll(".road-dash").forEach((n) => n.setAttribute("fill", t.dash));
+    document.querySelectorAll(".lamp-halo").forEach((n) => n.setAttribute("opacity", t.lampGlowAlpha));
+    document.querySelectorAll(".lamp-glass").forEach((n) => n.setAttribute("fill", t.lampGlass));
+    document.querySelectorAll(".tree-leaf-0").forEach((n) => n.setAttribute("fill", t.treeLeaf[0]));
+    document.querySelectorAll(".tree-leaf-1").forEach((n) => n.setAttribute("fill", t.treeLeaf[1]));
+    document.querySelectorAll(".tree-leaf-2").forEach((n) => n.setAttribute("fill", t.treeLeaf[2]));
+    shimmerBars.forEach((s) => s.el.setAttribute("stroke", t.shimmer));
+    waves.forEach((w) => w.el.setAttribute("stroke", t.waveStroke));
+
+    document.querySelectorAll(".theme-btn").forEach((btn) => {
+      btn.setAttribute("aria-pressed", btn.dataset.theme === name ? "true" : "false");
+    });
+  }
+
+  /* -------------------- Toast Feedback -------------------- */
+  let toastTimer = null;
+  function showToast(msg) {
+    const t = el("hud-toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 2000);
+  }
+
+  /* -------------------- Interactive Triggers -------------------- */
+  function triggerBell() {
+    state.bellAnim = 1.0;
+    Sound.playBell();
+    birds.forEach((b) => { b.scatterVy = -45 - Math.random() * 25; });
+    showToast("叮铃铃！海鸥听见邮差铜铃啦");
+  }
+
+  function triggerFishToss() {
+    if (state.fish.active) return;
+    state.fish.active = true;
+    state.fish.t = 0;
+    state.pouchJiggle = 1.0;
+    Sound.playFishToss();
+    showToast("喉囊抛起一条新鲜沙丁鱼！");
+  }
+
+  function triggerHop() {
+    if (state.hopY <= 2) {
+      state.hopVy = 460;
+      state.wheelieV = 98;
+      Sound.playHop();
+      showToast("顺风翘头跃起！");
+    } else {
+      state.wheelieV = Math.max(state.wheelieV, 56);
+    }
+  }
+
+  function triggerGust() {
+    state.gust = 1.0;
+    showToast("海风加速！围巾与风车一起疾转");
+  }
+
+  function togglePlay() {
+    state.playing = !state.playing;
+    el("btn-play").setAttribute("aria-pressed", String(state.playing));
+    el("lbl-play").textContent = state.playing ? "暂停" : "骑行";
+    el("ico-play").innerHTML = state.playing
+      ? '<rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/>'
+      : '<polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"/>';
+  }
+
+  function toggleIK() {
+    state.blueprint = !state.blueprint;
+    el("btn-ik").setAttribute("aria-pressed", String(state.blueprint));
+    el("ik-blueprint").setAttribute("opacity", state.blueprint ? "1" : "0");
+    showToast(state.blueprint ? "已开启 2-Bone IK 工程蓝图叠层" : "已关闭 IK 工程蓝图");
+  }
+
+  function toggleSound() {
+    const next = Sound.setEnabled(!state.sound);
+    state.sound = next;
+    el("btn-sound").setAttribute("aria-pressed", String(next));
+    el("lbl-sound").textContent = next ? "声景开" : "声景关";
+    el("ico-sound").innerHTML = next
+      ? '<path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.8 5.8a9 9 0 0 1 0 12.4"/>'
+      : '<path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m22 9-6 6m0-6 6 6"/>';
+    showToast(next ? "海浪与海风声景已开启" : "声景已静音");
+  }
+
+  function exportSVG() {
+    const svg = el("scene");
+    const clone = svg.cloneNode(true);
+    clone.setAttribute("xmlns", SVG_NS);
+    clone.setAttribute("width", "1280");
+    clone.setAttribute("height", "680");
+    const comment = document.createComment(" 署名: PRO1V(valerie...@gmail.com) | 海风邮差号 · Pelican Antigravity Ride 导出帧 ");
+    const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      new XMLSerializer().serializeToString(comment) + "\n" +
+      new XMLSerializer().serializeToString(clone);
+    const blob = new Blob([xml], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `pelican-antigravity-ride-${state.theme}.svg`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast(`已导出当前帧：pelican-antigravity-ride-${state.theme}.svg`);
+  }
+
+  /* -------------------- Main Simulation & Render Loop -------------------- */
+  let lastTs = 0;
+
+  function step(dt) {
+    const gCfg = GEARS[state.gear];
+    const gustFactor = 1 + state.gust * 0.42;
+    const targetRpm = gCfg.rpm * gustFactor;
+    state.rpm += (targetRpm - state.rpm) * Math.min(1, dt * 4.5);
+
+    const crankOmega = (state.rpm / 60) * Math.PI * 2;
+    const wheelOmega = crankOmega * gCfg.ratio;
+    const groundPxPerSec = wheelOmega * WHEEL_R;
+
+    // 0.70m wheel diameter => circumference ~2.199m
+    const wheelRevsPerSec = wheelOmega / (Math.PI * 2);
+    state.speedKmh = wheelRevsPerSec * 2.199 * 3.6;
+
+    if (state.playing) {
+      state.time += dt;
+      state.crankAngle = (state.crankAngle + crankOmega * dt) % (Math.PI * 2);
+      state.wheelAngle = (state.wheelAngle + wheelOmega * dt) % (Math.PI * 2);
+      state.chainOffset = (state.chainOffset + crankOmega * 20 * dt) % 16;
+      state.distanceM += wheelRevsPerSec * 2.199 * dt;
+      state.windmillAngle = (state.windmillAngle + (24 + state.gust * 65) * dt) % 360;
+
+      // Cadence half-turn mechanical click
+      const halfTurn = Math.floor(state.crankAngle / Math.PI);
+      if (halfTurn !== state.lastHalfTurn) {
+        state.lastHalfTurn = halfTurn;
+        Sound.playTick();
+      }
+    }
+
+    // Decay tailwind gust
+    if (state.gust > 0) state.gust = Math.max(0, state.gust - dt * 0.36);
+
+    // Bunny-hop & wheelie spring physics
+    if (state.hopY > 0 || state.hopVy !== 0) {
+      state.hopVy -= 1320 * dt;
+      state.hopY += state.hopVy * dt;
+      if (state.hopY < 0) {
+        state.hopY = 0;
+        state.hopVy = 0;
+      }
+    }
+    if (state.wheelie > 0 || Math.abs(state.wheelieV) > 0.05) {
+      const spring = -42 * state.wheelie - 6.8 * state.wheelieV;
+      state.wheelieV += spring * dt;
+      state.wheelie += state.wheelieV * dt;
+      if (state.wheelie < 0) {
+        state.wheelie = 0;
+        state.wheelieV = Math.max(0, -state.wheelieV * 0.25);
+      }
+      if (state.wheelie > 22) {
+        state.wheelie = 22;
+        state.wheelieV = Math.min(0, state.wheelieV);
+      }
+    }
+
+    // Bell ring animation
+    if (state.bellAnim > 0) state.bellAnim = Math.max(0, state.bellAnim - dt * 1.4);
+
+    // Fish toss parabolic arc
+    if (state.fish.active) {
+      state.fish.t += dt;
+      if (state.fish.t >= state.fish.dur) {
+        state.fish.active = false;
+        state.fish.caught += 1;
+        state.pouchJiggle = 1.0;
+        Sound.playFishCatch();
+        showToast(`精准接住！已吞下第 ${state.fish.caught} 条沙丁鱼`);
+      }
+    }
+    if (state.pouchJiggle > 0) state.pouchJiggle = Math.max(0, state.pouchJiggle - dt * 2.2);
+
+    // Blinking
+    state.blinkTimer -= dt;
+    if (state.blinkTimer <= 0) {
+      state.blinkDur = 0.14;
+      state.blinkTimer = 2.6 + Math.random() * 3.4;
+    }
+    if (state.blinkDur > 0) state.blinkDur = Math.max(0, state.blinkDur - dt);
+
+    Sound.updateAmbience(state.playing ? state.speedKmh : 0, state.gust);
+
+    const worldDx = state.playing ? groundPxPerSec * dt : 0;
+    renderWorld(worldDx, dt);
+    renderBikeAndPelican();
+    renderTelemetry();
+  }
+
+  function renderWorld(worldDx, dt) {
+    const t = state.time;
+    const theme = THEMES[state.theme];
+
+    // Twinkle stars
+    if (theme.starsAlpha > 0) {
+      for (const s of starsData) {
+        const tw = 0.45 + 0.55 * Math.sin(t * 2.4 + s.phase);
+        s.el.setAttribute("opacity", tw.toFixed(2));
+      }
+    }
+
+    // Clouds
+    for (const c of cloudsFar) {
+      c.x -= worldDx * c.speed + (state.playing ? 6 * dt : 0);
+      if (c.x < -140) c.x += 1560;
+      c.el.setAttribute("transform", `translate(${c.x.toFixed(1)}, ${c.y})`);
+    }
+    for (const c of cloudsNear) {
+      c.x -= worldDx * c.speed + (state.playing ? 12 * dt : 0);
+      if (c.x < -160) c.x += 1600;
+      c.el.setAttribute("transform", `translate(${c.x.toFixed(1)}, ${c.y})`);
+    }
+
+    // Seabirds
+    for (const b of birds) {
+      b.x -= worldDx * 0.09 + (state.playing ? 22 * dt : 0);
+      if (b.x < -60) {
+        b.x = 1340;
+        b.scatterY = 0;
+        b.scatterVy = 0;
+      }
+      if (b.scatterY !== 0 || b.scatterVy !== 0) {
+        b.scatterVy += 68 * dt;
+        b.scatterY += b.scatterVy * dt;
+        if (b.scatterY > 0) { b.scatterY = 0; b.scatterVy = 0; }
+      }
+      const flap = Math.sin(t * 6.5 + b.p) * 5.5 * b.s;
+      const w = 13 * b.s;
+      const y = b.y + b.scatterY + Math.sin(t * 1.8 + b.p) * 3;
+      b.el.setAttribute("d", `M${(b.x - w).toFixed(1)},${(y - flap).toFixed(1)} Q${(b.x - w * 0.45).toFixed(1)},${(y - 5 * b.s).toFixed(1)} ${b.x.toFixed(1)},${y.toFixed(1)} Q${(b.x + w * 0.45).toFixed(1)},${(y - 5 * b.s).toFixed(1)} ${(b.x + w).toFixed(1)},${(y - flap).toFixed(1)}`);
+    }
+
+    // Islands & Cliffside Town
+    for (const isl of islands) {
+      isl.offset -= worldDx * 0.085;
+      if (isl.offset <= -1600) isl.offset += 3200;
+      isl.el.setAttribute("transform", `translate(${isl.offset.toFixed(1)}, 0)`);
+    }
+    if (windmillBlades) {
+      windmillBlades.forEach((b) => b.setAttribute("transform", `translate(0, -10) rotate(${state.windmillAngle.toFixed(1)})`));
+    }
+
+    // Sea Sun/Moon Shimmer
+    const orbX = theme.orbPos[0];
+    for (const s of shimmerBars) {
+      const shift = Math.sin(t * 2.1 + s.phase) * 14;
+      const half = s.w * (0.45 + 0.08 * Math.sin(t * 3 + s.phase));
+      s.el.setAttribute("x1", (orbX - half + shift).toFixed(1));
+      s.el.setAttribute("x2", (orbX + half + shift).toFixed(1));
+    }
+
+    // Sailboats
+    for (const b of boats) {
+      b.x -= worldDx * b.speed;
+      if (b.x < -80) b.x = 1360;
+      const bob = Math.sin(t * 2.2 + b.p) * 2.4;
+      const tilt = Math.sin(t * 1.7 + b.p) * 2.8;
+      b.el.setAttribute("transform", `translate(${b.x.toFixed(1)}, ${(b.y + bob).toFixed(1)}) rotate(${tilt.toFixed(2)})`);
+    }
+
+    // Ocean Waves
+    for (const w of waves) {
+      w.x -= worldDx * w.speed;
+      if (w.x < -120) w.x += 1440;
+      const bob = Math.sin(t * 2.6 + w.phase) * 1.6;
+      w.el.setAttribute("transform", `translate(${w.x.toFixed(1)}, ${(w.y + bob).toFixed(1)})`);
+    }
+
+    // Occasional Leaping Sea Fish
+    for (const jf of seaJumpers) {
+      if (!jf.active) {
+        jf.timer -= dt;
+        if (jf.timer <= 0 && state.playing) {
+          jf.active = true;
+          jf.t = 0;
+          jf.x = 180 + Math.random() * 940;
+          jf.y = 375 + Math.random() * 52;
+        }
+      } else {
+        jf.t += dt;
+        const u = jf.t / jf.dur;
+        if (u >= 1) {
+          jf.active = false;
+          jf.timer = 4.2 + Math.random() * 5.0;
+          jf.el.setAttribute("opacity", "0");
+        } else {
+          const fx = jf.x + (u - 0.5) * 68;
+          const fy = jf.y - Math.sin(u * Math.PI) * 34;
+          const ang = (0.5 - u) * -95;
+          jf.el.setAttribute("opacity", Math.sin(u * Math.PI).toFixed(2));
+          jf.el.setAttribute("transform", `translate(${fx.toFixed(1)}, ${fy.toFixed(1)}) rotate(${ang.toFixed(1)})`);
+        }
+      }
+    }
+
+    // Balustrade (mid-near speed)
+    const balWrap = balustrades.length * 64;
+    for (const b of balustrades) {
+      b.x -= worldDx * 0.72;
+      if (b.x < -64) b.x += balWrap;
+      b.el.setAttribute("transform", `translate(${b.x.toFixed(1)}, 0)`);
+    }
+
+    // Promenade Trees & Lampposts
+    for (const p of promenadeProps) {
+      p.x -= worldDx * 0.82;
+      if (p.x < -120) p.x += 1680;
+      p.el.setAttribute("transform", `translate(${p.x.toFixed(1)}, 0)`);
+    }
+
+    // Road Dashes (true 1:1 ground speed!)
+    const dashWrap = roadDashes.length * 160;
+    for (const d of roadDashes) {
+      d.x -= worldDx;
+      if (d.x < -120) d.x += dashWrap;
+      d.el.setAttribute("x", d.x.toFixed(1));
+    }
+
+    // Milepost (true 1:1 ground speed)
+    for (const m of mileposts) {
+      m.x -= worldDx;
+      if (m.x < -60) {
+        m.x = 1360;
+        m.num += 1;
+        m.txt.textContent = `${String(m.num).padStart(2, "0")}k`;
+      }
+      m.el.setAttribute("transform", `translate(${m.x.toFixed(1)}, 0)`);
+    }
+
+    // Slipstream Wind Ribbons (visible at higher gears or during gust)
+    const speedRatio = Math.max(0, (state.speedKmh - 18) / 28) + state.gust * 0.85;
+    for (const r of windRibbons) {
+      r.x -= worldDx * (1.28 + state.gust * 0.5) + (state.playing ? 120 * dt : 0);
+      if (r.x < -220) r.x = 1340 + Math.random() * 140;
+      const op = Math.min(0.55, speedRatio * 0.42);
+      r.el.setAttribute("opacity", op.toFixed(2));
+      if (op > 0.02) {
+        const wy = r.y + Math.sin(t * 5 + r.phase) * 6;
+        const amp = 6 + state.gust * 8;
+        r.el.setAttribute("d", `M${r.x.toFixed(1)},${wy.toFixed(1)} Q${(r.x + r.len * 0.5).toFixed(1)},${(wy - amp).toFixed(1)} ${(r.x + r.len).toFixed(1)},${wy.toFixed(1)}`);
+      }
+    }
+
+    // Atmosphere Particles (Petals / Fireflies / Embers / Sea Spray)
+    const pType = theme.particleType;
+    for (const p of particles) {
+      if (state.playing) {
+        const speedMul = pType === "firefly" ? 0.35 : (0.7 + state.gust * 0.9);
+        p.x += (p.vx * speedMul - worldDx * (pType === "firefly" ? 0.15 : 0.35)) * dt;
+        p.y += (pType === "firefly" ? Math.sin(t * 2.5 + p.phase) * 18 : p.vy) * dt;
+        p.rot += 110 * dt;
+      }
+      if (p.x < -30) { p.x = 1310; p.y = 90 + Math.random() * 440; }
+      if (p.y > 650) { p.y = 60; p.x = 200 + Math.random() * 1080; }
+
+      if (pType === "petal") {
+        p.el.setAttribute("fill", "#ffd2e2");
+        p.el.setAttribute("rx", "5.5");
+        p.el.setAttribute("ry", "2.8");
+        p.el.setAttribute("opacity", "0.78");
+        p.el.setAttribute("transform", `translate(${p.x.toFixed(1)}, ${p.y.toFixed(1)}) rotate(${p.rot.toFixed(0)})`);
+      } else if (pType === "firefly") {
+        const glow = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * 3.8 + p.phase));
+        p.el.setAttribute("fill", "#ffe97d");
+        p.el.setAttribute("rx", "2.6");
+        p.el.setAttribute("ry", "2.6");
+        p.el.setAttribute("opacity", glow.toFixed(2));
+        p.el.setAttribute("transform", `translate(${p.x.toFixed(1)}, ${p.y.toFixed(1)})`);
+      } else if (pType === "ember") {
+        p.el.setAttribute("fill", "#ffd99c");
+        p.el.setAttribute("rx", "2.6");
+        p.el.setAttribute("ry", "1.6");
+        p.el.setAttribute("opacity", "0.46");
+        p.el.setAttribute("transform", `translate(${p.x.toFixed(1)}, ${p.y.toFixed(1)}) rotate(${p.rot.toFixed(0)})`);
+      } else {
+        const sprayOp = Math.min(0.45, 0.12 + state.gust * 0.35);
+        p.el.setAttribute("fill", "#ffffff");
+        p.el.setAttribute("rx", "3.4");
+        p.el.setAttribute("ry", "1.4");
+        p.el.setAttribute("opacity", sprayOp.toFixed(2));
+        p.el.setAttribute("transform", `translate(${p.x.toFixed(1)}, ${p.y.toFixed(1)})`);
+      }
+    }
+  }
+
+  let latestKneeR = 112;
+  let latestKneeL = 112;
+
+  function renderBikeAndPelican() {
+    const t = state.time;
+    const phi = state.crankAngle;
+    const wheelDeg = (state.wheelAngle * 180) / Math.PI;
+    const crankDeg = (phi * 180) / Math.PI;
+
+    // Suspension bounce synced to 2x pedal torque + gentle road texture
+    const pedalBounce = Math.sin(phi * 2) * 2.1 + Math.sin(t * 9.5) * (state.playing ? 0.6 : 0);
+    const rigY = RIG_BASE_Y - state.hopY + pedalBounce;
+    el("rig-root").setAttribute("transform", `translate(${RIG_BASE_X}, ${rigY.toFixed(2)})`);
+    el("rig-pitch").setAttribute("transform", `rotate(${(-state.wheelie).toFixed(2)})`);
+
+    // Ground shadow responds to jump & wheelie
+    const shScale = Math.max(0.55, 1 - state.hopY / 260);
+    const shRx = 192 * shScale - state.wheelie * 1.4;
+    el("bike-shadow").setAttribute("rx", shRx.toFixed(1));
+    el("bike-shadow").setAttribute("opacity", (0.34 * shScale).toFixed(2));
+
+    // Rotate wheels & chainring & chain links
+    el("wheel-rear").setAttribute("transform", `translate(0, 0) rotate(${wheelDeg.toFixed(2)})`);
+    el("wheel-front").setAttribute("transform", `translate(228, 0) rotate(${wheelDeg.toFixed(2)})`);
+    el("chainring").setAttribute("transform", `translate(${BB.x}, ${BB.y}) rotate(${crankDeg.toFixed(2)})`);
+    el("chain-upper-links").setAttribute("stroke-dashoffset", (-state.chainOffset).toFixed(2));
+    el("chain-lower-links").setAttribute("stroke-dashoffset", (state.chainOffset).toFixed(2));
+
+    // Pedals (180° opposed)
+    const pr = { x: BB.x + Math.cos(phi) * CRANK_R, y: BB.y + Math.sin(phi) * CRANK_R };
+    const pl = { x: BB.x - Math.cos(phi) * CRANK_R, y: BB.y - Math.sin(phi) * CRANK_R };
+
+    el("crank-near").setAttribute("x2", pr.x.toFixed(2));
+    el("crank-near").setAttribute("y2", pr.y.toFixed(2));
+    el("crank-near-hi").setAttribute("x2", pr.x.toFixed(2));
+    el("crank-near-hi").setAttribute("y2", pr.y.toFixed(2));
+    el("pedal-near").setAttribute("transform", `translate(${pr.x.toFixed(2)}, ${pr.y.toFixed(2)})`);
+
+    el("crank-far").setAttribute("x2", pl.x.toFixed(2));
+    el("crank-far").setAttribute("y2", pl.y.toFixed(2));
+    el("pedal-far").setAttribute("transform", `translate(${pl.x.toFixed(2)}, ${pl.y.toFixed(2)})`);
+
+    // Pelican posture dynamics (leans forward slightly at high gears)
+    const leanDeg = Math.min(7, (state.gear - 2) * 1.4 + state.gust * 2.5) - state.wheelie * 0.25;
+    const bodyBob = Math.sin(phi * 2 - 0.6) * 2.6;
+    el("pelican-body-group").setAttribute("transform", `translate(0, ${bodyBob.toFixed(2)}) rotate(${leanDeg.toFixed(2)}, 54, -124)`);
+
+    // 2-Bone Analytical IK for Both Pelican Legs!
+    const hipR = { x: HIP_R.x, y: HIP_R.y + bodyBob * 0.55 };
+    const hipL = { x: HIP_L.x, y: HIP_L.y + bodyBob * 0.55 };
+    const ankleR = { x: pr.x, y: pr.y - 5 };
+    const ankleL = { x: pl.x, y: pl.y - 5 };
+
+    const ikR = solve2BoneIK(hipR, ankleR, L1, L2);
+    const ikL = solve2BoneIK(hipL, ankleL, L1, L2);
+    latestKneeR = ikR.kneeDeg;
+    latestKneeL = ikL.kneeDeg;
+
+    const legRD = `M ${hipR.x.toFixed(1)},${hipR.y.toFixed(1)} L ${ikR.knee.x.toFixed(1)},${ikR.knee.y.toFixed(1)} L ${ankleR.x.toFixed(1)},${ankleR.y.toFixed(1)}`;
+    const legLD = `M ${hipL.x.toFixed(1)},${hipL.y.toFixed(1)} L ${ikL.knee.x.toFixed(1)},${ikL.knee.y.toFixed(1)} L ${ankleL.x.toFixed(1)},${ankleL.y.toFixed(1)}`;
+
+    el("leg-near-outline").setAttribute("d", legRD);
+    el("leg-near-fill").setAttribute("d", legRD);
+    el("leg-near-hi").setAttribute("d", legRD);
+    el("leg-far-outline").setAttribute("d", legLD);
+    el("leg-far-fill").setAttribute("d", legLD);
+
+    // Webbed pelican feet resting flat on self-leveling pedals
+    const footPath = (a) => `M ${(a.x - 10).toFixed(1)},${(a.y + 2).toFixed(1)} Q ${(a.x + 4).toFixed(1)},${(a.y - 4).toFixed(1)} ${(a.x + 17).toFixed(1)},${(a.y + 3).toFixed(1)} Q ${(a.x + 8).toFixed(1)},${(a.y + 6).toFixed(1)} ${(a.x - 10).toFixed(1)},${(a.y + 4).toFixed(1)} Z`;
+    el("foot-near").setAttribute("d", footPath(ankleR));
+    el("foot-far").setAttribute("d", footPath(ankleL));
+
+    // Keep forewing hand aligned to handlebar grip despite torso bob/lean
+    const rad = (-leanDeg * Math.PI) / 180;
+    const gx = 138 - 54, gy = -158 - (-124) - bodyBob;
+    const lx = 54 + gx * Math.cos(rad) - gy * Math.sin(rad) - 76;
+    const ly = -124 + gx * Math.sin(rad) + gy * Math.cos(rad) - (-172);
+    const midX = (12 + lx) * 0.5 + 8;
+    const midY = (4 + ly) * 0.5 + 14;
+    const armD = `M 12,4 Q ${midX.toFixed(1)},${midY.toFixed(1)} ${lx.toFixed(1)},${ly.toFixed(1)}`;
+    el("arm-near-outline").setAttribute("d", armD);
+    el("arm-near-fill").setAttribute("d", armD);
+    el("hand-near").setAttribute("cx", lx.toFixed(1));
+    el("hand-near").setAttribute("cy", ly.toFixed(1));
+
+    // Wing flap on hop/wheelie & subtle feather flutter on speed
+    const flapDeg = state.hopY * 0.42 + state.wheelie * 0.85 + Math.sin(t * 8) * (1.2 + state.gust * 4);
+    el("wing-flap").setAttribute("transform", `rotate(${flapDeg.toFixed(2)}, -4, 0)`);
+
+    // Tail feather wag
+    const tailWag = Math.sin(t * 7 + phi) * 3.5 + (state.pouchJiggle > 0.1 ? Math.sin(t * 28) * 9 : 0);
+    el("pelican-tail").setAttribute("transform", `translate(-30, -158) rotate(${tailWag.toFixed(2)})`);
+
+    // Dynamic Sailor Scarf Wave Spline
+    const windAmp = 5 + state.speedKmh * 0.24 + state.gust * 11;
+    const windFreq = 7.5 + state.speedKmh * 0.16 + state.gust * 6;
+    const pts = [];
+    for (let i = 0; i <= 7; i++) {
+      const u = i / 7;
+      const sx = 86 - u * (118 + state.gust * 26);
+      const sy = -208 + u * 16 + Math.sin(t * windFreq - u * 5.2) * windAmp * u;
+      pts.push([sx, sy]);
+    }
+    let scarfD = `M ${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+    for (let i = 1; i < pts.length; i++) {
+      const p0 = pts[i - 1], p1 = pts[i];
+      const mx = ((p0[0] + p1[0]) * 0.5).toFixed(1);
+      const my = ((p0[1] + p1[1]) * 0.5).toFixed(1);
+      scarfD += ` Q ${p0[0].toFixed(1)},${p0[1].toFixed(1)} ${mx},${my}`;
+    }
+    const lastP = pts[pts.length - 1];
+    scarfD += ` L ${lastP[0].toFixed(1)},${lastP[1].toFixed(1)}`;
+    el("scarf-tail-shadow").setAttribute("d", scarfD);
+    el("scarf-tail-main").setAttribute("d", scarfD);
+    el("scarf-tail-stripe").setAttribute("d", scarfD);
+
+    // Head subtle nod, cap lift on hop, blinking & fish tracking
+    let headPitch = Math.sin(phi * 2) * 1.8;
+    let targetJaw = 0;
+    let pupilX = 10.4, pupilY = -10.2;
+
+    if (state.fish.active) {
+      const u = state.fish.t / state.fish.dur;
+      // Parabolic fish trajectory from beak tip out and right back into open pouch
+      const arcH = Math.sin(u * Math.PI) * 108;
+      const fx = 212 + Math.sin(u * Math.PI) * 34;
+      const fy = -268 - arcH;
+      const fRot = -45 + u * 360;
+      el("tossed-fish").setAttribute("opacity", "1");
+      el("tossed-fish").setAttribute("transform", `translate(${fx.toFixed(1)}, ${fy.toFixed(1)}) rotate(${fRot.toFixed(1)})`);
+
+      headPitch = -Math.sin(u * Math.PI) * 16;
+      // Open wide on launch (0..0.22) and wide open to catch (0.72..1.0)
+      if (u < 0.25) targetJaw = Math.sin((u / 0.25) * Math.PI) * 28;
+      else if (u > 0.68) targetJaw = Math.sin(((u - 0.68) / 0.32) * Math.PI) * 34;
+      pupilX = 11.4;
+      pupilY = -12.6;
+    } else {
+      el("tossed-fish").setAttribute("opacity", "0");
+    }
+
+    state.jawAngle += (targetJaw - state.jawAngle) * 0.28;
+    const jiggle = Math.sin(t * 24) * state.pouchJiggle * 5.5 + Math.sin(phi * 2) * 1.6;
+    el("pelican-head").setAttribute("transform", `translate(115, -268) rotate(${headPitch.toFixed(2)})`);
+    el("pelican-jaw").setAttribute("transform", `translate(18, 2) rotate(${(state.jawAngle + jiggle * 0.35).toFixed(2)})`);
+    el("postman-cap").setAttribute("transform", `translate(-4, ${(-22 - state.hopY * 0.08).toFixed(1)}) rotate(${(-8 - state.hopY * 0.1).toFixed(1)})`);
+    el("eye-pupil").setAttribute("cx", pupilX.toFixed(1));
+    el("eye-pupil").setAttribute("cy", pupilY.toFixed(1));
+    el("eyelid").setAttribute("opacity", state.blinkDur > 0 ? "1" : "0");
+
+    // Basket fish subtle bob
+    el("basket-fish").setAttribute("transform", `translate(42, ${(-10 + Math.sin(t * 6) * 2.2).toFixed(1)}) rotate(${(-26 + Math.sin(t * 5) * 5).toFixed(1)})`);
+
+    // Bell visual acoustic rings
+    if (state.bellAnim > 0) {
+      const p = 1 - state.bellAnim;
+      el("bell-rings").setAttribute("opacity", state.bellAnim.toFixed(2));
+      el("bell-ring-1").setAttribute("r", (12 + p * 34).toFixed(1));
+      el("bell-ring-2").setAttribute("r", (18 + p * 54).toFixed(1));
+    } else {
+      el("bell-rings").setAttribute("opacity", "0");
+    }
+
+    // Update Engineering Blueprint Overlay when active
+    if (state.blueprint) {
+      el("ik-vec-near").setAttribute("d", legRD);
+      el("ik-vec-far").setAttribute("d", legLD);
+      el("ik-hip-r").setAttribute("cx", hipR.x.toFixed(1));
+      el("ik-hip-r").setAttribute("cy", hipR.y.toFixed(1));
+      el("ik-knee-r").setAttribute("cx", ikR.knee.x.toFixed(1));
+      el("ik-knee-r").setAttribute("cy", ikR.knee.y.toFixed(1));
+      el("ik-ankle-r").setAttribute("cx", ankleR.x.toFixed(1));
+      el("ik-ankle-r").setAttribute("cy", ankleR.y.toFixed(1));
+      el("ik-knee-l").setAttribute("cx", ikL.knee.x.toFixed(1));
+      el("ik-knee-l").setAttribute("cy", ikL.knee.y.toFixed(1));
+      el("bp-angles").textContent = `R-KNEE ${ikR.kneeDeg.toFixed(1)}° · L-KNEE ${ikL.kneeDeg.toFixed(1)}°`;
+      el("bp-crank").textContent = `CRANK ${String(Math.round(crankDeg)).padStart(3, "0")}° · L1=${L1} L2=${L2}`;
+      el("bp-slip").textContent = `WHEEL SLIP 0.00% · RATIO ${GEARS[state.gear].ratio.toFixed(2)}×`;
+    }
+  }
+
+  let uiTick = 0;
+  function renderTelemetry() {
+    uiTick++;
+    if (uiTick % 4 !== 0) return;
+    el("t-speed").textContent = (state.playing ? state.speedKmh : 0).toFixed(1);
+    el("t-rpm").textContent = String(state.playing ? Math.round(state.rpm) : 0);
+    el("t-ratio").textContent = `RPM · ${GEARS[state.gear].ratio.toFixed(2)}×`;
+    el("t-dist").textContent = (state.distanceM / 1000).toFixed(2);
+    el("t-fish").textContent = String(state.fish.caught);
+    el("t-knee").textContent = `条 · R ${Math.round(latestKneeR)}°`;
+  }
+
+  function loop(ts) {
+    if (!lastTs) lastTs = ts;
+    const dt = Math.min(0.05, Math.max(0.001, (ts - lastTs) / 1000));
+    lastTs = ts;
+    step(dt);
+    requestAnimationFrame(loop);
+  }
+
+  /* -------------------- Event Binding -------------------- */
+  function bindEvents() {
+    document.querySelectorAll(".theme-btn").forEach((btn) => {
+      btn.addEventListener("click", () => applyTheme(btn.dataset.theme));
+    });
+
+    el("btn-play").addEventListener("click", togglePlay);
+    el("btn-bell").addEventListener("click", triggerBell);
+    el("btn-fish").addEventListener("click", triggerFishToss);
+    el("btn-hop").addEventListener("click", triggerHop);
+    el("btn-gust").addEventListener("click", triggerGust);
+    el("btn-ik").addEventListener("click", toggleIK);
+    el("btn-sound").addEventListener("click", toggleSound);
+    el("btn-export").addEventListener("click", exportSVG);
+
+    el("gear-select").addEventListener("change", (e) => {
+      state.gear = Number(e.target.value);
+      showToast(`已切换至 ${GEARS[state.gear].label}`);
+    });
+
+    // Direct SVG hit areas
+    el("hit-pelican").addEventListener("click", (e) => { e.stopPropagation(); triggerFishToss(); });
+    el("hit-bell").addEventListener("click", (e) => { e.stopPropagation(); triggerBell(); });
+    el("hit-road").addEventListener("click", triggerHop);
+    el("hit-sky").addEventListener("click", triggerGust);
+
+    // Keyboard shortcuts
+    window.addEventListener("keydown", (e) => {
+      if (e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+      if (e.code === "Space") { e.preventDefault(); triggerHop(); }
+      else if (e.key === "p" || e.key === "P") togglePlay();
+      else if (e.key === "b" || e.key === "B") triggerBell();
+      else if (e.key === "f" || e.key === "F") triggerFishToss();
+      else if (e.key === "w" || e.key === "W") triggerGust();
+      else if (e.key === "x" || e.key === "X") toggleIK();
+      else if (e.key === "m" || e.key === "M") toggleSound();
+      else if (e.key === "s" || e.key === "S") { e.preventDefault(); exportSVG(); }
+      else if (e.key >= "1" && e.key <= "6") {
+        state.gear = Number(e.key);
+        el("gear-select").value = e.key;
+        showToast(`已切换至 ${GEARS[state.gear].label}`);
+      }
+    });
+  }
+
+  /* -------------------- Boot -------------------- */
+  initWheelSpokes();
+  initChainTangents();
+  initStars();
+  initClouds();
+  initBirds();
+  initIslands();
+  initSeaShimmer();
+  initBoats();
+  initWaves();
+  initSeaFish();
+  initBalustrade();
+  initPromenade();
+  initRoadDashes();
+  initMileposts();
+  initWindRibbons();
+  initParticles();
+  bindEvents();
+  applyTheme("azure");
+
+  if (!state.playing) {
+    el("btn-play").setAttribute("aria-pressed", "false");
+    el("lbl-play").textContent = "骑行";
+    el("ico-play").innerHTML = '<polygon points="6,4 20,12 6,20" fill="currentColor" stroke="none"/>';
+  }
+
+  // Expose deterministic inspection hook for verification
+  window.__PELICAN_RIDE__ = {
+    state,
+    applyTheme,
+    triggerBell,
+    triggerFishToss,
+    triggerHop,
+    triggerGust,
+    toggleIK,
+    step
+  };
+
+  step(0.016);
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

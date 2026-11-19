@@ -3,6 +3,9 @@
 
 鹈鹕骑自行车（Pelican Riding a Bicycle）SVG / HTML 多版本对比与归档仓库。
 
+<!-- 署名: PRO1V(valerie...@gmail.com) | Antigravity 原创直写（非 Codex） -->
+最新原创直写单文件作品：**[海风邮差号 · Pelican Antigravity Ride](./pelican-antigravity-ride.html)**（`107,377` 字节 / `2,635` 行，由 Antigravity `PRO1V` 原创直写、零外链离线纯矢量 SVG 交互页：戴水手邮差帽与流动红白围巾的白鹈鹕骑着装有航空信邮包与鲜鱼竹篮的绿松石单车，具备 2-Bone 解析 IK 腿翼联动与可切换蓝图叠层、18 辐无滑移轮速与 6 档变速、`晴汐蓝` / `橘子海` / `夏夜萤火` / `樱风薄雾` 四天色切换、点击抛鱼/响铃/翘头跃起/唤风互动、零采样 Web Audio 海浪风铃声景及实时帧矢量 SVG 导出）。
+
 <!-- 署名: PRO3J(saveljevsjill148@gmail.com) | Antigravity 纯手写单文件作品（未调用 Codex） -->
 最新纯手写单文件作品：**[海风慢递 · Coastal Pelican Courier](./pelican-coastal-courier.html)**（`105,581` 字节，由 Antigravity `PRO3J` 零 Codex 纯手写、零外链离线纯矢量 SVG 交互页：2-Bone 解析 IK 腿部与翼尖握把耦合、5 档真实踏频与平路/爬坡/下坡滑行、`晨海晴岚` / `橘子日落` / `灯塔星夜` 三时段海岸村落灯火、投喂银鱼接食与喉囊弹性吞咽、叮当车铃惊鸥、物理弹簧抬头翘车、IK 蓝图叠加、零采样 Web Audio 音效及当前帧矢量 SVG 导出）。
 
@@ -31,6 +34,9 @@
 最新归档包含三部离线 CursorSwarm 作品：**[NEON HARBOR · 赛博港湾造城](./cursor-swarm-city.html)**、**[AETHER FOUNDRY · 星港精密蓝图](./cursor-swarm-foundry.html)** 与 **[SKYRAIL COASTER · 光标造桥 × 鹈鹕骑行庆典](./pelican-swarm-coaster.html)**。每部作品都是零外链单文件，内含 SVG 场景、协作光标、主题与交互控制，可直接用手机或桌面浏览器离线打开。另收录 Codespace 提取作品 **[顺风出逃 · 骑到海边去](./pelican-ride.html)** · [独立 SVG 插画](./pelican-ride.svg) 与 [`pelican_bike.html`](./pelican_bike.html)。
 
 ## 作品列表
+
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+- **[海风邮差号 · Pelican Antigravity Ride](./pelican-antigravity-ride.html)**：`107,377` 字节（2,635 行）Antigravity (`PRO1V`) 原创直写（非 Codex）零外链纯矢量 SVG 海岸骑行交互作品，含 2-Bone 解析 IK 腿翼联动与可切换蓝图、18 辐无滑移轮速与 6 档变速、晴汐蓝/橘子海/夏夜萤火/樱风薄雾四天色、点击抛鱼/铜铃惊鸥/翘头跃起/唤风互动、零采样 Web Audio 海浪风铃声景及 SVG 导出。
 
 <!-- 署名: PRO3J(saveljevsjill148@gmail.com) -->
 - **[海风慢递 · Coastal Pelican Courier](./pelican-coastal-courier.html)**：`105,581` 字节（2,578 行）Antigravity (`PRO3J`) 零 Codex 纯手写全离线纯矢量 SVG 海岸骑行交互作品，含 2-Bone 解析 IK 腿翼联动、5 档真实踏频、平路/爬坡/下坡滑行、三时段海滨灯火与萤火虫、投喂银鱼、物理弹簧抬头翘车、叮当车铃、Web Audio 零采样音效及 SVG 导出。
@@ -85,6 +91,7 @@
 ├── SIGNATURES.md               # ✍️ 五账号联合签名稿 / 签到簿（置顶报到）
 ├── README.md
 ├── index.html                  # 作品总览导航页（集成 5 账号 CursorSwarm 多光标搭建动画与控制台）
+├── pelican-antigravity-ride.html # 海风邮差号（PRO1V Antigravity 原创直写零外链 SVG 2-Bone IK 骑行，107,377 B）
 ├── pelican-coastal-courier.html # 海风慢递（PRO3J Antigravity 纯手写零外链 SVG 2-Bone IK 骑行，105,581 B）
 ├── pelican-sol-ride.html       # 晴湾单车行（gpt-6.2-sol/xhigh 纯矢量 SVG 2-Bone IK 骑行，73,977 B）
 ├── meadow-cottage-3d.html      # 风过牧野（gpt-6.2-sol/xhigh Three.js 草原木屋水车池塘羊群，352,053 B）
@@ -137,17 +144,18 @@
    - 在 Agent 对话中输入 `/swarm <目标>`，主控代理会按互不冲突的目录切片派发 `swarm-worker` 并行开发，并调用 `swarm-verifier` 与 [`verify_repo.py`](./.cursor/skills/swarm-verify/scripts/verify_repo.py) 完成全量校验。
    - 如需在 MCP 中启用 GitHub Server，在本地导出 `GITHUB_PERSONAL_ACCESS_TOKEN` 环境变量即可（[`.cursor/mcp.json`](./.cursor/mcp.json) 使用 `${env:...}` 占位，不存放明文密钥）。
 2. **GitHub Actions 与 GitHub Pages**：
-   - **GitHub Pages**（[`.github/workflows/pages.yml`](./.github/workflows/pages.yml)）：在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，推送 `main` 后即自动发布 [`pelican-coastal-courier.html`](./pelican-coastal-courier.html)、[`pelican-sol-ride.html`](./pelican-sol-ride.html)、[`meadow-cottage-3d.html`](./meadow-cottage-3d.html)、[`sky-castle-cliff-3d.html`](./sky-castle-cliff-3d.html)、[`pelican-6000-mv.html`](./pelican-6000-mv.html) 原创纯代码交互长卷 MV、[`pelican-6000/index.html`](./pelican-6000/index.html) 模块化源码工程、**《鹈鹕六千年的车》**（[`pelican-6000-years-mv.html`](./pelican-6000-years-mv.html)）、**《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）、`the-pelican-test.html`（THE PELICAN TEST · 鹈鹕测试）原创程序短片、`pelican-6000-pure-code.html` 纯代码全片、三部 CursorSwarm 作品、`index.html`、`pelican-swarm-demo.html`、`swarm-demo.html`、Codespace 提取作品与 `pro1/`–`pro6/`。
+   - **GitHub Pages**（[`.github/workflows/pages.yml`](./.github/workflows/pages.yml)）：在 GitHub 仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，推送 `main` 后即自动发布 [`pelican-antigravity-ride.html`](./pelican-antigravity-ride.html)、[`pelican-coastal-courier.html`](./pelican-coastal-courier.html)、[`pelican-sol-ride.html`](./pelican-sol-ride.html)、[`meadow-cottage-3d.html`](./meadow-cottage-3d.html)、[`sky-castle-cliff-3d.html`](./sky-castle-cliff-3d.html)、[`pelican-6000-mv.html`](./pelican-6000-mv.html) 原创纯代码交互长卷 MV、[`pelican-6000/index.html`](./pelican-6000/index.html) 模块化源码工程、**《鹈鹕六千年的车》**（[`pelican-6000-years-mv.html`](./pelican-6000-years-mv.html)）、**《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）、`the-pelican-test.html`（THE PELICAN TEST · 鹈鹕测试）原创程序短片、`pelican-6000-pure-code.html` 纯代码全片、三部 CursorSwarm 作品、`index.html`、`pelican-swarm-demo.html`、`swarm-demo.html`、Codespace 提取作品与 `pro1/`–`pro6/`。
    - **Cursor Agent Swarm CI**（[`.github/workflows/cursor-agent-swarm.yml`](./.github/workflows/cursor-agent-swarm.yml)）：配置仓库 Secret 后可通过 `Actions → Cursor Agent Swarm CI` 手动触发，或在 Issue/PR 评论中输入 `/swarm <任务>` 自动开分支并发起 PR：
      ```bash
      gh secret set CURSOR_API_KEY --repo jian8111/d --body "$CURSOR_API_KEY"
      ```
 3. **本地校验与预览**：
    - 运行校验：`python3 .cursor/skills/swarm-verify/scripts/verify_repo.py --strict`
-   - 本地预览：直接打开 [`pelican-coastal-courier.html`](./pelican-coastal-courier.html)（**海风慢递** Antigravity `PRO3J` 零 Codex 纯手写纯矢量骑行）、[`pelican-sol-ride.html`](./pelican-sol-ride.html)（**晴湾单车行** `gpt-6.2-sol` 纯矢量骑行）、[`meadow-cottage-3d.html`](./meadow-cottage-3d.html)（**风过牧野** Three.js 草原木屋水车池塘羊群）、[`sky-castle-cliff-3d.html`](./sky-castle-cliff-3d.html)（**风崖与浮城** Three.js 海岸悬崖与浮空移动城堡）、[`pelican-6000-mv.html`](./pelican-6000-mv.html)（原创纯代码交互长卷 MV 单文件版，`1.88 MiB`）、[`pelican-6000/index.html`](./pelican-6000/index.html)（模块化源码工程）、[`pelican-6000-years-mv.html`](./pelican-6000-years-mv.html)（**《鹈鹕六千年的车》** 174.6s 全程序化单文件音画 MV）、[`index.html`](./index.html)、**《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）、[`the-pelican-test.html`](./the-pelican-test.html)（THE PELICAN TEST · 鹈鹕测试，原创 137 秒程序短片）、[`pelican-6000-pure-code.html`](./pelican-6000-pure-code.html)（原作 v1.1.0 纯代码单文件版）、[`cursor-swarm-city.html`](./cursor-swarm-city.html)、[`cursor-swarm-foundry.html`](./cursor-swarm-foundry.html)、[`pelican-swarm-coaster.html`](./pelican-swarm-coaster.html)、[`pelican-swarm-demo.html`](./pelican-swarm-demo.html)、[`pelican-ride.html`](./pelican-ride.html)、[`pelican_bike.html`](./pelican_bike.html) 或 [`swarm-demo.html`](./swarm-demo.html)。所有页面均为零外部依赖，支持离线运行；各音画全片与短片均通过播放手势解锁声音。
+   - 本地预览：直接打开 [`pelican-antigravity-ride.html`](./pelican-antigravity-ride.html)（**海风邮差号** Antigravity `PRO1V` 原创直写纯矢量骑行）、[`pelican-coastal-courier.html`](./pelican-coastal-courier.html)（**海风慢递** Antigravity `PRO3J` 零 Codex 纯手写纯矢量骑行）、[`pelican-sol-ride.html`](./pelican-sol-ride.html)（**晴湾单车行** `gpt-6.2-sol` 纯矢量骑行）、[`meadow-cottage-3d.html`](./meadow-cottage-3d.html)（**风过牧野** Three.js 草原木屋水车池塘羊群）、[`sky-castle-cliff-3d.html`](./sky-castle-cliff-3d.html)（**风崖与浮城** Three.js 海岸悬崖与浮空移动城堡）、[`pelican-6000-mv.html`](./pelican-6000-mv.html)（原创纯代码交互长卷 MV 单文件版，`1.88 MiB`）、[`pelican-6000/index.html`](./pelican-6000/index.html)（模块化源码工程）、[`pelican-6000-years-mv.html`](./pelican-6000-years-mv.html)（**《鹈鹕六千年的车》** 174.6s 全程序化单文件音画 MV）、[`index.html`](./index.html)、**《鹈鹕测试》（Pelican Test Cover）**（[`pelican-test.html`](./pelican-test.html)）、[`the-pelican-test.html`](./the-pelican-test.html)（THE PELICAN TEST · 鹈鹕测试，原创 137 秒程序短片）、[`pelican-6000-pure-code.html`](./pelican-6000-pure-code.html)（原作 v1.1.0 纯代码单文件版）、[`cursor-swarm-city.html`](./cursor-swarm-city.html)、[`cursor-swarm-foundry.html`](./cursor-swarm-foundry.html)、[`pelican-swarm-coaster.html`](./pelican-swarm-coaster.html)、[`pelican-swarm-demo.html`](./pelican-swarm-demo.html)、[`pelican-ride.html`](./pelican-ride.html)、[`pelican_bike.html`](./pelican_bike.html) 或 [`swarm-demo.html`](./swarm-demo.html)。所有页面均为零外部依赖，支持离线运行；各音画全片与短片均通过播放手势解锁声音。
    - 使用静态服务器预览纯代码全片：
      ```bash
      python3 -m http.server 8787 --bind 127.0.0.1
+     # 浏览器打开 http://127.0.0.1:8787/pelican-antigravity-ride.html （海风邮差号 · Pelican Antigravity Ride）
      # 浏览器打开 http://127.0.0.1:8787/pelican-coastal-courier.html （海风慢递 · Coastal Pelican Courier）
      # 浏览器打开 http://127.0.0.1:8787/pelican-sol-ride.html （晴湾单车行 · Pelican Sol Ride）
      # 浏览器打开 http://127.0.0.1:8787/meadow-cottage-3d.html （风过牧野 · Three.js 3D 草原木屋水车）
@@ -159,10 +167,10 @@
      # 浏览器打开 http://127.0.0.1:8787/the-pelican-test.html（THE PELICAN TEST · 鹈鹕测试）
      # 浏览器打开 http://127.0.0.1:8787/pelican-6000-pure-code.html
      ```
-   - `pelican-coastal-courier.html`、`pelican-sol-ride.html`、`meadow-cottage-3d.html`、`sky-castle-cliff-3d.html`、`pelican-6000-mv.html` 与 `pelican-6000-years-mv.html` 均可直接离线打开；`pelican-6000/index.html` 推荐使用上述静态服务器加载 ESM 模块。
+   - `pelican-antigravity-ride.html`、`pelican-coastal-courier.html`、`pelican-sol-ride.html`、`meadow-cottage-3d.html`、`sky-castle-cliff-3d.html`、`pelican-6000-mv.html` 与 `pelican-6000-years-mv.html` 均可直接离线打开；`pelican-6000/index.html` 推荐使用上述静态服务器加载 ESM 模块。
 
 ---
-**最近更新署名**：`PRO3J(saveljevsjill148@gmail.com)｜并发协同: PRO2H(hadcockulloa@gmail.com), PRO5C(crispinowilbourn@gmail.com), PRO1V(valerie...@gmail.com), PRO4M`
+**最近更新署名**：`PRO1V(valerie...@gmail.com)｜并发协同: PRO3J(saveljevsjill148@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO5C(crispinowilbourn@gmail.com), PRO4M`
 
-<!-- 署名: PRO3J(saveljevsjill148@gmail.com) -->
-**最新维护说明**：`PRO3J(saveljevsjill148@gmail.com)`｜由 Antigravity 纯手写（零 Codex）完成并交付单文件零外链纯矢量交互作品 [`pelican-coastal-courier.html`](./pelican-coastal-courier.html)（**海风慢递 · Coastal Pelican Courier**，`105,581` B），同步注册首页置顶卡片、README 与 GitHub Pages 发布清单，完整保留全部历史作品与配置。
+<!-- 署名: PRO1V(valerie...@gmail.com) -->
+**最新维护说明**：`PRO1V(valerie...@gmail.com)`｜由 Antigravity 原创直写（非 Codex）完成并交付单文件零外链纯矢量交互作品 [`pelican-antigravity-ride.html`](./pelican-antigravity-ride.html)（**海风邮差号 · Pelican Antigravity Ride**，`107,377` B），同步注册首页置顶卡片、README 与 GitHub Pages 发布清单，完整保留 `PRO3J` 并发作品及全部历史作品与配置。
