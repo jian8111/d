@@ -3,48 +3,29 @@
   "slot": "PRO5C",
   "label": "PRO5C([邮箱已隐藏])",
   "kind": "pro",
-  "status": "running",
-  "active_tasks": [
-    {
-      "run_id": "920b7986952645559cee4ad291d9f72d",
-      "task": "修复跨 Pro 打卡与监控台状态同步",
-      "executor": "Codex",
-      "targets": [
-        "scripts/agent_monitor.py",
-        "scripts/dual_publish.py",
-        "monitor.html",
-        ".cursor/rules/40-agent-monitor.mdc",
-        ".cursor/rules/00-collaboration-iron-rules.mdc",
-        ".devcontainer/setup-codex.sh",
-        "AGENTS.md",
-        "PROGRESS.md"
-      ],
-      "status": "running",
-      "started_at": "2026-11-19T17:54:39Z",
-      "heartbeat_at": "2026-11-19T18:00:02Z",
-      "note": "脚本往返测试已通过，正在检查浏览器轮询与镜像"
-    }
-  ],
+  "status": "idle",
+  "active_tasks": [],
   "last_done": {
-    "run_id": "pro5c-fix-visibility-polling",
-    "task": "排查修复多Pro未打卡与监控台自动刷新/Raw兜底/规则注入",
-    "executor": "codex/gpt-6.2-astra(max)",
+    "run_id": "920b7986952645559cee4ad291d9f72d",
+    "task": "修复跨 Pro 打卡与监控台状态同步",
+    "executor": "Codex",
     "status": "done",
     "commit": "3811208",
     "targets": [
       "scripts/agent_monitor.py",
       "scripts/dual_publish.py",
       "monitor.html",
-      ".cursor/rules/00-collaboration-iron-rules.mdc",
       ".cursor/rules/40-agent-monitor.mdc",
+      ".cursor/rules/00-collaboration-iron-rules.mdc",
       ".devcontainer/setup-codex.sh",
-      "AGENTS.md"
+      "AGENTS.md",
+      "PROGRESS.md"
     ],
-    "started_at": "2026-11-19T17:53:32Z",
-    "finished_at": "2026-11-19T18:06:42Z",
-    "duration_sec": 790,
-    "note": "gpt-6.2-astra 修复中"
+    "started_at": "2026-11-19T17:54:39Z",
+    "finished_at": "2026-11-19T18:07:14Z",
+    "duration_sec": 755,
+    "note": "已完成双端发布并由主代理验收"
   },
-  "updated_at": "2026-11-19T18:06:42Z",
-  "rev": 9
+  "updated_at": "2026-11-19T18:07:14Z",
+  "rev": 10
 }
