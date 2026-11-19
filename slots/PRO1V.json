@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "slot": "PRO1V",
+  "label": "PRO1V(valerie...@gmail.com)",
+  "kind": "pro",
+  "status": "idle",
+  "active_tasks": [],
+  "last_done": {
+    "run_id": "init-pro1v",
+    "task": "pelican-antigravity-ride.html 交付归档",
+    "executor": "Antigravity 原创直写",
+    "status": "done",
+    "commit": "ee341d1",
+    "targets": [],
+    "started_at": "2026-11-19T14:40:00Z",
+    "finished_at": "2026-11-19T14:40:00Z",
+    "duration_sec": 0,
+    "note": "监控槽位初始化完成"
+  },
+  "updated_at": "2026-11-19T15:27:00Z",
+  "rev": 1
+}

@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "slot": "GC",
+  "label": "GC (ominous-waffle-gxpr99x65p743vwvp)",
+  "kind": "codespace",
+  "codespace": "ominous-waffle-gxpr99x65p743vwvp",
+  "web_url": "https://ominous-waffle-gxpr99x65p743vwvp.github.dev",
+  "status": "shutdown",
+  "actor": "PRO2H",
+  "task": "Shutdown 省额度待命",
+  "active_tasks": [],
+  "last_done": {
+    "run_id": "init-gc",
+    "task": "Shutdown 省额度待命",
+    "executor": "GitHub Codespaces (2-core)",
+    "actor": "PRO2H",
+    "status": "shutdown",
+    "commit": "0a7abf2",
+    "targets": [],
+    "started_at": "2026-11-18T12:00:00Z",
+    "finished_at": "2026-11-18T12:00:00Z",
+    "duration_sec": 0,
+    "note": "已关机省额度"
+  },
+  "updated_at": "2026-11-19T15:27:00Z",
+  "rev": 1
+}
