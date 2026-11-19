@@ -44,6 +44,19 @@ class PublishError(RuntimeError):
     """A user-actionable publishing or preflight error."""
 
 
+EMAIL_RE = re.compile(r"[\w.%+!'-]+@[\w.-]+\.[a-zA-Z]{2,}\b")
+TOKEN_RE = re.compile(SECRET_RE.pattern.decode("ascii"))
+
+
+def redact(text: str) -> str:
+    return EMAIL_RE.sub("[邮箱已隐藏]", TOKEN_RE.sub("[凭证已隐藏]", text))
+
+
+class PublicParser(argparse.ArgumentParser):
+    def error(self, message: str) -> None:
+        super().error(redact(message))
+
+
 @dataclass(frozen=True)
 class Identity:
     key: str
@@ -68,7 +81,7 @@ class Candidate:
 def command_text(command: Sequence[str]) -> str:
     """Return a shell-like command for plans without exposing environment secrets."""
 
-    return shlex.join(str(part) for part in command)
+    return redact(shlex.join(str(part) for part in command))
 
 
 def resolve_cli(name: str) -> str | None:
@@ -157,6 +170,8 @@ def read_identity(root: Path) -> Identity:
     if not match:
         raise PublishError("ACCOUNT_IDENTITY.txt 未包含 PRO1V/PRO2H/PRO3J/PRO4M/PRO5C 身份。")
     key = match.group(1)
+    if key not in PRO_EMAILS or DRIVE_EMAIL in raw:
+        raise PublishError("身份文件含有非法 Pro 身份或纯 Drive 存储号。")
     embedded = re.search(rf"{re.escape(key)}\s*\(([^)]+)\)", raw)
     signatures = root / "SIGNATURES.md"
     signature_email = None
@@ -167,13 +182,9 @@ def read_identity(root: Path) -> Identity:
             signature_email = sig_match.group(1).strip()
     email = signature_email or PRO_EMAILS[key]
     if embedded and embedded.group(1).strip() != email:
-        raise PublishError(
-            f"身份邮箱与 SIGNATURES.md 不一致：{embedded.group(1).strip()} != {email}"
-        )
+        raise PublishError("身份邮箱与 SIGNATURES.md 不一致。")
     if email == DRIVE_EMAIL or DRIVE_EMAIL in email:
         raise PublishError("拒绝使用纯 Drive 存储号 466788455@qq.com 作为 Pro 身份。")
-    if key not in PRO_EMAILS:
-        raise PublishError(f"不支持的 Pro 身份：{key}")
     return Identity(key, email)
 
 
@@ -197,9 +208,9 @@ def run_integrity_verify(root: Path) -> None:
         ["python3", ".cursor/skills/swarm-verify/scripts/verify_repo.py", "--strict"], cwd=root
     )
     if result.stdout:
-        print(result.stdout.rstrip())
+        print(redact(result.stdout.rstrip()))
     if result.stderr:
-        print(result.stderr.rstrip(), file=sys.stderr)
+        print(redact(result.stderr.rstrip()), file=sys.stderr)
 
 
 def is_ignored(root: Path, relative: str) -> bool:
@@ -347,6 +358,48 @@ def has_working_change(root: Path, relative: str) -> bool:
     return bool(result.stdout.strip())
 
 
+def push_main(root: Path) -> None:
+    env = {**os.environ, "LC_ALL": "C"}
+    for attempt in range(3):
+        run_command(["git", "fetch", "origin", "main"], cwd=root, env=env)
+        ancestor = run_command(
+            ["git", "merge-base", "--is-ancestor", "FETCH_HEAD", "refs/heads/main"],
+            cwd=root, env=env, check=False,
+        )
+        if ancestor.returncode == 1:
+            branch = run_command(["git", "branch", "--show-current"], cwd=root).stdout.strip()
+            if branch != "main":
+                raise PublishError("远端 main 已领先，需在本地 main 上变基。")
+            # Only abort a rebase that this invocation started.
+            git_dir = Path(run_command(["git", "rev-parse", "--absolute-git-dir"], cwd=root).stdout.strip())
+            if any((git_dir / name).exists() for name in ("rebase-merge", "rebase-apply")):
+                raise PublishError("本地已有进行中的 rebase，请先处理该操作。")
+            pull = run_command(
+                ["git", "pull", "--rebase", "origin", "main"], cwd=root, env=env, check=False
+            )
+            if pull.returncode:
+                conflicts = run_command(
+                    ["git", "diff", "--name-only", "--diff-filter=U", "-z"], cwd=root
+                ).stdout.rstrip("\0").split("\0")
+                if any((git_dir / name).exists() for name in ("rebase-merge", "rebase-apply")):
+                    run_command(["git", "rebase", "--abort"], cwd=root)
+                    raise PublishError("变基已中止，冲突文件：" + (", ".join(conflicts) or "未知"))
+                raise PublishError(f"git pull --rebase 失败：{redact(pull.stderr.strip())}")
+        elif ancestor.returncode:
+            raise PublishError("无法比较本地与远端 main。")
+
+        scan_cached_diff(root)
+        push = run_command(["git", "push", "origin", "main"], cwd=root, env=env, check=False)
+        if push.returncode == 0:
+            return
+        detail = f"{push.stdout}\n{push.stderr}".strip()
+        race = re.search(r"\[(?:remote )?rejected\].*\((?:non-fast-forward|fetch first)\)"
+                         r"|cannot lock ref .*is at [0-9a-f]+ but expected", detail)
+        if not race or attempt == 2:
+            raise PublishError(f"git push origin main 失败：{redact(detail)}")
+        print(f"远端 main 已前移，重新同步后重试推送（{attempt + 1}/2）。", file=sys.stderr)
+
+
 def publish_git(
     root: Path,
     identity: Identity,
@@ -355,31 +408,32 @@ def publish_git(
     message: str,
     dry_run: bool,
     skip_git: bool,
-) -> None:
+) -> list[str]:
     if skip_git:
         print("Git 发布已跳过（--skip-git）。")
-        return
+        return []
     paths = [candidate.relative for candidate in small if has_working_change(root, candidate.relative)]
     if not paths:
         print("没有需要提交到 Git 的小文件变更。")
-        return
+        return []
     prefix = f"[{identity.signature}]"
     commit_message = message.strip() or "publish changes"
     if not commit_message.startswith(prefix):
         commit_message = f"{prefix} {commit_message}"
     add = ["git", "add", "--", *paths]
     commit = ["git", "commit", "--only", "-m", commit_message, "--", *paths]
-    push = ["git", "push", "origin", "main"]
     if dry_run:
         print(f"DRY-RUN {command_text(add)}")
         print("DRY-RUN security scan: git diff --cached")
         print(f"DRY-RUN {command_text(commit)}")
-        print(f"DRY-RUN {command_text(push)}")
-        return
+        print("DRY-RUN git fetch origin main；远端领先时 git pull --rebase origin main")
+        print("DRY-RUN git push origin main")
+        return []
     run_command(add, cwd=root)
     scan_cached_diff(root)
     run_command(commit, cwd=root)
-    run_command(push, cwd=root)
+    push_main(root)
+    return paths
 
 
 def json_from_output(output: str) -> Any:
@@ -654,8 +708,48 @@ def stop_codespace(root: Path, name: str, *, dry_run: bool) -> None:
     run_command(command, cwd=root, env=load_pat_env())
 
 
+def monitor_module():
+    # Keep the optional post-publish hook outside the critical publishing path.
+    if __package__:
+        from . import agent_monitor
+    else:
+        import agent_monitor
+    return agent_monitor
+
+
+def record_delivery(root: Path, identity: Identity, args: argparse.Namespace,
+                    paths: Sequence[str]) -> None:
+    try:
+        commit = run_command(["git", "rev-parse", "--short", "HEAD"], cwd=root).stdout.strip()
+        monitor_module().record_publish_completion(
+            identity.key, paths, commit, run_id=args.monitor_run_id,
+            task=args.monitor_task, message=args.message,
+        )
+    except Exception as exc:
+        print(f"Warning: 发布已完成，监控交付记录更新失败：{redact(str(exc))}", file=sys.stderr)
+
+
+def refresh_gc(root: Path, identity: Identity, args: argparse.Namespace) -> None:
+    try:
+        name = args.stop_codespace or args.from_codespace
+        if args.stop_codespace:
+            state = "shutdown"
+        else:
+            # Exporting a codespace doesn't imply that it is currently running.
+            result = run_command(["gh", "api", f"user/codespaces/{name}", "--jq", ".state"],
+                                 cwd=root, env=load_pat_env())
+            states = {"available": "running", "running": "running",
+                      "shutdown": "shutdown", "stopped": "shutdown"}
+            state = states.get(result.stdout.strip().lower())
+            if state is None:
+                raise PublishError("Codespace 尚无确定的运行或关机状态。")
+        monitor_module().update_gc_state(state, identity.key, task=args.monitor_task, codespace=name)
+    except Exception as exc:
+        print(f"Warning: GC 槽位刷新失败：{redact(str(exc))}", file=sys.stderr)
+
+
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
+    parser = PublicParser(
         description="将小文件发布到 GitHub main，并将全部文件同步到 Google Drive download。"
     )
     parser.add_argument("paths", nargs="*", help="要发布的文件或目录（默认无路径时使用全部变更）。")
@@ -668,6 +762,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--skip-drive", action="store_true", help="跳过 Google Drive 同步。")
     parser.add_argument("--from-codespace", metavar="NAME", help="导出并 squash 合并指定 Codespace。")
     parser.add_argument("--stop-codespace", metavar="NAME", help="完成后调用 gh codespace stop。")
+    parser.add_argument("--monitor-run-id", help="发布成功后关闭指定的活跃任务。")
+    parser.add_argument("--monitor-task", help="交付名称，可消除按路径匹配时的歧义。")
+    parser.add_argument("--skip-monitor", action="store_true", help="跳过监控交付与 GC 槽位更新。")
     parser.add_argument("--poll-interval", type=float, default=2.0, help=argparse.SUPPRESS)
     parser.add_argument("--timeout", type=float, default=600.0, help=argparse.SUPPRESS)
     return parser
@@ -676,8 +773,9 @@ def build_parser() -> argparse.ArgumentParser:
 def execute(args: argparse.Namespace) -> int:
     root = repo_root(args.root)
     identity = read_identity(root)
-    print(f"身份核验通过：{identity.signature}")
+    print(f"身份核验通过：{identity.key}")
     configure_git_identity(root, identity, dry_run=args.dry_run)
+    monitor = not args.dry_run and not args.skip_monitor
 
     if args.from_codespace:
         codespace_export(
@@ -695,6 +793,8 @@ def execute(args: argparse.Namespace) -> int:
         print("没有可发布的文件。")
         if args.stop_codespace:
             stop_codespace(root, args.stop_codespace, dry_run=args.dry_run)
+        if monitor and (args.from_codespace or args.stop_codespace):
+            refresh_gc(root, identity, args)
         return 0
 
     small = [candidate for candidate in candidates if not candidate.is_large]
@@ -708,9 +808,9 @@ def execute(args: argparse.Namespace) -> int:
     for candidate in candidates:
         size_mb = candidate.size / (1024 * 1024)
         lane = "Drive-only" if candidate.is_large else "Git + Drive"
-        print(f"  {lane}: {candidate.relative} ({size_mb:.2f} MiB)")
+        print(redact(f"  {lane}: {candidate.relative} ({size_mb:.2f} MiB)"))
 
-    publish_git(
+    pushed_paths = publish_git(
         root,
         identity,
         small,
@@ -721,8 +821,18 @@ def execute(args: argparse.Namespace) -> int:
     DrivePublisher(root, args.drive_root, dry_run=args.dry_run).sync(
         candidates, skip_drive=args.skip_drive
     )
+    if monitor:
+        published = pushed_paths if args.skip_drive else [c.relative for c in candidates]
+        if published:
+            # PROGRESS.md is automatically attached to --all-changed deliveries.
+            # It isn't evidence that a concurrent task owning that file has finished.
+            evidence = [p for p in published if p != "PROGRESS.md" or not all_changed
+                        or p in args.paths]
+            record_delivery(root, identity, args, evidence)
     if args.stop_codespace:
         stop_codespace(root, args.stop_codespace, dry_run=args.dry_run)
+    if monitor and (args.from_codespace or args.stop_codespace):
+        refresh_gc(root, identity, args)
     print("发布流程完成。" if not args.dry_run else "dry-run 计划完成，未执行 commit/push/Drive mutate。")
     return 0
 
@@ -733,7 +843,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         return execute(args)
     except PublishError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
+        print(f"ERROR: {redact(str(exc))}", file=sys.stderr)
         return 1
     except KeyboardInterrupt:
         print("ERROR: 已中断。", file=sys.stderr)

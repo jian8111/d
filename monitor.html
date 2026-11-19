@@ -1,0 +1,1251 @@
+<!doctype html>
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) -->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>5-Pro &amp; GC 实时任务监控台 · 海湾调度站</title>
+<link rel="icon" href="data:,">
+<style>
+:root {
+  color-scheme: light;
+  --paper: #f6f1e7; --surface: #fffdf8; --subtle: #f4f2ea; --line: #d7d9ce;
+  --ink: #172a36; --muted: #56665f; --quiet: #65736d; --teal: #147d75;
+  --accent-text: #116b64; --tint: #e3f1e9; --ok: #247452; --ok-bg: #e5f2e8;
+  --warn: #8a570e; --warn-bg: #fff0cf; --bad: #ab3c30; --bad-bg: #fbe7df;
+  --neutral: #596a62; --neutral-bg: #edf0e9; --nav: #103b3c; --radar: #123e40;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+}
+:root[data-theme="night"] {
+  color-scheme: dark;
+  --paper: #101e22; --surface: #192a2e; --subtle: #203237; --line: #35474a;
+  --ink: #e7eee9; --muted: #b1c3be; --quiet: #9cafaa; --teal: #63c8b8;
+  --accent-text: #85d7c7; --tint: #203f3b; --ok: #96d7ad; --ok-bg: #253f34;
+  --warn: #f5c373; --warn-bg: #443820; --bad: #ffb2a4; --bad-bg: #4a302d;
+  --neutral: #b5c7c3; --neutral-bg: #293a3e; --nav: #0d292d; --radar: #14383d;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 12px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 14px/1.55 var(--sans); }
+button, input, select { font: inherit; }
+button, a, select, summary { -webkit-tap-highlight-color: transparent; }
+button, summary, select { cursor: pointer; }
+button, input, select { color: inherit; }
+button { background: none; }
+button:disabled { cursor: wait; opacity: .72; }
+a { color: var(--accent-text); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid #d58529; outline-offset: 3px; }
+[hidden] { display: none !important; }
+h1, h2, h3, h4, p, ul, ol, dl, dd { margin: 0; }
+button, summary, a, p, h1, h2, h3, h4, dd, code, output { overflow-wrap: anywhere; }
+svg { display: block; }
+.ico { flex: none; width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.icon-bank { position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none; }
+.mono, time, code, .sha, .numeral, .tag, .slot-id { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.wrap { width: min(1320px, calc(100% - 72px)); margin-inline: auto; }
+.topbar { background: var(--nav); color: #f4f7ea; border-bottom: 3px solid #6aa795; }
+.topline { min-height: 61px; display: flex; align-items: center; gap: 36px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: inherit; flex: none; }
+.brand:hover, .navlink:hover, .tool:hover, .navtool:hover { text-decoration: none; }
+.brand svg { width: 41px; height: 41px; }
+.brand strong { display: block; font-size: 16px; line-height: 1.3; }
+.brand small { display: block; color: #a6ccbc; font: 10px/1.4 var(--mono); }
+.navlinks, .navtools, .toolbar, .inline, .meta, .section-title, .badge, .card-title,
+.task-times, .chips, .repo-line, .flow-meta, .drawer-title { display: flex; align-items: center; }
+.navlinks { gap: 23px; align-self: stretch; }
+.navlink { display: flex; align-items: center; position: relative; color: #bdd1c9; font-size: 13px; }
+.navlink[aria-current], .navlink:hover { color: #fffdf0; }
+.navlink[aria-current]::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; height: 3px; background: #a2d6b9; }
+.navtools { margin-left: auto; gap: 6px; }
+.navtool, .tool { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: 600; }
+.navtool { border: 1px solid transparent; color: #d9e7dd; }
+.navtool:hover { background: #ffffff15; }
+.navtool.gallery { border-color: #527370; }
+.skip { position: fixed; top: -6em; left: 8px; z-index: 9; background: var(--surface); padding: 8px; }
+.skip:focus { top: 8px; }
+main { padding-block: 26px 18px; }
+.repo-line { gap: 8px; flex-wrap: wrap; color: var(--muted); font: 12px/1.4 var(--mono); }
+.repo-line .ico { width: 14px; height: 14px; }
+.branch, .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; line-height: 1.5; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; }
+.branch { background: var(--subtle); }
+.headline, .section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.headline { margin: 8px 0; flex-wrap: wrap; }
+h1 { font-size: 32px; line-height: 1.24; font-weight: 750; }
+h1 .latin { font-family: var(--sans); }
+.toolbar { gap: 7px; flex-wrap: wrap; }
+.tool { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.tool:hover, .copy-card:hover, .work-links a:hover { border-color: var(--teal); color: var(--accent-text); background: var(--tint); }
+.tool.primary { background: #147d75; border-color: #147d75; color: #fff; }
+.tool.primary:hover { background: #10695f; }
+.tool[aria-expanded="true"] { color: var(--accent-text); border-color: var(--teal); }
+.poll { cursor: default; gap: 5px; padding-right: 6px; }
+.poll select { min-height: 24px; min-width: 44px; border: 0; padding: 0; background: var(--surface); color: var(--accent-text); font: 600 12px var(--mono); }
+.meta { gap: 6px 16px; flex-wrap: wrap; color: var(--muted); font-size: 12px; min-height: 25px; }
+.meta .inline { gap: 5px; flex-wrap: wrap; }
+.meta .ico { width: 14px; height: 14px; }
+.status-line { margin-top: 6px; color: var(--muted); font-size: 12px; }
+.settings { border-block: 1px solid var(--line); padding: 14px 0; margin-top: 12px; }
+.settings h2 { font-size: 16px; }
+.settings p { color: var(--muted); font-size: 12px; margin-block: 3px 8px; }
+.settings form { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+input[type="password"] { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; min-width: 0; width: min(280px,100%); height: 37px; padding-inline: 10px; }
+.badge { display: inline-flex; flex: none; gap: 5px; border-radius: 20px; padding: 2px 8px; font: 600 11px/1.65 var(--sans); }
+.dot { width: 7px; height: 7px; flex: none; border-radius: 50%; background: currentColor; }
+.ok { color: var(--ok); background: var(--ok-bg); }
+.warn { color: var(--warn); background: var(--warn-bg); }
+.bad { color: var(--bad); background: var(--bad-bg); }
+.neutral { color: var(--neutral); background: var(--neutral-bg); }
+.kpis { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; margin-block: 18px 12px; }
+.kpi { position: relative; min-width: 0; padding: 13px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 7px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.kpi-head { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; font-weight: 650; }
+.kpi-icon { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 4px; }
+.kpi .value { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 7px; min-height: 31px; font-size: 21px; font-weight: 720; line-height: 1.35; }
+.numeral { font-size: 30px; line-height: 1; }
+.kpi .unit, .kpi-foot { color: var(--muted); font-size: 12px; font-weight: 450; }
+.kpi-foot { margin-top: auto; }
+.kpi .chips { align-self: stretch; min-height: 31px; align-content: center; }
+.kpi .tag { border: 0; font-size: 12px; }
+.pro1v { --id-color:#147d75; --id-bg:#e0efe8; }
+.pro2h { --id-color:#3c66a1; --id-bg:#e6edf9; }
+.pro3j { --id-color:#a85b24; --id-bg:#fbecda; }
+.pro4m { --id-color:#845aa0; --id-bg:#f0e8f4; }
+.pro5c { --id-color:#477746; --id-bg:#e8f0de; }
+.gc { --id-color:#516d7e; --id-bg:#e5edf0; }
+[data-theme="night"] .pro1v { --id-color:#77d6c6; --id-bg:#23423e; }
+[data-theme="night"] .pro2h { --id-color:#99baf4; --id-bg:#293a51; }
+[data-theme="night"] .pro3j { --id-color:#eeb382; --id-bg:#45382c; }
+[data-theme="night"] .pro4m { --id-color:#d6aceb; --id-bg:#3b3147; }
+[data-theme="night"] .pro5c { --id-color:#afd298; --id-bg:#304031; }
+[data-theme="night"] .gc { --id-color:#b3cbdc; --id-bg:#2b3c46; }
+.agent-tag, .kpi-icon { color: var(--id-color); background: var(--id-bg); }
+.alert { margin-block: 12px; padding: 12px 16px; color: var(--bad); background: var(--bad-bg); border: 1px solid currentColor; border-left-width: 4px; border-radius: 5px; }
+.alert h2 { font-size: 16px; }
+.alert ul { padding-left: 18px; }
+.alert li { margin-top: 4px; overflow-wrap: anywhere; }
+.radar { min-width: 0; display: flex; align-items: center; gap: 16px; background: var(--radar); color: #ecf6e8; padding: 10px 18px; border-radius: 6px; position: relative; isolation: isolate; overflow: hidden; }
+.radar::before { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.28; background-image:linear-gradient(#55938533 1px,transparent 1px),linear-gradient(90deg,#55938533 1px,transparent 1px); background-size:18px 18px; }
+.scope { flex:none; width: 72px; height: 72px; }
+.scope svg { width: 100%; height: 100%; }
+.radar-info { min-width: 130px; flex: 0 0 auto; }
+.radar-info h2 { font-size: 16px; }
+.radar-info p, .lock-title { color: #bbd8ce; font-size: 12px; }
+.radar-info p { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+.radar-info .dot { color: #b5d8a5; }
+.lock-area { flex: 1; min-width: 0; border-left: 1px solid #49716f; padding-left: 20px; }
+.lock-title { display: flex; gap: 6px; align-items: center; margin-bottom: 5px; font-weight: 550; }
+.lock-title .ico { width: 14px; height: 14px; }
+.chips { gap: 5px; flex-wrap: wrap; min-width: 0; }
+.lock-chip { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 2px 7px; max-width: 100%; border: 1px solid #527b74; border-radius: 4px; padding: 1px 7px; color: #e2f0e2; background: #204b49; font: 11px/1.65 var(--mono); overflow-wrap: anywhere; }
+.lock-chip b { color: #b1dcc6; }
+.lock-empty { color: #dbeade; font-size: 13px; }
+.section-head { margin-block: 22px 10px; }
+.section-title { gap: 8px; flex-wrap: wrap; }
+.section-title > .ico { color: var(--teal); width: 20px; height: 20px; }
+h2 { font-size: 19px; line-height: 1.4; }
+.section-note { font-size: 12px; color: var(--muted); }
+.section-note .ico { width: 14px; height: 14px; }
+.slot-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; align-items: stretch; }
+.slot { min-width: 0; padding: 14px 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; scroll-margin-block: 12px; }
+.card-head { gap: 5px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 11px; }
+.card-title { gap: 8px; min-width: 0; }
+.avatar { position: relative; width: 33px; height: 33px; border-radius: 6px; background: var(--id-bg); color: var(--id-color); display: grid; place-items: center; }
+.avatar .ico { width: 20px; height: 20px; }
+.avatar::after { content:""; position:absolute; bottom:-2px; right:-2px; width:8px; height:8px; border:2px solid var(--surface); background:var(--id-color); border-radius:50%; }
+.slot-id { font-size: 22px; line-height: 1.2; }
+.task + .task { margin-top: 10px; border-top: 1px dashed var(--line); padding-top: 10px; }
+.task h4, .gc-task { font-size: 15px; line-height: 1.45; }
+.task-info { margin-top: 5px; }
+.file-chip, .exec-chip { max-width: 100%; display: inline-flex; align-items: center; gap: 4px; border-radius: 4px; padding: 1px 5px; font: 11px/1.65 var(--mono); overflow-wrap: anywhere; }
+.file-chip { background: var(--subtle); border: 1px solid var(--line); }
+.file-chip span { min-width: 0; }
+.exec-chip { color: var(--accent-text); background: var(--tint); }
+.file-chip .ico, .exec-chip .ico { width: 12px; height: 12px; }
+.task-times { gap: 5px 10px; flex-wrap: wrap; margin-top: 8px; font: 11px/1.5 var(--mono); color: var(--muted); }
+.task-times span { display: inline-flex; align-items: center; gap: 4px; }
+.task-times .ico { width: 13px; height: 13px; }
+.stale { color: var(--warn); }
+.copy-small { padding: 2px 5px; border: 1px solid var(--line); border-radius: 4px; color: var(--accent-text); font-size: 11px; }
+.idle-note { color: var(--muted); font-size: 13px; }
+.last-done { margin-top: 9px; background: var(--subtle); border-radius: 4px; padding: 7px 9px; }
+summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }
+.last-done summary { display: flex; align-items: baseline; gap: 6px; font-size: 12px; }
+.last-done summary::after, .drawer summary::after { content: "⌄"; margin-left: auto; color: var(--muted); }
+.last-done[open] summary::after, .drawer[open] summary::after { transform: rotate(180deg); }
+.last-label { flex: none; color: var(--quiet); font-size: 11px; }
+.last-done dl, .gc-data { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 3px 8px; font-size: 12px; }
+.last-done dl { margin-top: 6px; }
+dt { color: var(--muted); }
+.gc-data { margin-top: 4px; }
+.gc-links { display: flex; flex-wrap: wrap; gap: 5px 13px; margin-top: 8px; }
+.text-link { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; }
+.text-link .ico { width: 13px; height: 13px; }
+.panels { display: grid; grid-template-columns: minmax(0,.88fr) minmax(0,1.12fr); gap: 24px; margin-top: 24px; }
+.panel { min-width: 0; border-top: 2px solid var(--line); }
+.panel .section-head { margin-top: 12px; }
+.flow-row { display: grid; grid-template-columns: 28px minmax(0,1fr) auto; align-items: center; gap: 7px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.flow-row > .ico { width: 21px; height: 21px; color: var(--teal); }
+.flow-row h3 { font-size: 14px; }
+.flow-meta { flex-wrap: wrap; gap: 3px 7px; font-size: 11px; color: var(--muted); }
+.work-title { font-size: 14px; margin: 14px 0 7px; }
+.work-links { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 5px; }
+.work-links a { display:flex; justify-content:space-between; align-items:center; gap:3px; padding:5px 7px; background:var(--surface); border:1px solid var(--line); border-radius:4px; color:var(--muted); font-size:12px; }
+.work-links a::after { content:"↗"; color:var(--teal); }
+.commit-list { list-style:none; margin:0; padding:0; }
+.commit { display:grid; grid-template-columns:55px minmax(0,1fr) auto; align-items:baseline; gap:2px 7px; padding:7px 0; border-bottom:1px solid var(--line); }
+.commit .tag { justify-self: start; border:0; line-height:1.5; }
+.commit-title { color:var(--ink); font-size:13px; line-height:1.5; overflow-wrap:anywhere; }
+.commit-meta { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:flex-end; gap:2px 7px; font-size:11px; color:var(--muted); }
+.empty-text { padding:10px 0; color:var(--muted); font-size:13px; }
+.drawer { margin-top:22px; border-block:1px solid var(--line); }
+.drawer > summary { display:flex; align-items:center; gap:12px; padding:13px 0; }
+.drawer-title { gap:8px; font-weight:700; font-size:16px; }
+.drawer-title .ico { color:var(--teal); }
+.commands { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; padding-bottom:12px; }
+.copy-card { background:var(--surface); border:1px solid var(--line); border-radius:5px; display:grid; grid-template-columns:1fr auto; gap:3px 5px; padding:10px; text-align:left; min-width:0; }
+.copy-card strong { font:600 13px var(--mono); }
+.copy-card small { grid-column:1/-1; color:var(--muted); }
+.copy-card .ico { width:15px; height:15px; color:var(--teal); }
+.manual-copy { width:100%; background:var(--surface); color:var(--ink); border:1px solid var(--line); padding:6px; margin-block:6px; }
+.toast { position:fixed; z-index:20; right:18px; bottom:18px; max-width:calc(100% - 36px); padding:8px 14px; color:#f4faee; background:#183d39; border:1px solid #83a99b; border-radius:5px; font-size:13px; }
+footer { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:5px 10px; border-top:1px solid var(--line); color:var(--muted); padding:12px 0 20px; font-size:11px; }
+.sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+@media (max-width:1050px) {
+  .wrap { width:calc(100% - 42px); }
+  .slot-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .navlinks { gap:16px; }
+}
+@media (max-width:760px) {
+  .topline { gap:12px; min-height:54px; }
+  .navlinks { display:none; }
+  .wrap { width:calc(100% - 28px); }
+  main { padding-top:16px; }
+  h1 { font-size:26px; }
+  .kpis { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-block:13px 9px; }
+  .kpi { padding:11px 12px; }
+  .radar { gap:9px; padding:10px 12px; }
+  .scope { width:52px; height:52px; }
+  .radar-info { min-width:0; }
+  .lock-area { padding-left:12px; }
+  .panels { grid-template-columns:minmax(0,1fr); gap:18px; }
+  .commands { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:600px) {
+  .slot-grid { grid-template-columns:minmax(0,1fr); gap:8px; }
+  .navtool { padding:5px 8px; }
+  .section-head { margin-block:17px 8px; }
+  .radar { display:grid; grid-template-columns:48px minmax(0,1fr); gap:6px 9px; }
+  .scope { width:46px; height:46px; }
+  .lock-area { padding:7px 0 0; border-left:0; border-top:1px solid #49716f; grid-column:1/-1; }
+  .slot { padding:12px; }
+  .card-head { margin-bottom:8px; }
+  .commit { grid-template-columns:50px minmax(0,1fr); }
+  .commit-meta { grid-column:2; justify-content:flex-start; }
+}
+@media (max-width:420px) {
+  .wrap { width:calc(100% - 24px); }
+  .navtool .nav-text { display:none; }
+  .navtool { width:36px; height:36px; padding:0; }
+  .brand svg { width:35px; height:35px; }
+  .headline { gap:10px; }
+  h1 { font-size:23px; }
+  .toolbar { gap:5px; }
+  .toolbar .tool { padding:5px 7px; gap:4px; font-size:12px; }
+  .toolbar .ico { width:14px; height:14px; }
+  .meta { gap:4px 9px; }
+  .kpi { padding:9px 10px; gap:4px; }
+  .kpi .value { font-size:17px; min-height:26px; }
+  .numeral { font-size:25px; }
+  .kpi .tag { font-size:10px; padding-inline:4px; }
+  .kpi .chips { gap:3px; }
+  .work-links { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (prefers-reduced-motion:reduce) { *, *::before, *::after { scroll-behavior:auto !important; animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+<!-- Lucide icons v0.468.0
+ISC License
+
+Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT). All other copyright (c) for Lucide are held by Lucide Contributors 2022.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+-->
+<svg class="icon-bank" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" /></symbol>
+<symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 7v14" />
+  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></symbol>
+<symbol id="i-branch" viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15" />
+  <circle cx="18" cy="6" r="3" />
+  <circle cx="6" cy="18" r="3" />
+  <path d="M18 9a9 9 0 0 1-9 9" /></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+  <path d="M21 3v5h-5" />
+  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+  <path d="M8 16H3v5" /></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2" />
+  <line x1="12" x2="15" y1="14" y2="11" />
+  <circle cx="12" cy="14" r="8" /></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><path d="M20 7h-9" />
+  <path d="M14 17H5" />
+  <circle cx="17" cy="17" r="3" />
+  <circle cx="7" cy="7" r="3" /></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <polyline points="12 6 12 12 16.5 12" /></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4" />
+  <path d="M3.34 19a10 10 0 1 1 17.32 0" /></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+  <circle cx="9" cy="7" r="4" />
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+  <path d="M16 3.13a4 4 0 0 1 0 7.75" /></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+  <path d="M2 12h20" /></symbol>
+<symbol id="i-laptop" viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16" /></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><circle cx="12" cy="16" r="1" />
+  <rect x="3" y="10" width="18" height="12" rx="2" />
+  <path d="M7 10V7a5 5 0 0 1 10 0v3" /></symbol>
+<symbol id="i-panels" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" />
+  <path d="M3 9h18" />
+  <path d="M9 21V9" /></symbol>
+<symbol id="i-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10" />
+  <path d="M7 17 17 7" /></symbol>
+<symbol id="i-workflow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2" />
+  <path d="M7 11v4a2 2 0 0 0 2 2h4" />
+  <rect width="8" height="8" x="13" y="13" rx="2" /></symbol>
+<symbol id="i-commit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" />
+  <line x1="3" x2="9" y1="12" y2="12" />
+  <line x1="15" x2="21" y1="12" y2="12" /></symbol>
+<symbol id="i-terminal" viewBox="0 0 24 24"><path d="m7 11 2-2-2-2" />
+  <path d="M11 13h4" />
+  <rect width="18" height="18" x="3" y="3" rx="2" ry="2" /></symbol>
+<symbol id="i-radar" viewBox="0 0 24 24"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34" />
+  <path d="M4 6h.01" />
+  <path d="M2.29 9.62A10 10 0 1 0 21.31 8.35" />
+  <path d="M16.24 7.76A6 6 0 1 0 8.23 16.67" />
+  <path d="M12 18h.01" />
+  <path d="M17.99 11.66A6 6 0 0 1 15.77 16.67" />
+  <circle cx="12" cy="12" r="2" />
+  <path d="m13.41 10.59 5.66-5.66" /></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" />
+  <circle cx="12" cy="12" r="10" /></symbol>
+<symbol id="i-sail" viewBox="0 0 24 24"><path d="M22 18H2a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4Z" />
+  <path d="M21 14 10 2 3 14h18Z" />
+  <path d="M10 2v16" /></symbol>
+<symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z" /></symbol>
+<symbol id="i-waves" viewBox="0 0 24 24"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+  <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+  <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" /></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+  <path d="M14 2v4a2 2 0 0 0 2 2h4" /></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+  <path d="m9 12 2 2 4-4" /></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></symbol>
+<symbol id="i-save" viewBox="0 0 24 24"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+  <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+  <path d="M7 3v4a1 1 0 0 0 1 1h7" /></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18" />
+  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+  <line x1="10" x2="10" y1="11" y2="17" />
+  <line x1="14" x2="14" y1="11" y2="17" /></symbol>
+</defs></svg>
+<a class="skip" href="#overview">跳至监控总览</a>
+<header class="topbar" data-cs-ignore>
+  <div class="wrap topline">
+    <a class="brand" href="#overview" aria-label="海湾调度站，监控总览">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="21" fill="#174e4c" stroke="#9cc9aa"/>
+        <g fill="none" stroke="#578b7b" stroke-width=".8"><circle cx="24" cy="24" r="16.5" stroke-dasharray="40 5 8 3"/><path d="M24 1v7m0 32v7M1 24h7m32 0h7M9 9l4 4m22 22 4 4"/></g>
+        <path d="M8 26c5 1 9 0 14-5 2-2 3-7 7-8 3-1 6 1 6 4l-2 2-3-1c1 6-2 11-7 14-6 3-11 0-15-6Z" fill="#f1eed6"/>
+        <path d="M12 27c4 0 8-1 12-5-1 5-5 8-10 8Z" fill="#82b6a0"/>
+        <path d="m32 18 13 4c-5 3-9 3-14-1Z" fill="#ecb964"/><path d="m32 19 11 3" fill="none" stroke="#8a602d" stroke-width=".8"/>
+        <circle cx="32" cy="16.8" r="1" fill="#143c3b"/><path d="M12 34q10 4 23-1" fill="none" stroke="#6ca18d"/>
+      </svg>
+      <span><strong>海湾调度站</strong><small>PELICAN OPS</small></span>
+    </a>
+    <nav class="navlinks" aria-label="监控台导航">
+      <a class="navlink" href="#overview" aria-current="location">监控总览</a>
+      <a class="navlink" href="#slots">算力槽位</a>
+      <a class="navlink" href="#delivery">交付动态</a>
+    </nav>
+    <div class="navtools">
+      <button id="theme" class="navtool" type="button" title="🌙 暗夜调度模式" aria-label="🌙 暗夜调度模式" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg><span class="nav-text">夜间模式</span></button>
+      <a class="navtool gallery" href="./index.html" title="🏠 返回作品展廊" aria-label="🏠 返回作品展廊"><svg class="ico" aria-hidden="true"><use href="#i-house"/></svg><span class="nav-text">作品展廊</span></a>
+    </div>
+  </div>
+</header>
+<main class="wrap" id="overview">
+  <div class="repo-line"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><a href="https://github.com/jian8111/d">jian8111 / d</a><span class="branch"><svg class="ico" aria-hidden="true"><use href="#i-branch"/></svg>main</span></div>
+  <div class="headline">
+    <h1><span class="latin">5-Pro &amp; GC</span> 实时任务监控台</h1>
+    <div class="toolbar" role="group" aria-label="同步工具" data-cs-ignore>
+      <button type="button" class="tool primary" id="refresh"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg><span>立即刷新</span></button>
+      <label class="tool poll"><svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg>自动轮询<select id="poll" aria-label="自动轮询间隔"><option value="0">关</option><option value="30">30s</option><option value="60">60s</option><option value="120">120s</option></select></label>
+      <button type="button" class="tool" id="settings-button" aria-expanded="false" aria-controls="settings"><svg class="ico" aria-hidden="true"><use href="#i-settings"/></svg>接口设置</button>
+    </div>
+  </div>
+  <div class="meta">
+    <span id="connection" class="badge neutral">待同步</span>
+    <span class="inline"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>最近同步 <time id="checked">—</time></span>
+    <span class="inline"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg>API 剩余 <b class="mono" id="quota">—</b><span id="reset"></span></span>
+  </div>
+  <p id="source-note" class="status-line" role="status" hidden></p>
+  <section id="settings" class="settings" aria-labelledby="settings-title" data-cs-ignore hidden>
+    <h2 id="settings-title">⚙️ 配额提速</h2>
+    <p id="token-hint">可选的只读 GitHub Token 仅保存在当前浏览器。</p>
+    <form id="token-form" autocomplete="off">
+      <label class="sr" for="token">只读 GitHub Token</label><input id="token" type="password" placeholder="只读 GitHub Token" spellcheck="false" autocapitalize="none" autocomplete="off" aria-describedby="token-hint">
+      <button type="submit" class="tool primary">保存</button><button type="button" id="clear-token" class="tool">清除</button>
+    </form>
+  </section>
+  <section class="kpis" aria-label="调度总览">
+    <article class="kpi"><div class="kpi-head"><span class="kpi-icon pro1v"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg></span>在运行任务数</div><div class="value"><b class="numeral" id="task-count">—</b><span class="unit">项任务</span></div><div id="pro-count" class="kpi-foot">活跃 Pro 待同步</div></article>
+    <article class="kpi"><div class="kpi-head"><span class="kpi-icon pro5c"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg></span>空闲可用 Pro</div><div id="idle-list" class="chips">—</div><div id="idle-count" class="kpi-foot">待同步</div></article>
+    <article class="kpi"><div class="kpi-head"><span class="kpi-icon pro2h"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></span>网页最新部署</div><div id="pages-kpi" class="value">待同步</div><div class="kpi-foot">GitHub Pages</div></article>
+    <article class="kpi"><div class="kpi-head"><span class="kpi-icon pro4m"><svg class="ico" aria-hidden="true"><use href="#i-laptop"/></svg></span>GC Codespace</div><div id="gc-kpi" class="value">待同步</div><div id="gc-foot" class="kpi-foot">等待实例登记</div></article>
+  </section>
+  <aside id="conflicts" class="alert" aria-live="polite" hidden></aside>
+  <section class="radar" aria-labelledby="radar-title">
+    <div class="scope" aria-hidden="true"><svg id="scope-dial" viewBox="0 0 80 80">
+      <g fill="none" stroke="#5d9788" stroke-width=".8"><circle cx="40" cy="40" r="35"/><circle cx="40" cy="40" r="32" stroke-dasharray="1 4"/><circle cx="40" cy="40" r="23"/><circle cx="40" cy="40" r="12"/><path d="M40 2v76M2 40h76m-64-25 52 50M13 66l53-52" opacity=".7"/></g>
+      <path d="M40 40 46 6a35 35 0 0 1 24 16Z" fill="#69af86" opacity=".25"/><path d="m40 40 30-18" stroke="#b1daad" stroke-width="1.3"/>
+      <g id="radar-points" fill="#95aaa0"><circle cx="24" cy="31" r="2.5"/><circle cx="49" cy="21" r="2.5"/><circle cx="60" cy="44" r="2.5"/><circle cx="33" cy="59" r="2.5"/><circle cx="26" cy="45" r="2.5"/></g>
+      <circle cx="40" cy="40" r="2" fill="#d6e6c7"/>
+    </svg></div>
+    <div class="radar-info"><h2 id="radar-title">文件冲突雷达</h2><p><span class="dot"></span><span id="radar-status">等待槽位数据</span></p></div>
+    <div class="lock-area"><h3 class="lock-title"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>当前已占文件锁</h3><div id="locks" class="chips"></div></div>
+  </section>
+  <section id="slots" aria-labelledby="slots-title">
+    <div class="section-head"><div class="section-title"><svg class="ico" aria-hidden="true"><use href="#i-panels"/></svg><h2 id="slots-title">算力槽位</h2><span class="section-note">5 Pro + 1 GC</span></div><a class="text-link" href="https://github.com/jian8111/d/issues/7">Issue #7 <svg class="ico" aria-hidden="true"><use href="#i-up-right"/></svg></a></div>
+    <div class="slot-grid" id="slot-grid"></div>
+  </section>
+  <div class="panels" id="delivery">
+    <section class="panel" aria-labelledby="flows-title">
+      <div class="section-head"><div class="section-title"><svg class="ico" aria-hidden="true"><use href="#i-workflow"/></svg><h2 id="flows-title">部署流水线</h2></div><a class="text-link" href="https://github.com/jian8111/d/actions">Actions ↗</a></div>
+      <div id="flows"></div>
+      <h3 class="work-title">作品直达</h3>
+      <nav class="work-links" aria-label="常用作品">
+        <a href="./index.html">作品展廊</a><a href="./pelican-antigravity-ride.html">海湾单车</a><a href="./pelican-coastal-courier.html">海岸信使</a>
+        <a href="./pelican-sol-ride.html">骑行蓝图</a><a href="./meadow-cottage-3d.html">草原木屋</a><a href="./sky-castle-cliff-3d.html">海崖浮城</a>
+        <a href="./pelican-6000-mv.html">鹈鹕长卷 MV</a><a href="./pelican-6000-years-mv.html">六千年音画</a><a href="./pelican-test.html">Pelican Test</a>
+      </nav>
+    </section>
+    <section class="panel" aria-labelledby="git-title">
+      <div class="section-head"><div class="section-title"><svg class="ico" aria-hidden="true"><use href="#i-commit"/></svg><h2 id="git-title">最近提交</h2><span class="branch mono">main</span></div><a class="text-link" href="https://github.com/jian8111/d/commits/main/">Git 历史 ↗</a></div>
+      <p id="git-note" class="section-note"></p><ol id="commits" class="commit-list"></ol>
+    </section>
+  </div>
+  <details class="drawer" id="commands" data-cs-ignore><summary><span class="drawer-title"><svg class="ico" aria-hidden="true"><use href="#i-terminal"/></svg>常用指令</span><span class="section-note">一键复制</span></summary><div id="command-list" class="commands"></div></details>
+  <textarea id="manual-copy" class="manual-copy" aria-label="待复制指令" readonly hidden></textarea>
+  <noscript><p>启用 JavaScript 即可读取任务看板、缓存和复制指令。</p></noscript>
+</main>
+<footer class="wrap"><span>海湾调度站 · <span class="mono">jian8111/d</span></span><span>署名 <span class="mono">PRO5C(crispinowilbourn@gmail.com)</span></span></footer>
+<div id="toast" class="toast" role="status" data-cs-ignore hidden></div>
+<script>
+/* CursorSwarm v1.0.0 · © 2026 ZhengLinLei <zheng9112003@icloud.com>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+!function(t,e){"object"==typeof module&&module.exports?module.exports=e():"function"==typeof define&&define.amd?define([],e):t.CursorSwarm=e()}("undefined"!=typeof self?self:this,function(){"use strict";const t=["#ff5e00","#3be8ff","#c6ff3b","#ff3bd4","#ffd23b","#8b5cff","#3bff9d","#ff3b5c"],e={default:{colors:t},neon:{colors:["#39ff14","#ff00e6","#00f0ff","#fff200","#ff3131","#bc13fe"]},pastel:{colors:["#ffadad","#ffd6a5","#fdffb6","#caffbf","#9bf6ff","#bdb2ff","#ffc6ff"]},sunset:{colors:["#ff6b35","#ef476f","#ffd166","#f7c59f","#9d4edd"]},ocean:{colors:["#00b4d8","#90e0ef","#0077b6","#48cae4","#caf0f8"]},forest:{colors:["#52b788","#95d5b2","#2d6a4f","#b7e4c7","#d8f3dc"]},candy:{colors:["#ff70a6","#ff9770","#ffd670","#e9ff70","#70d6ff"]},mono:{mono:"#9a9a9a"},ink:{colors:["#111111","#444444","#777777"],hud:{background:"rgba(255,255,255,.85)",color:"#111",mute:"#666",border:"rgba(0,0,0,.12)"}}},s={frame:"layout",pop:"layout",type:"type",words:"type",media:"media"},i={frame:"drawing",pop:"spawning",type:"writing",words:"writing",media:"placing"},o="undefined"!=typeof navigator&&/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent)?"⌘":"Ctrl+",a="translate(-9999px,-9999px)",r=t=>!0===t?null:+t||0,n=["frame","pop","type","words","media"],c={IMG:1,VIDEO:1,CANVAS:1,IFRAME:1,OBJECT:1,EMBED:1,svg:1,SVG:1},l={BUTTON:1,INPUT:1,SELECT:1,TEXTAREA:1,PROGRESS:1,METER:1},h={SCRIPT:1,STYLE:1,NOSCRIPT:1,TEXTAREA:1,SELECT:1,OPTION:1,svg:1,SVG:1,TEMPLATE:1},p={cursors:3,agents:null,names:null,palette:"default",colors:null,startPosition:"center",root:null,targets:null,ignore:null,frames:!0,deconstruct:!0,exitAfterBuild:!1,idle:"dim",spawn:!0,speed:1,adaptiveSpeed:!0,maxSpeed:4,trigger:.88,typeDuration:1.6,hud:!0,hudPosition:"bottom-left",labels:!0,marquee:!0,guides:!0,sparks:!0,caret:!0,copyPaste:!1,relocation:!1,zIndex:2147483e3,respectReducedMotion:!0,onBuild:null,onUnbuild:null,onIdle:null,onDone:null},d=(t,e,s)=>Math.max(e,Math.min(s,t)),u=(t,e,s)=>t+(e-t)*s,f={none:t=>t,in:t=>t*t*t,out:t=>1-Math.pow(1-t,3),out3:t=>1-Math.pow(1-t,4),inOut:t=>t<.5?8*t*t*t*t:1-Math.pow(-2*t+2,4)/2,back:t=>1+3.4*Math.pow(t-1,3)+2.4*Math.pow(t-1,2)},m=t=>{if(!t||"transparent"===t)return 0;const e=t.match(/rgba?\(([^)]+)\)/);if(!e)return 1;const s=e[1].split(/[\s,/]+/).filter(Boolean);return s.length>3?parseFloat(s[3]):1},g=(t,e)=>"number"==typeof t?t:"string"==typeof t&&t.trim().endsWith("%")?parseFloat(t)/100*e:parseFloat(t)||0,y=t=>"string"==typeof t?document.querySelector(t):t,b=new Map,_=t=>{if(b.has(t))return b.get(t);const e=document.createElement("i");e.style.color=t,e.style.display="none",document.documentElement.appendChild(e);const s=getComputedStyle(e).color.match(/[\d.]+/g)||[0,0,0];e.remove();const i=s.slice(0,3).map(Number);return b.set(t,i),i},x=t=>(t=>{const[e,s,i]=_(t).map(t=>(t/=255)<=.03928?t/12.92:Math.pow((t+.055)/1.055,2.4));return.2126*e+.7152*s+.0722*i})(t)>.22?"#000":"#fff",w=t=>{const[e,s,i]=_(t).map(t=>t/255),o=Math.max(e,s,i),a=Math.min(e,s,i),r=(o+a)/2,n=o-a;let c=0;const l=n?n/(1-Math.abs(2*r-1)):0;return n&&(c=o===e?(s-i)/n%6:o===s?(i-e)/n+2:(e-s)/n+4),[Math.round((60*c+360)%360),100*l,100*r]},v=(t,e,s,i)=>`hsl(${t} ${e.toFixed(1)}% ${s.toFixed(1)}%${null!=i?` / ${i}`:""})`,k=(t,e=5)=>{const[s,i,o]=w(t),a=[t];for(let t=1;a.length<e&&t<12;t++)[o+13*t,o-13*t].forEach(t=>{a.length<e&&t>=14&&t<=92&&a.push(v(s,i,t))});for(;a.length<e;)a.push(a[a.length%Math.max(1,a.length-1)]);return a},E=(s,i)=>{if("string"==typeof s){const t=s.trim();s=/^mono[:(]/i.test(t)?{mono:t.replace(/^mono[:(]\s*|\)$/gi,"")}:t.includes(",")?{colors:t.split(",").map(t=>t.trim())}:e[t]||(window.CSS&&window.CSS.supports("color",t)?{mono:t}:e.default)}else Array.isArray(s)&&(s={colors:s});const o=(s=s||e.default).mono?k(s.mono,Math.max(i,3)):s.colors&&s.colors.length?s.colors:t;let a=s.hud||null;if(!a&&s.mono){const[t,e]=w(s.mono);a={background:v(t,.5*e,8,.8),color:v(t,.4*e,92),mute:v(t,.4*e,65),border:v(t,.6*e,60,.2)}}return{colors:o,hud:a}},C=t=>{if(t.dataset.csLabel)return t.dataset.csLabel;const e=t.tagName.toLowerCase();if(t.id)return`${e}#${t.id}`.slice(0,28);const s="string"==typeof t.className&&t.className.trim().split(/\s+/).find(t=>!t.startsWith("cs-"));return(s?`${e}.${s}`:e).slice(0,28)},M=()=>{if(document.getElementById("cursor-swarm-style"))return;const t=document.createElement("style");t.id="cursor-swarm-style",t.textContent='\n.cs-layer{position:fixed;inset:0;pointer-events:none;overflow:hidden;contain:strict}\n.cs-layer *{box-sizing:border-box}\n.cs-cur{position:absolute;top:0;left:0;will-change:transform;filter:drop-shadow(0 4px 12px rgba(0,0,0,.45));transition:opacity .4s ease}\n.cs-cur svg{display:block}.cs-cur path{transition:fill .4s ease,stroke .4s ease}\n.cs-cur span{position:absolute;left:18px;top:20px;white-space:nowrap;font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;background:var(--c);color:var(--ink,#000);padding:4px 7px;transition:opacity .4s ease,background .4s ease,color .4s ease}\n.cs-cur.cs-flip span{left:auto;right:4px}\n.cs-cur em{position:absolute;left:18px;top:-18px;font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-style:normal;letter-spacing:.04em;white-space:nowrap;background:#111;color:#fff;border:1px solid var(--c);border-radius:3px;padding:3px 6px;opacity:0;transform:translateY(4px);transition:opacity .2s ease,transform .2s ease}\n.cs-cur.cs-flip em{left:auto;right:4px}\n.cs-cur.cs-key em{opacity:1;transform:none}\n.cs-drop{position:absolute;top:0;left:0;border:1.5px dashed var(--c);background:color-mix(in srgb,var(--c) 7%,transparent);border-radius:4px;opacity:0;transition:opacity .3s ease}\n.cs-ghost{pointer-events:none!important;transition:none!important}\n.cs-cur.cs-dim{opacity:.45}.cs-cur.cs-dim span{opacity:0}\n.cs-cur.cs-hidden{opacity:0}\n.cs-mq{position:absolute;top:0;left:0;border:1px dashed var(--c);background:color-mix(in srgb,var(--c) 8%,transparent);opacity:0}\n.cs-mq i{position:absolute;width:7px;height:7px;background:#fff;border:1px solid var(--c)}\n.cs-mq i:nth-of-type(1){left:-4px;top:-4px}.cs-mq i:nth-of-type(2){right:-4px;top:-4px}\n.cs-mq i:nth-of-type(3){left:-4px;bottom:-4px}.cs-mq i:nth-of-type(4){right:-4px;bottom:-4px}\n.cs-mq b{position:absolute;left:50%;bottom:-24px;transform:translateX(-50%);font:500 10px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--c);color:var(--ink,#000);padding:3px 6px;white-space:nowrap}\n.cs-gd{position:absolute;top:0;left:0;opacity:0}\n.cs-gd.cs-h{width:100%;border-top:1px solid var(--c)}.cs-gd.cs-v{height:100%;border-left:1px solid var(--c)}\n.cs-caret{position:absolute;top:0;left:0;width:2px;height:20px;background:var(--c);box-shadow:0 0 10px var(--c);opacity:0}\n.cs-caret::after{content:"";position:absolute;inset:0;background:inherit;animation:cs-blink .9s steps(1) infinite}\n.cs-box{position:absolute;top:0;left:0}\n.cs-box i{position:absolute;background:var(--c)}\n.cs-box .t,.cs-box .b{left:0;right:0;height:1px}.cs-box .t{top:0;transform-origin:left}.cs-box .b{bottom:0;transform-origin:right}\n.cs-box .l,.cs-box .r{top:0;bottom:0;width:1px}.cs-box .r{right:0;transform-origin:top}.cs-box .l{left:0;transform-origin:bottom}\n.cs-box .f{inset:0;opacity:0}\n.cs-scan{position:absolute;top:0;left:0;background:var(--c);box-shadow:0 0 24px 6px var(--c)}\n.cs-spark{position:absolute;top:0;left:0;width:5px;height:5px;background:var(--c)}\n@keyframes cs-blink{50%{opacity:0}}\n.cs-c{opacity:0}\n.cs-w{display:inline-block;opacity:0;transform:translateY(.3em);transition:opacity .35s ease,transform .35s ease}\n.cs-c.cs-on,.cs-w.cs-on{opacity:1;transform:none}\n.cs-frame-off{background-color:transparent!important;background-image:none!important;border-color:transparent!important;box-shadow:none!important;outline-color:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}\n.cs-frame-fade{transition:background-color .7s ease,border-color .7s ease,box-shadow .7s ease,outline-color .7s ease!important}\n.cs-hud{position:fixed;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:9px 14px;font:500 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--cs-hud-fg,#f1efe9);background:var(--cs-hud-bg,rgba(10,10,10,.72));border:1px solid var(--cs-hud-line,rgba(255,255,255,.12));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);pointer-events:none;transition:opacity .4s ease,background .4s ease,color .4s ease}\n.cs-hud i{width:7px;height:7px;border-radius:50%;flex:none;background:currentColor;transition:background .3s}\n.cs-hud .cs-st{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46ch;color:var(--cs-hud-mute,#a3a29d)}\n.cs-hud .cs-pct{margin-left:4px;min-width:5ch;text-align:right}\nhtml.cs-cloak body{visibility:hidden}\n',(document.head||document.documentElement).appendChild(t)};class S{constructor(t){this.rate=t,this.list=new Set,this.paused=!1,this.instant=!1,this.raf=0,this.tracks=new Set,this.loop=this.loop.bind(this)}track(t){return this.tracks.add(t),t(),this.start(),()=>this.tracks.delete(t)}tween(t,e,s){return new Promise(i=>{if(this.instant||t<=0)return s&&s(1),void i();e=e||f.none,s&&s(e(0)),this.list.add({t:0,dur:t,ease:e,fn:s,res:i}),this.start()})}wait(t){return this.tween(t,null,null)}start(){this.raf||this.paused||(this.last=performance.now(),this.raf=requestAnimationFrame(this.loop))}loop(t){const e=Math.min(.05,(t-this.last)/1e3);this.last=t;const s=e*this.rate();for(const t of[...this.list]){t.t+=s;const e=Math.min(1,t.t/t.dur);t.fn&&t.fn(t.ease(e)),e>=1&&(this.list.delete(t),t.res())}this.tracks.forEach(t=>t()),this.raf=!this.list.size&&!this.tracks.size||this.paused?0:requestAnimationFrame(this.loop)}pause(){this.paused=!0,cancelAnimationFrame(this.raf),this.raf=0}resume(){this.paused=!1,(this.list.size||this.tracks.size)&&this.start()}flush(){this.instant=!0;for(const t of[...this.list])t.fn&&t.fn(1),t.res();this.list.clear(),this.tracks.clear(),cancelAnimationFrame(this.raf),this.raf=0}}class ${constructor(t={}){this.opts=Object.assign({},p,t),this.state="idle",this.records=[],this.byEl=new Map,this.agents=[],this._events={},this._mediaN=0,this._bgCache=new WeakMap,this._wasDone=!1,this._resumers=[],this.clock=new S(()=>this._rate())}init(){if("idle"!==this.state)return this;const t=document.documentElement;return this.opts.respectReducedMotion&&window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches||!document.body?(t.classList.remove("cs-cloak"),this.state="stopped",this):(M(),this.root=y(this.opts.root)||document.body,this.state="running",this.layer=document.createElement("div"),this.layer.className="cs-layer",this.layer.setAttribute("aria-hidden","true"),this.layer.style.zIndex=this.opts.zIndex,document.body.appendChild(this.layer),this.opts.hud&&this._makeHud(),t.classList.remove("cs-cloak"),this._collect(this.root),this._makeAgents(),this._paintHud(),this._io=new IntersectionObserver(t=>this._onIntersect(t),{rootMargin:`0px 0px -${Math.round(100*(1-this.opts.trigger))}% 0px`}),this.records.forEach(t=>this._io.observe(t.el)),this._onScroll=()=>{this._scrollQueued||(this._scrollQueued=!0,setTimeout(()=>{this._scrollQueued=!1,this._sweep()},90))},addEventListener("scroll",this._onScroll,{passive:!0}),addEventListener("resize",this._onScroll,{passive:!0}),requestAnimationFrame(()=>this._sweep()),this._updateHud(),this._emit("start"),this)}pause(){return"running"!==this.state||(this.state="paused",this.clock.pause(),this._emit("pause")),this}resume(){if("paused"!==this.state)return this;this.state="running",this.clock.resume();const t=this._resumers;return this._resumers=[],t.forEach(t=>t()),this._emit("resume"),this}toggle(){return"paused"===this.state?this.resume():this.pause()}stop({reveal:t=!0}={}){if("stopped"===this.state||"destroyed"===this.state||"idle"===this.state)return this;const e="paused"===this.state;if(this.state="stopped",this._teardownWatchers(),this.clock.flush(),e){const t=this._resumers;this._resumers=[],t.forEach(t=>t())}return this.records.forEach(t=>{t.waiters.splice(0).forEach(t=>t())}),t&&this.records.forEach(t=>this._finish(t)),this.agents.forEach(t=>t.cur.classList.add("cs-hidden")),this.hud&&(this.hud.style.opacity=0),setTimeout(()=>{this.layer&&this.layer.remove(),this.hud&&this.hud.remove()},450),this._emit("stop"),this}destroy(){return"destroyed"===this.state||(this.stop({reveal:!0}),this.records.forEach(t=>this._restore(t)),this.layer&&this.layer.remove(),this.hud&&this.hud.remove(),this.records=[],this.byEl.clear(),this.state="destroyed",this._emit("destroy")),this}buildAll(){return this.records.forEach(t=>{t.want="built",t.active||this._finish(t)}),this._updateHud(),this}refresh(){if("running"!==this.state&&"paused"!==this.state)return this;const t=this.records.length;return this._collect(this.root),this.records.slice(t).forEach(t=>this._io.observe(t.el)),this._sweep(),this._updateHud(),this}add(t,e){if(!(t=y(t))||this.byEl.has(t)||"idle"===this.state)return this;const s=getComputedStyle(t),i=n.includes(e)?e:this._detect(t,s,!1);if(!i)return this;this._unprepared=[];return this._register(t,i,s,this._containersOf(t)).forEach(t=>{this._prepare(t,t.cs),delete t.cs,this._io.observe(t.el)}),this._sweep(),this}setSpeed(t){return this.opts.speed=Math.max(.05,+t||1),this}setPalette(t,{keepColors:e=!1}={}){if(this.opts.palette=t,e||(this.opts.colors=null),!this.agents.length)return this;this._palette=E(t,this.agents.length);const s=this._colors();return this.agents.forEach((t,e)=>{t.fixedColor||this._paint(t,s[e%s.length])}),this._paintHud(),this._emit("palette",this._palette),this}get colors(){return this.agents.map(t=>t.color)}get progress(){const t=this.records.length;return t?this.records.filter(t=>"built"===t.state).length/t:1}on(t,e){return(this._events[t]=this._events[t]||[]).push(e),this}off(t,e){return this._events[t]=(this._events[t]||[]).filter(t=>t!==e),this}_emit(t,...e){(this._events[t]||[]).forEach(t=>{try{t(...e)}catch(t){console.error(t)}});const s=this.opts["on"+t[0].toUpperCase()+t.slice(1)];if("function"==typeof s)try{s(...e)}catch(t){console.error(t)}}_skipped(t){return t.matches("script,style,noscript,template,link,meta,head,br,wbr,source,track,[data-cs-ignore],.cs-layer,.cs-hud")||this.opts.ignore&&t.matches(this.opts.ignore)}_effectiveBg(t){for(let e=t;e&&1===e.nodeType;e=e.parentElement){if(this._bgCache.has(e))return this._bgCache.get(e);const t=getComputedStyle(e).backgroundColor;if(m(t)>.05)return this._bgCache.set(e,t),t}return"rgb(255, 255, 255)"}_hasBox(t,e){if(["Top","Right","Bottom","Left"].some(t=>parseFloat(e["border"+t+"Width"])>0&&"none"!==e["border"+t+"Style"]&&m(e["border"+t+"Color"])>.05)||"none"!==e.boxShadow||/gradient/.test(e.backgroundImage))return!0;if(m(e.backgroundColor)<=.05)return!1;const s=t.parentElement?this._effectiveBg(t.parentElement):"";return e.backgroundColor!==s}_directText(t){for(const e of t.childNodes)if(3===e.nodeType&&e.nodeValue.trim())return!0;return!1}_detect(t,e,s){const i=t.tagName,o=t.getBoundingClientRect();if(c[i]){return o.width>0&&o.width<48&&o.height<48?s?null:"pop":"media"}if(s)return null;if(!o.width&&!o.height)return null;if(l[i])return"pop";const a=this.opts.frames&&this._hasBox(t,e),r=this._directText(t);if(a&&o.width<=480&&o.height<=72&&(r||"A"===i))return"pop";if(r){return(/^H[1-3]$/.test(i)||parseFloat(e.fontSize)>=28)&&t.textContent.trim().length<=140?"type":"words"}if(/url\(/.test(e.backgroundImage)&&o.width>80&&o.height>80)return"media";if(a){return t===document.body||t===document.documentElement||o.width>=.97*innerWidth&&o.height>=.6*document.documentElement.scrollHeight?null:"frame"}return null}_containersOf(t){const e=[];for(let s=t.parentElement;s;s=s.parentElement)(this.byEl.get(s)||[]).forEach(t=>{("frame"===t.type||"media"===t.type&&!c[s.tagName])&&e.unshift(t)});return e}_collect(t){this._unprepared=[],this._detectAll(t),this._unprepared.forEach(t=>{this._prepare(t,t.cs),delete t.cs}),this._unprepared=[]}_detectAll(t){const e=this.opts.targets;if(e)return void t.querySelectorAll(e).forEach(t=>{if(this.byEl.has(t)||this._skipped(t))return;const e=getComputedStyle(t),s=t.getAttribute("data-cs"),i=n.includes(s)?s:this._detect(t,e,!1)||(this._directText(t)?"words":"pop");this._register(t,i,e,this._containersOf(t))});const s=(t,e,i)=>{if(this._skipped(t))return;const o=getComputedStyle(t);if("none"===o.display||"hidden"===o.visibility)return;if("PICTURE"===t.tagName)return void[...t.children].forEach(t=>s(t,e,i));const a=t.getAttribute("data-cs");if("skip"===a)return;let r=e,l=!0,h=i;if(this.byEl.has(t))(this.byEl.get(t)||[]).forEach(t=>{"frame"!==t.type&&"media"!==t.type||(r=r.concat(t))}),this.byEl.get(t).some(t=>t.parts)&&(h=!0);else{const s="none"===a?null:n.includes(a)?a:this._detect(t,o,i);if(s){this._register(t,s,o,e).forEach(e=>{("frame"===e.type||"media"===e.type&&!c[t.tagName])&&(r=r.concat(e))}),("pop"===s||c[t.tagName])&&(l=!1),"type"!==s&&"words"!==s||(h=!0)}}l&&[...t.children].forEach(t=>s(t,r,h))};t===document.body||t===document.documentElement?[...t.children].forEach(t=>s(t,[],!1)):s(t,[],!1)}_register(t,e,s,i){const o=[],a=(e,i)=>{const a={el:t,type:e,label:C(t),state:"empty",want:"empty",queued:!1,active:!1,containers:i,waiters:[],saved:{},cs:s};this._unprepared.push(a),this.records.push(a);const r=this.byEl.get(t)||[];return r.push(a),this.byEl.set(t,r),o.push(a),a};if(("type"===e||"words"===e)&&this.opts.frames&&this._hasBox(t,s)){const t=a("frame",i);a(e,i.concat(t))}else a(e,i);return o}_split(t,e){const s=[],i=[],o=t=>[...t.childNodes].forEach(a=>{if(3===a.nodeType){if(!a.nodeValue.trim())return;const o=document.createDocumentFragment(),r=[];if(a.nodeValue.split(/(\s+)/).forEach(t=>{if(t){if(/^\s+$/.test(t)){const e=document.createTextNode(t);return o.append(e),void r.push(e)}if(e){const e=document.createElement("span");e.className="cs-w",e.textContent=t,o.append(e),r.push(e),s.push(e)}else for(const e of Array.from(t)){const t=document.createElement("span");t.className="cs-c",t.textContent=e,o.append(t),r.push(t),s.push(t)}}}),/flex|grid/.test(getComputedStyle(t).display)){const t=document.createElement("span");return t.append(o),r.length=0,r.push(t),i.push({orig:a,made:r}),void a.replaceWith(t)}i.push({orig:a,made:r}),a.replaceWith(o)}else 1!==a.nodeType||h[a.tagName]||a.matches("[data-cs-ignore]")||this.byEl.has(a)||o(a)});return o(t),{parts:s,swaps:i}}_prepare(t,e){const s=t.el,i=t.saved;if("type"===t.type||"words"===t.type){const{parts:i,swaps:o}=this._split(s,"words"===t.type);if(!i.length)return t.type="pop",this._prepare(t,e);t.parts=i,t.swaps=o}else"media"===t.type?(t.dir=s.dataset.csDir||"lrt"[this._mediaN++%3],i.clipPath=s.style.clipPath,s.style.clipPath=this._clip(t.dir,0),c[s.tagName]||(t.img=s.querySelector(":scope > img, :scope > picture > img"))):"pop"===t.type?(i.opacity=s.style.opacity,i.scale=s.style.scale,s.style.opacity=0,s.style.scale=.4):"frame"===t.type&&s.classList.add("cs-frame-off")}_clip(t,e){const s=(100*(1-e)).toFixed(2)+"%";return"r"===t?`inset(0 0 0 ${s})`:"t"===t?`inset(0 0 ${s} 0)`:`inset(0 ${s} 0 0)`}_finish(t){const e=t.el,s=t.saved;t.parts&&t.parts.forEach(t=>t.classList.add("cs-on")),this._undisplace(t),"media"!==t.type||t.revealing||(e.style.clipPath=s.clipPath||"",t.img&&(t.img.style.scale="")),"pop"===t.type&&(e.style.opacity=s.opacity||"",e.style.scale=s.scale||""),"frame"===t.type&&e.classList.remove("cs-frame-off"),this._setState(t,"built")}_reset(t){const e=t.el;this._undisplace(t),t.parts&&t.parts.forEach(t=>t.classList.remove("cs-on")),"media"===t.type&&(e.style.clipPath=this._clip(t.dir,0)),"pop"===t.type&&(e.style.opacity=0,e.style.scale=.4),"frame"===t.type&&e.classList.add("cs-frame-off"),this._setState(t,"empty")}_restore(t){const e=t.el,s=t.saved;this._undisplace(t),t.swaps&&t.swaps.forEach(({orig:t,made:e})=>{e[0]&&e[0].parentNode&&(e[0].before(t),e.forEach(t=>t.remove()))}),"media"===t.type&&(e.style.clipPath=s.clipPath||"",t.img&&(t.img.style.scale="")),"pop"===t.type&&(e.style.opacity=s.opacity||"",e.style.scale=s.scale||""),e.classList.remove("cs-frame-off","cs-frame-fade")}_setState(t,e){if(t.state===e)return void this._notify(t);t.state=e,this._notify(t),this._emit("built"===e?"build":"unbuild",t.el,t.type,t.agent?t.agent.name:null),this._updateHud();const s=this.records.every(t=>"built"===t.state);s&&!this._wasDone&&this._emit("done"),this._wasDone=s}_notify(t){t.waiters.splice(0).forEach(t=>t())}_makeAgents(){const t=this.opts,e=Array.isArray(t.agents)&&t.agents.length?t.agents:[],s=Math.max(1,e.length||Math.round(t.cursors)||1),i=1===s?[["layout","type","media"]]:2===s?[["type"],["layout","media"]]:Array.from({length:s},(t,e)=>[["layout","type","media"][e%3]]);this._palette=E(t.palette,s);const o=this._colors();for(let r=0;r<s;r++){const n=e[r]||{},c=n.name||("function"==typeof t.names?t.names(r):Array.isArray(t.names)&&t.names[r])||`AGENT·${String(r+1).padStart(2,"0")}`,l=n.color||o[r%o.length],h={name:c,color:l,roles:n.role?[].concat(n.role):i[r],q:[],busy:!1,i:r,fixedColor:!!n.color,els:[]},p=(t,e)=>{const s=document.createElement("div");return s.className=t,s.style.transform=a,e&&(s.innerHTML=e),this.layer.appendChild(s),h.els.push(s),s};h.gh=p("cs-gd cs-h"),h.gv=p("cs-gd cs-v"),h.caret=p("cs-caret"),h.mq=p("cs-mq","<i></i><i></i><i></i><i></i><b></b>"),h.lbl=h.mq.querySelector("b"),h.cur=p("cs-cur",`<svg width="22" height="22" viewBox="0 0 24 24"><path d="M3 2l7.6 19.2 2.7-8 7.9-2.8z" stroke-width="1.3" stroke-linejoin="round"/></svg>${t.labels?"<span></span>":""}<em></em>`),t.labels&&(h.cur.querySelector("span").textContent=c),h.path=h.cur.querySelector("path"),h.kbd=h.cur.querySelector("em"),this._paint(h,l),h.home=this._startPos(r,s,n),this._place(h,h.home.x,h.home.y),this.agents.push(h)}this.agents.forEach(t=>{t.ready=this._spawn(t)})}_colors(){const t=this.opts;return Array.isArray(t.colors)&&t.colors.length?t.colors:this._palette.colors}_paint(t,e){t.color=e;const s=x(e);t.els.forEach(t=>{t.style.setProperty("--c",e),t.style.setProperty("--ink",s)}),t.path.setAttribute("fill",e),t.path.setAttribute("stroke",s)}_paintHud(){if(!this.hud)return;const t=this._palette&&this._palette.hud||{};[["bg",t.background],["fg",t.color],["mute",t.mute],["line",t.border]].forEach(([t,e])=>{e?this.hud.style.setProperty("--cs-hud-"+t,e):this.hud.style.removeProperty("--cs-hud-"+t)})}_startPos(t,e,s){const i=innerWidth,o=innerHeight,a=t=>({x:g(t.x,i),y:g(t.y,o)});if(null!=s.x||null!=s.y)return a({x:null!=s.x?s.x:"50%",y:null!=s.y?s.y:"50%"});const r=this.opts.startPosition;if("function"==typeof r)return a(r(t,e));if(Array.isArray(r))return a(r[t%r.length]);if(r&&"object"==typeof r)return a(r);const n=(t,e)=>(t+1)/(e+1);switch(r){case"random":return{x:i*(.12+.76*Math.random()),y:o*(.15+.7*Math.random())};case"corners":{const e=[[.08,.1],[.92,.1],[.92,.9],[.08,.9]][t%4];return{x:i*e[0]-(e[0]>.5?30:0),y:o*e[1]}}case"top":return{x:i*n(t,e),y:70};case"bottom":return{x:i*n(t,e),y:o-70};case"left":return{x:40,y:o*n(t,e)};case"right":return{x:i-70,y:o*n(t,e)};case"outside":{const s=t%4,a=n(Math.floor(t/4),Math.ceil(e/4));return[{x:-60,y:o*a},{x:i+60,y:o*a},{x:i*a,y:-60},{x:i*a,y:o+60}][s]}default:{const s=Math.min(110,.7*i/e);return{x:i/2+(t-(e-1)/2)*s-12,y:o/2-24}}}}async _spawn(t){if(!(this.opts.spawn&&"outside"!==this.opts.startPosition))return void this._idleLook(t,!0);t.cur.style.opacity=0,t.cur.style.scale=0,await this.clock.wait(.25+.3*t.i);const e=t.mq.style;e.opacity=1,await this.clock.tween(.35,f.out,s=>{const i=44*s;e.transform=`translate(${t.x-14}px,${t.y-14}px)`,e.width=i+"px",e.height=i+"px",t.lbl.textContent=`${Math.round(i)} × ${Math.round(i)}`}),this.clock.tween(.3,f.out,t=>{e.opacity=1-t}),await this.clock.tween(.45,f.back,e=>{t.cur.style.opacity=Math.min(1,2*e),t.cur.style.scale=e}),t.cur.style.opacity="",t.cur.style.scale="",this._idleLook(t,!0)}_place(t,e,s){t.x=e,t.y=s,t.cur.style.transform=`translate(${e-3}px,${s-2}px)`,t.cur.classList.toggle("cs-flip",e>innerWidth-110)}_idleLook(t,e){t.cur.classList.toggle("cs-dim",e&&"dim"===this.opts.idle),t.cur.classList.toggle("cs-hidden",e&&"hide"===this.opts.idle)}_rate(){const t=this.opts;if(!t.adaptiveSpeed)return t.speed;const e=this.agents.reduce((t,e)=>t+e.q.length,0);return t.speed*Math.min(1+.45*e,t.maxSpeed)}_travel(t,e,s=.5){const i=t.x,o=t.y;return this.clock.tween(s,f.inOut,s=>{const a=e();this._place(t,u(i,a.x,s),u(o,a.y,s))})}_say(t,e,s){this.hud&&(this.hudSt.textContent=`${t.name} › ${e} <${s}/>`,this.hudDot.style.background=t.color)}_onIntersect(t){"running"!==this.state&&"paused"!==this.state||t.forEach(t=>{const e=this.byEl.get(t.target)||[];t.isIntersecting?e.forEach(t=>this._dispatch(t,!0)):this.opts.deconstruct&&t.rootBounds&&t.boundingClientRect.top>=t.rootBounds.bottom&&e.forEach(t=>this._dispatch(t,!1))})}_sweep(){if("running"!==this.state&&"paused"!==this.state)return;const t=document.documentElement,e=scrollY+innerHeight>=t.scrollHeight-4,s=innerHeight*this.opts.trigger;this.records.forEach(t=>{if("built"===t.want)return;const i=t.el.getBoundingClientRect();(i.width||i.height)&&(i.bottom<0&&i.top<s?t.queued||t.active||(t.want="built",this._finish(t)):e&&i.top<innerHeight&&i.bottom>0&&this._dispatch(t,!0))})}_dispatch(t,e){if("running"!==this.state&&"paused"!==this.state)return;const i=e?"built":"empty";if(t.want!==i&&(t.want=i,this._notify(t)),t.queued||t.active||t.state===i)return;e&&t.containers.forEach(t=>{"built"!==t.state&&this._dispatch(t,!0)});const o=s[t.type],a=t=>t.q.length+(t.busy?1:0),r=this.agents.filter(t=>t.roles.includes(o)),n=t=>t.reduce((t,e)=>a(e)<a(t)?e:t);let c=r.length?n(r):n(this.agents);if(a(c)>=2){const t=n(this.agents);a(t)<a(c)&&(c=t)}t.queued=!0,t.agent=c,c.q.push(t),this._pump(c)}_alive(){return"running"===this.state||"paused"===this.state}_gate(){return"paused"===this.state?new Promise(t=>this._resumers.push(t)):null}async _awaitContainers(t,e){for(const s of t.containers){let i=Date.now();for(;this._alive()&&"built"!==s.state&&"built"===t.want;){if(s.agent===e&&s.queued||!s.queued&&!s.active||Date.now()-i>(s.copyRoll?9e3:4e3)){s.queued&&s.agent&&(s.agent.q.splice(s.agent.q.indexOf(s),1),s.queued=!1),s.active||(s.want="built",this._finish(s));break}await new Promise(t=>{s.waiters.push(t),setTimeout(t,500)})}}}_inView(t){const e=t.getBoundingClientRect();return!(e.bottom<-40||e.top>innerHeight+40||e.right<0||e.left>innerWidth||!e.width&&!e.height)}async _pump(t){if(!t.busy&&this._alive()){for(t.busy=!0,await t.ready,this._idleLook(t,!1),t.cur.classList.remove("cs-hidden");;){for(;t.q.length&&this._alive();){const e=this._gate();if(e&&await e,!this._alive())break;const s=t.q.shift();if(s.queued=!1,t.parked=!1,s.state===s.want)continue;if("built"===s.want&&await this._awaitContainers(s,t),!this._alive())break;const o=s.want;if(s.state===o)continue;if(!this._inView(s.el)){"built"===o?this._finish(s):this._reset(s);continue}const a="built"===o&&this._copySource(s);if("wait"===a){s.copyWaits=(s.copyWaits||0)+1,s.queued=!0,t.q.push(s),await this.clock.wait(t.q[0]===s?.25:.1);continue}s.copyRoll=null,s.copyWaits=0;const r="built"===o&&!a&&this._wantsRelocation(s);this._say(t,a?"copy-pasting":"built"===o?i[s.type]:"removing",s.label),s.active=!0;try{a?await this._copy(t,s,a):(r&&this._displace(t,s),await("built"===o?this._jobs:this._unjobs)[s.type].call(this,t,s),r&&this._alive()&&(this._say(t,"moving",s.label),await this._relocate(t,s)))}catch(t){console.error("[CursorSwarm]",t)}if(s.active=!1,!this._alive())break;"built"===o?this._finish(s):this._reset(s),s.want!==o&&(s.queued=!0,t.q.push(s))}if(!this._alive())break;const e=this.opts.exitAfterBuild;if(e&&!t.parked){if(await this.clock.wait(.6),t.q.length)continue;const s="home"===e,i=t.x<innerWidth/2?-80:innerWidth+80;if(await this._travel(t,()=>s?t.home:{x:i,y:t.y},.7),t.parked=!0,t.q.length)continue}break}t.busy=!1,this._alive()&&(t.q.length?this._pump(t):(this._idleLook(t,!0),this.hud&&this.agents.every(t=>!t.busy)&&(this.hudSt.textContent=this.progress>=.999?"all agents idle · page built":"all agents idle",this.hudDot.style.background=""),this._emit("idle",t)))}}_key(t,e){e&&(t.kbd.textContent=e),t.cur.classList.toggle("cs-key",!!e)}_signature(t){const e="string"==typeof t.className?t.className.split(/\s+/).filter(t=>t&&!t.startsWith("cs-")).sort().join("."):"";return t.tagName+"|"+e}_tree(t){return[t].concat(this.records.filter(e=>e!==t&&e.containers.includes(t)))}_copySource(t){const e=this.opts,s=t.el,i=s.dataset.csCopy;if("false"===i||!e.copyPaste&&"true"!==i)return null;if(!["frame","pop","media"].includes(t.type)||!s.parentElement)return null;if((this.byEl.get(s)||[])[0]!==t)return null;if(null==t.copyRoll){const s=r(e.copyPaste);t.copyRoll="true"===i||Math.random()<(null==s?.5:s)}if(!t.copyRoll)return null;const o=this._signature(s),a=[...s.parentElement.children],n=a.indexOf(s),c=a.filter(t=>t!==s&&!t.classList.contains("cs-ghost")&&this._signature(t)===o&&this.byEl.has(t)&&this._inView(t)),l=c.filter(t=>this.byEl.get(t).every(t=>this._tree(t).every(t=>"built"===t.state&&!t.active&&"built"===t.want)));if(l.length)return l.sort((t,e)=>Math.abs(a.indexOf(t)-n)-Math.abs(a.indexOf(e)-n))[0];return c.some(t=>this.byEl.get(t).some(t=>"built"===t.want))&&(t.copyWaits||0)<40?"wait":null}_finishTree(t){this._tree(t).forEach(e=>{if(e.want="built",e.queued&&e.agent){const t=e.agent.q,s=t.indexOf(e);s>-1&&t.splice(s,1),e.queued=!1}e!==t&&e.active||this._finish(e)})}async _copy(t,e,s){const i=e.el,a=()=>s.getBoundingClientRect(),r=()=>i.getBoundingClientRect();await this._travel(t,()=>{return{x:(t=a()).left+.5*t.width,y:t.top+.5*t.height};var t},.45);const n=this._mk("cs-drop",t.color),c=this.clock.track(()=>{const t=a();Object.assign(n.style,{transform:`translate(${t.left-3}px,${t.top-3}px)`,width:t.width+6+"px",height:t.height+6+"px"})});n.style.opacity=1,this._key(t,o+"C"),await this.clock.wait(.35);const l=a(),h=s.cloneNode(!0);h.setAttribute("data-cs-ignore",""),h.setAttribute("aria-hidden","true"),h.removeAttribute("id"),h.querySelectorAll("[id]").forEach(t=>t.removeAttribute("id")),h.classList.remove("cs-frame-fade"),h.classList.add("cs-ghost"),Object.assign(h.style,{position:"absolute",left:"0px",top:"0px",margin:"0",boxSizing:"border-box",zIndex:2147482e3,width:l.width+"px",height:l.height+"px",translate:"0px 0px",rotate:"0deg",scale:"",opacity:"0",clipPath:"",boxShadow:"0 26px 60px -18px rgba(0,0,0,.55)",outline:`1.5px solid ${t.color}`,outlineOffset:"2px"}),s.parentElement.appendChild(h);let p=0,d=0;const m=(t,e,s,i)=>{null!=s&&(h.style.width=s+"px",h.style.height=i+"px");const o=h.getBoundingClientRect();p+=t-o.left,d+=e-o.top,h.style.translate=`${p}px ${d}px`};try{await this.clock.tween(.3,f.out,e=>{const s=a();m(s.left+14*e,s.top+14*e),h.style.opacity=.92*e,this._place(t,s.left+.5*s.width+14*e,s.top+.5*s.height+14*e)}),c(),n.style.opacity=0,this._key(t,"drag");const s=this._mk("cs-drop",t.color),i=this.clock.track(()=>{const t=r();Object.assign(s.style,{transform:`translate(${t.left}px,${t.top}px)`,width:t.width+"px",height:t.height+"px"})});s.style.opacity=1,await this.clock.tween(.7,f.inOut,e=>{const s=a(),i=r(),o=u(s.left+14,i.left,e),n=u(s.top+14,i.top,e),c=u(s.width,i.width,e),l=u(s.height,i.height,e);m(o,n,c,l),this._place(t,o+.5*c,n+.5*l)}),i(),s.style.opacity=0,setTimeout(()=>s.remove(),400),this._key(t,o+"V"),this._finishTree(e),this._spark(r(),t.color),await this.clock.wait(.2),this._key(t,"edit"),await this.clock.tween(.45,f.out,e=>{const s=r();m(s.left,s.top,s.width,s.height),h.style.opacity=.92*(1-e),h.style.filter=`blur(${4*e}px)`,this._place(t,s.left+.5*s.width,s.top+.5*s.height)})}finally{c(),n.remove(),h.remove(),this._key(t,null)}}_wantsRelocation(t){const e=this.opts,s=t.el,i=s.dataset.csRelocate;if("false"===i||!e.relocation&&"true"!==i)return!1;if(!["frame","pop","media","type"].includes(t.type))return!1;if((this.byEl.get(s)||[])[0]!==t)return!1;if(t.containers.some(t=>t.offset))return!1;const o=s.getBoundingClientRect();if("true"!==i){if(o.width>.85*innerWidth||o.height>.7*innerHeight)return!1;if(/fixed|sticky/.test(getComputedStyle(s).position))return!1;const t=r(e.relocation);if(Math.random()>=(null==t?.3:t))return!1}return!0}_displace(t,e){const s=e.el,i=s.getBoundingClientRect(),o=e.saved,a=(t,e)=>(t+Math.random()*(e-t))*(Math.random()<.5?-1:1),r=d(a(50,130),8-i.left,Math.max(8-i.left,innerWidth-i.right-8)),n=a(30,90),c=a(2,"type"===e.type?3:7);"translate"in o||(o.translate=s.style.translate,o.rotate=s.style.rotate),s.style.translate=`${r}px ${n}px`,s.style.rotate=`${c}deg`;const l=i.left+scrollX,h=i.top+scrollY,p=i.width,u=i.height,f=this._mk("cs-drop",t.color),m=this.clock.track(()=>Object.assign(f.style,{transform:`translate(${l-scrollX}px,${h-scrollY}px)`,width:p+"px",height:u+"px"}));f.style.opacity=.8,e.offset={dx:r,dy:n,rot:c,drop:f,stop:m}}async _relocate(t,e){const s=e.el,i=e.offset;if(!i)return;const o=()=>s.getBoundingClientRect(),a=()=>({x:o().left+.5*o().width,y:o().top+.5*o().height});await this._travel(t,a,.35),this._key(t,"move"),await this.clock.wait(.12),await this.clock.tween(.65,f.inOut,e=>{const o=1-e;s.style.translate=`${i.dx*o}px ${i.dy*o}px`,s.style.rotate=i.rot*o+"deg";const r=a();this._place(t,r.x,r.y)}),this._key(t,null),this._spark(o(),t.color),this._undisplace(e)}_undisplace(t){const e=t.offset;e&&(e.stop(),e.drop.style.opacity=0,setTimeout(()=>e.drop.remove(),350),t.el.style.translate=t.saved.translate||"",t.el.style.rotate=t.saved.rotate||"",t.offset=null)}_mk(t,e){const s=document.createElement("div");return s.className=t,s.style.transform=a,s.style.setProperty("--c",e),this.layer.appendChild(s),s}_visible(t){const e=Math.max(t.top,-2),s=Math.min(t.bottom,innerHeight+2),i=Math.max(t.left,-2),o=Math.min(t.right,innerWidth+2);return{left:i,top:e,right:Math.max(i,o),bottom:Math.max(e,s),width:Math.max(0,o-i),height:Math.max(0,s-e)}}_spark(t,e){this.opts.sparks&&[[(t=this._visible(t)).left,t.top],[t.right,t.top],[t.left,t.bottom],[t.right,t.bottom]].forEach(([t,s])=>{for(let i=0;i<3;i++){const i=this._mk("cs-spark",e),o=Math.random()*Math.PI*2,a=16+32*Math.random();this.clock.tween(.7,f.out3,e=>{i.style.transform=`translate(${t+Math.cos(o)*a*e}px,${s+Math.sin(o)*a*e}px) rotate(${180*e}deg) scale(${1-e})`,i.style.opacity=1-e}).then(()=>i.remove())}})}async _marquee(t,e){const s=()=>this._visible(e.el.getBoundingClientRect());await this._travel(t,()=>({x:s().left,y:s().top}));const i=this.opts,o=t.mq.style;i.marquee&&(o.opacity=1),i.guides&&(t.gh.style.opacity=.45,t.gv.style.opacity=.45);const a=e=>{const a=s(),r=a.width*e,n=a.height*e;i.marquee&&(o.transform=`translate(${a.left}px,${a.top}px)`,o.width=r+"px",o.height=n+"px",t.lbl.textContent=`${Math.round(r)} × ${Math.round(n)}`),i.guides&&(t.gh.style.transform=`translateY(${a.top}px)`,t.gv.style.transform=`translateX(${a.left}px)`),this._place(t,a.left+r,a.top+n)};return await this.clock.tween(.45,f.out,a),()=>{this.clock.tween(.45,null,()=>a(1)),this.clock.wait(.2).then(()=>this.clock.tween(.35,null,e=>{const s=1-e;i.marquee&&(o.opacity=s),i.guides&&(t.gh.style.opacity=.45*s,t.gv.style.opacity=.45*s)}))}}_caretAt(t,e){if(!this.opts.caret)return;const s=t.caret.style;s.transform=`translate(${e.right+1}px,${e.top}px)`,s.height=e.height+"px"}get _jobs(){return{async frame(t,e){const s=e.el,i=await this._marquee(t,e),o=this._mk("cs-box",t.color);o.innerHTML='<i class="t"></i><i class="r"></i><i class="b"></i><i class="l"></i><i class="f"></i>';const a=[...o.children].slice(0,4),r=o.lastChild;r.style.background=t.color;this.clock.tween(1.5,null,t=>{const e=1.5*t,i=s.getBoundingClientRect();Object.assign(o.style,{transform:`translate(${i.left}px,${i.top}px)`,width:i.width+"px",height:i.height+"px"}),a.forEach((t,s)=>{const i=f.inOut(d((e-.06*s)/.45,0,1));t.style.transform=s%2?`scaleY(${i})`:`scaleX(${i})`}),r.style.opacity=.16*(1-d(e/.7,0,1)),o.style.opacity=1-d((e-1)/.5,0,1)}).then(()=>o.remove()),s.classList.add("cs-frame-fade"),s.classList.remove("cs-frame-off"),setTimeout(()=>s.classList.remove("cs-frame-fade"),800),this._spark(s.getBoundingClientRect(),t.color),i(),await this.clock.wait(.25)},async media(t,e){const s=e.el,i=await this._marquee(t,e),o=e.dir,a=this._mk("cs-scan",t.color);e.revealing=this.clock.tween(.8,f.inOut,t=>{const e=s.getBoundingClientRect();s.style.clipPath=this._clip(o,t),"t"===o?Object.assign(a.style,{transform:`translate(${e.left}px,${e.top+e.height*t}px)`,width:e.width+"px",height:"3px"}):Object.assign(a.style,{transform:`translate(${"r"===o?e.right-e.width*t:e.left+e.width*t}px,${e.top}px)`,width:"3px",height:e.height+"px"})}).then(()=>{a.remove(),e.revealing=null,"built"===e.state&&(s.style.clipPath=e.saved.clipPath||"")}),e.img&&this.clock.tween(1.2,f.out,t=>{e.img.style.scale=1.3-.3*t}).then(()=>{e.img&&(e.img.style.scale="")}),this._spark(s.getBoundingClientRect(),t.color),i(),await this.clock.wait(.35)},async pop(t,e){const s=e.el,i=()=>s.getBoundingClientRect();await this._travel(t,()=>({x:i().left+.5*i().width,y:i().top+.6*i().height}),.35),await this.clock.tween(.35,f.back,t=>{s.style.opacity=d(t,0,1),s.style.scale=.4+.6*t})},async type(t,e){const s=e.parts,i=s.length,o=Math.min("words"===e.type?.06:.03,this.opts.typeDuration/i),a=t=>s[d(t,0,i-1)].getBoundingClientRect();await this._travel(t,()=>{const t=a(0);return{x:t.left,y:t.top+.7*t.height}},.45),this.opts.caret&&(t.caret.style.opacity=1);let r=0;await this.clock.tween(i*o,null,e=>{const o=Math.ceil(e*i);for(;r<o;)s[r++].classList.add("cs-on");const n=a(r-1);this._caretAt(t,n),this._place(t,u(t.x,n.right+8,.35),u(t.y,n.top+.7*n.height,.35))}),await this.clock.wait(.2),t.caret.style.opacity=0},get words(){return this.type}}}get _unjobs(){return{async frame(t,e){const s=e.el,i=()=>this._visible(s.getBoundingClientRect());await this._travel(t,()=>({x:i().right,y:i().bottom}),.35),s.classList.add("cs-frame-fade","cs-frame-off"),setTimeout(()=>s.classList.remove("cs-frame-fade"),800),await this.clock.tween(.35,f.in,e=>this._place(t,u(i().right,i().left,e),u(i().bottom,i().top,e)))},async media(t,e){const s=e.el,i=()=>this._visible(s.getBoundingClientRect()),o=e.dir;e.revealing&&await e.revealing,await this._travel(t,()=>({x:i().right,y:i().top+.5*i().height}),.35);const a=this._mk("cs-scan",t.color);await this.clock.tween(.5,f.in,e=>{const r=s.getBoundingClientRect(),n=1-e;s.style.clipPath=this._clip(o,n),"t"===o?Object.assign(a.style,{transform:`translate(${r.left}px,${r.top+r.height*n}px)`,width:r.width+"px",height:"3px"}):Object.assign(a.style,{transform:`translate(${"r"===o?r.right-r.width*n:r.left+r.width*n}px,${r.top}px)`,width:"3px",height:r.height+"px"}),this._place(t,u(i().right,i().left,e),i().top+.5*i().height)}),a.remove()},async pop(t,e){const s=e.el,i=()=>s.getBoundingClientRect();await this._travel(t,()=>({x:i().left+.5*i().width,y:i().top+.6*i().height}),.25),await this.clock.tween(.2,f.in,t=>{s.style.opacity=1-t,s.style.scale=1-.6*t})},async type(t,e){const s=e.parts,i=s.length,o=Math.min("words"===e.type?.025:.012,.5*this.opts.typeDuration/i),a=t=>s[d(t,0,i-1)].getBoundingClientRect();await this._travel(t,()=>{const t=a(i-1);return{x:t.right+8,y:t.top+.7*t.height}},.35),this.opts.caret&&(t.caret.style.opacity=1);let r=i;await this.clock.tween(i*o,null,e=>{const o=i-Math.ceil(e*i);for(;r>o;)s[--r].classList.remove("cs-on");const n=a(r-1),c=r?n.right:a(0).left-1;this._caretAt(t,{right:c,top:n.top,height:n.height}),this._place(t,u(t.x,c+8,.35),u(t.y,n.top+.7*n.height,.35))}),t.caret.style.opacity=0},get words(){return this.type}}}_makeHud(){const t=document.createElement("div");t.className="cs-hud",t.setAttribute("aria-hidden","true"),t.style.zIndex=this.opts.zIndex+1;const[e,s]=String(this.opts.hudPosition).split("-");t.style["top"===e?"top":"bottom"]="12px",t.style["right"===s?"right":"left"]="12px",t.innerHTML='<i></i><span class="cs-st">booting agents…</span><b class="cs-pct">0%</b>',document.body.appendChild(t),this.hud=t,this.hudDot=t.querySelector("i"),this.hudSt=t.querySelector(".cs-st"),this.hudPct=t.querySelector(".cs-pct")}_updateHud(){if(!this.hud)return;const t=this.progress;this.hudPct.textContent=t>.999?"BUILT ✓":Math.round(100*t)+"%"}_teardownWatchers(){this._io&&this._io.disconnect(),removeEventListener("scroll",this._onScroll),removeEventListener("resize",this._onScroll)}}$.version="1.0.0",$.defaults=p,$.palettes=e,$.mono=k,$.inkOn=x,$.cloak=()=>{M(),document.documentElement.classList.add("cs-cloak")};const q="undefined"!=typeof document&&document.currentScript;if(q&&q.hasAttribute("data-auto")){const t={};for(const[e,s]of Object.entries(q.dataset)){if("auto"===e)continue;let i=s;"true"===i||""===i?i=!0:"false"===i?i=!1:""===i||isNaN(+i)?/^(colors|names)$/.test(e)&&(i=i.split(",").map(t=>t.trim())):i=+i,t[e]=i}$.cloak(),setTimeout(()=>document.documentElement.classList.remove("cs-cloak"),3e3);const e=()=>{window.cursorSwarm=new $(t).init()};"loading"===document.readyState?document.addEventListener("DOMContentLoaded",e,{once:!0}):e()}return $});
+</script>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const PROS = ['PRO1V', 'PRO2H', 'PRO3J', 'PRO4M', 'PRO5C'];
+  const SLOTS = [...PROS, 'GC'];
+  const COMMENT_IDS = ['7013584882','7013585386','7013585792','7013586208','7013586711','7013587156'];
+  const MASK = 'PRO1V(valerie...@gmail.com)';
+  const REPO = 'https://github.com/jian8111/d';
+  const API = 'https://api.github.com/repos/jian8111/d/';
+  const INSTANCE = 'ominous-waffle-gxpr99x65p743vwvp';
+  const SOURCES = {
+    slots: {path:'issues/7/comments?per_page=100', name:'槽位'},
+    actions: {path:'actions/runs?per_page=10', name:'Actions'},
+    commits: {path:'commits?per_page=12', name:'提交'}
+  };
+  const KEYS = Object.keys(SOURCES);
+  const PREFIX = 'pelican.ops.v1.';
+  const TTL = 20 * 60 * 1000;
+  const stamp = value => {
+    if (typeof value === 'number') return Number.isFinite(value) && value > 0 && value < 8640000000000000 ? value : 0;
+    const ms = typeof value === 'string' ? Date.parse(value) : NaN;
+    return Number.isFinite(ms) && ms > 0 ? ms : 0;
+  };
+  const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  function plain(value) {
+    return typeof value === 'string' ? value.trim()
+      .replace(/[\w.%+!'-]+@[\w.-]+\.[a-z]{2,}\b/gi, '[邮箱已隐藏]')
+      .replace(/\bPRO1V\s*\([^()\n]*\)/gi, MASK)
+      .replace(/yls-[a-zA-Z0-9]{16,}|gh[pousr]_[a-zA-Z0-9]{20,}|github_pat_[a-zA-Z0-9_]{8,}/g, '[凭证已隐藏]') : '';
+  }
+  function read(key) {
+    try { return localStorage.getItem(PREFIX + key); } catch { return null; }
+  }
+  function write(key, value) {
+    try {
+      if (value == null) localStorage.removeItem(PREFIX + key);
+      else localStorage.setItem(PREFIX + key, value);
+      return true;
+    } catch { return false; }
+  }
+  function readJSON(key) {
+    try { return JSON.parse(read(key)); } catch { return null; }
+  }
+  function element(tag, cls, value) {
+    const el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (value != null) el.textContent = value;
+    return el;
+  }
+  function icon(name) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('class', 'ico');
+    svg.setAttribute('aria-hidden', 'true');
+    const use = document.createElementNS(ns, 'use');
+    use.setAttribute('href', '#i-' + name);
+    svg.append(use);
+    return svg;
+  }
+  function link(label, href, cls = 'text-link') {
+    const a = element('a', cls, label);
+    a.href = href;
+    return a;
+  }
+  function badge(label, tone) {
+    const b = element('span', 'badge ' + tone);
+    b.append(element('i', 'dot'), label);
+    return b;
+  }
+  function compactTime(ms) {
+    return ms ? new Date(ms).toLocaleTimeString('zh-CN', {hour12:false}) : '—';
+  }
+  function fullTime(ms) {
+    return ms ? new Date(ms).toLocaleString('zh-CN', {hour12:false}) : '未登记';
+  }
+  function duration(seconds) {
+    if (!Number.isFinite(seconds)) return '未登记';
+    const n = Math.max(0, Math.floor(seconds));
+    return String(Math.floor(n / 60)).padStart(2,'0') + 'm ' + String(n % 60).padStart(2,'0') + 's';
+  }
+  function relative(ms, now) {
+    if (!ms) return '时间未登记';
+    const n = Math.max(0, Math.floor((now - ms) / 1000));
+    if (n < 60) return n + ' 秒前';
+    if (n < 3600) return Math.floor(n / 60) + ' 分钟前';
+    if (n < 86400) return Math.floor(n / 3600) + ' 小时前';
+    return Math.floor(n / 86400) + ' 天前';
+  }
+  function targetPath(raw) {
+    const parts = [];
+    for (const part of plain(raw).split('/')) {
+      if (part === '' || part === '.') continue;
+      if (part === '..' && parts.length && parts.at(-1) !== '..') parts.pop();
+      else parts.push(part);
+    }
+    return plain(raw) ? parts.join('/') || '.' : '';
+  }
+  function taskRow(row) {
+    const rawTargets = Array.isArray(row.targets) ? row.targets : [];
+    return {
+      run_id:plain(row.run_id), task:plain(row.task), executor:plain(row.executor), note:plain(row.note),
+      started_at:stamp(row.started_at), heartbeat_at:stamp(row.heartbeat_at), finished_at:stamp(row.finished_at),
+      duration_sec:typeof row.duration_sec === 'number' && Number.isFinite(row.duration_sec) ? row.duration_sec : null,
+      commit:plain(row.commit), actor:plain(row.actor), targets:[...new Set(rawTargets.map(targetPath).filter(Boolean))]
+    };
+  }
+  function slotRow(row) {
+    const id = plain(row.slot).toUpperCase();
+    if (!SLOTS.includes(id) || !Array.isArray(row.active_tasks) || !row.active_tasks.every(object)) return null;
+    return {
+      slot:id, label:id === 'PRO1V' ? MASK : plain(row.label) || id, status:plain(row.status).toLowerCase(),
+      updated_at:stamp(row.updated_at), active_tasks:row.active_tasks.map(taskRow),
+      last_done:object(row.last_done) && plain(row.last_done.task) ? taskRow(row.last_done) : null,
+      task:plain(row.task), actor:plain(row.actor), note:plain(row.note), codespace:plain(row.codespace)
+    };
+  }
+  function commentSlots(comments) {
+    if (!Array.isArray(comments)) throw new Error('invalid comments');
+    const known = new Set(comments.filter(object).map(c => String(c.id)));
+    const selected = new Map();
+    for (const c of comments) {
+      if (!object(c) || typeof c.body !== 'string') continue;
+      const part = /<!--\s*MONITOR[-_\s]+JSON[-_\s]+START\s*-->([\s\S]*?)<!--\s*MONITOR[-_\s]+JSON[-_\s]+END\s*-->/i.exec(c.body);
+      if (!part) continue;
+      const first = part[1].indexOf('{'), last = part[1].lastIndexOf('}');
+      if (first < 0 || last < first) continue;
+      try {
+        // Slicing the object also accepts raw JSON, Markdown fences, CRLF and whitespace.
+        const row = JSON.parse(part[1].slice(first, last + 1));
+        if (!object(row)) continue;
+        const marker = /<!--\s*AGENT-MONITOR-SLOT\s*:\s*(\w+)\s*-->/i.exec(c.body)?.[1].toUpperCase();
+        const fixedSlot = SLOTS[COMMENT_IDS.indexOf(String(c.id))];
+        const id = plain(row.slot || marker || fixedSlot).toUpperCase();
+        if (!SLOTS.includes(id) || (marker && marker !== id) || (fixedSlot && fixedSlot !== id)) continue;
+        if (known.has(COMMENT_IDS[SLOTS.indexOf(id)]) && !fixedSlot) continue;
+        const valid = slotRow({...row, slot:id});
+        if (valid && (!selected.has(id) || valid.updated_at >= selected.get(id).updated_at)) selected.set(id, valid);
+      } catch { /* Ignore unrelated or damaged comment blocks independently. */ }
+    }
+    if (!selected.size) throw new Error('no valid slots');
+    return [...selected.values()];
+  }
+  const validSha = sha => /^[a-f\d]{7,64}$/i.test(sha);
+  function normalize(key, rows) {
+    if (!Array.isArray(rows)) throw new Error('invalid list');
+    if (key === 'slots') {
+      const slots = rows.filter(object).map(slotRow).filter(Boolean);
+      if (!slots.length) throw new Error('empty board');
+      return slots;
+    }
+    if (key === 'actions') return rows.slice(0,10).filter(object).map(r => ({
+      name:plain(r.name), id:/^\d+$/.test(String(r.id)) ? String(r.id) : '',
+      status:plain(r.status), conclusion:plain(r.conclusion), head_branch:plain(r.head_branch),
+      created_at:stamp(r.created_at), updated_at:stamp(r.updated_at)
+    }));
+    return rows.slice(0,12).filter(r => object(r) && validSha(plain(r.sha))).map(r => ({
+      sha:plain(r.sha), message:plain(r.message).split(/\r?\n/,1)[0], date:stamp(r.date)
+    }));
+  }
+  function project(key, payload) {
+    if (key === 'slots') return commentSlots(payload);
+    if (key === 'actions') return normalize(key, payload?.workflow_runs);
+    if (!Array.isArray(payload)) throw new Error('invalid commits');
+    return normalize(key, payload.filter(object).map(r => ({
+      sha:r.sha, message:r.commit?.message, date:r.commit?.committer?.date || r.commit?.author?.date
+    })));
+  }
+  const snapshots = {};
+  for (const key of KEYS) {
+    const saved = readJSON('snap.' + key);
+    if (!object(saved) || !stamp(saved.checked)) continue;
+    try { snapshots[key] = {data:normalize(key,saved.data), etag:plain(saved.etag), checked:stamp(saved.checked)}; }
+    catch { /* A corrupt snapshot must not prevent the other panels from starting. */ }
+  }
+  const demoStart = Date.now();
+  const examples = [
+    ['PRO1V','海岸骑行场景光照校准','pelican-antigravity-ride.html','codex/gpt-6.2-astra'],
+    ['PRO3J','海岸信使移动端适配','pelican-coastal-courier.html','codex/gpt-6.2-sol']
+  ];
+  const demo = SLOTS.map(id => {
+    const item = examples.find(x => x[0] === id);
+    return slotRow({slot:id, status:id === 'GC' ? 'shutdown' : item ? 'running' : 'idle',
+      actor:id === 'GC' ? 'PRO5C' : '', task:id === 'GC' ? '关机待命' : '',
+      active_tasks:item ? [{run_id:'demo-' + id, task:item[1], targets:[item[2]], executor:item[3],
+        started_at:demoStart - (id === 'PRO1V' ? 496000 : 167000), heartbeat_at:demoStart - 4000}] : []});
+  });
+  const slotIcons = ['radar','compass','sail','mountain','waves','terminal'];
+  const fresh = (task, now) => task.heartbeat_at > 0 && now - task.heartbeat_at < TTL;
+  const idle = slot => slot.status === 'idle' && !slot.active_tasks.length;
+  const workingGC = slot => slot && ['running','available','started'].includes(slot.status);
+  function gcState(slot) {
+    if (workingGC(slot)) return ['⚡ 运行中', 'ok'];
+    if (slot && ['shutdown','stopped','shut down'].includes(slot.status)) return ['💤 已关机省额', 'neutral'];
+    return ['待同步','neutral'];
+  }
+  function elapsed(kind, value) {
+    const span = element('span');
+    span.dataset.clock = kind;
+    span.dataset.ms = String(value);
+    if (value) span.title = fullTime(value);
+    return span;
+  }
+  function updateClocks(now) {
+    document.querySelectorAll('[data-clock]').forEach(node => {
+      const ms = Number(node.dataset.ms);
+      const sec = Math.max(0, Math.floor((now - ms) / 1000));
+      let label;
+      if (node.dataset.clock === 'run') label = ms ? '已跑 ' + duration(sec) : '开始时间未登记';
+      else if (node.dataset.clock === 'beat') label = ms ? '心跳 ' + sec + 's 前' : '心跳未登记';
+      else label = relative(ms,now);
+      if (node.textContent !== label) node.textContent = label;
+    });
+  }
+  function pair(dl, key, value) {
+    const dd = element('dd');
+    dd.append(value);
+    dl.append(element('dt','',key), dd);
+  }
+  function commitLink(sha) {
+    return link(sha.slice(0,7), REPO + '/commit/' + sha, 'sha');
+  }
+  function deliveryDetails(last, wasOpen) {
+    if (!last) return element('p','last-done last-label','上次交付 · 暂无记录');
+    const panel = element('details','last-done');
+    panel.open = wasOpen;
+    const summary = element('summary');
+    summary.append(element('span','last-label','上次交付'), element('b','',last.task));
+    const dl = element('dl');
+    pair(dl,'提交',validSha(last.commit) ? commitLink(last.commit) : last.commit || '无提交');
+    const seconds = last.duration_sec ?? (last.started_at && last.finished_at ? (last.finished_at-last.started_at)/1000 : NaN);
+    pair(dl,'耗时',duration(seconds));
+    pair(dl,'完成时间',fullTime(last.finished_at));
+    panel.append(summary,dl);
+    return panel;
+  }
+  function chip(value, cls, glyph) {
+    const node = element('span',cls);
+    node.append(icon(glyph),element('span','',value));
+    return node;
+  }
+  function quoted(arg) {
+    return /^[A-Za-z0-9_.-]+$/.test(arg) ? arg : "'" + arg.replace(/'/g, "'\\''") + "'";
+  }
+  function taskBlock(task,id,now) {
+    const block = element('div','task');
+    block.append(element('h4','',task.task || '任务名未登记'));
+    const info = element('div','task-info chips');
+    info.append(chip(task.executor || '执行器未登记','exec-chip','terminal'));
+    for (const file of task.targets) info.append(chip(file,'file-chip','file'));
+    if (!task.targets.length) info.append(element('span','section-note','未声明文件'));
+    const times = element('div','task-times');
+    const run = element('span'), beat = element('span');
+    run.append(icon('timer'),elapsed('run',task.started_at));
+    beat.append(icon('activity'),elapsed('beat',task.heartbeat_at));
+    times.append(run,beat);
+    if (!fresh(task,now)) {
+      times.append(element('strong','stale','⚠️ 疑似失联'));
+      if (task.run_id) {
+        const clear = element('button','copy-small','复制清理指令');
+        clear.type = 'button';
+        clear.dataset.copy = 'python3 -B scripts/agent_monitor.py clear --run-id' + (task.run_id.startsWith('-') ? '=' : ' ') + quoted(task.run_id) + ' --agent ' + id;
+        times.append(clear);
+      }
+    }
+    block.append(info,times);
+    return block;
+  }
+  function renderCard(id,slot,now,wasOpen) {
+    const card = element('article','slot ' + id.toLowerCase());
+    card.id = 'slot-' + id;
+    const head = element('div','card-head'), title = element('div','card-title');
+    const avatar = element('span','avatar');
+    avatar.append(icon(slotIcons[SLOTS.indexOf(id)]));
+    const name = element('h3','slot-id',id);
+    name.title = id === 'PRO1V' ? MASK : slot?.label || id;
+    title.append(avatar,name);
+    let state = ['待同步','neutral'];
+    const tasks = slot?.active_tasks || [];
+    const live = tasks.filter(t => fresh(t,now)).length;
+    if (id === 'GC') state = gcState(slot);
+    else if (live) state = [live > 1 ? live + ' 并发' : '在运行','ok'];
+    else if (tasks.length) state = ['超时预警','warn'];
+    else if (slot && idle(slot)) state = ['空闲待命','neutral'];
+    head.append(title,badge(...state));
+    card.append(head);
+    if (id === 'GC') {
+      const latest = tasks[0] || slot?.last_done;
+      card.append(element('h4','gc-task',workingGC(slot) ? '运行中 — 记得用完 Shutdown' : slot?.task || 'GitHub Codespace'));
+      const dl = element('dl','gc-data');
+      pair(dl,'实例',element('span','mono',slot?.codespace || INSTANCE));
+      pair(dl,'操作者',slot?.actor || latest?.actor || '未登记');
+      pair(dl,'最近说明',[slot?.task, latest?.note || slot?.note].filter((v,i,a) => v && a.indexOf(v) === i).join(' · ') || '暂无说明');
+      const nav = element('div','gc-links');
+      nav.append(link('打开 Codespace ↗','https://' + INSTANCE + '.github.dev'),link('管理实例 ↗','https://github.com/codespaces'));
+      card.append(dl,nav);
+    } else if (tasks.length) {
+      for (const task of tasks) card.append(taskBlock(task,id,now));
+    } else if (slot && idle(slot)) {
+      card.append(element('p','idle-note','⚪ 空闲待命（可随时派活）'),deliveryDetails(slot.last_done,wasOpen));
+    } else {
+      card.append(element('p','idle-note','槽位登记尚未同步'));
+    }
+    return card;
+  }
+  let nextExpiry = Infinity;
+  function renderFleet(now = Date.now()) {
+    const board = snapshots.slots?.data || demo;
+    const isDemo = !snapshots.slots;
+    const open = new Set([...$('slot-grid').querySelectorAll('details[open]')].map(d => d.closest('article').id));
+    const cards = document.createDocumentFragment();
+    const owners = new Map(), idleNames = [];
+    let active = 0, taskCount = 0, proCount = 0;
+    nextExpiry = Infinity;
+    for (const id of SLOTS) {
+      const slot = board.find(s => s.slot === id);
+      cards.append(renderCard(id,slot,now,open.has('slot-' + id)));
+      if (id === 'GC' || !slot) continue;
+      proCount++;
+      if (idle(slot)) idleNames.push(id);
+      const live = slot.active_tasks.filter(task => fresh(task,now));
+      if (live.length) active++;
+      taskCount += live.length;
+      for (const t of live) {
+        nextExpiry = Math.min(nextExpiry, t.heartbeat_at + TTL);
+        for (const file of t.targets) {
+          if (!owners.has(file)) owners.set(file, []);
+          owners.get(file).push({id,task:t});
+        }
+      }
+    }
+    $('slot-grid').replaceChildren(cards);
+    $('task-count').textContent = proCount ? String(taskCount).padStart(2,'0') : '—';
+    $('pro-count').textContent = active + ' 个活跃 Pro' + (isDemo ? ' · 示例' : proCount < 5 ? ' · 槽位不全' : '');
+    $('idle-list').replaceChildren(...idleNames.map(id => element('span','tag agent-tag ' + id.toLowerCase(),id)));
+    if (!idleNames.length) $('idle-list').append(element('strong','',proCount === 5 ? '暂无空闲' : '待确认'));
+    $('idle-count').textContent = idleNames.length + ' 个可派活' + (isDemo ? ' · 示例' : '');
+    const gc = board.find(s => s.slot === 'GC');
+    $('gc-kpi').textContent = gcState(gc)[0];
+    $('gc-foot').textContent = (isDemo ? '示例 · ' : '') + (gc?.actor ? '操作者 ' + gc.actor : '操作者未登记');
+    const conflict = [...owners].filter(([,group]) => group.length >= 2);
+    const alert = $('conflicts');
+    alert.hidden = !conflict.length;
+    alert.replaceChildren();
+    if (conflict.length) {
+      const list = element('ul');
+      for (const [file,group] of conflict) {
+        const li = element('li');
+        li.append(element('b','mono',file),' · ' + group.map(o => o.id + ' / ' + (o.task.run_id || '未登记 run_id') + ' / ' + (o.task.task || '未命名任务')).join('；'));
+        list.append(li);
+      }
+      alert.append(element('h2','','⚠️ 文件并发撞车警报'),list);
+    }
+    $('locks').replaceChildren();
+    for (const [file,group] of owners) {
+      const lock = element('span','lock-chip');
+      lock.append(element('b','',[...new Set(group.map(o => o.id))].join(' / ')),element('span','',file));
+      $('locks').append(lock);
+    }
+    if (!owners.size) $('locks').append(element('span','lock-empty',proCount === 5 ? '暂无文件占用' : '已同步槽位暂无文件锁'));
+    const radarText = isDemo ? '示例文件锁' : conflict.length ? conflict.length + ' 个文件冲突' : proCount < 5 ? '部分槽位待同步' : '未发现冲突';
+    $('radar-status').textContent = radarText + ' · ' + owners.size + ' 个文件';
+    [...$('radar-points').children].forEach((pt,i) => {
+      const slot = board.find(s => s.slot === PROS[i]);
+      const tasks = slot?.active_tasks || [];
+      pt.setAttribute('fill', tasks.some(t => fresh(t,now)) ? '#c8ec96' : tasks.length ? '#ffc66c' : '#88aaa0');
+    });
+    updateClocks(now);
+  }
+  const FLOWS = [
+    {label:'GitHub Pages', icon:'globe', names:['Deploy Showcase & CursorSwarm to GitHub Pages','pages-build-deployment']},
+    {label:'仓库完整性检查', icon:'shield', names:['Swarm & Repo Integrity Check']}
+  ];
+  function flowState(run,pages) {
+    if (!run) return ['待同步','neutral'];
+    if (['queued','in_progress','requested','waiting','pending'].includes(run.status)) return [pages ? '部署构建中' : '检查中','warn'];
+    if (run.conclusion === 'success') return [pages ? '已上线' : '检查通过','ok'];
+    if (['failure','timed_out','action_required','startup_failure','stale'].includes(run.conclusion)) return [pages ? '部署失败' : '检查失败','bad'];
+    if (run.conclusion === 'cancelled') return [pages ? '部署已取消' : '检查已取消','warn'];
+    if (['skipped','neutral'].includes(run.conclusion)) return ['已跳过','neutral'];
+    return ['状态待确认','neutral'];
+  }
+  function renderHistory() {
+    const rows = snapshots.actions?.data || [];
+    $('flows').replaceChildren();
+    FLOWS.forEach((flow,i) => {
+      const run = rows.filter(r => flow.names.includes(r.name)).sort((a,b) => b.created_at - a.created_at || Number(b.id)-Number(a.id))[0];
+      const [label,tone] = flowState(run,i === 0);
+      const line = element('div','flow-row'), content = element('div');
+      const title = element('h3');
+      title.append(run?.id ? link(flow.label,REPO + '/actions/runs/' + run.id,'') : flow.label);
+      const meta = element('div','flow-meta');
+      if (run) meta.append(run.head_branch || run.name, ' · ', elapsed('relative',run.updated_at || run.created_at));
+      else meta.textContent = snapshots.actions ? '最近 10 次运行无匹配记录' : '等待 Actions 快照';
+      content.append(title,meta);
+      line.append(icon(flow.icon),content,badge(run || !snapshots.actions ? label : '暂无记录',tone));
+      $('flows').append(line);
+      if (i === 0) {
+        const light = {ok:'🟢',warn:'🟡',bad:'🔴',neutral:'⚪'}[tone];
+        $('pages-kpi').textContent = light + ' ' + (run || !snapshots.actions ? label : '暂无记录');
+      }
+    });
+    const list = $('commits');
+    list.replaceChildren();
+    const commits = snapshots.commits?.data || [];
+    $('git-note').textContent = commits.length ? '' : snapshots.commits ? 'main 暂无提交记录。' : '等待 GitHub 提交快照，可从 Git 历史查看。';
+    for (const row of commits) {
+      const sig = /^\s*\[(PRO1V|PRO2H|PRO3J|PRO4M|PRO5C)\s*\([^)]*\)\]\s*/i.exec(row.message);
+      const id = sig?.[1].toUpperCase();
+      const li = element('li','commit');
+      const tag = element('span','tag ' + (id ? 'agent-tag ' + id.toLowerCase() : 'neutral'),id || 'Git');
+      if (id === 'PRO1V') tag.title = MASK;
+      else if (sig) tag.title = sig[0].trim().slice(1,-1);
+      const summary = row.message.slice(sig?.[0].length || 0) || '未填写提交摘要';
+      const meta = element('div','commit-meta');
+      meta.append(commitLink(row.sha),elapsed('relative',row.date));
+      li.append(tag,element('span','commit-title',summary),meta);
+      list.append(li);
+    }
+    updateClocks(Date.now());
+  }
+  // A short-lived worker keeps transport diagnostics off the document console, including on file URLs.
+  // All requests use fixed API URLs. The worker and its copy of the credential disappear after each batch.
+  async function fetchOne(job, externalSignal) {
+    const controller = new AbortController();
+    const cancel = () => controller.abort();
+    if (externalSignal?.aborted) return {status:0};
+    externalSignal?.addEventListener('abort',cancel,{once:true});
+    const timeout = setTimeout(cancel,10000);
+    try {
+      const headers = {Accept:'application/vnd.github+json'};
+      if (job.etag) headers['If-None-Match'] = job.etag;
+      if (job.token) headers.Authorization = 'Bearer ' + job.token;
+      const response = await fetch(job.url,{headers,signal:controller.signal,credentials:'omit',
+        cache:'no-store',redirect:'error',referrerPolicy:'no-referrer'});
+      const result = {status:response.status};
+      for (const key of ['etag','x-ratelimit-remaining','x-ratelimit-limit','x-ratelimit-reset','retry-after']) {
+        result[key] = response.headers.get(key);
+      }
+      if (response.status === 200) {
+        try { result.payload = await response.json(); } catch { /* Retain headers and the last valid data. */ }
+      }
+      return result;
+    } catch { return {status:0}; }
+    finally { clearTimeout(timeout); externalSignal?.removeEventListener('abort',cancel); }
+  }
+  function fetchGroup(jobs,signal) {
+    const direct = () => Promise.all(jobs.map(job => fetchOne(job,signal)));
+    if (!window.Worker || !URL.createObjectURL) return direct();
+    let url, worker;
+    try {
+      const code = fetchOne.toString() + '\nself.onmessage = e => e.data.forEach(async (job,i) => self.postMessage([i, await fetchOne(job)]));';
+      url = URL.createObjectURL(new Blob([code],{type:'text/javascript'}));
+      worker = new Worker(url);
+    } catch {
+      if (url) URL.revokeObjectURL(url);
+      return direct();
+    }
+    return new Promise(resolve => {
+      const replies = jobs.map(() => ({status:0}));
+      let pending = jobs.length;
+      function clean() {
+        worker.terminate();
+        URL.revokeObjectURL(url);
+        clearTimeout(timeout);
+        signal.removeEventListener('abort',finish);
+      }
+      function finish() { clean(); resolve(replies); }
+      const timeout = setTimeout(finish,13000);
+      signal.addEventListener('abort',finish,{once:true});
+      worker.onmessage = e => {
+        const [i,data] = e.data;
+        replies[i] = data;
+        if (!--pending) finish();
+      };
+      worker.onerror = e => { e.preventDefault(); clean(); resolve(direct()); };
+      worker.postMessage(jobs);
+    });
+  }
+  let token = read('readToken') || '';
+  let limits = readJSON('quota');
+  if (!object(limits)) limits = {};
+  let blockedUntil = stamp(limits.blockedUntil);
+  let authRejected = false;
+  let poll = Number(read('poll'));
+  if (![0,30,60,120].includes(poll)) poll = 0;
+  let inflight = null, pollTimer = 0, lastAttempt = 0, initial = true;
+  let outcomes = {};
+  const visible = () => document.visibilityState !== 'hidden';
+  const online = () => navigator.onLine !== false;
+  function headerInt(value) {
+    return typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : null;
+  }
+  function applyLimits(replies,now) {
+    const samples = replies.map(r => ({
+      remaining:headerInt(r['x-ratelimit-remaining']), limit:headerInt(r['x-ratelimit-limit']),
+      reset:(headerInt(r['x-ratelimit-reset']) || 0) * 1000
+    })).filter(q => q.remaining !== null);
+    samples.sort((a,b) => b.reset-a.reset || a.remaining-b.remaining);
+    if (samples.length) limits = {...samples[0], limit:samples[0].limit ?? limits.limit ?? null};
+    if (limits.remaining === 0 && limits.reset > now) blockedUntil = Math.max(blockedUntil,limits.reset);
+    replies.forEach(r => {
+      if (r.status !== 429 && r.status !== 403) return;
+      const after = r['retry-after'];
+      const retryAt = headerInt(after) !== null ? now + Number(after)*1000 : stamp(after);
+      if (r.status === 429 || after || headerInt(r['x-ratelimit-remaining']) === 0) {
+        blockedUntil = Math.max(blockedUntil,retryAt || (headerInt(r['x-ratelimit-reset']) || 0)*1000,now+1000);
+        if (blockedUntil <= now+1000) blockedUntil = now+60000;
+      } else if (r.status === 403 && headerInt(r['x-ratelimit-remaining']) === null) {
+        blockedUntil = Math.max(blockedUntil,now + 60000);
+      }
+    });
+    limits.blockedUntil = blockedUntil;
+    write('quota', JSON.stringify(limits));
+  }
+  function drawConnection() {
+    const now = Date.now(), cacheCount = KEYS.filter(k => snapshots[k]).length;
+    const allOK = KEYS.every(k => ['live','304'].includes(outcomes[k]));
+    let label = '示例预览', tone = 'neutral';
+    if (inflight) label = '同步中';
+    else if (blockedUntil > now) { label = '配额退避'; tone = 'warn'; }
+    else if (allOK) { label = '已同步'; tone = 'ok'; }
+    else if (KEYS.every(k => outcomes[k] === '离线')) label = cacheCount ? '离线快照' : '离线示例';
+    else if (cacheCount) label = KEYS.some(k => ['live','304'].includes(outcomes[k])) ? '部分同步' : '本地快照';
+    else if (KEYS.every(k => outcomes[k] === '网络不可用')) label = '网络不可用';
+    const indicator = $('connection');
+    indicator.className = 'badge ' + tone;
+    indicator.replaceChildren(element('i','dot'),label);
+    const checked = Math.max(0,...KEYS.map(k => snapshots[k]?.checked || 0));
+    $('checked').textContent = compactTime(checked);
+    $('checked').title = fullTime(checked);
+    if (checked) $('checked').dateTime = new Date(checked).toISOString();
+    $('quota').textContent = Number.isFinite(limits.remaining) ? limits.remaining + (limits.limit ? ' / ' + limits.limit : '') : '—';
+    $('reset').textContent = limits.reset ? '重置 ' + compactTime(limits.reset) : '';
+    $('reset').title = fullTime(limits.reset);
+    const notices = [];
+    if (!snapshots.slots) notices.push('槽位为内置示例，联网刷新可读取 Issue #7。');
+    else if (snapshots.slots.data.length < SLOTS.length) notices.push('部分固定槽位缺少有效登记。');
+    const cached = [];
+    for (const key of KEYS) {
+      if (['live','304'].includes(outcomes[key])) continue;
+      const time = snapshots[key]?.checked;
+      if (time || outcomes[key]) cached.push(SOURCES[key].name + ' ' + (outcomes[key] || '缓存') + (time ? '（快照 ' + fullTime(time) + '）' : ''));
+    }
+    if (cached.length) notices.push(cached.join(' · '));
+    if (blockedUntil > now) notices.push('可于 ' + compactTime(blockedUntil) + ' 重试。');
+    $('source-note').textContent = notices.join(' ');
+    $('source-note').hidden = !notices.length;
+    $('refresh').disabled = Boolean(inflight);
+    $('refresh').querySelector('span').textContent = inflight ? '同步中…' : '立即刷新';
+  }
+  function schedulePoll() {
+    clearTimeout(pollTimer);
+    if (!poll || !visible() || inflight || authRejected) return;
+    const due = Math.max(lastAttempt + poll*1000,blockedUntil);
+    pollTimer = setTimeout(refresh,Math.max(100,due-Date.now()));
+  }
+  async function refresh() {
+    if (!visible() || inflight) return;
+    clearTimeout(pollTimer);
+    initial = false;
+    if (blockedUntil > Date.now()) {
+      drawConnection();
+      schedulePoll();
+      return;
+    }
+    const controller = new AbortController();
+    inflight = controller;
+    lastAttempt = Date.now();
+    drawConnection();
+    try {
+      const jobs = KEYS.map(k => ({url:API + SOURCES[k].path, etag:snapshots[k]?.etag || '',token}));
+      const replies = await fetchGroup(jobs,controller.signal);
+      if (controller.signal.aborted || inflight !== controller) return;
+      const now = Date.now();
+      applyLimits(replies,now);
+      authRejected = replies.some(r => r.status === 401);
+      KEYS.forEach((key,i) => {
+        const r = replies[i], old = snapshots[key];
+        if (r.status === 304 && old) {
+          snapshots[key] = {...old,etag:r.etag || old.etag,checked:now};
+          outcomes[key] = '304';
+        } else if (r.status === 200) {
+          try {
+            snapshots[key] = {data:project(key,r.payload), etag:r.etag || '', checked:now};
+            outcomes[key] = 'live';
+          } catch { outcomes[key] = '格式异常'; return; }
+        } else {
+          if (r.status === 401) outcomes[key] = '凭证无效';
+          else if (blockedUntil > now && (r.status === 403 || r.status === 429)) outcomes[key] = '限流';
+          else if (r.status === 0) outcomes[key] = online() ? '网络不可用' : '离线';
+          else outcomes[key] = 'HTTP ' + r.status;
+          return;
+        }
+        write('snap.' + key,JSON.stringify(snapshots[key]));
+      });
+    } catch {
+      if (!controller.signal.aborted) outcomes = Object.fromEntries(KEYS.map(k => [k,'网络不可用']));
+    } finally {
+      if (inflight === controller) {
+        inflight = null;
+        renderFleet();
+        renderHistory();
+        drawConnection();
+        schedulePoll();
+      }
+    }
+  }
+  function cancelRefresh() {
+    const prev = inflight;
+    inflight = null;
+    prev?.abort();
+    clearTimeout(pollTimer);
+  }
+  let toastTimer;
+  function toast(message) {
+    clearTimeout(toastTimer);
+    $('toast').hidden = false;
+    $('toast').textContent = message;
+    toastTimer = setTimeout(() => { $('toast').hidden = true; },2700);
+  }
+  const commands = [
+    ['status','查看全部六个槽位','python3 -B scripts/agent_monitor.py status'],
+    ['wrap','登记任务并自动续心跳','python3 -B scripts/agent_monitor.py wrap --task "仓库完整性检查" --executor python3 --targets monitor.html -- python3 -B .cursor/skills/swarm-verify/scripts/verify_repo.py --strict'],
+    ['dual_publish','双端发布监控页','python3 -B scripts/dual_publish.py monitor.html -m "更新监控台"'],
+    ['clear --stale','清理当前号超时 20 分钟的任务','python3 -B scripts/agent_monitor.py clear --stale 20']
+  ];
+  for (const [name,desc,command] of commands) {
+    const button = element('button','copy-card');
+    button.type = 'button'; button.dataset.copy = command; button.title = command;
+    button.append(element('strong','',name),icon('copy'),element('small','',desc));
+    $('command-list').append(button);
+  }
+  async function copyCommand(button) {
+    const text = button.dataset.copy, box = $('manual-copy');
+    box.hidden = true;
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('clipboard unavailable');
+      await navigator.clipboard.writeText(text);
+    } catch {
+      box.value = text; box.hidden = false;
+      box.focus({preventScroll:true}); box.select();
+      let copied = false;
+      try { copied = document.execCommand('copy'); } catch { /* Leave the command selected. */ }
+      if (!copied) { box.scrollIntoView({block:'nearest'}); toast('指令已选中，可手动复制'); return; }
+      box.hidden = true; button.focus({preventScroll:true});
+    }
+    toast('指令已复制');
+  }
+  document.addEventListener('click',e => {
+    const button = e.target.closest?.('button[data-copy]');
+    if (button) void copyCommand(button);
+  });
+  let swarm;
+  function setTheme(night) {
+    document.documentElement.dataset.theme = night ? 'night' : 'day';
+    const btn = $('theme'), label = night ? '切换至日间模式' : '🌙 暗夜调度模式';
+    btn.title = label; btn.setAttribute('aria-label',label); btn.setAttribute('aria-pressed',String(night));
+    btn.querySelector('use').setAttribute('href',night ? '#i-sun' : '#i-moon');
+    btn.querySelector('span').textContent = night ? '日间模式' : '夜间模式';
+    swarm?.setPalette(night ? 'ocean' : 'forest');
+  }
+  setTheme(read('theme') === 'night');
+  $('theme').addEventListener('click',() => {
+    setTheme(document.documentElement.dataset.theme !== 'night');
+    write('theme',document.documentElement.dataset.theme);
+  });
+  function tokenHint() {
+    $('token-hint').textContent = token ? '本浏览器已保存只读 Token，可替换或清除。' : '可选的只读 GitHub Token 仅保存在当前浏览器。';
+  }
+  tokenHint();
+  $('settings-button').addEventListener('click',() => {
+    const show = $('settings').hidden;
+    $('settings').hidden = !show;
+    $('settings-button').setAttribute('aria-expanded',String(show));
+    if (!show) $('token').value = '';
+  });
+  function changeToken(value) {
+    if (value && /[^\x21-\x7e]/.test(value)) { toast('Token 含空格或无效字符'); return; }
+    if (!write('readToken',value || null) && value) { toast('浏览器未允许保存 Token'); return; }
+    cancelRefresh();
+    token = value; $('token').value = ''; tokenHint();
+    authRejected = false; blockedUntil = 0; limits = {}; outcomes = {};
+    write('quota',null);
+    for (const key of KEYS) if (snapshots[key]) {
+      snapshots[key].etag = '';
+      write('snap.' + key,JSON.stringify(snapshots[key]));
+    }
+    toast(value ? '已保存到当前浏览器' : 'Token 已清除');
+    void refresh();
+  }
+  $('token-form').addEventListener('submit',e => {
+    e.preventDefault();
+    const value = $('token').value.trim();
+    if (value) changeToken(value); else toast('请先输入只读 Token');
+  });
+  $('clear-token').addEventListener('click',() => changeToken(''));
+  $('refresh').addEventListener('click',refresh);
+  $('poll').value = String(poll);
+  $('poll').addEventListener('change',() => {
+    poll = Number($('poll').value);
+    write('poll',String(poll)); schedulePoll();
+  });
+  function tick() {
+    if (!visible()) return;
+    const now = Date.now();
+    if (now >= nextExpiry) renderFleet(now);
+    else updateClocks(now);
+    if (blockedUntil && now >= blockedUntil) {
+      blockedUntil = 0;
+      if (limits.remaining === 0) { limits.remaining = null; limits.reset = 0; }
+      limits.blockedUntil = 0; write('quota',JSON.stringify(limits));
+      drawConnection();
+    }
+  }
+  document.addEventListener('visibilitychange',() => {
+    if (!visible()) {
+      if (inflight) initial = true;
+      cancelRefresh(); swarm?.stop({reveal:true}); return;
+    }
+    tick();
+    if (initial) void refresh();
+    else { drawConnection(); schedulePoll(); }
+  });
+  window.addEventListener('offline',refresh);
+  window.addEventListener('online',refresh);
+  // Also restore a suspended page from the browser's back/forward cache.
+  window.addEventListener('pagehide',() => { cancelRefresh(); swarm?.stop({reveal:true}); });
+  window.addEventListener('pageshow',e => { if (e.persisted) { tick(); drawConnection(); schedulePoll(); } });
+  if ('IntersectionObserver' in window) {
+    const sections = ['overview','slots','delivery'];
+    const nav = [...document.querySelectorAll('.navlink')];
+    const mark = () => {
+      const curr = sections.filter(id => $(id).getBoundingClientRect().top < innerHeight * .32).at(-1) || 'overview';
+      for (const a of nav) {
+        if (a.hash === '#' + curr) a.setAttribute('aria-current','location');
+        else a.removeAttribute('aria-current');
+      }
+    };
+    const observer = new IntersectionObserver(mark,{rootMargin:'0px 0px -68% 0px'});
+    sections.forEach(id => observer.observe($(id)));
+    swarm = new window.CursorSwarm({root:'.scope',targets:'#scope-dial',respectReducedMotion:true,
+      cursors:1,hud:false,frames:false,deconstruct:false,labels:false,sparks:false,guides:false,
+      marquee:false,spawn:false,exitAfterBuild:true,idle:'hidden',zIndex:2,
+      startPosition:() => { const r = $('scope-dial').getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2}; }
+    });
+    swarm.setSpeed(4).setPalette(document.documentElement.dataset.theme === 'night' ? 'ocean' : 'forest').init();
+    setTimeout(() => swarm.stop({reveal:true}),1500);
+  }
+  renderFleet(); renderHistory(); drawConnection();
+  setInterval(tick,1000);
+  if (visible()) void refresh();
+})();
+</script>
+</body>
+</html>

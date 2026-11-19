@@ -73,6 +73,36 @@
       line-height: 1.6;
     }
 
+    .monitor-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 20px;
+      padding: 14px 18px;
+      border-block: 1px solid var(--border);
+      border-inline-start: 3px solid var(--accent);
+      background: var(--surface);
+    }
+
+    .monitor-strip h2 {
+      margin: 0;
+      font-size: 1.08rem;
+    }
+
+    .monitor-strip p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .monitor-strip { padding: 12px; }
+      .monitor-strip .actions { gap: 6px; }
+      .monitor-strip .btn { padding-inline: 10px; }
+    }
+
     .entries {
       display: flex;
       flex-direction: column;
@@ -222,6 +252,17 @@
       <h1>鹈鹕骑车 · Pelican Riding a Bicycle</h1>
       <p>SVG 与交互式 HTML 作品归档目录，按版本分文件夹存放，方便直接预览与横向对比；已集成 5 账号多光标协同搭建动画与 Cursor Agent Swarm 配置。</p>
     </header>
+
+    <section class="monitor-strip" aria-label="实时任务监控台">
+      <div>
+        <h2>📡 5-Pro &amp; GC 实时任务监控台</h2>
+        <p>查看 5 个 Pro 的并发任务、心跳与文件占用，跟踪 GC 开关机状态。</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary" href="./monitor.html">📡 打开实时监控台 →</a>
+        <a class="btn" href="https://github.com/jian8111/d/issues/7" target="_blank" rel="noopener">查看 Issue #7</a>
+      </div>
+    </section>
 
     <section class="swarm-banner" aria-label="Cursor Agent Swarm 与多光标协同配置">
       <div>

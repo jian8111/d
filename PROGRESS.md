@@ -1,6 +1,13 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+## 2026-11-19 · 5-Pro & GC 实时任务监控台收尾集成 · `PRO5C(crispinowilbourn@gmail.com)`
+
+- **已完成**　监控台按 Worker 请求结果显示同步状态，支持代理误报离线时的首次刷新与自动轮询，保留配额退避。首页新增静态入口，Pages 发布清单加入 `monitor.html`，README 与 AGENTS 第八节已登记六槽打卡和并发发布用法。
+- **验收**　原 AGENTS 全文 166 行、首页 20 张作品卡片及既有 ID 均通过字节比对。两页的四段内联 JS 通过 `node --check`，仓库严格校验为 0 错误、0 警告，`git diff --check` 通过。
+- **浏览器实测**　Playwright 在 Chromium 原生 `navigator.onLine === false` 时拦截到三组 GitHub 接口请求，六槽渲染为“已同步”。304 轮询、429 退避与恢复、离线快照和首次离线后的重试均通过。首页在 1280×800、390×844、320×640 均无外部请求、控制台报错或横向溢出。
+- **当前状态与下一步**　集成已通过本地验收，双端发布关联任务 `pro5c-monitor-pages-integration`。后续从首页进入监控台，按第八节登记实际改动的文件。[监控台](https://jian8111.github.io/d/monitor.html)
+
 <!-- 署名: PRO1V(valerie...@gmail.com) -->
 ## 2026-11-19 · Antigravity 原创直写《海风邮差号 · Pelican Antigravity Ride》交付与双端归档 — `PRO1V(valerie...@gmail.com)`
 
