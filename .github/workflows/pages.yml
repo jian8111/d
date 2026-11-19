@@ -30,8 +30,8 @@ jobs:
         run: |
           mkdir -p _site
           # 署名: PRO1V(valerie...@gmail.com) | 创作: Codespaces Codex (gpt-6.1-sol/xhigh) 提取核验双发布
-          # 并发集成署名: PRO5C(crispinowilbourn@gmail.com) | 最新维护署名: PRO2H(hadcockulloa@gmail.com)
-          cp index.html pelican-sol-ride.html meadow-cottage-3d.html sky-castle-cliff-3d.html pelican-6000-years-mv.html pelican-6000-mv.html pelican-test.html the-pelican-test.html pelican-6000-pure-code.html swarm-demo.html pelican-swarm-demo.html pelican-ride.html pelican-ride.svg pelican_bike.html cursor-swarm-city.html cursor-swarm-foundry.html pelican-swarm-coaster.html _site/
+          # 并发集成署名: PRO5C(crispinowilbourn@gmail.com) | 维护署名: PRO2H(hadcockulloa@gmail.com), PRO3J(saveljevsjill148@gmail.com)
+          cp index.html pelican-coastal-courier.html pelican-sol-ride.html meadow-cottage-3d.html sky-castle-cliff-3d.html pelican-6000-years-mv.html pelican-6000-mv.html pelican-test.html the-pelican-test.html pelican-6000-pure-code.html swarm-demo.html pelican-swarm-demo.html pelican-ride.html pelican-ride.svg pelican_bike.html cursor-swarm-city.html cursor-swarm-foundry.html pelican-swarm-coaster.html _site/
           cp -r assets pro1 pro2 pro3 pro4 pro5 pro6 pelican-6000 _site/
           rm -rf _site/pelican-6000/tools/__pycache__
           touch _site/.nojekyll
