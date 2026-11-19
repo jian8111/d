@@ -1,0 +1,24 @@
+---
+description: Check in before editing repository files or running Codex so all Pro workers appear on the shared monitor.
+alwaysApply: true
+---
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) -->
+
+# 开工先同步、打卡
+
+每次实际写代码、改文件或调用 `codex exec`，在动手前按以下顺序执行。纯聊天讨论免打卡。
+
+1. 用 `git status --short` 查看工作区。干净时运行 `git pull --ff-only origin main` 并确认同步成功。有改动时保留现场，继续打卡。
+2. 在仓库根目录登记任务、执行器及用逗号分隔的目标文件相对路径。
+
+   ```bash
+   python3 -B scripts/agent_monitor.py start --task "<任务>" --executor "<执行器>" --targets "<路径一>,<路径二>"
+   ```
+
+   外层调用 `codex exec` 时建议直接用 `wrap` 完成打卡、定期续心跳和收尾。
+
+   ```bash
+   python3 -B scripts/agent_monitor.py wrap --task "<任务>" --executor Codex --targets "<路径一>,<路径二>" -- codex exec -m gpt-6.2-sol -c 'model_reasoning_effort="max"' "<任务>" < /dev/null
+   ```
+
+已经进入 Codex 的会话直接完成任务，禁止递归调用。手动 `start` 时保留返回的 `RUN_ID`，供后续 `heartbeat`、`done` 或 `error` 使用。六个槽位及并发占用规则见 `AGENTS.md` 第八节。

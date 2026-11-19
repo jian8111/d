@@ -1,6 +1,17 @@
 <!-- 署名: PRO1V(valerie...@gmail.com) | 历史维护: PRO5C(crispinowilbourn@gmail.com), PRO2H(hadcockulloa@gmail.com), PRO4M(wilermccomber@gmail.com), PRO3J(saveljevsjill148@gmail.com) -->
 # PROGRESS.md — 跨号交接进度记录
 
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) -->
+## 2026-11-19 · 排查修复多 Pro 未显状态根因（规则自动注入 + 跨号鉴权兼容 + 30s 自动轮询与 Raw 镜像兜底）— `PRO5C(crispinowilbourn@gmail.com)`
+
+- **执行身份**：`PRO5C(crispinowilbourn@gmail.com)`（已核验 `~/.gemini/ACCOUNT_IDENTITY.txt` 并实时打卡 `pro5c-fix-visibility-polling`，全程由 `codex exec` `gpt-6.2-astra/max` 实施并经本地与 Chromium 实机复核）。
+- **根因定位与全链路修复**：
+  1. **监控台默认不自动刷新 & 手机共享 IP 限流盲区（[`monitor.html`](./monitor.html)）**：将默认轮询从 `0` 改为 `30s`（配合 `ETag` `304` 零扣额）；切回监控页且距上次请求 `> 8s` 时立刻触发刷新；当 `api.github.com` 发生 `403`/`429` 限流或异常时自动降级并行直读 `raw.githubusercontent.com/jian8111/d/monitor-state/slots/*.json`（按 `rev` CAS 合并新状态）；移除初始假运行态示例，改为手动「👁️ 演示模式」开关，并补充 `Cursor Agent Swarm CI` 与活动工作流提示。
+  2. **跨 Pro 容器打卡兼容性（[`scripts/agent_monitor.py`](./scripts/agent_monitor.py) & [`scripts/dual_publish.py`](./scripts/dual_publish.py)）**：兼容 `PRO1V` 真实邮箱与 `valerie...@gmail.com` 脱敏前缀校验（公开输出统一脱敏）；`agent_monitor.py api()` 优先使用容器原生 `gh` 通道，遇鉴权失败才回退 `~/.config/gh/pat.env`，避免旧 PAT 覆盖插件授权。
+  3. **全账号规则触达补强（[`.cursor/rules/40-agent-monitor.mdc`](./.cursor/rules/40-agent-monitor.mdc)、[`.cursor/rules/00-collaboration-iron-rules.mdc`](./.cursor/rules/00-collaboration-iron-rules.mdc)、[`.devcontainer/setup-codex.sh`](./.devcontainer/setup-codex.sh) 与 [`AGENTS.md`](./AGENTS.md) 第八节）**：新增 `alwaysApply: true` 的监控打卡规则，强化开工前「先 `git pull --ff-only origin main`（工作区干净时），再用 `start` / `wrap` 打卡」；严格保持 `AGENTS.md` 前 166 行逐字节不变。
+- **验收结果**：`AGENTS.md` 前 166 行 SHA-256 校验完全一致；`PRO1V` 邮箱兼容与 `gh` 原生/PAT 回退单测通过；Chromium 无头实测 `monitor.html` 在 403 限流自动切换 `镜像直读`、默认 `30s` 轮询、`演示模式` 开关与 `390×844` / `1280×800` 下均 `0` 报错、`0` 横向溢出；`verify_repo.py --strict` 返回 `PASS (0 errors, 0 warnings)`。
+- **记录署名**：`PRO5C(crispinowilbourn@gmail.com)`
+
 ## 2026-11-19 · 5-Pro & GC 实时任务监控台收尾集成 · `PRO5C(crispinowilbourn@gmail.com)`
 
 - **已完成**　监控台按 Worker 请求结果显示同步状态，支持代理误报离线时的首次刷新与自动轮询，保留配额退避。首页新增静态入口，Pages 发布清单加入 `monitor.html`，README 与 AGENTS 第八节已登记六槽打卡和并发发布用法。

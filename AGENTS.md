@@ -171,14 +171,14 @@
 
 追加署名: PRO5C(crispinowilbourn@gmail.com)
 
-- **数据源与看板**　Issue `#7` 有六条固定槽位评论，分别对应 `PRO1V`、`PRO2H`、`PRO3J`、`PRO4M`、`PRO5C`、`GC`。孤儿分支 `monitor-state` 的 `slots/<SLOT>.json` 通过文件 SHA 做原子比较并交换（CAS），写入后同步至对应评论。在线监控台读取评论展示并发状态。[Issue #7](https://github.com/jian8111/d/issues/7) · [在线监控台](https://jian8111.github.io/d/monitor.html) · [源码](./monitor.html)
-- **何时打卡（零冗余 Token 原则）**　纯聊天讨论不打卡，额外开销为 0。只有在实际改代码、改配置或调用 `codex exec` 前，才运行下方命令。用逗号分隔涉及的仓库相对路径，让其他账号能看到文件占用。
+- **数据源与看板**　Issue `#7` 有五个 Pro 和 GC 共六条固定槽位评论。`monitor-state` 分支的 `slots/<SLOT>.json` 通过文件 SHA 做原子比较并交换（CAS），写入后同步至对应评论。监控台默认每 30 秒轮询，切回页面且距上次请求超过 8 秒时立即刷新。评论 API 限流或网络请求失败时，直接从 raw.githubusercontent.com 并行读取六个槽位，退避期间仍可刷新镜像。[Issue #7](https://github.com/jian8111/d/issues/7) · [在线监控台](https://jian8111.github.io/d/monitor.html) · [源码](./monitor.html)
+- **动手第一步：先同步，再打卡**　每次实际写代码、改文件或调用 `codex exec` 前，若工作区干净，先执行 `git pull --ff-only origin main` 并确认成功。工作区有改动时保留现场，直接打卡。用 `start` 登记任务、执行器和用逗号分隔的仓库相对路径，再动手。纯聊天讨论免打卡。
 
   ```bash
   python3 -B scripts/agent_monitor.py start --task "<任务>" --executor "<执行器>" --targets "<涉及文件>"
   ```
 
-  耗时命令可直接用 `wrap` 代替 `start`。沿用相同的任务、执行器与文件参数，在 `--` 后接实际命令，脚本会自动登记、每 75 秒续心跳并在命令结束时收尾。
+  对外层的 `codex exec` 默认建议用 `wrap` 直接打卡：将上例的 `start` 换成 `wrap`，并追加 `-- codex exec -m gpt-6.2-sol -c 'model_reasoning_effort="max"' "<任务>" < /dev/null`。其他耗时命令也可用 `wrap`；它会自动登记、每 75 秒续心跳并在命令结束时收尾。已经在 Codex 内执行的任务直接处理，禁止嵌套。
 
 - **多发防撞（1 多发 / 多号多发）**　若 `start` 提示其他 Pro 正占用 `index.html`、`PROGRESS.md` 等公共文件，优先生成并推送独立作品文件，最后统一登记首页。`scripts/dual_publish.py` 推 `main` 前自动 `git fetch`，远端领先时执行 `git pull --rebase`，并在并发推送被拒时重试。发布成功后联动 `agent_monitor` 关闭匹配任务，可用 `--monitor-run-id` 精确指定。涉及 GC 导出或关机的发布也会刷新 `GC` 槽位。
 - **GC 开关机顺手打卡**　唤醒 `ominous-waffle-gxpr99x65p743vwvp` 后执行 `python3 -B scripts/agent_monitor.py gc --state running`；确认 `Shutdown` 后执行 `python3 -B scripts/agent_monitor.py gc --state shutdown`。

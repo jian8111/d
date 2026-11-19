@@ -23,21 +23,22 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 
-SIGNATURE = "PRO1V(valerie...@gmail.com)"
+PRO1V_PUBLIC_EMAIL = "valerie...@gmail.com"
+SIGNATURE = f"PRO1V({PRO1V_PUBLIC_EMAIL})"
 DEFAULT_DRIVE_ROOT = "1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr"
 MAX_GIT_FILE_BYTES = 50 * 1024 * 1024
 SECRET_RE = re.compile(
     rb"yls-[a-zA-Z0-9]{16,}|ghp_[a-zA-Z0-9]{20,}|github_pat_[a-zA-Z0-9_]{8,}"
 )
 PRO_EMAILS = {
-    "PRO1V": "valerie...@gmail.com",
+    "PRO1V": PRO1V_PUBLIC_EMAIL,
     "PRO2H": "hadcockulloa@gmail.com",
     "PRO3J": "saveljevsjill148@gmail.com",
     "PRO4M": "wilermccomber@gmail.com",
     "PRO5C": "crispinowilbourn@gmail.com",
 }
 DRIVE_EMAIL = "466788455@qq.com"
-IDENTITY_RE = re.compile(r"\b(PRO[1-5][A-Z])\b")
+IDENTITY_RE = re.compile(r"\bPRO\d+[A-Z]\b")
 
 
 class PublishError(RuntimeError):
@@ -48,8 +49,21 @@ EMAIL_RE = re.compile(r"[\w.%+!'-]+@[\w.-]+\.[a-zA-Z]{2,}\b")
 TOKEN_RE = re.compile(SECRET_RE.pattern.decode("ascii"))
 
 
-def redact(text: str) -> str:
-    return EMAIL_RE.sub("[邮箱已隐藏]", TOKEN_RE.sub("[凭证已隐藏]", text))
+def matches_email(address: str, registered: str) -> bool:
+    prefix, masked, suffix = registered.casefold().partition("...")
+    address = address.casefold()
+    if masked:
+        return address.startswith(prefix) and address.endswith(suffix)
+    return address == prefix
+
+
+def redact(text: str, *, public_mask: str = PRO1V_PUBLIC_EMAIL) -> str:
+    def public_email(match: re.Match[str]) -> str:
+        if matches_email(match[0], public_mask):
+            return public_mask
+        return "[邮箱已隐藏]"
+
+    return EMAIL_RE.sub(public_email, TOKEN_RE.sub("[凭证已隐藏]", text))
 
 
 class PublicParser(argparse.ArgumentParser):
@@ -166,25 +180,37 @@ def read_identity(root: Path) -> Identity:
     if not path.exists():
         raise PublishError(f"缺少持久身份文件：{path}")
     raw = path.read_text(encoding="utf-8", errors="replace").strip()
-    match = IDENTITY_RE.search(raw)
-    if not match:
-        raise PublishError("ACCOUNT_IDENTITY.txt 未包含 PRO1V/PRO2H/PRO3J/PRO4M/PRO5C 身份。")
-    key = match.group(1)
-    if key not in PRO_EMAILS or DRIVE_EMAIL in raw:
-        raise PublishError("身份文件含有非法 Pro 身份或纯 Drive 存储号。")
-    embedded = re.search(rf"{re.escape(key)}\s*\(([^)]+)\)", raw)
+    keys = set(IDENTITY_RE.findall(raw))
+    if len(keys) != 1 or not keys.issubset(PRO_EMAILS):
+        raise PublishError("持久身份文件含有非法或不唯一的 Pro 身份。")
+    key = keys.pop()
+    reserved = {DRIVE_EMAIL, *(addr for slot, addr in PRO_EMAILS.items() if slot != key)}
+    folded = raw.casefold()
+    raw_addresses = EMAIL_RE.findall(raw)
+    for other in reserved:
+        if other.casefold() in folded or any(matches_email(addr, other) for addr in raw_addresses):
+            raise PublishError("持久身份文件含有其他 Pro 邮箱或纯 Drive 存储号。")
+
+    declaration = re.compile(rf"\b{key}\s*\(([^)\n]*)\)")
     signatures = root / "SIGNATURES.md"
-    signature_email = None
-    if signatures.exists():
-        text = signatures.read_text(encoding="utf-8", errors="replace")
-        sig_match = re.search(rf"{re.escape(key)}\s*\(([^)]+)\)", text)
-        if sig_match:
-            signature_email = sig_match.group(1).strip()
-    email = signature_email or PRO_EMAILS[key]
-    if embedded and embedded.group(1).strip() != email:
-        raise PublishError("身份邮箱与 SIGNATURES.md 不一致。")
-    if email == DRIVE_EMAIL or DRIVE_EMAIL in email:
-        raise PublishError("拒绝使用纯 Drive 存储号 466788455@qq.com 作为 Pro 身份。")
+    email = PRO_EMAILS[key]
+    if signatures.is_file():
+        signed = declaration.search(signatures.read_text(encoding="utf-8", errors="replace"))
+        if signed:
+            address = signed[1].strip()
+            if not EMAIL_RE.fullmatch(address) or any(matches_email(address, addr) for addr in reserved):
+                raise PublishError("SIGNATURES.md 含有无效的 Pro 署名。")
+            # A public mask stays authoritative even in a checkout with a full signature.
+            if "..." not in email:
+                email = address
+
+    addresses = [address.strip() for address in declaration.findall(raw) if address.strip()]
+    if "..." in email:
+        addresses = [address for address in addresses if "@" in address]
+    else:
+        addresses.extend(raw_addresses)
+    if any(not EMAIL_RE.fullmatch(address) or not matches_email(address, email) for address in addresses):
+        raise PublishError("持久身份文件中的邮箱与 Pro 署名不匹配。")
     return Identity(key, email)
 
 
@@ -418,6 +444,9 @@ def publish_git(
         return []
     prefix = f"[{identity.signature}]"
     commit_message = message.strip() or "publish changes"
+    if "..." in identity.email:
+        # A caller can supply a pre-signed message copied from the private identity file.
+        commit_message = redact(commit_message, public_mask=identity.email)
     if not commit_message.startswith(prefix):
         commit_message = f"{prefix} {commit_message}"
     add = ["git", "add", "--", *paths]
@@ -600,11 +629,16 @@ class DrivePublisher:
             self.sync_one(candidate)
 
 
-def load_pat_env() -> dict[str, str]:
+def load_pat_env(*, require_file_token: bool = False) -> dict[str, str]:
     path = Path.home() / ".config" / "gh" / "pat.env"
     env = os.environ.copy()
-    if not path.exists():
-        return with_cli_path(env)
+    if not path.is_file():
+        return {} if require_file_token else with_cli_path(env)
+    token_keys = ("GH_TOKEN", "GITHUB_TOKEN")
+    if require_file_token:
+        # gh prefers GH_TOKEN, even when the file only supplies GITHUB_TOKEN.
+        for key in token_keys:
+            env.pop(key, None)
     for raw_line in path.read_text(encoding="utf-8", errors="replace").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("#"):
@@ -620,7 +654,9 @@ def load_pat_env() -> dict[str, str]:
         value = value.strip()
         if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
             value = value[1:-1]
-        env[key] = value
+        env[key] = value.strip() if key in token_keys else value
+    if require_file_token and not any(env.get(key) for key in token_keys):
+        return {}
     return with_cli_path(env)
 
 

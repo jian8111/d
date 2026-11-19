@@ -52,18 +52,27 @@ class MonitorError(RuntimeError):
 
 
 class ApiError(MonitorError):
-    def __init__(self, method: str, endpoint: str, detail: str):
+    def __init__(self, method: str, endpoint: str, detail: str, returncode: int = 1):
         match = re.search(r"\bHTTP(?:/\d(?:\.\d)?)?\s+(\d{3})\b", detail, re.I)
         self.status = int(match[1]) if match else None
         self.conflict = self.status == 409 or bool(re.search(
             r"sha.{0,80}(?:mismatch|does not match|wasn't supplied|was not supplied|must be supplied)"
             r"|already exists|is at [0-9a-f]+ but expected", detail, re.I,
         ))
-        self.restricted = (
-            self.status in (403, 404) and not re.search(r"rate limit|abuse", detail, re.I)
-            or bool(re.search(r"protected branch|branch protection|repository rule violations", detail, re.I))
+        limited = re.search(r"rate[-_ ]?limit|too many requests|abuse", detail, re.I)
+        protected = re.search(r"protected branch|branch protection|repository rule violations", detail, re.I)
+        self.restricted = bool((self.status in (403, 404) and not limited) or protected)
+        login = re.search(
+            r"gh auth login|not logged in|not authenticated|bad credentials|unauthorized|forbidden"
+            r"|requires authentication|authentication (?:required|failed)|permission denied"
+            r"|resource not accessible|invalid (?:access )?token|(?:set|populate) (?:the )?(?:GH_TOKEN|GITHUB_TOKEN)",
+            detail, re.I,
         )
-        super().__init__(f"GitHub {method} {endpoint} 失败（HTTP {self.status or '未知'}）。")
+        self.auth_error = not limited and not protected and (
+            self.status in (401, 403) or self.status is None and (returncode == 4 or bool(login))
+        )
+        reason = "鉴权失败" if self.auth_error else "失败"
+        super().__init__(f"GitHub {method} {endpoint} {reason}（HTTP {self.status or '未知'}）。")
 
 
 def warn(message: object) -> None:
@@ -92,16 +101,11 @@ def seconds_between(start: str, end: str) -> int:
 def current_agent(override: str | None) -> str:
     if override is not None and override not in PRO_LABELS:
         raise MonitorError("非法 Pro 槽位。")
-    path = Path.home() / ".gemini" / "ACCOUNT_IDENTITY.txt"
-    raw = path.read_text(encoding="utf-8").strip()
-    keys = set(re.findall(r"\bPRO\d+[A-Z]\b", raw))
-    if len(keys) != 1 or not keys.issubset(PRO_LABELS) or publish.DRIVE_EMAIL in raw:
-        raise MonitorError("持久身份文件含有非法或不唯一的 Pro 身份。")
-    key = keys.pop()
-    emails = set(publish.EMAIL_RE.findall(raw))
-    if emails and emails != {publish.PRO_EMAILS[key]}:
-        raise MonitorError("持久身份文件中的邮箱与 Pro 身份不匹配。")
-    return override or key
+    try:
+        identity = publish.read_identity(Path(__file__).resolve().parents[1])
+    except publish.PublishError as exc:
+        raise MonitorError(str(exc)) from exc
+    return override or identity.key
 
 
 def api(method: str, endpoint: str, payload: dict | None = None) -> Any:
@@ -111,17 +115,28 @@ def api(method: str, endpoint: str, payload: dict | None = None) -> Any:
         command.extend(["--input", "-"])
         data = json.dumps(payload, ensure_ascii=False)
         check_secret(data)
+    def request(env: dict[str, str]) -> str:
+        try:
+            result = subprocess.run(
+                command, input=data, text=True, capture_output=True, timeout=30, env=env,
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise MonitorError(f"无法执行 gh api {method}（{type(exc).__name__}）。") from exc
+        if result.returncode:
+            raise ApiError(method, endpoint, result.stderr + "\n" + result.stdout, result.returncode)
+        return result.stdout
+
     try:
-        result = subprocess.run(
-            command, input=data, text=True, capture_output=True, timeout=30,
-            env=publish.load_pat_env(),
-        )
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise MonitorError(f"无法执行 gh api {method}（{type(exc).__name__}）。") from exc
-    if result.returncode:
-        raise ApiError(method, endpoint, result.stderr + "\n" + result.stdout)
+        output = request(publish.with_cli_path())
+    except ApiError as exc:
+        if not exc.auth_error:
+            raise
+        fallback = publish.load_pat_env(require_file_token=True)
+        if not fallback:
+            raise
+        output = request(fallback)
     try:
-        return json.loads(result.stdout)
+        return json.loads(output)
     except ValueError as exc:
         raise MonitorError("GitHub 返回了无效的 JSON。") from exc
 

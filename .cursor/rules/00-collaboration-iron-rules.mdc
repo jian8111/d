@@ -14,3 +14,4 @@ Follow `AGENTS.md` on every task without exception:
 4. **Cross-Account Handoff**: Read `AGENTS.md` and `PROGRESS.md` first when resuming (`继续`). Update `PROGRESS.md` in both repo root and Drive `download` after finishing changes.
 5. **Cloud Environment (`no sudo`)**: Use `pip install --user --break-system-packages` for Python packages and user-prefix npm (`~/.npm-global`) for Node tools.
 6. **Dual Signature (`PRO1V`–`PRO5C`)**: Configure `git config user.name "PRO<N><L>"` and `git config user.email "<ProEmail>"`, prefix commit messages with `[PRO<N><L>(<ProEmail>)]`, and sign code headers, artifacts, and `PROGRESS.md`.
+7. **Monitor Check-in First**. Before editing files or invoking `codex exec`, sync a clean worktree with `git pull --ff-only origin main`, then check in with `scripts/agent_monitor.py start` or `wrap` as specified in `AGENTS.md` 第八节. Chat-only discussions skip check-in.
