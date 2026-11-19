@@ -136,6 +136,7 @@
   | 作品路径 | 说明 | Drive File ID |
   | --- | --- | --- |
   | `index.html` | 总览导航页 | `1WEvA-ab3LkKdoizM-6WhhhB6ovDjWMWU` |
+  | `pelican-coastal-courier.html` | PRO3J 105,581 B Antigravity 纯手写（零 Codex）海岸单车骑行与 2-Bone IK 交互页 | `1h2dOHQktxFct_zm098bEqeu4fKWzzsuP` |
   | `pelican-sol-ride.html` | PRO2H 73,977 B `gpt-6.2-sol` 纯矢量单车骑行与 IK 蓝图 | `186XVVAkIr1GKINJ_Hnr9KK1oOwD4_fAN` |
   | `meadow-cottage-3d.html` | PRO2H 352,053 B Three.js 草原木屋水车池塘羊群 3D 场景 | `1EMNYlye7XWzWiUg3YuBqUhNMtssVmhUj` |
   | `sky-castle-cliff-3d.html` | PRO2H 333,568 B Three.js 海崖灯塔与浮空移动城堡 3D 场景 | `1aVKJvSnRo0B6XPv-pA_PYhyBRpBHh827` |
@@ -161,4 +162,4 @@
 - **严禁影响对话与聊天参数（原样直发、绝不加锁）**：上述限制**绝不作用于用户与 Agent 的日常对话**。对话中完全保持原有聊天参数与习惯，允许直接收发、明文展示与输出完整密钥、Token、模型/推理档位参数及可直接复制执行的完整命令，严禁因仓库规范而对对话内容打码、截断、拒答或擅自改变聊天参数。
 
 ---
-**维护与署名**：`PRO1V(valerie...@gmail.com)｜最新更新: PRO2H(hadcockulloa@gmail.com)`
+**维护与署名**：`PRO1V(valerie...@gmail.com)｜最新更新: PRO3J(saveljevsjill148@gmail.com)`

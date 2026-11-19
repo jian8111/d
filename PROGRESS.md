@@ -5,13 +5,13 @@
 ## 2026-11-19 · Antigravity 纯手写《海风慢递 · Coastal Pelican Courier》单文件交付与双端归档 — `PRO3J(saveljevsjill148@gmail.com)`
 
 - **执行身份**：`PRO3J(saveljevsjill148@gmail.com)`（已读取 `~/.gemini/ACCOUNT_IDENTITY.txt` 核验为 `PRO3J`，严格排除纯 Drive 存储号 `466788455@qq.com`；严格按用户明确指令「你自己写，不要 codex」，全程由 Antigravity 纯手写完成，未调用 `codex`）。
-- **交付作品**：[`pelican-coastal-courier.html`](./pelican-coastal-courier.html)（`105,581` 字节 / `2,578` 行，`0` 外部脚本/样式/字体/音频/图片，`0` `fetch()`，桌面与手机自适应离线直开）：
+- **交付作品**：[`pelican-coastal-courier.html`](./pelican-coastal-courier.html)（`105,581` 字节 / `2,578` 行，Drive ID: `1h2dOHQktxFct_zm098bEqeu4fKWzzsuP`，GitHub commit `7a2583f`，`0` 外部脚本/样式/字体/音频/图片，`0` `fetch()`，桌面与手机自适应离线直开）：
   - **真几何单车与 2-Bone 解析 IK 联动**：完整蓝绿色黄铜套管复古单车、16 辐条反光轮组与链条线性滚动耦合、无滑移轮速联动 5 档变速齿轮与真实 700c 踏频读数、平路/爬坡/下坡滑行坡度切换（下坡自动棘轮滑行与微倾姿态）；白鹈鹕双腿与翼尖握把均由解析 2-Bone IK 实时驱动，可一键开启 `IK 骨架` 蓝图叠加查看膝角与曲柄相位。
   - **三时段海岸世界与物理互动**：支持 `晨海晴岚`、`橘子日落` 与 `灯塔星夜` 三套完整配色（含星月、海滨小屋暖窗、街灯晕光、灯塔旋转扫光、车头动态灯束与夜间萤火虫）；支持点击/快捷键投喂银鱼（眼神追踪、大喉囊张嘴接食与弹性吞咽鼓囊）、点击车铃叮当响并惊起海鸥、绕后轮接地点的弹簧阻尼抬头翘车（Wheelie）、高车速自动拉下飞行护目镜、零采样 Web Audio 海风/车铃/棘轮/接鱼音效，以及一键导出当前动画帧矢量 `.svg`。
 - **仓库集成与验收**：
-  - 在 [`index.html`](./index.html) 置顶新增原创内联 SVG 展示卡（独立 `pcc-` 前缀、`0` `<filter>`、`0` 重复 ID，完整保留既有 18 张卡片共 19 张）；同步更新 [`README.md`](./README.md) 与 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)。
+  - 在 [`index.html`](./index.html) 置顶新增原创内联 SVG 展示卡（独立 `pcc-` 前缀、`0` `<filter>`、`0` 重复 ID，完整保留既有 18 张卡片共 19 张）；同步更新 [`README.md`](./README.md)、[`AGENTS.md`](./AGENTS.md) 与 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml)。
   - 无头 Chromium CDP 实机验收通过：`pelican-coastal-courier.html` 与 `index.html` 在 `1280×860` / `390×844` / `320×640` 均 `0` 控制台/运行错误、`0` 外部请求、`0` 横向溢出（`scrollW <= clientW`），并已目视复核晨海、日落 + IK 接鱼、星夜翘车、手机端与首页卡片截图；`verify_repo.py --strict` 返回 `PASS (0 errors, 0 warnings)`。
-- **当前状态与下一步**：本次全部小文件变更通过 [`scripts/dual_publish.py`](./scripts/dual_publish.py) 同步至 GitHub `main` 与 Google Drive `download`（`1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`），并回填新产物 Drive File ID 至 [`AGENTS.md`](./AGENTS.md) 索引表。
+- **当前状态与下一步**：已完成 GitHub `main` 与 Google Drive `download`（`1RyZ0U23cXeT2jyyPDFjX7NjfBAXOGejr`）双端归档及 [`AGENTS.md`](./AGENTS.md) Drive File ID 回填；可直接离线打开 [`pelican-coastal-courier.html`](./pelican-coastal-courier.html) 或访问 GitHub Pages 体验。
 - **记录署名**：`PRO3J(saveljevsjill148@gmail.com)`
 
 <!-- 署名: PRO2H(hadcockulloa@gmail.com) -->
