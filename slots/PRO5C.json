@@ -3,8 +3,27 @@
   "slot": "PRO5C",
   "label": "PRO5C([邮箱已隐藏])",
   "kind": "pro",
-  "status": "idle",
-  "active_tasks": [],
+  "status": "running",
+  "active_tasks": [
+    {
+      "run_id": "pro5c-fix-visibility-polling",
+      "task": "排查修复多Pro未打卡与监控台自动刷新/Raw兜底/规则注入",
+      "executor": "codex/gpt-6.2-astra(max)",
+      "targets": [
+        "scripts/agent_monitor.py",
+        "scripts/dual_publish.py",
+        "monitor.html",
+        ".cursor/rules/00-collaboration-iron-rules.mdc",
+        ".cursor/rules/40-agent-monitor.mdc",
+        ".devcontainer/setup-codex.sh",
+        "AGENTS.md"
+      ],
+      "status": "running",
+      "started_at": "2026-11-19T17:53:32Z",
+      "heartbeat_at": "2026-11-19T17:53:32Z",
+      "note": ""
+    }
+  ],
   "last_done": {
     "run_id": "pro5c-monitor-pages-integration",
     "task": "监控台代理兼容与首页、Pages 收尾集成",
@@ -27,6 +46,6 @@
     "duration_sec": 523,
     "note": "本地严格校验和三尺寸 Chromium 测试已通过，正在双端归档。"
   },
-  "updated_at": "2026-11-19T16:24:54Z",
-  "rev": 4
+  "updated_at": "2026-11-19T17:53:33Z",
+  "rev": 5
 }
