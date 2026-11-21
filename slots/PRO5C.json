@@ -23,7 +23,7 @@
     "task": "GeoSleuth云盘托管一键引导与6.2-sol/astra双核策略规范化",
     "executor": "codex-gpt-6.2-sol",
     "status": "done",
-    "commit": "",
+    "commit": "5cf913f",
     "targets": [
       "scripts/setup_geosleuth.sh",
       ".cursor/skills/geo-sleuth/SKILL.md",
@@ -37,6 +37,6 @@
     "duration_sec": 521,
     "note": ""
   },
-  "updated_at": "2026-11-21T12:08:06Z",
-  "rev": 19
+  "updated_at": "2026-11-21T12:08:52Z",
+  "rev": 20
 }
