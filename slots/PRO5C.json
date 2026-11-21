@@ -3,35 +3,22 @@
   "slot": "PRO5C",
   "label": "PRO5C([邮箱已隐藏])",
   "kind": "pro",
-  "status": "running",
-  "active_tasks": [
-    {
-      "run_id": "f18fe6bd45ee48c5953b572e4546ebfa",
-      "task": "geosleuth北方重构精准几何指纹检索",
-      "executor": "codex-gpt-6.2-sol+astra+argon",
-      "targets": [
-        "PROGRESS.md"
-      ],
-      "status": "running",
-      "started_at": "2026-11-21T13:10:38Z",
-      "heartbeat_at": "2026-11-21T13:10:38Z",
-      "note": ""
-    }
-  ],
+  "status": "idle",
+  "active_tasks": [],
   "last_done": {
-    "run_id": "55e0f6bd973041c1a66a513231e9ef42",
-    "task": "geosleuth北方山地继续定位",
-    "executor": "codex-gpt-6.2-sol+astra",
+    "run_id": "f18fe6bd45ee48c5953b572e4546ebfa",
+    "task": "geosleuth北方重构精准几何指纹检索",
+    "executor": "codex-gpt-6.2-sol+astra+argon",
     "status": "done",
     "commit": "",
     "targets": [
       "PROGRESS.md"
     ],
-    "started_at": "2026-11-21T12:37:26Z",
-    "finished_at": "2026-11-21T13:05:26Z",
-    "duration_sec": 1680,
-    "note": "完成北方五大山脉带 DEM 全境扫描与 98 视角 3D 对比"
+    "started_at": "2026-11-21T13:10:38Z",
+    "finished_at": "2026-11-21T14:00:13Z",
+    "duration_sec": 2975,
+    "note": "完成三路重构管线 (SfM 6607点3D配准 + 8省OSM越岭盘山路 + 49窗中尺度鱼脊梁) 与3D渲染"
   },
-  "updated_at": "2026-11-21T13:10:39Z",
-  "rev": 24
+  "updated_at": "2026-11-21T14:00:13Z",
+  "rev": 25
 }
