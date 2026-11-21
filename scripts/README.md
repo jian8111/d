@@ -78,6 +78,23 @@ python3 scripts/dual_publish.py --all-changed --monitor-task "更新索引"
 
 `--monitor-run-id` 精确关闭任务并记录当前 HEAD 短 SHA。省略时按实际发布路径匹配，`--monitor-task` 可指定任务名。匹配有歧义时保留活跃任务，槽位空闲时只更新最近交付。自动附带的 `PROGRESS.md` 不作为匹配依据。使用 Codespaces 选项会同步 GC 槽位，监控故障只报 Warning。`--skip-monitor` 关闭监控联动，`--dry-run` 仅预览。
 
+## GeoSleuth 安装
+
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) -->
+
+在仓库根目录运行以下命令。脚本优先从 Google Drive 获取 `geo-sleuth-skill.tar.gz`，Drive 不可用时浅克隆 GitHub 上游。技能安装到 `~/.agents/skills/geo-sleuth`，并为 Claude、OpenCode、Gemini 和 Copilot 建立软链接。
+
+```bash
+bash scripts/setup_geosleuth.sh
+```
+
+- `--force` 重新安装。已有 `SKILL.md` 时，默认只检查并更新软链接。
+- `--from-github` 在需要安装技能时直接使用 GitHub。可与 `--force` 一起使用。
+- `--with-ml-cache` 或 `GEOSLEUTH_WITH_CACHE=1` 查询 Drive 的 `download` 文件夹，找到 `geo-sleuth-ml-cache.tar.gz` 时下载并解压到 `~/.cache/`。缓存约 2.4 GB。
+- `--doctor` 在 `uv` 可用时运行技能的 `scripts/doctor.py`。`--quiet` 隐藏常规安装日志，保留错误和显式诊断输出。
+
+Codespaces 的启动脚本在技能缺失时后台运行 `bash scripts/setup_geosleuth.sh --quiet`。
+
 ## 自测
 
 ```bash

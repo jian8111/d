@@ -2,6 +2,13 @@
 # PROGRESS.md — 跨号交接进度记录
 
 <!-- 署名: PRO5C(crispinowilbourn@gmail.com) -->
+## 2026-11-21 · GeoSleuth 云盘安装与 Codex 双模型协作 · `PRO5C(crispinowilbourn@gmail.com)`
+
+- **已完成**　新增 GeoSleuth 安装脚本、Cursor 技能入口和 Codespaces 后台初始化。`AGENTS.md` 第九节登记 Drive 技能包及 `gpt-6.2-sol`、`gpt-6.2-astra` 的 `max` 搭配，`scripts/README.md` 补充了安装参数。
+- **验收**　仓库严格校验与两份脚本的 Bash 语法检查通过。实测 Drive 安装、GitHub 重装与四个软链接，通过模拟验证缓存恢复、诊断调用与 Codespaces 后台启动。
+- **当前状态与下一步**　已通过 `scripts/dual_publish.py` 同步推送至 GitHub `main` 与 Google Drive `download`。新容器可运行 `bash scripts/setup_geosleuth.sh` 获取技能，模型缓存包上传到 Drive 后可通过 `--with-ml-cache` 获取。
+
+<!-- 署名: PRO5C(crispinowilbourn@gmail.com) -->
 ## 2026-11-19 · 排查修复多 Pro 未显状态根因（规则自动注入 + 跨号鉴权兼容 + 30s 自动轮询与 Raw 镜像兜底）— `PRO5C(crispinowilbourn@gmail.com)`
 
 - **执行身份**：`PRO5C(crispinowilbourn@gmail.com)`（已核验 `~/.gemini/ACCOUNT_IDENTITY.txt` 并实时打卡 `pro5c-fix-visibility-polling`，全程由 `codex exec` `gpt-6.2-astra/max` 实施并经本地与 Chromium 实机复核）。

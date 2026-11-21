@@ -182,3 +182,10 @@
 
 - **多发防撞（1 多发 / 多号多发）**　若 `start` 提示其他 Pro 正占用 `index.html`、`PROGRESS.md` 等公共文件，优先生成并推送独立作品文件，最后统一登记首页。`scripts/dual_publish.py` 推 `main` 前自动 `git fetch`，远端领先时执行 `git pull --rebase`，并在并发推送被拒时重试。发布成功后联动 `agent_monitor` 关闭匹配任务，可用 `--monitor-run-id` 精确指定。涉及 GC 导出或关机的发布也会刷新 `GC` 槽位。
 - **GC 开关机顺手打卡**　唤醒 `ominous-waffle-gxpr99x65p743vwvp` 后执行 `python3 -B scripts/agent_monitor.py gc --state running`；确认 `Shutdown` 后执行 `python3 -B scripts/agent_monitor.py gc --state shutdown`。
+
+## 九、Codex `gpt-6.2-sol` + `gpt-6.2-astra` 满血搭配与 GeoSleuth 云盘托管规范
+
+追加署名: PRO5C(crispinowilbourn@gmail.com)
+
+- 用户额度充裕，Codex 继续以 `gpt-6.2-sol`（`max`）为主力默认。复杂架构、长链路排错、疑难推演（含 GeoSleuth 多线索研判）或交叉核验时，主动搭配 `gpt-6.2-astra`（`max`），使用 `codex exec -p astra` 选择该档位。
+- GeoSleuth 技能包托管于 Google Drive `download/geo-sleuth-skill.tar.gz`，File ID 为 `1tfopCesoGPB1JrJ5XxzFDoP4lx-KnZTP`。各容器执行 `bash scripts/setup_geosleuth.sh`，自动拉取到 `~/.agents/skills/geo-sleuth` 供调用。Git 只维护引导脚本与说明，上游技能目录和 2.4 GB 模型缓存通过云盘分发。

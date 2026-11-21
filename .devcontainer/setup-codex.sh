@@ -156,3 +156,7 @@ PY
 echo "[setup-codex] AI 开工前请先阅读 AGENTS.md 与 PROGRESS.md。"
 echo "[setup-codex] Codex: $(command -v codex || echo 'not-on-path') | OpenCode: $(command -v opencode || echo 'not-on-path')"
 echo "[setup-codex] 写代码、改文件或调用 codex exec 前，干净工作区先 git pull --ff-only origin main，再用 scripts/agent_monitor.py start / wrap 打卡。"
+
+if [ ! -f "$HOME/.agents/skills/geo-sleuth/SKILL.md" ] && [ -f scripts/setup_geosleuth.sh ]; then
+  (bash scripts/setup_geosleuth.sh --quiet || true) </dev/null >/dev/null 2>&1 &
+fi
