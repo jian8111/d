@@ -31,7 +31,7 @@
       ],
       "status": "running",
       "started_at": "2026-11-21T11:59:25Z",
-      "heartbeat_at": "2026-11-21T12:02:03Z",
+      "heartbeat_at": "2026-11-21T12:03:22Z",
       "note": ""
     }
   ],
@@ -56,6 +56,6 @@
     "duration_sec": 755,
     "note": "已完成双端发布并由主代理验收"
   },
-  "updated_at": "2026-11-21T12:02:03Z",
-  "rev": 14
+  "updated_at": "2026-11-21T12:03:22Z",
+  "rev": 15
 }
