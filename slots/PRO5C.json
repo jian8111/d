@@ -3,8 +3,21 @@
   "slot": "PRO5C",
   "label": "PRO5C([邮箱已隐藏])",
   "kind": "pro",
-  "status": "idle",
-  "active_tasks": [],
+  "status": "running",
+  "active_tasks": [
+    {
+      "run_id": "55e0f6bd973041c1a66a513231e9ef42",
+      "task": "geosleuth北方山地继续定位",
+      "executor": "codex-gpt-6.2-sol+astra",
+      "targets": [
+        "PROGRESS.md"
+      ],
+      "status": "running",
+      "started_at": "2026-11-21T12:37:26Z",
+      "heartbeat_at": "2026-11-21T12:37:26Z",
+      "note": ""
+    }
+  ],
   "last_done": {
     "run_id": "f48c10de99054c3b8ed773f6e648314e",
     "task": "geosleuth图片定位与真伪核验",
@@ -19,6 +32,6 @@
     "duration_sec": 2069,
     "note": "完成 geo-sleuth (sol max + astra max) 定位与真伪核验"
   },
-  "updated_at": "2026-11-21T12:21:20Z",
-  "rev": 21
+  "updated_at": "2026-11-21T12:37:27Z",
+  "rev": 22
 }
