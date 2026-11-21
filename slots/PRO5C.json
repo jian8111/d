@@ -3,40 +3,22 @@
   "slot": "PRO5C",
   "label": "PRO5C([邮箱已隐藏])",
   "kind": "pro",
-  "status": "running",
-  "active_tasks": [
-    {
-      "run_id": "f48c10de99054c3b8ed773f6e648314e",
-      "task": "geosleuth图片定位与真伪核验",
-      "executor": "codex-gpt-6.2-sol+astra",
-      "targets": [
-        "PROGRESS.md"
-      ],
-      "status": "running",
-      "started_at": "2026-11-21T11:46:51Z",
-      "heartbeat_at": "2026-11-21T11:46:51Z",
-      "note": ""
-    }
-  ],
+  "status": "idle",
+  "active_tasks": [],
   "last_done": {
-    "run_id": "55353ab4a541466e8b4885d85f194942",
-    "task": "GeoSleuth云盘托管一键引导与6.2-sol/astra双核策略规范化",
-    "executor": "codex-gpt-6.2-sol",
+    "run_id": "f48c10de99054c3b8ed773f6e648314e",
+    "task": "geosleuth图片定位与真伪核验",
+    "executor": "codex-gpt-6.2-sol+astra",
     "status": "done",
-    "commit": "5cf913f",
+    "commit": "",
     "targets": [
-      "scripts/setup_geosleuth.sh",
-      ".cursor/skills/geo-sleuth/SKILL.md",
-      ".devcontainer/setup-codex.sh",
-      "AGENTS.md",
-      "scripts/README.md",
       "PROGRESS.md"
     ],
-    "started_at": "2026-11-21T11:59:25Z",
-    "finished_at": "2026-11-21T12:08:06Z",
-    "duration_sec": 521,
-    "note": ""
+    "started_at": "2026-11-21T11:46:51Z",
+    "finished_at": "2026-11-21T12:21:20Z",
+    "duration_sec": 2069,
+    "note": "完成 geo-sleuth (sol max + astra max) 定位与真伪核验"
   },
-  "updated_at": "2026-11-21T12:08:52Z",
-  "rev": 20
+  "updated_at": "2026-11-21T12:21:20Z",
+  "rev": 21
 }
