@@ -3,8 +3,21 @@
   "slot": "PRO5C",
   "label": "PRO5C([邮箱已隐藏])",
   "kind": "pro",
-  "status": "idle",
-  "active_tasks": [],
+  "status": "running",
+  "active_tasks": [
+    {
+      "run_id": "f48c10de99054c3b8ed773f6e648314e",
+      "task": "geosleuth图片定位与真伪核验",
+      "executor": "codex-gpt-6.2-sol+astra",
+      "targets": [
+        "PROGRESS.md"
+      ],
+      "status": "running",
+      "started_at": "2026-11-21T11:46:51Z",
+      "heartbeat_at": "2026-11-21T11:46:51Z",
+      "note": ""
+    }
+  ],
   "last_done": {
     "run_id": "920b7986952645559cee4ad291d9f72d",
     "task": "修复跨 Pro 打卡与监控台状态同步",
@@ -26,6 +39,6 @@
     "duration_sec": 755,
     "note": "已完成双端发布并由主代理验收"
   },
-  "updated_at": "2026-11-19T18:07:14Z",
-  "rev": 10
+  "updated_at": "2026-11-21T11:46:52Z",
+  "rev": 11
 }
