@@ -16,6 +16,23 @@
       "started_at": "2026-11-21T11:46:51Z",
       "heartbeat_at": "2026-11-21T11:46:51Z",
       "note": ""
+    },
+    {
+      "run_id": "55353ab4a541466e8b4885d85f194942",
+      "task": "GeoSleuth云盘托管一键引导与6.2-sol/astra双核策略规范化",
+      "executor": "codex-gpt-6.2-sol",
+      "targets": [
+        "scripts/setup_geosleuth.sh",
+        ".cursor/skills/geo-sleuth/SKILL.md",
+        ".devcontainer/setup-codex.sh",
+        "AGENTS.md",
+        "scripts/README.md",
+        "PROGRESS.md"
+      ],
+      "status": "running",
+      "started_at": "2026-11-21T11:59:25Z",
+      "heartbeat_at": "2026-11-21T11:59:25Z",
+      "note": ""
     }
   ],
   "last_done": {
@@ -39,6 +56,6 @@
     "duration_sec": 755,
     "note": "已完成双端发布并由主代理验收"
   },
-  "updated_at": "2026-11-21T11:46:52Z",
-  "rev": 11
+  "updated_at": "2026-11-21T11:59:25Z",
+  "rev": 12
 }
